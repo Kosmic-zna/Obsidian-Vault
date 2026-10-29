@@ -1,0 +1,16 @@
+{
+  "folder": "fonts",
+  "roles": {
+    "text": null,
+    "interface": null,
+    "monospace": null,
+    "headings": null,
+    "emoji": null
+  },
+  "hardOverride": false,
+  "cache": {
+    "version": 2,
+    "folder": "fonts",
+    "faces": []
+  }
+}

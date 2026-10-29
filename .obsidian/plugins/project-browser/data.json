@@ -1,0 +1,222 @@
+{
+  "onboardingNotices": {
+    "welcomeNoticeRead": false,
+    "lastVersionNoticeRead": ""
+  },
+  "settingsVersion": "0.4.0",
+  "access": {
+    "replaceNewTab": true,
+    "enableRibbonIcon": true,
+    "enableCommand": true,
+    "launchFolder": "/"
+  },
+  "useAliases": true,
+  "showFileExtForNonMdFiles": true,
+  "showStateMenu": true,
+  "loopStatesWhenCycling": true,
+  "folders": {
+    "defaultView": "Small"
+  },
+  "states": {
+    "visible": [
+      {
+        "name": "Idea",
+        "link": true,
+        "defaultViewMode": "Small Cards",
+        "defaultViewOrder": "AliasOrFilename",
+        "defaultViewPriorityVisibility": true,
+        "defaultViewPriorityGrouping": true
+      },
+      {
+        "name": "Shortlisted",
+        "link": true,
+        "defaultViewMode": "Small Cards",
+        "defaultViewOrder": "AliasOrFilename",
+        "defaultViewPriorityVisibility": true,
+        "defaultViewPriorityGrouping": true
+      },
+      {
+        "name": "Drafting",
+        "link": true,
+        "defaultViewMode": "Detailed Cards",
+        "defaultViewOrder": "AliasOrFilename",
+        "defaultViewPriorityVisibility": true,
+        "defaultViewPriorityGrouping": true
+      },
+      {
+        "name": "Focus",
+        "link": true,
+        "defaultViewMode": "Simple Cards",
+        "defaultViewOrder": "AliasOrFilename",
+        "defaultViewPriorityVisibility": true,
+        "defaultViewPriorityGrouping": true
+      },
+      {
+        "name": "Final",
+        "link": true,
+        "defaultViewMode": "Small Cards",
+        "defaultViewOrder": "ModifiedDate",
+        "defaultViewPriorityVisibility": false,
+        "defaultViewPriorityGrouping": false
+      }
+    ],
+    "hidden": [
+      {
+        "name": "Archived",
+        "link": true,
+        "defaultViewMode": "Small Cards",
+        "defaultViewOrder": "ModifiedDate",
+        "defaultViewPriorityVisibility": false,
+        "defaultViewPriorityGrouping": false
+      },
+      {
+        "name": "Cancelled",
+        "link": true,
+        "defaultViewMode": "Detailed Cards",
+        "defaultViewOrder": "ModifiedDate",
+        "defaultViewPriorityVisibility": false,
+        "defaultViewPriorityGrouping": false
+      }
+    ]
+  },
+  "stateless": {
+    "name": "",
+    "defaultViewMode": "Detailed Cards",
+    "defaultViewOrder": "ModifiedDate",
+    "defaultViewPriorityVisibility": true,
+    "defaultViewPriorityGrouping": true
+  },
+  "defaultState": "Idea",
+  "priorities": [
+    {
+      "name": "High",
+      "link": false
+    },
+    {
+      "name": "Low",
+      "link": false
+    }
+  ],
+  "fileTypes": {
+    "projectBrowser": {
+      "visible": [
+        "md",
+        "canvas",
+        "base",
+        "pdf",
+        "avif",
+        "bmp",
+        "gif",
+        "jpeg",
+        "jpg",
+        "png",
+        "svg",
+        "webp",
+        "flac",
+        "m4a",
+        "mp3",
+        "ogg",
+        "oga",
+        "opus",
+        "wav",
+        "webm",
+        "3gp",
+        "mkv",
+        "mov",
+        "mp4",
+        "ogv"
+      ],
+      "hidden": [
+        "pbs"
+      ]
+    },
+    "pageMenu": {
+      "visible": [
+        "md",
+        "canvas",
+        "base"
+      ],
+      "hidden": [
+        "pbs",
+        "pdf",
+        "avif",
+        "bmp",
+        "gif",
+        "jpeg",
+        "jpg",
+        "png",
+        "svg",
+        "webp",
+        "flac",
+        "m4a",
+        "mp3",
+        "ogg",
+        "oga",
+        "opus",
+        "wav",
+        "webm",
+        "3gp",
+        "mkv",
+        "mov",
+        "mp4",
+        "ogv"
+      ]
+    }
+  },
+  "projectPageStates": {
+    "visible": [
+      {
+        "name": "First Draft",
+        "link": true,
+        "defaultViewMode": "Small Cards",
+        "defaultViewOrder": "AliasOrFilename",
+        "defaultViewPriorityVisibility": true,
+        "defaultViewPriorityGrouping": false
+      },
+      {
+        "name": "Work in Progress",
+        "link": true,
+        "defaultViewMode": "Detailed Cards",
+        "defaultViewOrder": "AliasOrFilename",
+        "defaultViewPriorityVisibility": true,
+        "defaultViewPriorityGrouping": false
+      },
+      {
+        "name": "Proofingreading",
+        "link": true,
+        "defaultViewMode": "List",
+        "defaultViewOrder": "ModifiedDate",
+        "defaultViewPriorityVisibility": false,
+        "defaultViewPriorityGrouping": false
+      },
+      {
+        "name": "Ready",
+        "link": true,
+        "defaultViewMode": "List",
+        "defaultViewOrder": "ModifiedDate",
+        "defaultViewPriorityVisibility": false,
+        "defaultViewPriorityGrouping": false
+      }
+    ],
+    "hidden": [
+      {
+        "name": "Abandoned",
+        "link": true,
+        "defaultViewMode": "List",
+        "defaultViewOrder": "ModifiedDate",
+        "defaultViewPriorityVisibility": false,
+        "defaultViewPriorityGrouping": false
+      }
+    ]
+  },
+  "projectPageStateless": {
+    "name": "",
+    "defaultViewMode": "List",
+    "link": true,
+    "defaultViewOrder": "ModifiedDate",
+    "defaultViewPriorityVisibility": true,
+    "defaultViewPriorityGrouping": false
+  },
+  "loopProjectPageStatesWhenCycling": true,
+  "showRenamePopupOnNewPage": true
+}

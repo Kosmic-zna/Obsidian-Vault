@@ -2,5 +2,15 @@
   "obsidian-git",
   "pdf-plus",
   "omnisearch",
-  "word-reader"
+  "word-reader",
+  "fontsource",
+  "local-fonts",
+  "obsidian-excalidraw-plugin",
+  "templater-obsidian",
+  "table-editor-obsidian",
+  "obsidian-style-settings",
+  "agent-client",
+  "obsidian-kanban",
+  "project-browser",
+  "operon"
 ]

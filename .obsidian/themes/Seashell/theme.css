@@ -1,0 +1,1621 @@
+/*
+ * Seashell — a dark-only theme for Obsidian
+ * Repository: https://github.com/gabrielfrimodig/obsidian-seashell
+ * License: MIT (see LICENSE)
+ *
+ * This file is the complete runtime stylesheet; no build step is required.
+ * Fonts resolve locally. No external assets are loaded.
+ *
+ * Structure
+ * 01–03  Palette, semantic variables and shared defaults
+ * 04–06  Selection, workspace, navigation and form controls
+ * 07–11  Markdown, code, tables, embeds, properties and callouts
+ * 12–14  Dialogs, settings, Graph, Canvas and feedback
+ * 15     Final typography and color overrides
+ * 16     Narrow-window layout adjustments
+ *
+ * Cascade notes
+ * Keep final overrides after component styles: their order is intentional.
+ * Preserve host selectors (including CodeMirror and HyperMD class names).
+ * Use shared tokens for palette changes; verify overrides in both editor
+ * and reading views before changing specificity or removing !important.
+ */
+
+/* @settings
+name: Seashell
+id: seashell
+settings:
+  - id: seashell-reading
+    title: Reading
+    type: heading
+    level: 1
+  - id: seashell-font-help
+    title: Fonts and text size
+    description: "Choose interface, text, and monospace fonts and text size in Obsidian Settings → Appearance. Seashell provides local font fallbacks."
+    type: info-text
+  - id: seashell-line-width
+    title: Note width
+    description: "Maximum note width when Readable line length is enabled in Settings → Editor."
+    type: variable-number-slider
+    default: 760
+    min: 520
+    max: 1200
+    step: 20
+    format: px
+  - id: seashell-line-height
+    title: Line spacing
+    type: variable-number-slider
+    default: 1.7
+    min: 1.3
+    max: 2.1
+    step: 0.05
+  - id: seashell-neutral-headings
+    title: Neutral headings
+    description: "Use the normal text color instead of Seashell's heading colors."
+    type: class-toggle
+    default: false
+  - id: seashell-underline-links
+    title: Underline links
+    description: "Underline links in notes, including when a separate link snippet normally removes underlines."
+    type: class-toggle
+    default: false
+  - id: seashell-quiet-callouts
+    title: Quieter callouts
+    description: "Remove callout background fills and shadows while keeping their colored borders."
+    type: class-toggle
+    default: false
+  - id: seashell-code
+    title: Code
+    type: heading
+    level: 1
+  - id: seashell-code-scale
+    title: Code size
+    description: "Code size relative to the text size chosen in Appearance. Applies to inline code and code blocks."
+    type: variable-number-slider
+    default: 0.9
+    min: 0.75
+    max: 1.2
+    step: 0.05
+  - id: seashell-code-scroll
+    title: Scroll long code lines
+    description: "Reading view only. Scroll horizontally instead of wrapping long code lines. Editor wrapping follows Obsidian."
+    type: class-toggle
+    default: false
+  - id: seashell-colors
+    title: Colors
+    type: heading
+    level: 1
+  - id: seashell-accent-source
+    title: Accent color
+    description: "Use Seashell's accent, or follow the accent selected in Obsidian Settings → Appearance."
+    type: class-select
+    allowEmpty: false
+    default: seashell-own-accent
+    options:
+      - label: Use Seashell accent
+        value: seashell-own-accent
+      - label: Follow Obsidian accent
+        value: seashell-native-accent
+*/
+
+/* === 01. Shared palette, typography and dimensions === */
+
+:root {
+  --seashell-cursor: #fba02f;
+  --seashell-background: #08131a;
+  --seashell-foreground: #deb88d;
+  --seashell-selection: #1e4862;
+  --seashell-selection-text: #fee3cd;
+  --seashell-blue-900: #17384c;
+  --seashell-orange-700: #d05023;
+  --seashell-teal-700: #027b9b;
+  --seashell-orange-500: #fba02f;
+  --seashell-teal-900: #1d4850;
+  --seashell-cyan-400: #68d3f0;
+  --seashell-cyan-600: #50a3b5;
+  --seashell-shell-500: #deb88d;
+  --seashell-slate-600: #424b52;
+  --seashell-coral-400: #d38677;
+  --seashell-blue-500: #618c98;
+  --seashell-shell-300: #fdd29e;
+  --seashell-cyan-500: #1abcdd;
+  --seashell-ice-300: #bbe3ee;
+  --seashell-blue-300: #86abb3;
+  --seashell-shell-100: #fee3cd;
+
+  /* Optional Style Settings values have matching CSS defaults. */
+  --seashell-line-width: 760px;
+  --seashell-line-height: 1.7;
+  --seashell-code-scale: 0.9;
+  --body-font-weight: 450;
+  --seashell-note-text: var(--text-muted);
+  --seashell-cta-background: #1d4850;
+  --seashell-cta-background-hover: #026b87;
+  --seashell-cta-text: #fee3cd;
+  --seashell-cta-shadow: rgb(26 188 221 / 16%);
+  --radius-s: 4px;
+  --radius-m: 6px;
+  --radius-l: 8px;
+  --radius-xl: 8px;
+  --input-radius: 6px;
+  --tab-radius-active: 6px 6px 0 0;
+  --checkbox-radius: 4px;
+  --divider-width: 1px;
+  --border-width: 1px;
+  --line-height-tight: 1.35;
+  --icon-stroke: 1.8px;
+}
+
+/* === 02. Dark mode: Obsidian semantic variables === */
+
+/* Dark mode only. No light palette is provided. */
+.theme-dark {
+  color-scheme: dark;
+
+  --color-red-rgb: 208, 80, 35;
+  --color-red: var(--seashell-orange-700);
+  --color-orange-rgb: 251, 160, 47;
+  --color-orange: var(--seashell-orange-500);
+  --color-yellow-rgb: 253, 210, 158;
+  --color-yellow: var(--seashell-shell-300);
+  --color-green-rgb: 80, 163, 181;
+  --color-green: var(--seashell-cyan-600);
+  --color-cyan-rgb: 26, 188, 221;
+  --color-cyan: var(--seashell-cyan-500);
+  --color-blue-rgb: 104, 211, 240;
+  --color-blue: var(--seashell-cyan-400);
+  --color-purple-rgb: 187, 227, 238;
+  --color-purple: var(--seashell-ice-300);
+  --color-pink-rgb: 211, 134, 119;
+  --color-pink: var(--seashell-coral-400);
+  --background-primary: var(--seashell-background);
+  --background-primary-alt: #0b1b25;
+  --background-secondary: #0c1c26;
+  --background-secondary-alt: #102735;
+  --background-modifier-hover: rgb(104 211 240 / 8%);
+  --background-modifier-active-hover: rgb(251 160 47 / 16%);
+  --background-modifier-border: rgb(134 171 179 / 24%);
+  --background-modifier-border-hover: rgb(104 211 240 / 38%);
+  --background-modifier-border-focus: rgb(251 160 47 / 76%);
+  --background-modifier-form-field: rgb(23 56 76 / 54%);
+  --background-modifier-form-field-highlighted: rgb(30 72 98 / 72%);
+  --background-modifier-box-shadow: rgb(0 0 0 / 42%);
+  --background-modifier-cover: rgb(8 19 26 / 74%);
+  --background-modifier-success: rgb(80 163 181 / 20%);
+  --background-modifier-error: rgb(208 80 35 / 24%);
+  --background-modifier-error-hover: rgb(208 80 35 / 34%);
+  --text-normal: var(--seashell-blue-300);
+  --text-muted: var(--seashell-blue-300);
+  --text-faint: rgb(134 171 179 / 64%);
+  --text-on-accent: var(--seashell-background);
+  --text-on-accent-inverted: var(--seashell-shell-100);
+  --text-accent: var(--seashell-cyan-400);
+  --text-accent-hover: var(--seashell-shell-300);
+  --text-selection: var(--seashell-selection-text);
+  --text-highlight-bg: rgb(251 160 47 / 24%);
+  --text-highlight-bg-active: rgb(251 160 47 / 34%);
+  --text-error: var(--seashell-coral-400);
+  --text-success: var(--seashell-cyan-600);
+  --text-warning: var(--seashell-orange-500);
+  --interactive-normal: rgb(23 56 76 / 72%);
+  --interactive-hover: rgb(30 72 98 / 86%);
+  --interactive-success: var(--seashell-cyan-600);
+  --titlebar-background: #071117;
+  --titlebar-background-focused: #0a1821;
+  --ribbon-background: #071117;
+  --tab-container-background: #071117;
+  --tab-text-color: var(--seashell-blue-300);
+  --tab-text-color-active: var(--seashell-shell-100);
+  --tab-outline-color: rgb(134 171 179 / 16%);
+  --divider-color: rgb(134 171 179 / 18%);
+  --scrollbar-bg: rgb(8 19 26 / 18%);
+  --scrollbar-thumb-bg: rgb(97 140 152 / 45%);
+  --scrollbar-active-thumb-bg: rgb(251 160 47 / 70%);
+  --link-color: var(--seashell-shell-100);
+  --link-color-hover: var(--seashell-shell-300);
+  --link-external-color: var(--seashell-shell-100);
+  --link-external-color-hover: var(--seashell-shell-300);
+  --link-decoration: none;
+  --link-decoration-hover: underline;
+  --link-unresolved-color: var(--seashell-coral-400);
+  --link-unresolved-decoration-style: dotted;
+  --tag-color: var(--seashell-shell-300);
+  --tag-background: rgb(251 160 47 / 13%);
+  --tag-background-hover: rgb(251 160 47 / 22%);
+  --tag-border-color: rgb(251 160 47 / 32%);
+  --tag-border-color-hover: rgb(253 210 158 / 52%);
+  --code-normal: var(--seashell-shell-100);
+  --code-background: rgb(23 56 76 / 54%);
+  --code-comment: rgb(134 171 179 / 74%);
+  --code-function: var(--seashell-cyan-400);
+  --code-important: var(--seashell-orange-500);
+  --code-keyword: var(--seashell-coral-400);
+  --code-operator: var(--seashell-cyan-500);
+  --code-property: var(--seashell-shell-300);
+  --code-punctuation: var(--seashell-blue-300);
+  --code-string: var(--seashell-cyan-600);
+  --code-tag: var(--seashell-orange-700);
+  --code-value: var(--seashell-ice-300);
+  --blockquote-border-color: rgb(104 211 240 / 38%);
+  --blockquote-background-color: rgb(23 56 76 / 42%);
+  --hr-color: rgb(134 171 179 / 28%);
+  --table-header-background: rgb(23 56 76 / 72%);
+  --table-row-alt-background: rgb(23 56 76 / 22%);
+  --table-border-color: rgb(134 171 179 / 24%);
+  --embed-background: rgb(23 56 76 / 28%);
+  --embed-border-left: 2px solid rgb(104 211 240 / 52%);
+  --indentation-guide-color: rgb(134 171 179 / 20%);
+  --indentation-guide-color-active: rgb(251 160 47 / 45%);
+  --h1-color: #eccfba;
+  --h2-color: #fba02f;
+  --h3-color: #68d3f0;
+  --h4-color: var(--seashell-coral-400);
+  --h5-color: var(--seashell-blue-300);
+  --h6-color: var(--seashell-orange-500);
+  --inline-title-color: var(--seashell-shell-100);
+  --bold-color: var(--seashell-shell-100);
+  --italic-color: var(--seashell-shell-300);
+  --checkbox-color: var(--seashell-cyan-500);
+  --checkbox-color-hover: var(--seashell-cyan-400);
+  --checkbox-marker-color: var(--seashell-background);
+  --checkbox-border-color: rgb(134 171 179 / 58%);
+  --checkbox-border-color-hover: var(--seashell-cyan-400);
+}
+
+/* Preserve the default Seashell accent without overriding Obsidian's stored hue.
+   The opt-in native mode leaves the core --color-accent variables intact. */
+body.theme-dark:not(.seashell-native-accent) {
+  --color-accent-hsl: 35, 96%, 59%;
+  --color-accent: var(--seashell-orange-500);
+  --color-accent-1: var(--seashell-orange-500);
+  --color-accent-2: var(--seashell-shell-300);
+  --interactive-accent: var(--seashell-orange-500);
+  --interactive-accent-hover: var(--seashell-shell-300);
+}
+
+body.theme-dark.seashell-native-accent {
+  --seashell-cursor: var(--color-accent);
+  --background-modifier-border-focus: var(--color-accent);
+  --text-accent: var(--color-accent);
+  --text-accent-hover: var(--color-accent-2);
+  --text-on-accent: white;
+  --text-on-accent-inverted: black;
+  --checkbox-color: var(--interactive-accent);
+  --checkbox-color-hover: var(--interactive-accent-hover);
+  --checkbox-marker-color: var(--text-on-accent);
+  --seashell-cta-background: var(--interactive-accent);
+  --seashell-cta-background-hover: var(--interactive-accent-hover);
+  --seashell-cta-text: var(--text-on-accent);
+  --seashell-cta-shadow: color-mix(
+    in srgb,
+    var(--color-accent) 16%,
+    transparent
+  );
+  --scrollbar-active-thumb-bg: color-mix(
+    in srgb,
+    var(--color-accent) 70%,
+    transparent
+  );
+}
+
+/* === 03. Shared UI variables and document defaults === */
+
+body {
+  /* Obsidian's --font-* chains put the user's Appearance overrides first. */
+  --font-text-theme:
+    "Rubik", "Glow Sans SC", -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, helvetica, arial, sans-serif;
+  --font-interface-theme:
+    "Rubik", "Glow Sans SC", -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, helvetica, arial, sans-serif;
+  --font-monospace-theme:
+    "OperatorMonoSSmLig-Book", "SFMono-Regular", menlo, monaco, consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --tag-font-family: var(--font-monospace);
+  --file-line-width: var(--seashell-line-width);
+  --line-height-normal: var(--seashell-line-height);
+  --code-size: calc(var(--font-text-size) * var(--seashell-code-scale));
+
+  font-family: var(--font-interface);
+  font-size: var(--font-ui-medium);
+
+  --metadata-label-width: 9em;
+  --metadata-label-text-color: var(--text-muted);
+  --metadata-input-text-color: var(--seashell-foreground);
+  --metadata-property-background: transparent;
+  --metadata-property-background-hover: var(--background-modifier-hover);
+  --metadata-divider-color: var(--divider-color);
+  --nav-item-color: var(--text-muted);
+  --nav-item-color-hover: var(--seashell-foreground);
+  --nav-item-color-active: var(--seashell-foreground);
+  --nav-item-background-hover: var(--background-modifier-hover);
+  --nav-item-background-active: rgb(104 211 240 / 12%);
+  --nav-item-weight-active: var(--body-font-weight);
+  --nav-item-size: 13px;
+  --tab-font-size: 12px;
+  --tab-font-weight: 560;
+  --status-bar-font-size: 12px;
+  --popover-width: 460px;
+  --popover-height: 340px;
+
+  accent-color: var(--interactive-accent);
+  background-color: var(--background-primary);
+  text-rendering: optimizelegibility;
+}
+
+/* === 04. Selection and scrollbars === */
+
+::selection {
+  color: var(--text-selection) !important;
+  background: var(--seashell-selection) !important;
+}
+
+/* Standard scrollbars coexist with Electron pseudo-elements. Recent Chromium
+   may prioritize these properties over the WebKit sizing rules. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-active-thumb-bg);
+}
+
+/* === 05. Workspace, ribbon, tabs and status bar === */
+
+.titlebar,
+.workspace-ribbon,
+.mod-sidedock .workspace-tabs,
+.workspace-split.mod-horizontal > * > .workspace-leaf-resize-handle,
+.workspace-split.mod-vertical > * > .workspace-leaf-resize-handle {
+  border-color: var(--divider-color);
+}
+
+.workspace-leaf-resize-handle:hover,
+.workspace-leaf-resize-handle:active {
+  background-color: rgb(104 211 240 / 42%) !important;
+  border-color: rgb(104 211 240 / 42%) !important;
+}
+
+.workspace,
+.workspace-split.mod-root,
+.workspace-leaf,
+.workspace-tabs,
+.workspace-tabs .workspace-leaf {
+  background: var(--background-primary);
+}
+
+.workspace-ribbon {
+  background: var(--ribbon-background);
+}
+
+.workspace-ribbon.mod-left {
+  border-right: 1px solid var(--divider-color);
+}
+
+.workspace-ribbon.mod-right {
+  border-left: 1px solid var(--divider-color);
+}
+
+.side-dock-ribbon-action,
+.workspace-ribbon-collapse-btn,
+.workspace-tab-header-inner-icon,
+.view-action,
+.clickable-icon {
+  color: var(--text-muted);
+  border-radius: 6px;
+}
+
+.side-dock-ribbon-action:hover,
+.workspace-ribbon-collapse-btn:hover,
+.view-action:hover,
+.clickable-icon:hover,
+.tree-item-self.is-clickable:hover {
+  color: var(--seashell-foreground);
+  background: var(--background-modifier-hover);
+}
+
+.clickable-icon.is-active,
+.side-dock-ribbon-action.is-active {
+  color: var(--text-on-accent);
+  background: var(--interactive-accent);
+}
+
+.mod-root .workspace-tab-header-container,
+.workspace-tab-header-container {
+  background: var(--tab-container-background);
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.workspace-tab-header {
+  color: var(--tab-text-color);
+  border-radius: var(--tab-radius-active);
+}
+
+.workspace-tab-header:hover {
+  color: var(--tab-text-color-active);
+  background: var(--background-modifier-hover);
+}
+
+.workspace-tab-header.is-active {
+  color: var(--tab-text-color-active);
+  background: var(--background-primary);
+  box-shadow: inset 0 -2px 0 var(--interactive-accent);
+}
+
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
+  display: none;
+}
+
+.workspace-tab-header-inner {
+  padding-inline: 8px;
+}
+
+.workspace-leaf-content {
+  background: var(--background-primary);
+}
+
+.view-header {
+  height: 38px;
+  background: var(--background-primary);
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.view-header-title {
+  color: var(--text-muted);
+  font-weight: 620;
+}
+
+.view-header-title-parent {
+  color: var(--text-faint);
+}
+
+.status-bar {
+  color: var(--text-faint);
+  background: color-mix(in srgb, var(--background-secondary) 86%, transparent);
+  border-color: var(--divider-color);
+  border-top-left-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+/* === 06. Navigation, search and form controls === */
+
+.nav-header {
+  padding: 10px 12px 6px;
+}
+
+.nav-buttons-container {
+  gap: 4px;
+}
+
+.search-input-container,
+.workspace-leaf-content[data-type="search"] .search-input-container {
+  margin: 8px 12px;
+}
+
+.search-input-container input,
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  color: var(--seashell-foreground);
+  background: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--input-radius);
+  box-shadow: none;
+}
+
+.search-input-container input:focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--background-modifier-border-focus);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--interactive-accent) 15%, transparent);
+}
+
+.search-input-container::before {
+  color: var(--text-faint);
+}
+
+.nav-files-container {
+  padding: 4px 8px 14px;
+}
+
+.nav-folder-title,
+.nav-file-title {
+  min-height: 28px;
+  margin-bottom: 1px;
+  border-radius: 6px;
+}
+
+.nav-folder-title,
+.nav-file-title {
+  color: var(--text-muted);
+}
+
+.nav-folder-title:hover,
+.nav-file-title:hover {
+  color: var(--seashell-foreground);
+  background: var(--background-modifier-hover);
+}
+
+/* Navigation uses the interface font selected in Appearance. */
+.nav-folder-title,
+.nav-file-title,
+.nav-folder-title:hover,
+.nav-file-title:hover,
+.nav-folder-title.is-active,
+.nav-file-title.is-active,
+body:not(.is-grabbing) .nav-folder-title:hover,
+body:not(.is-grabbing) .nav-file-title:hover {
+  font-family: var(--font-interface);
+  font-weight: var(--body-font-weight) !important;
+  font-style: normal !important;
+  font-synthesis: none;
+}
+
+.nav-file-title.is-active {
+  color: var(--seashell-note-text);
+  background: rgb(104 211 240 / 12%);
+  box-shadow: none;
+}
+
+/* Keep active folders quiet while preserving a visible keyboard focus cue. */
+.nav-folder-title.is-active {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.nav-folder-title:focus-visible,
+.nav-file-title:focus-visible {
+  outline: 2px solid var(--seashell-cursor);
+  outline-offset: -2px;
+}
+
+.workspace-leaf-content[data-type="outline"] .tree-item-self.is-active {
+  color: var(--seashell-note-text);
+  background: rgb(104 211 240 / 12%);
+  box-shadow: none;
+}
+
+.nav-file-tag {
+  color: var(--text-on-accent);
+  background: color-mix(in srgb, var(--interactive-accent) 72%, transparent);
+  border-radius: 999px;
+}
+
+.tree-item-flair {
+  color: var(--seashell-shell-300);
+  background: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+  border-radius: 999px;
+}
+
+/* Scope search resets to core search leaves. Specificity prevents rounded tree
+   styles from turning result groups into large pills. */
+.workspace-leaf-content[data-type="search"] .search-result,
+.workspace-leaf-content[data-type="search"] .search-result-container,
+.workspace-leaf-content[data-type="search"] .search-result-file-matches,
+.workspace-leaf-content[data-type="search"] .search-result-file-match,
+.workspace-leaf-content[data-type="search"] .search-result-file-match:hover,
+.workspace-leaf-content[data-type="search"]
+  .search-result-file-match-destination-file,
+.workspace-leaf-content[data-type="search"] .search-result-file-title,
+.workspace-leaf-content[data-type="search"] .tree-item-self {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.workspace-leaf-content[data-type="search"] .search-result-file-matched-text,
+.workspace-leaf-content[data-type="search"]
+  .search-result-file-title
+  .search-result-file-matched-text,
+.workspace-leaf-content[data-type="search"]
+  .search-result-file-match
+  .search-result-file-matched-text {
+  color: var(--seashell-shell-300) !important;
+  background: color-mix(
+    in srgb,
+    var(--interactive-accent) 22%,
+    transparent
+  ) !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  box-shadow: none !important;
+  padding: 0 0.08em !important;
+}
+
+.workspace-leaf-content[data-type="search"] .tree-item-children,
+.workspace-leaf-content[data-type="search"] .search-result-file-matches,
+.workspace-leaf-content[data-type="search"] .search-result-container {
+  overflow: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Suppress decorative search pseudo-elements; actual match text stays visible. */
+.workspace-leaf-content[data-type="search"]
+  :is(
+    .search-result-file-matches,
+    .search-result-file-match,
+    .search-result-container
+  )::before,
+.workspace-leaf-content[data-type="search"]
+  :is(
+    .search-result-file-matches,
+    .search-result-file-match,
+    .search-result-container
+  )::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* === 07. Markdown surfaces, editor and typography === */
+
+.markdown-source-view,
+.markdown-preview-view,
+.markdown-reading-view,
+.empty-state {
+  background: var(--background-primary);
+}
+
+.markdown-source-view.mod-cm6 .cm-scroller,
+.markdown-preview-view {
+  font-family: var(--font-text);
+  line-height: var(--line-height-normal);
+}
+
+.markdown-source-view.mod-cm6 .cm-content,
+.markdown-preview-view,
+.markdown-rendered {
+  color: var(--seashell-note-text);
+  font-feature-settings: "kern", "liga", "calt";
+}
+
+.markdown-source-view.mod-cm6 .cm-content {
+  caret-color: var(--seashell-cursor);
+}
+
+.markdown-source-view.mod-cm6 .cm-line {
+  padding-inline: 0;
+}
+
+.markdown-source-view.mod-cm6 .cm-content,
+.markdown-preview-view,
+.markdown-rendered {
+  font-size: var(--font-text-size);
+}
+
+.markdown-source-view.mod-cm6.is-readable-line-width .cm-content,
+.markdown-source-view.mod-cm6.is-readable-line-width .cm-line,
+.markdown-preview-view.is-readable-line-width .markdown-preview-sizer {
+  max-width: var(--file-line-width);
+}
+
+.inline-title {
+  margin-bottom: 1.1em;
+  color: var(--inline-title-color);
+  font-size: 2.65rem;
+  font-weight: 760;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.markdown-rendered h1,
+.markdown-rendered h2,
+.markdown-rendered h3,
+.markdown-rendered h4,
+.markdown-rendered h5,
+.markdown-rendered h6,
+.HyperMD-header,
+.cm-header {
+  line-height: var(--line-height-tight);
+  letter-spacing: 0;
+}
+
+.markdown-rendered h1,
+.cm-header-1 {
+  color: var(--h1-color);
+  font-size: 2.05em;
+  font-weight: 760;
+}
+
+.markdown-rendered h1 {
+  margin-top: 1.55em;
+  margin-bottom: 0.7em;
+}
+
+.markdown-rendered h2,
+.cm-header-2 {
+  color: var(--h2-color);
+  font-size: 1.62em;
+  font-weight: 720;
+}
+
+.markdown-rendered h2 {
+  margin-top: 1.45em;
+  margin-bottom: 0.6em;
+}
+
+.markdown-rendered h3,
+.cm-header-3 {
+  color: var(--h3-color);
+  font-size: 1.32em;
+  font-weight: 700;
+}
+
+.markdown-rendered h3 {
+  margin-top: 1.25em;
+  margin-bottom: 0.45em;
+}
+
+.markdown-source-view.mod-cm6 .cm-header.cm-header-1 {
+  color: var(--h1-color);
+}
+
+.markdown-source-view.mod-cm6 .cm-header.cm-header-2 {
+  color: var(--h2-color);
+}
+
+.markdown-source-view.mod-cm6 .cm-header.cm-header-3 {
+  color: var(--h3-color);
+}
+
+.markdown-source-view.mod-cm6 .cm-header.cm-header-4 {
+  color: var(--h4-color);
+}
+
+.markdown-source-view.mod-cm6 .cm-header.cm-header-5 {
+  color: var(--h5-color);
+}
+
+.markdown-source-view.mod-cm6 .cm-header.cm-header-6 {
+  color: var(--h6-color);
+}
+
+.markdown-rendered h4,
+.cm-header-4 {
+  color: var(--h4-color);
+  font-size: 1.12em;
+  font-weight: 690;
+}
+
+.markdown-rendered h5,
+.cm-header-5 {
+  color: var(--h5-color);
+  font-size: 1em;
+  font-weight: 680;
+}
+
+.markdown-rendered h6,
+.cm-header-6 {
+  color: var(--h6-color);
+  font-size: 0.92em;
+  font-weight: 680;
+  text-transform: uppercase;
+}
+
+.markdown-rendered h1,
+.markdown-rendered h2 {
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid rgb(134 171 179 / 20%);
+}
+
+.markdown-rendered p,
+.markdown-rendered ul,
+.markdown-rendered ol {
+  color: var(--seashell-note-text);
+  margin-block: 0.95em;
+}
+
+.markdown-rendered strong,
+.cm-strong {
+  color: var(--bold-color);
+  font-weight: 720;
+}
+
+.markdown-rendered em,
+.cm-em {
+  color: var(--italic-color);
+}
+
+.markdown-rendered a,
+.cm-hmd-internal-link,
+.cm-link,
+.internal-link,
+.external-link {
+  color: var(--link-color);
+  text-decoration-color: color-mix(in srgb, currentcolor 45%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+/* Warm, bold links match the theme's emphasized text. Tags keep their own style. */
+.markdown-rendered a:not(.tag),
+.cm-hmd-internal-link,
+.cm-link,
+.internal-link,
+.external-link {
+  font-weight: 720;
+}
+
+.markdown-rendered a:hover,
+.cm-hmd-internal-link:hover,
+.internal-link:hover,
+.external-link:hover {
+  color: var(--link-color-hover);
+}
+
+.markdown-rendered .tag,
+a.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  color: var(--tag-color);
+  background: var(--tag-background);
+  border: 1px solid var(--tag-border-color);
+  border-radius: 999px;
+  padding: 0.08em 0.55em;
+  text-decoration: none;
+  font-family: var(--tag-font-family);
+  line-height: 1.25;
+}
+
+.cm-hashtag {
+  color: var(--tag-color);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  text-decoration: none;
+  font-family: var(--tag-font-family);
+}
+
+.markdown-rendered .tag *,
+a.tag * {
+  color: inherit !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.markdown-rendered .tag:hover,
+a.tag:hover {
+  color: var(--tag-color);
+  background: var(--tag-background-hover);
+  border-color: var(--tag-border-color-hover);
+}
+
+.cm-hashtag:hover {
+  color: var(--tag-color);
+  background: transparent;
+  border-color: transparent;
+}
+
+.markdown-rendered mark,
+.cm-highlight {
+  color: var(--seashell-note-text);
+  background: linear-gradient(
+    transparent 20%,
+    var(--text-highlight-bg) 20%,
+    var(--text-highlight-bg) 86%,
+    transparent 86%
+  );
+  border-radius: 3px;
+  padding-inline: 0.08em;
+}
+
+.markdown-rendered blockquote {
+  margin: 1.35em 0;
+  padding: 1.05em 1.25em;
+  background: linear-gradient(
+    180deg,
+    var(--blockquote-background-color),
+    rgb(23 56 76 / 28%)
+  );
+  border: 1px solid rgb(104 211 240 / 20%);
+  border-left: 4px solid var(--blockquote-border-color);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgb(187 227 238 / 4%),
+    0 12px 28px rgb(0 0 0 / 12%);
+}
+
+.markdown-rendered blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-rendered blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-rendered hr {
+  border-color: var(--hr-color);
+}
+
+.cm-formatting,
+.cm-formatting-header,
+.cm-formatting-list,
+.cm-formatting-quote,
+.cm-formatting-link,
+.cm-formatting-link-string,
+.cm-formatting-code,
+.cm-formatting-code-block {
+  color: var(--text-faint);
+}
+
+.cm-active.cm-line,
+.markdown-source-view.mod-cm6 .cm-active.HyperMD-codeblock {
+  background: transparent !important;
+}
+
+.cm-selectionBackground,
+.markdown-source-view.mod-cm6 .cm-selectionBackground,
+.markdown-source-view.mod-cm6 .cm-content ::selection {
+  background: var(--seashell-selection) !important;
+}
+
+.cm-cursor,
+.cm-dropCursor {
+  border-left-color: var(--seashell-cursor) !important;
+}
+
+/* === 08. Inline code, fenced code and syntax tokens === */
+
+.markdown-rendered code,
+.cm-inline-code {
+  color: var(--seashell-note-text);
+  background: var(--code-background);
+  border: 1px solid
+    color-mix(in srgb, var(--background-modifier-border) 78%, transparent);
+  border-radius: 5px;
+  padding: 0.12em 0.34em;
+  font-size: var(--code-size);
+  font-family: var(--font-monospace);
+}
+
+.markdown-rendered pre {
+  background: var(--code-background);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 18px;
+  overflow-x: auto;
+  white-space: var(--code-white-space);
+  padding: 1em;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-codeblock-bg {
+  background: var(--code-background);
+  border: 0;
+  border-radius: 0;
+}
+
+/* Remove inline-code decoration inside fenced blocks.
+   Code inherits its monospace font; syntax tokens keep their colors. */
+.markdown-rendered pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata,
+.cm-comment {
+  color: var(--code-comment);
+}
+
+.token.function,
+.cm-def,
+.cm-variable-2 {
+  color: var(--code-function);
+}
+
+.token.keyword,
+.cm-keyword {
+  color: var(--code-keyword);
+}
+
+.token.string,
+.cm-string,
+.cm-string-2 {
+  color: var(--code-string);
+}
+
+.token.number,
+.token.boolean,
+.cm-number {
+  color: var(--code-value);
+}
+
+.token.operator,
+.cm-operator {
+  color: var(--code-operator);
+}
+
+.token.punctuation,
+.cm-punctuation {
+  color: var(--code-punctuation);
+}
+
+.token.property,
+.cm-property {
+  color: var(--code-property);
+}
+
+.token.tag,
+.cm-tag {
+  color: var(--code-tag);
+}
+
+/* === 09. Tables, lists and tasks === */
+
+.markdown-rendered table {
+  width: 100%;
+  margin-block: 1.2em;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--table-border-color);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+}
+
+.markdown-rendered th,
+.markdown-rendered td {
+  padding: 0.65em 0.8em;
+  border-color: var(--table-border-color);
+}
+
+.markdown-rendered th {
+  background: var(--table-header-background);
+}
+
+/* Row, cell and hover backgrounds intentionally match. Retain parity and hover
+   specificity so host table rules cannot override the uniform background. */
+.markdown-rendered table tbody tr,
+.markdown-rendered table tbody tr:nth-child(even),
+.markdown-rendered table tbody tr:nth-child(odd),
+.markdown-rendered table tbody tr td,
+.markdown-rendered table tbody tr:nth-child(even) td,
+.markdown-rendered table tbody tr:nth-child(odd) td,
+.markdown-rendered table tbody tr:hover,
+.markdown-rendered table tbody tr:hover td {
+  background: var(--table-row-alt-background) !important;
+}
+
+.markdown-rendered ul > li::marker,
+.markdown-rendered ol > li::marker,
+.cm-formatting-list {
+  color: var(--seashell-orange-500);
+}
+
+.markdown-rendered .task-list-item-checkbox,
+input[type="checkbox"] {
+  width: 1.05em;
+  height: 1.05em;
+  border: 1px solid var(--checkbox-border-color);
+  border-radius: var(--checkbox-radius);
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.markdown-rendered .task-list-item-checkbox:hover,
+input[type="checkbox"]:hover {
+  border-color: var(--checkbox-border-color-hover);
+}
+
+.markdown-rendered .task-list-item-checkbox:checked,
+input[type="checkbox"]:checked {
+  background-color: var(--checkbox-color);
+  border-color: var(--checkbox-color);
+}
+
+.markdown-rendered .task-list-item.is-checked,
+.HyperMD-task-line[data-task="x"] {
+  color: var(--text-faint);
+}
+
+/* === 10. Embeds and properties === */
+
+.markdown-embed,
+.file-embed {
+  background: var(--embed-background);
+  border: 1px solid var(--background-modifier-border);
+  border-left: var(--embed-border-left);
+  border-radius: var(--radius-l);
+}
+
+.markdown-embed-title,
+.file-embed-title {
+  color: var(--text-muted);
+  font-weight: 650;
+}
+
+.frontmatter,
+.metadata-container {
+  margin-bottom: 1.2em;
+  padding: 0.8em;
+  background: color-mix(in srgb, var(--background-secondary) 48%, transparent);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+}
+
+.metadata-property {
+  border-radius: 5px;
+}
+
+.metadata-property:hover {
+  background: var(--metadata-property-background-hover);
+}
+
+.metadata-property-key {
+  color: var(--metadata-label-text-color);
+}
+
+.metadata-property-value {
+  color: var(--metadata-input-text-color);
+}
+
+/* === 11. Callouts === */
+
+.callout {
+  --callout-color: 104, 211, 240;
+
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--callout-color), 0.12),
+    rgb(var(--callout-color), 0.05)
+  );
+  border: 1px solid rgb(var(--callout-color), 0.28);
+  border-left-width: 4px;
+  border-radius: var(--radius-l);
+  box-shadow: 0 14px 32px rgb(0 0 0 / 12%);
+}
+
+.callout-title {
+  gap: 8px;
+  padding: 0.75em 0.9em;
+  color: rgb(var(--callout-color));
+  background: rgb(var(--callout-color), 0.08);
+  font-weight: 720;
+}
+
+.callout-content {
+  padding: 0.8em 1em 1em;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"] {
+  --callout-color: 104, 211, 240;
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"],
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] {
+  --callout-color: 80, 163, 181;
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] {
+  --callout-color: 253, 210, 158;
+}
+
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"] {
+  --callout-color: 251, 160, 47;
+}
+
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"] {
+  --callout-color: 208, 80, 35;
+}
+
+.callout[data-callout="example"],
+.callout[data-callout="quote"],
+.callout[data-callout="cite"] {
+  --callout-color: 211, 134, 119;
+}
+
+/* === 12. Buttons, dialogs, menus and settings === */
+
+button,
+.mod-cta,
+.modal-button-container button,
+.setting-item-control button {
+  border-radius: var(--input-radius);
+  font-weight: 650;
+}
+
+button:not(.clickable-icon),
+.setting-item-control button {
+  color: var(--seashell-foreground);
+  background: var(--interactive-normal);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: none;
+}
+
+button:not(.clickable-icon):hover,
+.setting-item-control button:hover {
+  color: var(--seashell-foreground);
+  background: var(--interactive-hover);
+  border-color: var(--background-modifier-border-hover);
+}
+
+button.mod-cta,
+.mod-cta,
+.modal-button-container button.mod-cta {
+  color: var(--seashell-cta-text);
+  background: var(--seashell-cta-background);
+  border-color: rgb(104 211 240 / 24%);
+  box-shadow: 0 8px 20px var(--seashell-cta-shadow);
+}
+
+/* Preserve warm text and sufficient contrast when primary buttons are hovered. */
+button.mod-cta:hover,
+.mod-cta:hover,
+.modal-button-container button.mod-cta:hover {
+  color: var(--seashell-cta-text);
+  background: var(--seashell-cta-background-hover);
+  border-color: rgb(104 211 240 / 42%);
+}
+
+.modal,
+.prompt,
+.suggestion-container,
+.menu,
+.popover {
+  color: var(--seashell-foreground);
+  background: color-mix(
+    in srgb,
+    var(--background-secondary) 94%,
+    var(--background-primary)
+  );
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 34%);
+}
+
+.modal-title,
+.prompt-title {
+  color: var(--inline-title-color);
+}
+
+.suggestion-item,
+.menu-item {
+  border-radius: 6px;
+}
+
+.suggestion-item.is-selected,
+.menu-item:hover,
+.menu-item.selected {
+  color: var(--seashell-foreground);
+  background: var(--background-modifier-hover);
+}
+
+.suggestion-highlight {
+  color: var(--seashell-shell-300);
+}
+
+.setting-item {
+  border-color: var(--divider-color);
+}
+
+.setting-item-name {
+  color: var(--seashell-foreground);
+  font-weight: 650;
+}
+
+.setting-item-description {
+  color: var(--text-muted);
+}
+
+.vertical-tab-header,
+.vertical-tab-content-container {
+  background: var(--background-primary);
+}
+
+.vertical-tab-nav-item {
+  color: var(--text-muted);
+  border-radius: 6px;
+}
+
+.vertical-tab-nav-item:hover {
+  color: var(--seashell-foreground);
+  background: var(--background-modifier-hover);
+}
+
+.vertical-tab-nav-item.is-active {
+  color: var(--seashell-shell-100) !important;
+  background: var(--background-modifier-hover);
+}
+
+/* Preserve the active settings category color across modal and hover states. */
+.modal .vertical-tab-nav-item.is-active,
+.modal .vertical-tab-nav-item.is-active:hover,
+.mod-settings .vertical-tab-nav-item.is-active,
+.mod-settings .vertical-tab-nav-item.is-active:hover {
+  color: var(--seashell-shell-100) !important;
+}
+
+.progress-bar {
+  background: var(--background-secondary-alt);
+  border-radius: 999px;
+}
+
+.progress-bar-line {
+  background: linear-gradient(
+    90deg,
+    var(--seashell-cyan-500),
+    var(--seashell-orange-500)
+  );
+}
+
+/* === 13. Graph and Canvas === */
+
+.graph-view.color-fill {
+  color: var(--seashell-cyan-400);
+}
+
+.graph-view.color-fill-focused {
+  color: var(--seashell-orange-500);
+}
+
+.graph-view.color-fill-tag {
+  color: var(--seashell-coral-400);
+}
+
+.graph-view.color-fill-attachment {
+  color: var(--seashell-shell-300);
+}
+
+.graph-view.color-line {
+  color: rgb(134 171 179 / 38%);
+}
+
+.graph-view.color-line-highlight {
+  color: rgb(251 160 47 / 72%);
+}
+
+.canvas-wrapper {
+  background:
+    linear-gradient(var(--divider-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--divider-color) 1px, transparent 1px),
+    var(--background-primary);
+  background-size: 28px 28px;
+}
+
+.canvas-card-menu,
+.canvas-control-group {
+  background: color-mix(in srgb, var(--background-secondary) 92%, transparent);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  box-shadow: 0 14px 36px rgb(0 0 0 / 20%);
+}
+
+.canvas-node-container {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  box-shadow: 0 12px 36px rgb(0 0 0 / 20%);
+}
+
+.canvas-node.is-focused .canvas-node-container,
+.canvas-node.is-selected .canvas-node-container {
+  border-color: var(--interactive-accent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--interactive-accent) 16%, transparent),
+    0 16px 40px rgb(0 0 0 / 24%);
+}
+
+.canvas-node-label {
+  color: var(--text-muted);
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 999px;
+}
+
+.canvas-path {
+  stroke: var(--seashell-blue-300);
+}
+
+.canvas-path.is-focused,
+.canvas-path.is-selected {
+  stroke: var(--seashell-orange-500);
+}
+
+/* === 14. Feedback and community settings === */
+
+.is-flashing:not(.nav-folder-title) {
+  --background-modifier-border-focus: var(--interactive-accent);
+
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--interactive-accent) 20%, transparent);
+}
+
+.workspace-drop-overlay {
+  background: color-mix(in srgb, var(--interactive-accent) 16%, transparent);
+  border: 2px solid var(--interactive-accent);
+}
+
+.notice {
+  color: var(--seashell-foreground);
+  background: color-mix(
+    in srgb,
+    var(--background-secondary) 92%,
+    var(--background-primary)
+  );
+  border: 1px solid var(--background-modifier-border);
+  border-left: 4px solid var(--interactive-accent);
+  border-radius: var(--radius-l);
+  box-shadow: 0 18px 48px rgb(0 0 0 / 30%);
+}
+
+.community-item,
+.installed-plugins-container .setting-item,
+.hotkey-list-container .setting-item {
+  border-color: var(--divider-color);
+}
+
+.community-item:hover,
+.installed-plugins-container .setting-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* === 15. Intentional late typography and color overrides === */
+
+/* Keep these overrides after component rules to preserve body text and emphasis. */
+.markdown-source-view.mod-cm6,
+.markdown-preview-view,
+.markdown-reading-view .markdown-rendered {
+  --text-normal: var(--text-muted);
+  --bold-color: var(--seashell-shell-100);
+  --italic-color: var(--bold-color);
+  --code-normal: var(--seashell-selection-text);
+}
+
+.markdown-source-view.mod-cm6 .cm-content,
+.markdown-source-view.mod-cm6 .cm-line:not(.HyperMD-codeblock),
+.markdown-preview-view,
+.markdown-rendered,
+.markdown-rendered p,
+.markdown-rendered li,
+.markdown-rendered blockquote,
+.markdown-rendered td,
+.markdown-rendered th {
+  font-family: var(--font-text);
+  font-weight: var(--body-font-weight);
+}
+
+.inline-title,
+.inline-title[data-level],
+.markdown-source-view.mod-cm6 .inline-title,
+.markdown-preview-view .inline-title {
+  font-family: var(--font-text);
+}
+
+/* Let descendants inherit text colors naturally, so plugin and inline styles
+   can supply their own colors without competing with blanket overrides. */
+.markdown-rendered p strong,
+.markdown-rendered li strong,
+.markdown-rendered blockquote strong,
+.markdown-rendered td strong,
+.markdown-rendered th strong,
+.markdown-source-view.mod-cm6 .cm-strong,
+.markdown-rendered p em,
+.markdown-rendered li em,
+.markdown-rendered blockquote em,
+.markdown-rendered td em,
+.markdown-rendered th em,
+.markdown-source-view.mod-cm6 .cm-em {
+  color: var(--bold-color) !important;
+}
+
+/* Font containers, not every descendant: copy buttons and plugin elements
+   retain their own fonts and syntax tokens retain their colors. */
+.markdown-rendered pre,
+.markdown-source-view.mod-cm6 .HyperMD-codeblock {
+  font-family: var(--font-monospace);
+  font-size: var(--code-size);
+  font-weight: var(--font-normal);
+}
+
+/* Optional controls only add classes or variables; the theme works without
+   Style Settings and never changes Obsidian's saved Appearance preferences. */
+body.seashell-neutral-headings {
+  --h1-color: var(--text-normal);
+  --h2-color: var(--text-normal);
+  --h3-color: var(--text-normal);
+  --h4-color: var(--text-normal);
+  --h5-color: var(--text-normal);
+  --h6-color: var(--text-normal);
+}
+
+/* This explicit opt-in also wins over local snippets that hide underlines. */
+body.seashell-underline-links .markdown-rendered a,
+body.seashell-underline-links .cm-hmd-internal-link,
+body.seashell-underline-links .cm-link,
+body.seashell-underline-links .cm-underline {
+  text-decoration: underline !important;
+  text-underline-offset: 0.15em;
+}
+
+body.seashell-quiet-callouts .callout,
+body.seashell-quiet-callouts .callout-title {
+  background: transparent;
+  box-shadow: none;
+}
+
+body.seashell-code-scroll {
+  --code-white-space: pre;
+}
+
+/* === 16. Narrow windows and mobile layout === */
+
+@media (max-width: 760px) {
+  body {
+    --file-line-width: 100%;
+  }
+
+  .inline-title {
+    font-size: 2rem;
+  }
+
+  .markdown-preview-sizer,
+  .markdown-source-view.mod-cm6 .cm-contentContainer {
+    padding-inline: 18px;
+  }
+
+  .view-header {
+    height: 42px;
+  }
+
+  .status-bar {
+    border-top-left-radius: 0;
+  }
+}

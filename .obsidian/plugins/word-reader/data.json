@@ -56,46 +56,10 @@
       }
     },
     {
-      "path": "Term 1/IT(L)/IT notes (sept 8).docx",
-      "mtime": 1788831478745,
-      "format": "docx",
-      "lastAccessed": 181,
-      "position": {
-        "scrollLeft": 0,
-        "scrollTop": 261
-      },
-      "zoom": {
-        "scale": 1,
-        "fit": false
-      },
-      "navigation": {
-        "panelVisible": true,
-        "collapsedIds": []
-      }
-    },
-    {
-      "path": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
-      "mtime": 1793292466771,
-      "format": "docx",
-      "lastAccessed": 464,
-      "position": {
-        "scrollLeft": 19,
-        "scrollTop": 13977
-      },
-      "zoom": {
-        "scale": 1.4500000000000002,
-        "fit": false
-      },
-      "navigation": {
-        "panelVisible": true,
-        "collapsedIds": []
-      }
-    },
-    {
       "path": "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
       "mtime": 1790559031232,
       "format": "xlsx",
-      "lastAccessed": 465,
+      "lastAccessed": 469,
       "position": {
         "scrollLeft": 0,
         "scrollTop": 0
@@ -113,13 +77,67 @@
       "path": "Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
       "mtime": 1789774977600,
       "format": "docx",
-      "lastAccessed": 466,
+      "lastAccessed": 470,
       "position": {
         "scrollLeft": 0,
         "scrollTop": 0
       },
       "zoom": {
         "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/IT(L)/IT notes (sept 8).docx",
+      "mtime": 1788831478745,
+      "format": "docx",
+      "lastAccessed": 772,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 261
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
+      "mtime": 1793292466771,
+      "format": "docx",
+      "lastAccessed": 978,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 11846
+      },
+      "zoom": {
+        "scale": 1.4500000000000002,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/CS/Module 1/CS Module 1-3.docx",
+      "mtime": 1789691498516,
+      "format": "docx",
+      "lastAccessed": 1143,
+      "position": {
+        "scrollLeft": 69,
+        "scrollTop": 4340
+      },
+      "zoom": {
+        "scale": 1.35,
         "fit": false
       },
       "navigation": {

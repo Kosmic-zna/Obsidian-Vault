@@ -11,12 +11,26 @@
             "id": "48c0fda3ba2efed3",
             "type": "leaf",
             "state": {
-              "type": "word-reader-view",
+              "type": "markdown",
               "state": {
-                "file": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx"
+                "file": "Term 1/CS/Module 2/Hardware and Software Systems.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "file-text",
-              "title": "HUM categorical syllogisms & square of opposition.docx"
+              "icon": "lucide-file",
+              "title": "Hardware and Software Systems"
+            }
+          },
+          {
+            "id": "b9b6ed1182afa833",
+            "type": "leaf",
+            "state": {
+              "type": "card-browser-view",
+              "state": {
+                "path": "Term 1/CS/Module 2"
+              },
+              "icon": "align-vertical-justify-start",
+              "title": "Browse"
             }
           }
         ]
@@ -78,10 +92,26 @@
             }
           }
         ]
+      },
+      {
+        "id": "d2e56b91e9297dd8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "855cbca9fda51354",
+            "type": "leaf",
+            "state": {
+              "type": "operon-flow-time",
+              "state": {},
+              "icon": "hourglass",
+              "title": "FlowTime"
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 518.5
+    "width": 319.5
   },
   "right": {
     "id": "3434a2c835a4c4d8",
@@ -152,11 +182,22 @@
             }
           },
           {
+            "id": "ba0dd99be03828bd",
+            "type": "leaf",
+            "state": {
+              "type": "agent-client-chat-view",
+              "state": {},
+              "icon": "bot-message-square",
+              "title": "New session"
+            }
+          },
+          {
             "id": "9677d05bff210ce8",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
+                "file": "Term 1/CS/Module 2/Hardware and Software Systems.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -165,12 +206,12 @@
               "title": "Outline"
             }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 350.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,37 +226,55 @@
       "pdf-plus:PDF++: Toggle auto-copy": false,
       "pdf-plus:PDF++: Toggle auto-focus": false,
       "pdf-plus:PDF++: Toggle auto-paste": false,
-      "omnisearch:Omnisearch": false
+      "omnisearch:Omnisearch": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "templater-obsidian:Templater": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "agent-client:Open agent client": false,
+      "obsidian-kanban:Create new board": false,
+      "project-browser:Open project browser": false,
+      "operon:Create New Operon Task": false,
+      "operon:Operon Filter View": false,
+      "operon:Task Finder": false,
+      "operon:Operon Calendar": false,
+      "operon:Operon Kanban": false,
+      "operon:Operon Table": false,
+      "operon:Open Pinned Tasks": false
     }
   },
-  "active": "a29bdf29231c874d",
+  "active": "855cbca9fda51354",
   "lastOpenFiles": [
-    "Term 1/Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
-    "Term 1/Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
-    "Term 1/Unsorted/1st Year/Term 1/Coursera M4R94T3GS4OM.pdf",
-    "Term 1/Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
-    "Term 1/Unsorted/1st Year/Term 1/Interest.pdf",
-    "Term 1/Unsorted/1st Year/Term 1/meme.jpg",
-    "Term 1/Unsorted/1st Year/Term 1/TEMPLATE-VE031-DISCIPLINE-REFLECTION(1).docx",
-    "Term 1/Unsorted/1st Year/Term 1/TEMPLATE-VE031-SENSE OF URGENCY.docx",
-    "Term 1/Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
-    "Term 1/Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
+    "Term 1/CS/Module 1/CS Module 1-3.docx",
+    "Term 1/CS/Module 1/Number System.md",
+    "Operon/Demo Workspace/Operon Basics Project.md",
+    "Operon/Tables/Default table.table",
+    "Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
+    "Operon/Demo Workspace/Operon Command Palette.md",
+    "TO DO LIST.md",
+    "Operon/Demo Workspace",
+    "Operon/Tasks",
+    "Operon/Tables",
+    "Operon",
+    "Term 1/CS/Module 2/Hardware and Software Systems.md",
+    "Untitled.md",
+    "Term 1/CS/Module 2/Drawing 2026-10-30 07.29.56.excalidraw.md",
     "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
-    "Term 1/Unsorted/1st Year/Term 1/Reviewers/reviewer template (new) - Copy.docx",
-    "Term 1/Unsorted/1st Year/Term 1/Reviewers/HUM Lesson 1-4 reviewer.docx",
-    "Term 1/Unsorted/1st Year/Term 1/Printed Notes/~$M categorical syllogisms & square of opposition.docx",
-    "Term 1/Unsorted/1st Year/Term 1/Printed Notes/[  [   Printed Notes Template   ]  ].docx",
-    "Term 1/Unsorted/1st Year/Term 1/solution.png",
-    "Term 1/Unsorted/1st Year/Term 1/solution (2).png",
-    "Term 1/Unsorted/1st Year/Term 1/Introduce myself.png",
-    "Term 1/Unsorted/1st Year/Term 1/al.png",
+    "Term 1/IT(L)/IT notes (sept 8).docx",
+    "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
+    "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
+    "Unsorted/1st Year/Term 1/Coursera M4R94T3GS4OM.pdf",
+    "Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
+    "Unsorted/1st Year/Term 1/meme.jpg",
+    "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
+    "Unsorted/1st Year/Term 1/solution.png",
+    "Unsorted/1st Year/Term 1/solution (2).png",
+    "Unsorted/1st Year/Term 1/Introduce myself.png",
+    "Unsorted/1st Year/Term 1/al.png",
     "1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
     "1st Year/Term 1/solution (2).png",
-    "Term 1/CS/Module 1/Number System.md",
     "Term 1/HUM/Module 2/Squares of opposition & Catgorical Syllogisms.md",
     "Term 1/HUM/Module 1/Syllogisms.md",
     "HUM/Syllogisms.md",
-    "Term 1/CS/Module 2/Hardware and Software Systems.md",
     "Term 1/CS100/Number System.md",
     "Term 1/CS100/Hardware and Software Systems.md",
     "testing.md",
