@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "common": {
+    "language": "en",
+    "defaultZoomPercent": 100,
+    "largeFileWarningMb": 25
+  },
+  "docx": {
+    "defaultFitWidth": false,
+    "showOutlineByDefault": true,
+    "enableImagePreview": true
+  },
+  "pptx": {
+    "defaultFitWindow": true,
+    "showNavigationByDefault": true,
+    "showNotesByDefault": false
+  },
+  "xlsx": {
+    "defaultFitWidth": true
+  },
+  "readingStates": [
+    {
+      "path": "HUM categorical syllogisms & square of opposition.docx",
+      "mtime": 1793292466771,
+      "format": "docx",
+      "lastAccessed": 137,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1.25,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/IT notes (sept 8).docx",
+      "mtime": 1788831478745,
+      "format": "docx",
+      "lastAccessed": 166,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/IT(L)/IT notes (sept 8).docx",
+      "mtime": 1788831478745,
+      "format": "docx",
+      "lastAccessed": 181,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 261
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
+      "mtime": 1793292466771,
+      "format": "docx",
+      "lastAccessed": 464,
+      "position": {
+        "scrollLeft": 19,
+        "scrollTop": 13977
+      },
+      "zoom": {
+        "scale": 1.4500000000000002,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
+      "mtime": 1790559031232,
+      "format": "xlsx",
+      "lastAccessed": 465,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": true
+      },
+      "navigation": {
+        "panelVisible": false,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
+      "mtime": 1789774977600,
+      "format": "docx",
+      "lastAccessed": 466,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    }
+  ]
+}

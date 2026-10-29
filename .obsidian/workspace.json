@@ -4,21 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "6fa231f73b35ea58",
+        "id": "5611852ff7238c9d",
         "type": "tabs",
         "children": [
           {
-            "id": "716f620c029fbc4e",
+            "id": "48c0fda3ba2efed3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "word-reader-view",
               "state": {
-                "file": "CS100/Number System.md",
-                "mode": "source",
-                "source": false
+                "file": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx"
               },
-              "icon": "lucide-file",
-              "title": "Number System"
+              "icon": "file-text",
+              "title": "HUM categorical syllogisms & square of opposition.docx"
             }
           }
         ]
@@ -83,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 518.5
   },
   "right": {
     "id": "3434a2c835a4c4d8",
@@ -99,7 +97,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS100/Number System.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +115,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS100/Number System.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +157,6 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS100/Number System.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -185,13 +180,46 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false,
+      "pdf-plus:PDF++: Toggle auto-copy": false,
+      "pdf-plus:PDF++: Toggle auto-focus": false,
+      "pdf-plus:PDF++: Toggle auto-paste": false,
+      "omnisearch:Omnisearch": false
     }
   },
-  "active": "716f620c029fbc4e",
+  "active": "a29bdf29231c874d",
   "lastOpenFiles": [
-    "CS100/Hardware and Software Systems.md",
+    "Term 1/Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
+    "Term 1/Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
+    "Term 1/Unsorted/1st Year/Term 1/Coursera M4R94T3GS4OM.pdf",
+    "Term 1/Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
+    "Term 1/Unsorted/1st Year/Term 1/Interest.pdf",
+    "Term 1/Unsorted/1st Year/Term 1/meme.jpg",
+    "Term 1/Unsorted/1st Year/Term 1/TEMPLATE-VE031-DISCIPLINE-REFLECTION(1).docx",
+    "Term 1/Unsorted/1st Year/Term 1/TEMPLATE-VE031-SENSE OF URGENCY.docx",
+    "Term 1/Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
+    "Term 1/Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
+    "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
+    "Term 1/Unsorted/1st Year/Term 1/Reviewers/reviewer template (new) - Copy.docx",
+    "Term 1/Unsorted/1st Year/Term 1/Reviewers/HUM Lesson 1-4 reviewer.docx",
+    "Term 1/Unsorted/1st Year/Term 1/Printed Notes/~$M categorical syllogisms & square of opposition.docx",
+    "Term 1/Unsorted/1st Year/Term 1/Printed Notes/[  [   Printed Notes Template   ]  ].docx",
+    "Term 1/Unsorted/1st Year/Term 1/solution.png",
+    "Term 1/Unsorted/1st Year/Term 1/solution (2).png",
+    "Term 1/Unsorted/1st Year/Term 1/Introduce myself.png",
+    "Term 1/Unsorted/1st Year/Term 1/al.png",
+    "1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
+    "1st Year/Term 1/solution (2).png",
+    "Term 1/CS/Module 1/Number System.md",
+    "Term 1/HUM/Module 2/Squares of opposition & Catgorical Syllogisms.md",
+    "Term 1/HUM/Module 1/Syllogisms.md",
+    "HUM/Syllogisms.md",
+    "Term 1/CS/Module 2/Hardware and Software Systems.md",
+    "Term 1/CS100/Number System.md",
+    "Term 1/CS100/Hardware and Software Systems.md",
+    "testing.md",
     "CS100/Number System.md",
-    "HUM/Syllogisms.md"
+    "CS100/Hardware and Software Systems.md"
   ]
 }
