@@ -83,9 +83,9 @@ $$n = \frac{N}{1 + N e^2}$$
          ▼                                           ▼
    DESCRIPTIVE                                  INFERENTIAL
 (Summarise the Known)                     (Generalise to the Unknown)
-• Mean, Median, Mode           • Hypothesis Testing
-• Tables, Charts, Graphs       • Interval Estimation
-• Observed Percentages[cite: 55, 56]     • Future Predictions
+• Mean, Median, Mode                      • Hypothesis Testing
+• Tables, Charts, Graphs                  • Interval Estimation
+• Observed Percentages                    • Future Predictions
 ```
 
 ### 1. Descriptive Statistics
@@ -148,15 +148,15 @@ $$\bar{X} = \frac{\sum X_i}{n}$$
          ▼                                                     ▼
     QUALITATIVE                                           QUANTITATIVE
    (Categorical)                                           (Numerical)
-• Words, Labels, Codes                       • Counts, Scales, Weights[cite: 65, 69]
-• Non-arithmetic                         • Arithmetic is meaningful[cite: 65, 79]
+• Words, Labels, Codes                             • Counts, Scales, Weights
+• Non-arithmetic                                   • Arithmetic is meaningful
                                                                │
                                             ┌──────────────────┴──────────────────┐
                                             ▼                                     ▼
                                         DISCRETE                              CONTINUOUS
                                    (Finite / Counted)                    (Infinite / Measured)
-                                   • Integers ($0, 1, 2$)     • Real continuum[cite: 67]
-                                   • Absolute gaps[cite: 67]            • No gaps / jumps[cite: 67]
+                                   • Integers ($0, 1, 2$)                • Real continuum
+                                   • Absolute gaps                       • No gaps / jumps
 ```
 
 ### 1. Qualitative (Categorical) Data
@@ -269,12 +269,12 @@ $$\bar{X} = \frac{\sum X_i}{n}$$
          ▼                                                   ▼
 NON-STATISTICAL                                         STATISTICAL
 (Non-Probability)                                       (Probability)
-• Unknown probabilities                  • Known, calculable selection chances
-• Susceptible to selection bias[cite: 85, 88]          • Required for formal inference[cite: 57, 84, 89]
-  ├─ Convenience                           ├─ Simple Random[cite: 87, 90]
-  ├─ Judgmental / Purposive                ├─ Stratified Random[cite: 87, 91]
-  └─ Snowball                                  ├─ Systematic[cite: 87, 92]
-                                                          └─ Cluster[cite: 87, 93]
+• Unknown probabilities                                 • Known, calculable selection chances
+• Susceptible to selection bias                         • Required for formal inference[cite: 57, 84, 89]
+  ├─ Convenience                                          ├─ Simple Random[cite: 87, 90]
+  ├─ Judgmental / Purposive                               ├─ Stratified Random[cite: 87, 91]
+  └─ Snowball                                             ├─ Systematic[cite: 87, 92]
+	                                                      └─ Cluster[cite: 87, 93]
 ```
 
 ### 1. Non-Statistical (Non-Probability) Sampling

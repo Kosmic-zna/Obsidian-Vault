@@ -1,3 +1,6 @@
+---
+state: "[[Final]]"
+---
 # 💻 CS100: Master Architecture & Comprehensive Exam Reviewer
 
 ## 🏛️ MODULE 1: Computing Foundations, History, & Digital Citizenship

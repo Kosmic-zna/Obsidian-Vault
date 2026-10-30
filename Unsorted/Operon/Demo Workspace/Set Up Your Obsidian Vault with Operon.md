@@ -1,14 +1,14 @@
 ---
 operonId: bui5bdb
-status: Project.Planned
-priority: A
+status: Project.Brainstorming
+priority: S
 dateScheduled: 2026-10-31
 dateDue: 2026-11-06
 taskIcon: vault
 taskColor: "#0f766e"
 note: A one week realistic adaptation project for shaping an Obsidian vault around Operon workflows
 datetimeCreated: 2026-10-30T07:35:32
-datetimeModified: 2026-10-30T07:35:32
+datetimeModified: 2026-10-30T23:59:13
 progress: 0
 directSubtaskCount: 7
 directDoneSubtaskCount: 0
@@ -56,9 +56,9 @@ This demo project is a realistic first-week adaptation path for a user who wants
 
 ## Day 4 - Plan Work Across Time
 
-- [ ] Day 4 - Plan Work Across Time #operon-demo #vault-setup {{operonId:: fzqn0nb}} {{status:: Project.Planned}} {{priority:: A}} {{dateScheduled:: 2026-11-03}} {{totalEstimate:: 11700}} {{parentTask:: bui5bdb}} {{progress:: 0}} {{directSubtaskCount:: 5}} {{directDoneSubtaskCount:: 0}} {{directOpenSubtaskCount:: 5}} {{treeDescendantCount:: 5}} {{treeDoneDescendantCount:: 0}} {{treeOpenDescendantCount:: 5}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{note:: Turns filtered work into a realistic weekly plan without filling the Calendar with vague intentions.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
+- [ ] Day 4 - Plan Work Across Time #operon-demo #vault-setup {{operonId:: fzqn0nb}} {{status:: Project.Brainstorming}} {{priority:: A}} {{dateScheduled:: 2026-11-03}} {{totalEstimate:: 11700}} {{parentTask:: bui5bdb}} {{progress:: 0}} {{directSubtaskCount:: 5}} {{directDoneSubtaskCount:: 0}} {{directOpenSubtaskCount:: 5}} {{treeDescendantCount:: 5}} {{treeDoneDescendantCount:: 0}} {{treeOpenDescendantCount:: 5}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{note:: Turns filtered work into a realistic weekly plan without filling the Calendar with vague intentions.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T23:59:13}}
 - [ ] Have you checked your pinned focus tasks today #operon-demo #pinned {{operonId:: p2aiva9}} {{status:: Project.Planned}} {{priority:: A}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{dateScheduled:: 2026-11-03}} {{estimate:: 900}} {{note:: Keeps the few tasks that deserve attention visible while you move through notes, filters, and planning views.}} {{parentTask:: fzqn0nb}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
-- [ ] Choose which tasks deserve calendar time this week #operon-demo #calendar {{operonId:: sxt6flq}} {{status:: Project.Planned}} {{priority:: A}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{dateScheduled:: 2026-11-03}} {{estimate:: 1800}} {{note:: Protects the Calendar from clutter by scheduling only the work that benefits from time commitment.}} {{parentTask:: fzqn0nb}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
+- [ ] Choose which tasks deserve calendar time this week #operon-demo #calendar {{operonId:: sxt6flq}} {{status:: Project.InProgress}} {{priority:: A}} {{dateScheduled:: 2026-11-03}} {{estimate:: 1800}} {{parentTask:: fzqn0nb}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{note:: Protects the Calendar from clutter by scheduling only the work that benefits from time commitment.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T23:59:12}}
 - [ ] Reserve focus blocks for the highest-value tasks #operon-demo #calendar {{operonId:: 4eyp4he}} {{status:: Project.Planned}} {{priority:: A}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{dateScheduled:: 2026-11-03}} {{datetimeStart:: 2026-11-03T09:00:00}} {{datetimeEnd:: 2026-11-03T10:30:00}} {{estimate:: 5400}} {{note:: Turns important work into protected time instead of letting it compete with a loose list.}} {{parentTask:: fzqn0nb}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
 - [ ] Review unscheduled work after planning the week #operon-demo #calendar {{operonId:: upbc24k}} {{status:: Project.Planned}} {{priority:: B}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{dateScheduled:: 2026-11-03}} {{estimate:: 1800}} {{note:: Keeps lower-priority work visible without forcing every task onto the Calendar.}} {{parentTask:: fzqn0nb}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
 - [ ] Adjust the weekly plan after seeing available capacity #operon-demo #calendar {{operonId:: s23wbms}} {{status:: Project.Planned}} {{priority:: B}} {{taskIcon:: calendar-days}} {{taskColor:: ea580c}} {{dateScheduled:: 2026-11-03}} {{estimate:: 1800}} {{note:: Helps you plan realistically instead of overcommitting and carrying silent failure into the next day.}} {{parentTask:: fzqn0nb}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}

@@ -7,7 +7,7 @@ dateDue: 2026-11-06
 taskIcon: sparkles
 taskColor: "#111827"
 datetimeCreated: 2026-10-30T07:35:32
-datetimeModified: 2026-10-30T07:35:32
+datetimeModified: 2026-10-31T00:05:26
 progress: 2
 directSubtaskCount: 11
 directDoneSubtaskCount: 0
@@ -66,8 +66,8 @@ This is a working basics project for exploring Operon. Every checklist item belo
 
 ## Use Dependencies
 
-- [ ] Use Dependencies #operon-demo #operon-demo-section {{operonId:: 4u53i5n}} {{status:: Project.Planned}} {{priority:: B}} {{parentTask:: l1dk70s}} {{progress:: 0}} {{directSubtaskCount:: 3}} {{directDoneSubtaskCount:: 0}} {{directOpenSubtaskCount:: 3}} {{treeDescendantCount:: 3}} {{treeDoneDescendantCount:: 0}} {{treeOpenDescendantCount:: 3}} {{taskIcon:: workflow}} {{taskColor:: DC2626}} {{note:: Makes task order and handoffs explicit when one piece of work depends on another.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
-  - [ ] Complete the blocking setup task first #operon-demo #dependencies {{operonId:: 2ygfo2l}} {{status:: Project.Planned}} {{priority:: A}} {{taskIcon:: workflow}} {{taskColor:: DC2626}} {{blocking:: w9adqqw}} {{note:: Shows how one task can intentionally unlock the next piece of work.}} {{parentTask:: 4u53i5n}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
+- [ ] Use Dependencies #operon-demo #operon-demo-section {{operonId:: 4u53i5n}} {{status:: Project.Planned}} {{priority:: B}} {{parentTask:: l1dk70s}} {{progress:: 0}} {{directSubtaskCount:: 3}} {{directDoneSubtaskCount:: 0}} {{directOpenSubtaskCount:: 3}} {{treeDescendantCount:: 3}} {{treeDoneDescendantCount:: 0}} {{treeOpenDescendantCount:: 3}} {{taskIcon:: workflow}} {{taskColor:: DC2626}} {{note:: Makes task order and handoffs explicit when one piece of work depends on another.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-31T00:05:26}}
+  - [ ] Complete the blocking setup task first #operon-demo #dependencies {{operonId:: 2ygfo2l}} {{status:: Project.Brainstorming}} {{priority:: A}} {{parentTask:: 4u53i5n}} {{blocking:: w9adqqw}} {{taskIcon:: workflow}} {{taskColor:: DC2626}} {{note:: Shows how one task can intentionally unlock the next piece of work.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-31T00:05:26}}
   - [ ] Start this blocked task after setup is finished #operon-demo #dependencies {{operonId:: w9adqqw}} {{status:: Project.Planned}} {{priority:: B}} {{taskIcon:: workflow}} {{taskColor:: DC2626}} {{blockedBy:: 2ygfo2l}} {{blocking:: 9guoq4z}} {{note:: Makes waiting work visible without asking you to remember why it cannot move yet.}} {{parentTask:: 4u53i5n}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
   - [ ] Review the final handoff after dependencies clear #operon-demo #dependencies {{operonId:: 9guoq4z}} {{status:: Project.Planned}} {{priority:: C}} {{taskIcon:: workflow}} {{taskColor:: DC2626}} {{blockedBy:: w9adqqw}} {{note:: Shows how a chain of dependent tasks can end with a clean review point.}} {{parentTask:: 4u53i5n}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
 

@@ -1,0 +1,756 @@
+{
+  "items": {
+    "/": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": [
+        "Important",
+        "Year 1",
+        "Unsorted"
+      ]
+    },
+    "Unsorted": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": [
+        "Random",
+        "Operon",
+        "2026-10-30.md"
+      ]
+    },
+    "Unsorted/2026-10-30.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793319128833,
+      "mtime": 1793323926829
+    },
+    "Unsorted/Operon": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": [
+        "Demo Workspace",
+        "Tables",
+        "Tasks"
+      ]
+    },
+    "Unsorted/Operon/Demo Workspace": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": [
+        "Operon Basics Project.md",
+        "Operon Command Palette.md",
+        "Set Up Your Obsidian Vault with Operon.md"
+      ]
+    },
+    "Unsorted/Operon/Demo Workspace/Operon Basics Project.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793316932363,
+      "mtime": 1793376326496
+    },
+    "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793316932389,
+      "mtime": 1793375953632
+    },
+    "Unsorted/Operon/Demo Workspace/Operon Command Palette.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793316932377,
+      "mtime": 1793316932377
+    },
+    "Unsorted/Operon/Tables": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": [
+        "Default table.table"
+      ]
+    },
+    "Unsorted/Operon/Tables/Default table.table": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793316925985,
+      "mtime": 1793316999450
+    },
+    "Unsorted/Operon/Tasks": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": []
+    },
+    "Important": {
+      "isPinned": false,
+      "isHidden": false,
+      "sortOrder": "custom",
+      "customOrder": [
+        "To Do List.md"
+      ]
+    },
+    "Important/To Do List.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793375969446,
+      "mtime": 1793376860316
+    },
+    "Year 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Term 1"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377259521,
+      "mtime": 1793377259521
+    },
+    "Year 1/Term 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "HUM",
+        "IT(L)",
+        "MATH",
+        "IT",
+        "AI",
+        "CS"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290296,
+      "mtime": 1793377290296
+    },
+    "Year 1/Term 1/CS": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Module 1",
+        "Module 2"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290302,
+      "mtime": 1793377290302
+    },
+    "Year 1/Term 1/AI": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Ai notes (sep 10).docx"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290303,
+      "mtime": 1793377290303
+    },
+    "Year 1/Term 1/IT": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Module 2"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290303,
+      "mtime": 1793377290303
+    },
+    "Year 1/Term 1/MATH": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Module 1",
+        "Module 2",
+        "Module 3"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290303,
+      "mtime": 1793377290303
+    },
+    "Year 1/Term 1/IT(L)": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "IT notes (sept 8).docx"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290303,
+      "mtime": 1793377290303
+    },
+    "Year 1/Term 1/HUM": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Module 1",
+        "Module 2",
+        "Module 3"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290306,
+      "mtime": 1793377290306
+    },
+    "Year 1/Term 1/CS/Module 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "CS Module 1-3.docx",
+        "Number System.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290308,
+      "mtime": 1793377290308
+    },
+    "Year 1/Term 1/MATH/Module 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [],
+      "sortOrder": "custom",
+      "ctime": 1793377290308,
+      "mtime": 1793377290308
+    },
+    "Year 1/Term 1/MATH/Module 2": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [],
+      "sortOrder": "custom",
+      "ctime": 1793377290309,
+      "mtime": 1793377290309
+    },
+    "Year 1/Term 1/MATH/Module 3": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Resources",
+        "Types of Reasoning (MATH).md",
+        "Nature of Statistics (MATH).md",
+        "Descriptive Statistics, Grouped and Ungrouped (MATH).md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290309,
+      "mtime": 1793377290309
+    },
+    "Year 1/Term 1/CS/Module 2": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Hardware, Software, Network Systems (CS).md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290309,
+      "mtime": 1793377290309
+    },
+    "Year 1/Term 1/AI/Ai notes (sep 10).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290310,
+      "mtime": 1793377290310
+    },
+    "Year 1/Term 1/IT(L)/IT notes (sept 8).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290310,
+      "mtime": 1793377290310
+    },
+    "Year 1/Term 1/IT/Module 2": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Arrays (IT).md",
+        "Structured Pseudocode Algorithmic Logic (IT).md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290311,
+      "mtime": 1793377290311
+    },
+    "Year 1/Term 1/HUM/Module 2": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Categorical syllogisms & square of opposition (HUM).docx"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290315,
+      "mtime": 1793377290315
+    },
+    "Year 1/Term 1/HUM/Module 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [],
+      "sortOrder": "custom",
+      "ctime": 1793377290316,
+      "mtime": 1793377290316
+    },
+    "Year 1/Term 1/HUM/Module 3": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Formal & Informal Fallacies (HUM).md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290316,
+      "mtime": 1793377290316
+    },
+    "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290322,
+      "mtime": 1793377290322
+    },
+    "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290322,
+      "mtime": 1793377290322
+    },
+    "Year 1/Term 1/MATH/Module 3/Resources": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Skewness.png",
+        "868845380_972292148761577_63461927135347969_n.png"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377290324,
+      "mtime": 1793377290324
+    },
+    "Year 1/Term 1/CS/Module 1/Number System.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290324,
+      "mtime": 1793377290324
+    },
+    "Year 1/Term 1/CS/Module 1/CS Module 1-3.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290325,
+      "mtime": 1793377290325
+    },
+    "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290325,
+      "mtime": 1793377290325
+    },
+    "Year 1/Term 1/MATH/Module 3/Types of Reasoning (MATH).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290326,
+      "mtime": 1793377290326
+    },
+    "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290326,
+      "mtime": 1793377290326
+    },
+    "Year 1/Term 1/IT/Module 2/Arrays (IT).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290326,
+      "mtime": 1793377290326
+    },
+    "Year 1/Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290331,
+      "mtime": 1793377290331
+    },
+    "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290332,
+      "mtime": 1793377290332
+    },
+    "Year 1/Term 1/MATH/Module 3/Resources/868845380_972292148761577_63461927135347969_n.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290351,
+      "mtime": 1793377290351
+    },
+    "Year 1/Term 1/MATH/Module 3/Resources/Skewness.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377290353,
+      "mtime": 1793377290353
+    },
+    "Unsorted/Random": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Term 1"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377309170,
+      "mtime": 1793377309170
+    },
+    "Unsorted/Random/Term 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "When the exam is so hard you pull out ts emote 🙏🤲.png",
+        "VE031 Ted talk (relunia).docx",
+        "To whom it may concern.docx",
+        "TEMPLATE-VE031-DISCIPLINE-REFLECTION(1).docx",
+        "TEMPLATE-VE031-SENSE OF URGENCY.docx",
+        "VE031 - PGS Worksheet.docx",
+        "VE031 - PGS Worksheet (Earl Relunia ).docx",
+        "Types of Reasoning(1).pdf",
+        "The Nature of Statistics.pdf",
+        "solution.png",
+        "t-distribution table.pdf",
+        "solution (2).png",
+        "SOFTWARE.pdf",
+        "Reviewers",
+        "Relunia - Disaster Preparedness and Response Action Plan.docx",
+        "Problem Solving Strategies-Lecture Notes.pdf",
+        "IT101-1 Arrays.pdf",
+        "NSTP031-Mod-1.4-Drugs-and-Substance-Abuse.pptx",
+        "meme.jpg",
+        "Printed Notes",
+        "NSTP031-Mod-1.3-Voter-Education1.pptx",
+        "M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 1 (1).pdf",
+        "NSTP module 1.2  constitution in action.docx",
+        "Interest.pdf",
+        "M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 2.pdf",
+        "Lesson 8 Operating System.pdf",
+        "Infographic for VE about teamwork.png",
+        "DIGITAL SECURITY.pdf",
+        "Introduce myself.png",
+        "CS100 midterms reviewer.pdf",
+        "Data Description (Grouped Data).pdf",
+        "HARDWARE_SOFTWARE.pdf",
+        "Data Description.pdf",
+        "Apportionment Cheats - Copy.xlsx",
+        "Coursera M4R94T3GS4OM.pdf",
+        "b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
+        "Chi-square-table.pdf",
+        "Apportionment Cheats.xlsx",
+        "868845380_972292148761577_63461927135347969_n.png",
+        "al.png"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377309172,
+      "mtime": 1793377309172
+    },
+    "Unsorted/Random/Term 1/al.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309177,
+      "mtime": 1793377309177
+    },
+    "Unsorted/Random/Term 1/868845380_972292148761577_63461927135347969_n.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309178,
+      "mtime": 1793377309178
+    },
+    "Unsorted/Random/Term 1/Apportionment Cheats.xlsx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309179,
+      "mtime": 1793377309179
+    },
+    "Unsorted/Random/Term 1/Chi-square-table.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309179,
+      "mtime": 1793377309179
+    },
+    "Unsorted/Random/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309180,
+      "mtime": 1793377309180
+    },
+    "Unsorted/Random/Term 1/Coursera M4R94T3GS4OM.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309180,
+      "mtime": 1793377309180
+    },
+    "Unsorted/Random/Term 1/Apportionment Cheats - Copy.xlsx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309180,
+      "mtime": 1793377309180
+    },
+    "Unsorted/Random/Term 1/Data Description.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309182,
+      "mtime": 1793377309182
+    },
+    "Unsorted/Random/Term 1/HARDWARE_SOFTWARE.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309183,
+      "mtime": 1793377309183
+    },
+    "Unsorted/Random/Term 1/Data Description (Grouped Data).pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309184,
+      "mtime": 1793377309184
+    },
+    "Unsorted/Random/Term 1/CS100 midterms reviewer.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309185,
+      "mtime": 1793377309185
+    },
+    "Unsorted/Random/Term 1/Introduce myself.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309187,
+      "mtime": 1793377309187
+    },
+    "Unsorted/Random/Term 1/DIGITAL SECURITY.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309188,
+      "mtime": 1793377309188
+    },
+    "Unsorted/Random/Term 1/Infographic for VE about teamwork.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309188,
+      "mtime": 1793377309188
+    },
+    "Unsorted/Random/Term 1/Lesson 8 Operating System.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309189,
+      "mtime": 1793377309189
+    },
+    "Unsorted/Random/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 2.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309189,
+      "mtime": 1793377309189
+    },
+    "Unsorted/Random/Term 1/Interest.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309190,
+      "mtime": 1793377309190
+    },
+    "Unsorted/Random/Term 1/NSTP module 1.2  constitution in action.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309191,
+      "mtime": 1793377309191
+    },
+    "Unsorted/Random/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 1 (1).pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309192,
+      "mtime": 1793377309192
+    },
+    "Unsorted/Random/Term 1/NSTP031-Mod-1.3-Voter-Education1.pptx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309192,
+      "mtime": 1793377309192
+    },
+    "Unsorted/Random/Term 1/Printed Notes": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "~$M categorical syllogisms & square of opposition.docx",
+        "[  [   Printed Notes Template   ]  ].docx",
+        "~$ [   Printed Notes Template   ]  ].docx",
+        "HUM categorical syllogisms & square of opposition.docx",
+        "IT notes (sept 8).docx",
+        "CS Module 1-3.docx",
+        "MATH Module 1 Propositional, Discrete.docx",
+        "Ai notes (sep 10).docx"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377309193,
+      "mtime": 1793377309193
+    },
+    "Unsorted/Random/Term 1/meme.jpg": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309194,
+      "mtime": 1793377309194
+    },
+    "Unsorted/Random/Term 1/NSTP031-Mod-1.4-Drugs-and-Substance-Abuse.pptx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309194,
+      "mtime": 1793377309194
+    },
+    "Unsorted/Random/Term 1/IT101-1 Arrays.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309195,
+      "mtime": 1793377309195
+    },
+    "Unsorted/Random/Term 1/Problem Solving Strategies-Lecture Notes.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309195,
+      "mtime": 1793377309195
+    },
+    "Unsorted/Random/Term 1/Relunia - Disaster Preparedness and Response Action Plan.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309196,
+      "mtime": 1793377309196
+    },
+    "Unsorted/Random/Term 1/Reviewers": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "reviewer template (new) - Copy.docx",
+        "HUM Lesson 1-4 reviewer.docx"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793377309197,
+      "mtime": 1793377309197
+    },
+    "Unsorted/Random/Term 1/SOFTWARE.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309197,
+      "mtime": 1793377309197
+    },
+    "Unsorted/Random/Term 1/solution (2).png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309198,
+      "mtime": 1793377309198
+    },
+    "Unsorted/Random/Term 1/t-distribution table.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309198,
+      "mtime": 1793377309198
+    },
+    "Unsorted/Random/Term 1/solution.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309199,
+      "mtime": 1793377309199
+    },
+    "Unsorted/Random/Term 1/The Nature of Statistics.pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309199,
+      "mtime": 1793377309199
+    },
+    "Unsorted/Random/Term 1/Types of Reasoning(1).pdf": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309200,
+      "mtime": 1793377309200
+    },
+    "Unsorted/Random/Term 1/VE031 - PGS Worksheet (Earl Relunia ).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309200,
+      "mtime": 1793377309200
+    },
+    "Unsorted/Random/Term 1/VE031 - PGS Worksheet.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309201,
+      "mtime": 1793377309201
+    },
+    "Unsorted/Random/Term 1/TEMPLATE-VE031-SENSE OF URGENCY.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309201,
+      "mtime": 1793377309201
+    },
+    "Unsorted/Random/Term 1/TEMPLATE-VE031-DISCIPLINE-REFLECTION(1).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309202,
+      "mtime": 1793377309202
+    },
+    "Unsorted/Random/Term 1/To whom it may concern.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309202,
+      "mtime": 1793377309202
+    },
+    "Unsorted/Random/Term 1/VE031 Ted talk (relunia).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309203,
+      "mtime": 1793377309203
+    },
+    "Unsorted/Random/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309204,
+      "mtime": 1793377309204
+    },
+    "Unsorted/Random/Term 1/Printed Notes/Ai notes (sep 10).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309208,
+      "mtime": 1793377309208
+    },
+    "Unsorted/Random/Term 1/Printed Notes/MATH Module 1 Propositional, Discrete.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309209,
+      "mtime": 1793377309209
+    },
+    "Unsorted/Random/Term 1/Printed Notes/CS Module 1-3.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309210,
+      "mtime": 1793377309210
+    },
+    "Unsorted/Random/Term 1/Printed Notes/IT notes (sept 8).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309211,
+      "mtime": 1793377309211
+    },
+    "Unsorted/Random/Term 1/Printed Notes/HUM categorical syllogisms & square of opposition.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309212,
+      "mtime": 1793377309212
+    },
+    "Unsorted/Random/Term 1/Printed Notes/~$ [   Printed Notes Template   ]  ].docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309212,
+      "mtime": 1793377309212
+    },
+    "Unsorted/Random/Term 1/Printed Notes/[  [   Printed Notes Template   ]  ].docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309213,
+      "mtime": 1793377309213
+    },
+    "Unsorted/Random/Term 1/Reviewers/HUM Lesson 1-4 reviewer.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309214,
+      "mtime": 1793377309214
+    },
+    "Unsorted/Random/Term 1/Printed Notes/~$M categorical syllogisms & square of opposition.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309215,
+      "mtime": 1793377309215
+    },
+    "Unsorted/Random/Term 1/Reviewers/reviewer template (new) - Copy.docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793377309215,
+      "mtime": 1793377309215
+    }
+  },
+  "showHidden": false,
+  "hidePatterns": [],
+  "newItemPlacement": "top",
+  "persistOrderOnCreateDelete": true,
+  "debugMode": false
+}

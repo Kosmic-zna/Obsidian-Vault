@@ -377,8 +377,8 @@
 		"pinnedTaskSortMode": "priority",
 		"pinnedTaskItemWidth": 240,
 		"pinnedDockPosition": "bottom-center",
-		"pinnedDockX": null,
-		"pinnedDockY": null,
+		"pinnedDockX": 49,
+		"pinnedDockY": 947,
 		"pinnedDockVisible": false,
 		"pinnedDockCollapsed": false,
 		"pinnedDockLayout": "vertical",
@@ -471,7 +471,7 @@
 		"duplicateAlertDelaySeconds": 10,
 		"taskStatsBackfillVersion": 2,
 		"excludedFolders": [],
-		"lastUsedFileTaskTemplateId": null,
+		"lastUsedFileTaskTemplateId": "builtin-minimal-file-task-template:pl_project",
 		"trackerHistoryDays": 7,
 		"trackerShowStatusBarTimer": true,
 		"trackerTaskDescriptionClickAction": "openTaskEditor",
@@ -1522,12 +1522,17 @@
 		"tablePresets": {
 			"version": 4,
 			"presetIds": [
-				"table-preset-my-first-table"
+				"table-preset-my-first-table",
+				"tp_qvotqwu"
 			],
 			"fileBindings": [
 				{
 					"id": "table-preset-my-first-table",
 					"path": "Unsorted/Operon/Tables/Default table.table"
+				},
+				{
+					"id": "tp_qvotqwu",
+					"path": "Operon/Tables/Default table 2.table"
 				}
 			],
 			"initialized": true,
@@ -3165,8 +3170,8 @@
 			"version": 2,
 			"itemsById": {
 				"7tg5qxz": {
-					"pinned": true,
-					"updatedAt": "2026-10-30T00:12:09.326Z"
+					"pinned": false,
+					"updatedAt": "2026-10-30T16:02:28.280Z"
 				}
 			}
 		}

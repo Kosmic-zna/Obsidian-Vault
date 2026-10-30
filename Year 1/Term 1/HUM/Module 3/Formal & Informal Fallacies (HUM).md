@@ -1,3 +1,6 @@
+---
+state: "[[Final]]"
+---
 # 🛡️ Module 3: Formal & Informal Fallacies
 
 ## 📖 Prerequisite Lexicon (From First Principles)
