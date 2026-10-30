@@ -17,6 +17,7 @@ treeDescendantCount: 43
 treeDoneDescendantCount: 0
 treeOpenDescendantCount: 43
 totalEstimate: 67500
+cssclasses:
 ---
 
 # [[Set Up Your Obsidian Vault with Operon]]
