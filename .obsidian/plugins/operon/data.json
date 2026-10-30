@@ -476,7 +476,7 @@
 		"trackerShowStatusBarTimer": true,
 		"trackerTaskDescriptionClickAction": "openTaskEditor",
 		"flowTimeMode": "flowtime",
-		"flowTimeSessionMinutes": 72,
+		"flowTimeSessionMinutes": 25,
 		"flowTimePauseMinutes": 5,
 		"flowTimeUseLastSelectedDuration": false,
 		"flowTimeDefaultSessionMinutes": 25,

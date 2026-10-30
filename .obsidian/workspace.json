@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
+                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Module 1-3, Hardware, Software, Network Systems"
+              "title": "Hardware, Software, Network Systems"
             }
           },
           {
@@ -191,7 +191,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
+                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -236,10 +236,11 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "a29bdf29231c874d",
+  "active": "48c0fda3ba2efed3",
   "lastOpenFiles": [
-    "Term 1/CS/Module 2/Hardware and Software Systems/Page 1.md",
     "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
+    "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+    "Term 1/CS/Module 2/Hardware and Software Systems/Page 1.md",
     "Term 1/CS/Module 2/cs100_comprehensive_exam_reviewer.md",
     "Term 1/CS/Module 2/Hardware and Software Systems/Page 2.md",
     "Term 1/CS/Module 2/Hardware and Software Systems/folder-settings.pbs",
