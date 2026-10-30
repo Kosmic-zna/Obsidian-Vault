@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+                "file": "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Hardware, Software, Network Systems"
+              "title": "Formal and Informal Fallacies"
             }
           },
           {
@@ -208,7 +208,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+                "file": "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -253,8 +253,13 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "a29bdf29231c874d",
+  "active": "6f474b2a6c7d3618",
   "lastOpenFiles": [
+    "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+    "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
+    "Term 1/HUM/Module 3/gemini-code-1793339011232.md",
+    "Term 1/HUM/Module 3",
+    "Term 1/HUM/New folder",
     "Unsorted/1st Year/Term 1/SOFTWARE.pdf",
     "Unsorted/1st Year/Term 1/HARDWARE_SOFTWARE.pdf",
     "Unsorted/1st Year/Term 1/Lesson 8 Operating System.pdf",
@@ -264,9 +269,6 @@
     "Unsorted/1st Year/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 1 (1).pdf",
     "Unsorted/1st Year/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 2.pdf",
     "Unsorted/1st Year/Term 1/Printed Notes/MATH Module 1 Propositional, Discrete.docx",
-    "Unsorted/1st Year/Term 1/Printed Notes/IT notes (sept 8).docx",
-    "Unsorted/1st Year/Term 1/Printed Notes/HUM categorical syllogisms & square of opposition.docx",
-    "Unsorted/1st Year/Term 1/Printed Notes/CS Module 1-3.docx",
     "Unsorted/1st Year/Term 1/al.png",
     "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
     "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
@@ -276,7 +278,6 @@
     "Unsorted/1st Year/Term 1/Introduce myself.png",
     "Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
     "Unsorted/2026-10-30.md",
-    "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
     "Unsorted/Operon/Demo Workspace/Operon Basics Project.md",
     "Untitled Kanban.md",
     "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
