@@ -4,5 +4,9 @@
   "underwater-theme@@callout": "callout-solid",
   "underwater-theme@@table": "normal",
   "underwater-theme@@checkbox": "normal",
-  "underwater-theme@@vault-icon": "Moon"
+  "underwater-theme@@vault-icon": "Moon",
+  "underwater-theme@@love-rgb@@dark": "#B5E8FE",
+  "underwater-theme@@rose-rgb@@dark": "#DEA8A8",
+  "underwater-theme@@gold-rgb@@dark": "#D7F895",
+  "underwater-theme@@pine-rgb@@dark": "#7D51BB"
 }

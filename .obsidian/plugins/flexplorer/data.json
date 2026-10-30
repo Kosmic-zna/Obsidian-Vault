@@ -5,7 +5,6 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "Operon",
         "Important",
         "Year 1",
         "Unsorted"
@@ -295,7 +294,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793377290322,
-      "mtime": 1793380593324
+      "mtime": 1793381036769
     },
     "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md": {
       "isPinned": false,
@@ -754,24 +753,6 @@
       "isHidden": false,
       "ctime": 1793378538483,
       "mtime": 1793378899173
-    },
-    "Operon": {
-      "isPinned": false,
-      "isHidden": false,
-      "sortOrder": "custom",
-      "customOrder": [
-        "Tasks"
-      ],
-      "ctime": 1793380841433,
-      "mtime": 1793380841433
-    },
-    "Operon/Tasks": {
-      "isPinned": false,
-      "isHidden": false,
-      "sortOrder": "custom",
-      "customOrder": [],
-      "ctime": 1793380841450,
-      "mtime": 1793380841450
     }
   },
   "showHidden": false,

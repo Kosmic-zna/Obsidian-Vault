@@ -273,11 +273,11 @@ $$\bar{X} = \frac{\sum X_i}{n}$$
 NON-STATISTICAL                                         STATISTICAL
 (Non-Probability)                                       (Probability)
 • Unknown probabilities                                 • Known, calculable selection chances
-• Susceptible to selection bias                         • Required for formal inference[cite: 57, 84, 89]
-  ├─ Convenience                                          ├─ Simple Random[cite: 87, 90]
-  ├─ Judgmental / Purposive                               ├─ Stratified Random[cite: 87, 91]
-  └─ Snowball                                             ├─ Systematic[cite: 87, 92]
-	                                                      └─ Cluster[cite: 87, 93]
+• Susceptible to selection bias                         • Required for formal inference
+  ├─ Convenience                                          ├─ Simple Random
+  ├─ Judgmental / Purposive                               ├─ Stratified Random
+  └─ Snowball                                             ├─ Systematic
+	                                                      └─ Cluster
 ```
 
 ### 1. Non-Statistical (Non-Probability) Sampling
