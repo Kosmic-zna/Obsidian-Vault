@@ -94,8 +94,8 @@
             "state": {
               "type": "operon-flow-time",
               "state": {},
-              "icon": "hourglass",
-              "title": "FlowTime"
+              "icon": "lucide-ghost",
+              "title": "operon-flow-time"
             }
           },
           {
@@ -267,6 +267,8 @@
   },
   "active": "53f5f6a92d32baa6",
   "lastOpenFiles": [
+    "Operon/Tasks",
+    "Operon",
     "Unsorted/Operon/Tables/Default table.table",
     "Unsorted/Operon/Demo Workspace/Operon Command Palette.md",
     "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
@@ -289,8 +291,6 @@
     "Unsorted/1st Year/Term 1/Data Description.pdf",
     "Unsorted/1st Year/Term 1/The Nature of Statistics.pdf",
     "Unsorted/1st Year/Term 1/Problem Solving Strategies-Lecture Notes.pdf",
-    "Unsorted/1st Year/Term 1/Types of Reasoning(1).pdf",
-    "Unsorted/1st Year/Term 1/IT101-1 Arrays.pdf",
     "Unsorted/1st Year/Term 1/868845380_972292148761577_63461927135347969_n.png",
     "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
     "Term 1/Math/problem_solving_heuristics_p_lya_s_framework_strategies.md",

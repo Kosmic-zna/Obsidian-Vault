@@ -42,7 +42,7 @@
 		"releaseNotesShowOnUpdate": true,
 		"releaseNotesLastShownVersion": "4.3.0",
 		"checkForUpdatesOnStartup": true,
-		"lastNotifiedReleaseVersion": "",
+		"lastNotifiedReleaseVersion": "4.4.0",
 		"operonDocsFolder": "Operon/Docs",
 		"operonDocsAutoUpdateEnabled": false,
 		"operonDocsLastAutoUpdateVersion": "",
