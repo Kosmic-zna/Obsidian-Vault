@@ -6,7 +6,7 @@ kanban-plugin: board
 
 ## Day Tasks
 
-- [ ] review for HUM
+- [ ] review for HUM ^zsy0i9
 - [ ] review for IT(L)
 - [ ] make HUM docx reviewer
 

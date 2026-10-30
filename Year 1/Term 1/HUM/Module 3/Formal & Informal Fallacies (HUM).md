@@ -128,7 +128,7 @@ state: "[[Final]]"
     - ↳ **Symbolic Trace**: In Premise 1, "fruits" is the predicate of an affirmative statement ($m$). In Premise 2, "some fruits" is a particular subject ($m$). Neither is capital $M$.
 
 > [!bug] 🚨 Lecture Material Discrepancy (Slide Typo Alert)
-> In your first PDF (`M3_L8-9... 1.pdf`, Slide 13), the symbolic translation for *"All stewardesses are females; But, all mothers are females"* is typed with capital letters as `$P + M$` and `$S + M$`, and the conclusion of the mango example *"Some mangoes are apples"* is typed with a capital `$S + p$`. Your second PDF (`M3_L8-9... 2.pdf`, Slide 40) corrects the first two to lowercase `$P + m$` and `$S + m$`, as affirmative predicates are always particular ($m$), and "Some mangoes" is a particular subject ($s$). Always use lowercase **$m$** for affirmative predicates on your exam!
+> In your first PDF (`M3_L8-9... 1.pdf`, Slide 13), the symbolic translation for *"All stewardesses are females; But, all mothers are females"* is typed with capital letters as `P + M` and `S + M`, and the conclusion of the mango example *"Some mangoes are apples"* is typed with a capital `S + p`. Your second PDF (`M3_L8-9... 2.pdf`, Slide 40) corrects the first two to lowercase `P + m` and `S + m`, as affirmative predicates are always particular ($m$), and "Some mangoes" is a particular subject ($s$). Always use lowercase **$m$** for affirmative predicates on your exam!
 
 ---
 
@@ -206,8 +206,8 @@ state: "[[Final]]"
 
 #### 📐 Rule 8: The Conclusion Always Follows the Weaker Premise
 - **Formal Requirement**:
-  - ↳ **Hierarchy of Weakness in Quantity**: **Particular** ($I, O$) is weaker than **Universal** ($A, E$). If one premise is Universal and the other is Particular, the conclusion ==MUST be Particular==.
-  - ↳ **Hierarchy of Weakness in Quality**: **Negative** ($E, O$) is weaker than **Affirmative** ($A, I$). If one premise is Affirmative and the other is Negative, the conclusion ==MUST be Negative==.
+  - ↳ **Hierarchy of Weakness in Quantity**: **Particular** ($I, O$) is weaker than **Universal** ($A, E$). If one premise is Universal and the other is Particular, the conclusion ==<mark style="background:rgba(240, 200, 0, 0.2)">MUST be Particular</mark>==.
+  - ↳ **Hierarchy of Weakness in Quality**: **Negative** ($E, O$) is weaker than **Affirmative** ($A, I$). If one premise is Affirmative and the other is Negative, the conclusion <mark style="background:rgba(163, 67, 31, 0.2)">==MUST be Negative==</mark>.
 - **Associated Errors**:
   - ⤷ **Fallacy of a Universal Conclusion Drawn from a Particular Premise**: One premise is particular, yet the conclusion is universal.
   - ⤷ **Fallacy of an Affirmative Conclusion Drawn from a Negative Premise**: One premise is negative, yet the conclusion is affirmative.
