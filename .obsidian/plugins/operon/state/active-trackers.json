@@ -1,15 +1,4 @@
 {
 	"version": 1,
-	"active": [
-		{
-			"id": "trk_mvu9riez_4qblic",
-			"userId": "",
-			"userName": "",
-			"taskId": "7tg5qxz",
-			"start": "2026-10-30T09:04:07",
-			"source": "flowtime",
-			"createdAt": "2026-10-30T09:04:07",
-			"updatedAt": "2026-10-30T09:04:07"
-		}
-	]
+	"active": []
 }
