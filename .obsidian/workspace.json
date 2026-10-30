@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+                "file": "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Formal & Informal Fallacies (HUM)"
+              "title": "Structured Pseudocode Algorithmic Logic (IT)"
             }
           }
         ],
@@ -196,7 +196,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+                "file": "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -241,12 +241,18 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "a29bdf29231c874d",
+  "active": "b9b6ed1182afa833",
   "lastOpenFiles": [
+    "Term 1/IT/Module 2/Arrays (IT).md",
+    "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
+    "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+    "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic.md",
+    "Term 1/IT/Module 2/it101_arrays_reviewer.md",
+    "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic",
+    "Term 1/IT/Module 2/structured_pseudocode_algorithmic_logic_reviewer.md",
     "Term 1/IT/Module 2",
     "Term 1/IT",
     "Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
-    "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx",
     "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
     "Term 1/HUM/Module 3/formal_informal_fallacies_reviewer.md",
@@ -257,9 +263,7 @@
     "Unsorted/1st Year/Term 1/HARDWARE_SOFTWARE.pdf",
     "Unsorted/1st Year/Term 1/Lesson 8 Operating System.pdf",
     "Unsorted/1st Year/Term 1/DIGITAL SECURITY.pdf",
-    "Unsorted/1st Year/Term 1/CS100 midterms reviewer.pdf",
     "Unsorted/1st Year/Term 1/cs100_comprehensive_exam_reviewer.md",
-    "Unsorted/1st Year/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 1 (1).pdf",
     "Unsorted/1st Year/Term 1/al.png",
     "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
     "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
@@ -284,10 +288,6 @@
     "1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
     "1st Year/Term 1/solution (2).png",
     "Term 1/HUM/Module 2/Squares of opposition & Catgorical Syllogisms.md",
-    "Term 1/HUM/Module 1/Syllogisms.md",
-    "HUM/Syllogisms.md",
-    "Term 1/CS100/Number System.md",
-    "Term 1/CS100/Hardware and Software Systems.md",
-    "testing.md"
+    "Term 1/HUM/Module 1/Syllogisms.md"
   ]
 }
