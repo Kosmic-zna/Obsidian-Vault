@@ -56,42 +56,6 @@
       }
     },
     {
-      "path": "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
-      "mtime": 1790559031232,
-      "format": "xlsx",
-      "lastAccessed": 469,
-      "position": {
-        "scrollLeft": 0,
-        "scrollTop": 0
-      },
-      "zoom": {
-        "scale": 1,
-        "fit": true
-      },
-      "navigation": {
-        "panelVisible": false,
-        "collapsedIds": []
-      }
-    },
-    {
-      "path": "Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
-      "mtime": 1789774977600,
-      "format": "docx",
-      "lastAccessed": 470,
-      "position": {
-        "scrollLeft": 0,
-        "scrollTop": 0
-      },
-      "zoom": {
-        "scale": 1,
-        "fit": false
-      },
-      "navigation": {
-        "panelVisible": true,
-        "collapsedIds": []
-      }
-    },
-    {
       "path": "Term 1/IT(L)/IT notes (sept 8).docx",
       "mtime": 1788831478745,
       "format": "docx",
@@ -110,13 +74,31 @@
       }
     },
     {
+      "path": "Term 1/CS/Module 1/CS Module 1-3.docx",
+      "mtime": 1789691498516,
+      "format": "docx",
+      "lastAccessed": 1143,
+      "position": {
+        "scrollLeft": 69,
+        "scrollTop": 4340
+      },
+      "zoom": {
+        "scale": 1.35,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
       "path": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
       "mtime": 1793292466771,
       "format": "docx",
-      "lastAccessed": 978,
+      "lastAccessed": 1189,
       "position": {
         "scrollLeft": 0,
-        "scrollTop": 11846
+        "scrollTop": 13387
       },
       "zoom": {
         "scale": 1.4500000000000002,
@@ -128,16 +110,288 @@
       }
     },
     {
-      "path": "Term 1/CS/Module 1/CS Module 1-3.docx",
-      "mtime": 1789691498516,
+      "path": "Unsorted/1st Year/Term 1/Printed Notes/Ai notes (sep 10).docx",
+      "mtime": 1789053057869,
       "format": "docx",
-      "lastAccessed": 1143,
+      "lastAccessed": 1191,
       "position": {
-        "scrollLeft": 69,
-        "scrollTop": 4340
+        "scrollLeft": 0,
+        "scrollTop": 0
       },
       "zoom": {
-        "scale": 1.35,
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Apportionment Cheats - Copy.xlsx",
+      "mtime": 1790560089842,
+      "format": "xlsx",
+      "lastAccessed": 1217,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "page": 1
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": true
+      },
+      "navigation": {
+        "panelVisible": false,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Relunia - Disaster Preparedness and Response Action Plan.docx",
+      "mtime": 1792853391423,
+      "format": "docx",
+      "lastAccessed": 1311,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 1347
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/TEMPLATE-VE031-DISCIPLINE-REFLECTION(1).docx",
+      "mtime": 1793293388110,
+      "format": "docx",
+      "lastAccessed": 1368,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 1905
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/TEMPLATE-VE031-SENSE OF URGENCY.docx",
+      "mtime": 1793293384118,
+      "format": "docx",
+      "lastAccessed": 1432,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 1848
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/To whom it may concern.docx",
+      "mtime": 1789126471280,
+      "format": "docx",
+      "lastAccessed": 1433,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/VE031 - PGS Worksheet.docx",
+      "mtime": 1789003749397,
+      "format": "docx",
+      "lastAccessed": 1434,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/VE031 - PGS Worksheet (Earl Relunia ).docx",
+      "mtime": 1789312219148,
+      "format": "docx",
+      "lastAccessed": 1435,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
+      "mtime": 1789774977600,
+      "format": "docx",
+      "lastAccessed": 1436,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Reviewers/reviewer template (new) - Copy.docx",
+      "mtime": 1772981557811,
+      "format": "docx",
+      "lastAccessed": 1438,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Reviewers/HUM Lesson 1-4 reviewer.docx",
+      "mtime": 1788702472021,
+      "format": "docx",
+      "lastAccessed": 1439,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
+      "mtime": 1790559031232,
+      "format": "xlsx",
+      "lastAccessed": 1441,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "page": 1
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": true
+      },
+      "navigation": {
+        "panelVisible": false,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Printed Notes/CS Module 1-3.docx",
+      "mtime": 1789691498516,
+      "format": "docx",
+      "lastAccessed": 1454,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Printed Notes/HUM categorical syllogisms & square of opposition.docx",
+      "mtime": 1792930352710,
+      "format": "docx",
+      "lastAccessed": 1456,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Printed Notes/IT notes (sept 8).docx",
+      "mtime": 1788831478745,
+      "format": "docx",
+      "lastAccessed": 1457,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Unsorted/1st Year/Term 1/Printed Notes/MATH Module 1 Propositional, Discrete.docx",
+      "mtime": 1788704230562,
+      "format": "docx",
+      "lastAccessed": 1487,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 1100
+      },
+      "zoom": {
+        "scale": 1,
         "fit": false
       },
       "navigation": {

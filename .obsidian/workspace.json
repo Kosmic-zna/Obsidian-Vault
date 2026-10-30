@@ -22,6 +22,18 @@
             }
           },
           {
+            "id": "6f474b2a6c7d3618",
+            "type": "leaf",
+            "state": {
+              "type": "word-reader-view",
+              "state": {
+                "file": "Unsorted/1st Year/Term 1/Printed Notes/MATH Module 1 Propositional, Discrete.docx"
+              },
+              "icon": "file-text",
+              "title": "MATH Module 1 Propositional, Discrete.docx"
+            }
+          },
+          {
             "id": "b9b6ed1182afa833",
             "type": "leaf",
             "state": {
@@ -33,7 +45,8 @@
               "title": "Browse"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -180,7 +193,9 @@
             "type": "leaf",
             "state": {
               "type": "agent-client-chat-view",
-              "state": {},
+              "state": {
+                "initialAgentId": "mistral-vibe"
+              },
               "icon": "bot-message-square",
               "title": "New session"
             }
@@ -191,8 +206,8 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
-                "followCursor": false,
+                "file": "Unsorted/1st Year/Term 1/Printed Notes/MATH Module 1 Propositional, Discrete.docx",
+                "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
@@ -238,37 +253,39 @@
   },
   "active": "a29bdf29231c874d",
   "lastOpenFiles": [
-    "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
+    "Unsorted/1st Year/Term 1/Printed Notes/IT notes (sept 8).docx",
+    "Unsorted/1st Year/Term 1/Printed Notes/HUM categorical syllogisms & square of opposition.docx",
+    "Unsorted/1st Year/Term 1/Printed Notes/CS Module 1-3.docx",
+    "Unsorted/1st Year/Term 1/al.png",
+    "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
+    "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
+    "Unsorted/1st Year/Term 1/Reviewers/HUM Lesson 1-4 reviewer.docx",
+    "Unsorted/1st Year/Term 1/Reviewers/reviewer template (new) - Copy.docx",
+    "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
+    "Unsorted/1st Year/Term 1/VE031 Ted talk (relunia).docx",
+    "Unsorted/1st Year/Term 1/VE031 - PGS Worksheet (Earl Relunia ).docx",
+    "Unsorted/1st Year/Term 1/VE031 - PGS Worksheet.docx",
+    "Unsorted/1st Year/Term 1/To whom it may concern.docx",
+    "Unsorted/1st Year/Term 1/TEMPLATE-VE031-SENSE OF URGENCY.docx",
+    "Unsorted/1st Year/Term 1/solution (2).png",
+    "Unsorted/1st Year/Term 1/solution.png",
+    "Unsorted/1st Year/Term 1/meme.jpg",
+    "Unsorted/1st Year/Term 1/Introduce myself.png",
+    "Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
+    "Unsorted/2026-10-30.md",
     "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+    "Unsorted/Operon/Demo Workspace/Operon Basics Project.md",
+    "Untitled Kanban.md",
+    "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
     "Term 1/CS/Module 2/Hardware and Software Systems/Page 1.md",
     "Term 1/CS/Module 2/cs100_comprehensive_exam_reviewer.md",
     "Term 1/CS/Module 2/Hardware and Software Systems/Page 2.md",
-    "Term 1/CS/Module 2/Hardware and Software Systems/folder-settings.pbs",
-    "Term 1/CS/Module 2/Hardware and Software Systems",
-    "Unsorted/2026-10-30.md",
     "TO DO LIST.md",
-    "Term 1/CS/Module 1/CS Module 1-3.docx",
     "Term 1/CS/Module 1/Number System.md",
-    "Unsorted/Operon/Demo Workspace/Operon Basics Project.md",
-    "Unsorted/Operon/Tables/Default table.table",
     "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
     "Unsorted/Operon/Demo Workspace/Operon Command Palette.md",
-    "Unsorted/Operon/Demo Workspace",
-    "Unsorted/Operon/Tasks",
-    "Unsorted/Operon/Tables",
-    "Unsorted/Operon",
     "Untitled.md",
     "Term 1/CS/Module 2/Drawing 2026-10-30 07.29.56.excalidraw.md",
-    "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
-    "Term 1/IT(L)/IT notes (sept 8).docx",
-    "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
-    "Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
-    "Unsorted/1st Year/Term 1/meme.jpg",
-    "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
-    "Unsorted/1st Year/Term 1/solution.png",
-    "Unsorted/1st Year/Term 1/solution (2).png",
-    "Unsorted/1st Year/Term 1/Introduce myself.png",
-    "Unsorted/1st Year/Term 1/al.png",
     "1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
     "1st Year/Term 1/solution (2).png",
     "Term 1/HUM/Module 2/Squares of opposition & Catgorical Syllogisms.md",
