@@ -13,38 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+                "file": "Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Hardware, Software, Network Systems"
-            }
-          },
-          {
-            "id": "6f474b2a6c7d3618",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Formal and Informal Fallacies"
+              "title": "Hardware, Software, Network Systems (CS)"
             }
           },
           {
             "id": "b9b6ed1182afa833",
             "type": "leaf",
             "state": {
-              "type": "card-browser-view",
+              "type": "markdown",
               "state": {
-                "path": "Term 1/CS/Module 2"
+                "file": "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+                "mode": "preview",
+                "source": false
               },
-              "icon": "align-vertical-justify-start",
-              "title": "Browse"
+              "icon": "lucide-file",
+              "title": "Formal & Informal Fallacies (HUM)"
             }
           }
         ],
@@ -208,7 +196,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
+                "file": "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -253,10 +241,15 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "6f474b2a6c7d3618",
+  "active": "a29bdf29231c874d",
   "lastOpenFiles": [
-    "Term 1/CS/Module 2/Hardware, Software, Network Systems.md",
+    "Term 1/IT/Module 2",
+    "Term 1/IT",
+    "Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
+    "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+    "Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx",
     "Term 1/HUM/Module 3/Formal and Informal Fallacies.md",
+    "Term 1/HUM/Module 3/formal_informal_fallacies_reviewer.md",
     "Term 1/HUM/Module 3/gemini-code-1793339011232.md",
     "Term 1/HUM/Module 3",
     "Term 1/HUM/New folder",
@@ -267,8 +260,6 @@
     "Unsorted/1st Year/Term 1/CS100 midterms reviewer.pdf",
     "Unsorted/1st Year/Term 1/cs100_comprehensive_exam_reviewer.md",
     "Unsorted/1st Year/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 1 (1).pdf",
-    "Unsorted/1st Year/Term 1/M3_L8-9_Rules of Categorical Syllogisms and Formal Fallacies 2.pdf",
-    "Unsorted/1st Year/Term 1/Printed Notes/MATH Module 1 Propositional, Discrete.docx",
     "Unsorted/1st Year/Term 1/al.png",
     "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
     "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
@@ -297,8 +288,6 @@
     "HUM/Syllogisms.md",
     "Term 1/CS100/Number System.md",
     "Term 1/CS100/Hardware and Software Systems.md",
-    "testing.md",
-    "CS100/Number System.md",
-    "CS100/Hardware and Software Systems.md"
+    "testing.md"
   ]
 }

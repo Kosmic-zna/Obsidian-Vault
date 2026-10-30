@@ -92,24 +92,6 @@
       }
     },
     {
-      "path": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
-      "mtime": 1793292466771,
-      "format": "docx",
-      "lastAccessed": 1189,
-      "position": {
-        "scrollLeft": 0,
-        "scrollTop": 13387
-      },
-      "zoom": {
-        "scale": 1.4500000000000002,
-        "fit": false
-      },
-      "navigation": {
-        "panelVisible": true,
-        "collapsedIds": []
-      }
-    },
-    {
       "path": "Unsorted/1st Year/Term 1/Printed Notes/Ai notes (sep 10).docx",
       "mtime": 1789053057869,
       "format": "docx",
@@ -392,6 +374,24 @@
       },
       "zoom": {
         "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
+      "mtime": 1793292466771,
+      "format": "docx",
+      "lastAccessed": 1490,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1.4500000000000002,
         "fit": false
       },
       "navigation": {
