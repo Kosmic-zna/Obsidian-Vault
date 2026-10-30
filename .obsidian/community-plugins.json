@@ -9,9 +9,12 @@
   "templater-obsidian",
   "table-editor-obsidian",
   "obsidian-style-settings",
-  "agent-client",
   "obsidian-kanban",
   "project-browser",
   "operon",
-  "flexplorer"
+  "flexplorer",
+  "editing-toolbar",
+  "obsidian-advanced-slides",
+  "obsidian-latex-suite",
+  "obsidian-spaced-repetition"
 ]

@@ -38,12 +38,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Year 1/Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
+                "file": "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Types of Reasoning (MATH)"
+              "title": "Descriptive Statistics, Grouped and Ungrouped (MATH)"
             }
           }
         ],
@@ -135,6 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -153,6 +154,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -190,30 +192,28 @@
             }
           },
           {
-            "id": "ba0dd99be03828bd",
-            "type": "leaf",
-            "state": {
-              "type": "agent-client-chat-view",
-              "state": {
-                "initialAgentId": "mistral-vibe"
-              },
-              "icon": "bot-message-square",
-              "title": "New session"
-            }
-          },
-          {
             "id": "9677d05bff210ce8",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "Year 1/Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
+                "file": "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "Outline"
+            }
+          },
+          {
+            "id": "ae9cee6e079dc279",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "Notes Review Queue"
             }
           }
         ],
@@ -250,13 +250,19 @@
       "operon:Operon Kanban": false,
       "operon:Operon Table": false,
       "operon:Open Pinned Tasks": false,
-      "custom-sort:Toggle custom sorting": false
+      "custom-sort:Toggle custom sorting": false,
+      "remotely-save:Remotely Save": false,
+      "obsidian-advanced-slides:Show Slide Preview": false,
+      "obsidian-spaced-repetition:Review flashcards": false
     }
   },
   "active": "8ea51f554edeca7a",
   "lastOpenFiles": [
     "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
+    "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
+    "Year 1/Term 1/MATH/Module 3/Problem Solving Strategies (MATH).md",
     "Year 1/Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
+    "Important/To Do List.md",
     "Year 1/Term 1/AI/Untitled.md",
     "Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
     "Unsorted/Random/Term 1/Reviewers/reviewer template (new) - Copy.docx",
@@ -285,11 +291,9 @@
     "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
     "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
     "Year 1/Term 1/CS/Module 1/Number System.md",
-    "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
     "Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
     "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
-    "Important/To Do List.md",
     "Important/Review for hum.md",
     "Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
     "Untitled.md",
@@ -299,7 +303,6 @@
     "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
     "Unsorted/Operon/Demo Workspace/Operon Basics Project.md",
     "Term 1/MATH/Descriptive Statistics (MATH).md",
-    "Term 1/MATH/grouped_data_statistics_chi_square_hypothesis_testing.md",
-    "Term 1/MATH/problem_solving_heuristics_p_lya_s_framework_strategies.md"
+    "Term 1/MATH/grouped_data_statistics_chi_square_hypothesis_testing.md"
   ]
 }

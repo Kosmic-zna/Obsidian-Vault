@@ -59,7 +59,7 @@ All formal arguments within mathematics, science, and dialectics bifurcate into 
 
   * ↳ **Primary Instrument**: Pattern recognition, empirical sampling, and analogy.
 
-> \[!tip\] 💡 Intuition: The Scientific Investigator
+> [!tip] 💡 Intuition: The Scientific Investigator
 > Imagine an observer examining swans in an isolated biome. Swan 1 is white; Swan 2 is white; Swan 500 is white. The observer concludes: *"All swans are white."* This inference is entirely rational, yet structurally vulnerable. The subsequent discovery of a single black swan instantly topples the entire generalisation. Inductive logic yields useful predictions, not absolute certitude.
 
 * ⤷ **The Mathematical Anatomy of Induction**:
@@ -79,7 +79,7 @@ All formal arguments within mathematics, science, and dialectics bifurcate into 
 
   * ↳ **Primary Instrument**: Syllogisms, algebraic derivations, and axiomatic proofs.
 
-> \[!tip\] 💡 Intuition: The Mathematical Engine
+> [!tip] 💡 Intuition: The Mathematical Engine
 > Consider an axiomatic rule: *All distinct planar triangles possess interior angles summing to precisely* $180^\circ$*.* When presented with a novel, previously unexamined triangle, one does not require an empirical protractor to state its sum. The overarching principle guarantees the individual property without exception.
 
 * ⤷ **The Mathematical Anatomy of Deduction**:
@@ -102,7 +102,7 @@ All formal arguments within mathematics, science, and dialectics bifurcate into 
 
 ## 🔍 Structural Discrepancies & Analytical Nuances
 
-> \[!bug\] 🚨 Lecture Material Discrepancy: Validity vs. Soundness
+> [!bug] 🚨 Lecture Material Discrepancy: Validity vs. Soundness
 > In academic logic, an argument may be **valid** in its deductive structure while being **unsound** in its material truth. Consider the classroom example:
 >
 > * *Premise 1*: All oranges are fruits. (Empirically True)
@@ -113,7 +113,7 @@ All formal arguments within mathematics, science, and dialectics bifurcate into 
 >
 > The lecture categorises this strictly as **Deductive**, which is structurally accurate because the conclusion follows inexorably from the *form* of the premises ($A \subset B \land B \subset C \implies A \subset C$). However, do note that for an exam, this is a **valid deductive argument**, yet **factually unsound** because Premise 2 is empirically flawed.
 
-> \[!warning\] ⚠️ Exam Trap & Edge Case: The Illusion of High Sample Size
+> [!warning] ⚠️ Exam Trap & Edge Case: The Illusion of High Sample Size
 > A recurring error on examinations is presuming that an inductive argument becomes "deductive" once the sample size becomes exceedingly large (e.g., observing 10,000,000 cases). Magnitude of evidence never transforms induction into deduction. Unless a universal boundary condition or exhaustive mathematical proof is applied, empirical enumeration remains strictly **inductive**.
 
 ## 📐 Exemplary Derivations & Application Catalogue
@@ -198,7 +198,7 @@ All formal arguments within mathematics, science, and dialectics bifurcate into 
 
 #### 3. Euclidean Geometric Angle Resolution
 
-> \[!example\] 🧪 Step-by-Step Derivation: Right Triangle Interior Angles
+> [!example] 🧪 Step-by-Step Derivation: Right Triangle Interior Angles
 > Given a right-angled Euclidean triangle with known angle $A = 60^\circ$ and target angle $x$:
 >
 > 1. **Universal Theorem**: The interior angles of any planar triangle sum strictly to $180^\circ$:
@@ -242,7 +242,7 @@ All formal arguments within mathematics, science, and dialectics bifurcate into 
 
 ## 🔢 High-Yield Quick Review Checklist
 
-> \[!check\] 🔢 Diagnostic Decision Tree
+> [!check] 🔢 Diagnostic Decision Tree
 > When identifying reasoning types on assessments, query the following:
 >
 > 1. **Is the premise relying on historical observations, physical trials, or repeating patterns?**

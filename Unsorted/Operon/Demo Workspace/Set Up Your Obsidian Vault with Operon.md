@@ -18,6 +18,9 @@ treeDoneDescendantCount: 0
 treeOpenDescendantCount: 43
 totalEstimate: 67500
 cssclasses:
+sr-due: 2026-11-01
+sr-interval: 1
+sr-ease: 210
 ---
 
 # [[Set Up Your Obsidian Vault with Operon]]

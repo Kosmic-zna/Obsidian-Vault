@@ -1,4 +1,6 @@
 {
   "cssTheme": "Underwater",
-  "showRibbon": true
+  "showRibbon": true,
+  "accentColor": "#2986ff",
+  "baseFontSizeAction": true
 }

@@ -219,10 +219,11 @@
       "isPinned": false,
       "isHidden": false,
       "customOrder": [
-        "Resources",
+        "Problem Solving Strategies (MATH).md",
         "Types of Reasoning (MATH).md",
         "Nature of Statistics (MATH).md",
-        "Descriptive Statistics, Grouped and Ungrouped (MATH).md"
+        "Descriptive Statistics, Grouped and Ungrouped (MATH).md",
+        "Resources"
       ],
       "sortOrder": "custom",
       "ctime": 1793377290309,
@@ -746,6 +747,12 @@
       "isHidden": false,
       "ctime": 1793377309215,
       "mtime": 1793377309215
+    },
+    "Year 1/Term 1/MATH/Module 3/Problem Solving Strategies (MATH).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793378538483,
+      "mtime": 1793378538483
     }
   },
   "showHidden": false,
