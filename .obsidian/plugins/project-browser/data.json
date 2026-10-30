@@ -84,7 +84,7 @@
     "defaultViewMode": "Detailed Cards",
     "defaultViewOrder": "ModifiedDate",
     "defaultViewPriorityVisibility": true,
-    "defaultViewPriorityGrouping": true
+    "defaultViewPriorityGrouping": false
   },
   "defaultState": "Idea",
   "priorities": [

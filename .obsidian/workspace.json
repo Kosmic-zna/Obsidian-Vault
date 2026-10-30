@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Term 1/CS/Module 2/Hardware and Software Systems.md",
-                "mode": "source",
+                "file": "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Hardware and Software Systems"
+              "title": "Module 1-3, Hardware, Software, Network Systems"
             }
           },
           {
@@ -62,6 +62,16 @@
             }
           },
           {
+            "id": "855cbca9fda51354",
+            "type": "leaf",
+            "state": {
+              "type": "operon-flow-time",
+              "state": {},
+              "icon": "hourglass",
+              "title": "FlowTime"
+            }
+          },
+          {
             "id": "a83a92517fb1a7a4",
             "type": "leaf",
             "state": {
@@ -89,22 +99,6 @@
               },
               "icon": "lucide-bookmark",
               "title": "Bookmarks"
-            }
-          }
-        ]
-      },
-      {
-        "id": "d2e56b91e9297dd8",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "855cbca9fda51354",
-            "type": "leaf",
-            "state": {
-              "type": "operon-flow-time",
-              "state": {},
-              "icon": "hourglass",
-              "title": "FlowTime"
             }
           }
         ]
@@ -197,9 +191,9 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Term 1/CS/Module 2/Hardware and Software Systems.md",
+                "file": "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
                 "followCursor": false,
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
@@ -242,27 +236,31 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "855cbca9fda51354",
+  "active": "a29bdf29231c874d",
   "lastOpenFiles": [
+    "Term 1/CS/Module 2/Hardware and Software Systems/Page 1.md",
+    "Term 1/CS/Module 2/Module 1-3, Hardware, Software, Network Systems.md",
+    "Term 1/CS/Module 2/cs100_comprehensive_exam_reviewer.md",
+    "Term 1/CS/Module 2/Hardware and Software Systems/Page 2.md",
+    "Term 1/CS/Module 2/Hardware and Software Systems/folder-settings.pbs",
+    "Term 1/CS/Module 2/Hardware and Software Systems",
+    "Unsorted/2026-10-30.md",
+    "TO DO LIST.md",
     "Term 1/CS/Module 1/CS Module 1-3.docx",
     "Term 1/CS/Module 1/Number System.md",
-    "Operon/Demo Workspace/Operon Basics Project.md",
-    "Operon/Tables/Default table.table",
-    "Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
-    "Operon/Demo Workspace/Operon Command Palette.md",
-    "TO DO LIST.md",
-    "Operon/Demo Workspace",
-    "Operon/Tasks",
-    "Operon/Tables",
-    "Operon",
-    "Term 1/CS/Module 2/Hardware and Software Systems.md",
+    "Unsorted/Operon/Demo Workspace/Operon Basics Project.md",
+    "Unsorted/Operon/Tables/Default table.table",
+    "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
+    "Unsorted/Operon/Demo Workspace/Operon Command Palette.md",
+    "Unsorted/Operon/Demo Workspace",
+    "Unsorted/Operon/Tasks",
+    "Unsorted/Operon/Tables",
+    "Unsorted/Operon",
     "Untitled.md",
     "Term 1/CS/Module 2/Drawing 2026-10-30 07.29.56.excalidraw.md",
     "Term 1/HUM/Module 2/HUM categorical syllogisms & square of opposition.docx",
     "Term 1/IT(L)/IT notes (sept 8).docx",
-    "Unsorted/1st Year/Term 1/Apportionment Cheats.xlsx",
     "Unsorted/1st Year/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
-    "Unsorted/1st Year/Term 1/Coursera M4R94T3GS4OM.pdf",
     "Unsorted/1st Year/Term 1/Infographic for VE about teamwork.png",
     "Unsorted/1st Year/Term 1/meme.jpg",
     "Unsorted/1st Year/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",

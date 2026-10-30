@@ -475,8 +475,8 @@
 		"trackerHistoryDays": 7,
 		"trackerShowStatusBarTimer": true,
 		"trackerTaskDescriptionClickAction": "openTaskEditor",
-		"flowTimeMode": "tracktime",
-		"flowTimeSessionMinutes": 25,
+		"flowTimeMode": "flowtime",
+		"flowTimeSessionMinutes": 72,
 		"flowTimePauseMinutes": 5,
 		"flowTimeUseLastSelectedDuration": false,
 		"flowTimeDefaultSessionMinutes": 25,
@@ -1527,7 +1527,7 @@
 			"fileBindings": [
 				{
 					"id": "table-preset-my-first-table",
-					"path": "Operon/Tables/Default table.table"
+					"path": "Unsorted/Operon/Tables/Default table.table"
 				}
 			],
 			"initialized": true,
@@ -3163,7 +3163,12 @@
 	"state": {
 		"pinnedTasks": {
 			"version": 2,
-			"itemsById": {}
+			"itemsById": {
+				"7tg5qxz": {
+					"pinned": true,
+					"updatedAt": "2026-10-30T00:12:09.326Z"
+				}
+			}
 		}
 	}
 }
