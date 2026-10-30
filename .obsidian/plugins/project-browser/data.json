@@ -86,7 +86,6 @@
     "defaultViewPriorityVisibility": true,
     "defaultViewPriorityGrouping": false
   },
-  "defaultState": "Idea",
   "priorities": [
     {
       "name": "High",
@@ -124,7 +123,14 @@
         "mkv",
         "mov",
         "mp4",
-        "ogv"
+        "ogv",
+        "docx",
+        "doc",
+        "pptx",
+        "xlsx",
+        "xls",
+        "excalidraw",
+        "table"
       ],
       "hidden": [
         "pbs"
@@ -159,7 +165,14 @@
         "mkv",
         "mov",
         "mp4",
-        "ogv"
+        "ogv",
+        "docx",
+        "doc",
+        "pptx",
+        "xlsx",
+        "xls",
+        "excalidraw",
+        "table"
       ]
     }
   },

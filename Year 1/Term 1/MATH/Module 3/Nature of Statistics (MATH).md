@@ -1,3 +1,6 @@
+---
+state: "[[Idea]]"
+---
 # 📊 The Nature of Statistics
 
 ## 📖 Prerequisite Lexicon: Foundational Building Blocks

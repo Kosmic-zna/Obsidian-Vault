@@ -3105,7 +3105,7 @@
 			"version": 1,
 			"workspaceTweaksHideScrollbars": false,
 			"workspaceTweaksBackgroundDimming": 50,
-			"workspaceTweaksCollapseProperties": false,
+			"workspaceTweaksCollapseProperties": true,
 			"workspaceTweaksPropertiesScope": "operon-file-tasks",
 			"workspaceTweaksPropertiesExcludedFolders": [],
 			"workspaceTweaksCompactSidebarTabIcons": false
