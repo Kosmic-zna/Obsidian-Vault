@@ -22,24 +22,20 @@
             }
           },
           {
-            "id": "8cad377f50c64632",
+            "id": "9ac3fa34df0cba6a",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "pm-project",
               "state": {
-                "file": "Important/To Do List.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
+                "scope": {
+                  "kind": "project",
+                  "path": "Projects/School Dashboard/School Dashboard.md"
+                },
+                "filePath": "Projects/School Dashboard/School Dashboard.md",
+                "anchor": "Projects/School Dashboard/School Dashboard.md"
               },
-              "icon": "lucide-trello",
-              "title": "To Do List"
+              "icon": "chart-gantt",
+              "title": "School Dashboard"
             }
           }
         ],
@@ -193,7 +189,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Important/To Do List.md",
+                "file": "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -247,56 +243,58 @@
       "operon:Operon Table": false,
       "operon:Open Pinned Tasks": false,
       "dashboard-hub:Open dashboard hub": false,
-      "notion-bases:Notion Bases": false
+      "notion-bases:Notion Bases": false,
+      "progress-tracker:Progress Tracker": false,
+      "project-manager:Project manager": false
     }
   },
-  "active": "8cad377f50c64632",
+  "active": "9ac3fa34df0cba6a",
   "lastOpenFiles": [
+    "Projects/School Dashboard/To Do List.md",
+    "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+    "Projects/School Dashboard/_tasks/using-functions-methods.md",
+    "Projects/School Dashboard/_tasks/practice-task.md",
+    "Projects/School Dashboard/_tasks/learning-task.md",
+    "Projects/School Dashboard/_tasks/correlation-and-regression.md",
+    "Projects/School Dashboard/_tasks/ai-ethics,-responsible-use.md",
+    "Projects/School Dashboard/_tasks/review-for-math.md",
+    "Projects/School Dashboard/_tasks/review-math.md",
+    "Projects/School Dashboard/_tasks/finish-codechum.md",
+    "Projects/School Dashboard/_tasks/review-for-it(l).md",
+    "Projects/School Dashboard/_tasks/review-for-hum.md",
+    "Projects/School Dashboard/School Dashboard.md",
+    "Projects/School Dashboard/_tasks",
+    "Projects/School Dashboard",
+    "Projects/test/_tasks/3.md",
+    "Projects/test/_tasks/2.md",
+    "Projects/test/_tasks/1.md",
+    "Projects/test/_tasks/ee.md",
+    "Projects/test/_tasks/wwaw.md",
+    "Projects/test/_tasks/da.md",
+    "Projects/Dashboard/Dashboard.md",
+    "Projects/Dashboard/_tasks",
+    "Projects/Dashboard",
+    "Projects",
     "Untitled 1.md",
     "_database.md",
-    "Important/To Do List.md",
     "Untitled.md",
     "Dashboards/Test.dashboard",
     "Dashboards/Timeline/Timeline/2026-10-31.md",
     "Dashboards/Timeline/Timeline",
     "Dashboards/Timeline",
     "Dashboards",
-    "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Unsorted/Operon 1/Tasks",
-    "Unsorted/Operon 1",
-    "Year 1/Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx",
-    "Year 1/Term 1/IT(L)/IT notes (sept 8).docx",
     "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
     "Year 1/Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
-    "Year 1/Term 1/MATH/Module 3/Problem Solving Strategies (MATH).md",
-    "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
-    "Year 1/Term 1/AI/Untitled.md",
-    "Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
-    "Unsorted/Random/Term 1/Reviewers/reviewer template (new) - Copy.docx",
-    "Unsorted/Random/Term 1/Printed Notes/~$M categorical syllogisms & square of opposition.docx",
     "Unsorted/Random/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
     "Unsorted/Random/Term 1/solution.png",
     "Unsorted/Random/Term 1/solution (2).png",
     "Unsorted/Random/Term 1/meme.jpg",
     "Unsorted/Random/Term 1/Infographic for VE about teamwork.png",
     "Unsorted/Random/Term 1/Introduce myself.png",
-    "Unsorted/Random/Term 1/cs100_comprehensive_exam_reviewer.md",
     "Unsorted/Random/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
     "Unsorted/Random/Term 1/868845380_972292148761577_63461927135347969_n.png",
     "Unsorted/Random/Term 1/al.png",
-    "Year 1/Term 1/MATH/Module 3/Resources/Skewness.png",
-    "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
-    "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
-    "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
-    "Year 1/Term 1/CS/Module 1/Number System.md",
-    "Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
-    "Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
-    "Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
-    "Important/Review for hum.md",
-    "Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
-    "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
-    "Term 1/IT/Module 2/Arrays (IT).md",
-    "Unsorted/Operon/Demo Workspace/Operon Command Palette.md",
-    "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md"
+    "Year 1/Term 1/MATH/Module 3/Resources/Skewness.png"
   ]
 }

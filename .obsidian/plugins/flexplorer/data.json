@@ -5,7 +5,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "Important",
+        "Projects",
         "Year 1",
         "Unsorted"
       ]
@@ -83,20 +83,6 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": []
-    },
-    "Important": {
-      "isPinned": false,
-      "isHidden": false,
-      "sortOrder": "custom",
-      "customOrder": [
-        "To Do List.md"
-      ]
-    },
-    "Important/To Do List.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793375969446,
-      "mtime": 1793410468571
     },
     "Year 1": {
       "isPinned": false,
@@ -753,6 +739,112 @@
       "isHidden": false,
       "ctime": 1793378538483,
       "mtime": 1793378899173
+    },
+    "Projects": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "School Dashboard"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793412082024,
+      "mtime": 1793412082024
+    },
+    "Projects/School Dashboard": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "To Do List.md",
+        "School Dashboard.md",
+        "_tasks"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793412743627,
+      "mtime": 1793412743627
+    },
+    "Projects/School Dashboard/_tasks": {
+      "isPinned": false,
+      "isHidden": true,
+      "customOrder": [
+        "using-functions-methods.md",
+        "practice-task.md",
+        "learning-task.md",
+        "correlation-and-regression.md",
+        "ai-ethics,-responsible-use.md",
+        "review-for-math.md",
+        "finish-codechum.md",
+        "review-for-it(l).md",
+        "review-for-hum.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793412743632,
+      "mtime": 1793412743632
+    },
+    "Projects/School Dashboard/School Dashboard.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793412743639,
+      "mtime": 1793413628239
+    },
+    "Projects/School Dashboard/_tasks/review-for-hum.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793412991364,
+      "mtime": 1793412991364
+    },
+    "Projects/School Dashboard/_tasks/review-for-it(l).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413035654,
+      "mtime": 1793413035654
+    },
+    "Projects/School Dashboard/_tasks/finish-codechum.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413070709,
+      "mtime": 1793413070709
+    },
+    "Projects/School Dashboard/_tasks/review-for-math.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413212739,
+      "mtime": 1793413212739
+    },
+    "Projects/School Dashboard/_tasks/ai-ethics,-responsible-use.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413479587,
+      "mtime": 1793413479587
+    },
+    "Projects/School Dashboard/_tasks/correlation-and-regression.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413531160,
+      "mtime": 1793413628234
+    },
+    "Projects/School Dashboard/_tasks/learning-task.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413531163,
+      "mtime": 1793413531163
+    },
+    "Projects/School Dashboard/_tasks/practice-task.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413531170,
+      "mtime": 1793413531170
+    },
+    "Projects/School Dashboard/_tasks/using-functions-methods.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793413605628,
+      "mtime": 1793413605628
+    },
+    "Projects/School Dashboard/To Do List.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793375969446,
+      "mtime": 1793412887547
     }
   },
   "showHidden": false,
