@@ -1,13 +1,13 @@
 ---
 operonId: l1dk70s
-status: Project.Planned
+status: in-progress
 priority: B
 dateScheduled: 2026-10-30
 dateDue: 2026-11-06
 taskIcon: sparkles
 taskColor: "#111827"
 datetimeCreated: 2026-10-30T07:35:32
-datetimeModified: 2026-10-31T00:05:26
+datetimeModified: 2026-10-31T09:36:06
 progress: 2
 directSubtaskCount: 11
 directDoneSubtaskCount: 0
@@ -16,6 +16,8 @@ treeDescendantCount: 44
 treeDoneDescendantCount: 1
 treeOpenDescendantCount: 43
 totalEstimate: 8700
+started: 2026-10-31
+totalDuration: 4
 ---
 
 # [[Operon Basics Project]]
@@ -45,9 +47,9 @@ This is a working basics project for exploring Operon. Every checklist item belo
 
 ## Plan On The Calendar
 
-- [ ] Plan On The Calendar #operon-demo #operon-demo-section {{operonId:: pnqei6v}} {{status:: Project.Planned}} {{priority:: B}} {{totalEstimate:: 3600}} {{parentTask:: l1dk70s}} {{progress:: 0}} {{directSubtaskCount:: 3}} {{directDoneSubtaskCount:: 0}} {{directOpenSubtaskCount:: 3}} {{treeDescendantCount:: 3}} {{treeDoneDescendantCount:: 0}} {{treeOpenDescendantCount:: 3}} {{taskIcon:: calendar-days}} {{taskColor:: EA580C}} {{note:: Turns task lists into time-aware planning without forcing every task onto the calendar.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
+- [ ] Plan On The Calendar #operon-demo #operon-demo-section {{operonId:: pnqei6v}} {{status:: Project.Planned}} {{priority:: B}} {{totalEstimate:: 3600}} {{totalDuration:: 4}} {{parentTask:: l1dk70s}} {{progress:: 0}} {{directSubtaskCount:: 3}} {{directDoneSubtaskCount:: 0}} {{directOpenSubtaskCount:: 3}} {{treeDescendantCount:: 3}} {{treeDoneDescendantCount:: 0}} {{treeOpenDescendantCount:: 3}} {{taskIcon:: calendar-days}} {{taskColor:: EA580C}} {{note:: Turns task lists into time-aware planning without forcing every task onto the calendar.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-31T09:36:06}}
   - [ ] Reschedule this task from the Calendar #operon-demo #calendar {{operonId:: 3nutws8}} {{status:: Project.Planned}} {{priority:: B}} {{taskIcon:: calendar-days}} {{taskColor:: EA580C}} {{dateScheduled:: 2026-10-31}} {{dateDue:: 2026-11-06}} {{note:: Shows how planned work can move when the day changes without losing the task itself.}} {{parentTask:: pnqei6v}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
-  - [ ] Move this timed task to another time block #operon-demo #calendar {{operonId:: u2jsba0}} {{status:: Project.Planned}} {{priority:: A}} {{taskIcon:: calendar-days}} {{taskColor:: EA580C}} {{dateScheduled:: 2026-11-02}} {{datetimeStart:: 2026-11-02T09:00:00}} {{datetimeEnd:: 2026-11-02T10:00:00}} {{estimate:: 3600}} {{note:: Shows how scheduled work can move with the day instead of becoming stale the moment plans change.}} {{parentTask:: pnqei6v}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
+  - [ ] Move this timed task to another time block #operon-demo #calendar {{operonId:: u2jsba0}} {{status:: Project.InProgress}} {{priority:: A}} {{dateScheduled:: 2026-11-02}} {{datetimeStart:: 2026-11-02T09:00:00}} {{datetimeEnd:: 2026-11-02T10:00:00}} {{estimate:: 3600}} {{duration:: 4}} {{parentTask:: pnqei6v}} {{trackers:: 2026-10-31T09:36:02/2026-10-31T09:36:06}} {{taskIcon:: calendar-days}} {{taskColor:: EA580C}} {{note:: Shows how scheduled work can move with the day instead of becoming stale the moment plans change.}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-31T09:36:06}}
   - [ ] Clear the scheduled date from this task #operon-demo #calendar {{operonId:: 40g6s5s}} {{status:: Project.Planned}} {{priority:: C}} {{taskIcon:: calendar-days}} {{taskColor:: EA580C}} {{dateScheduled:: 2026-11-03}} {{note:: Separates useful planning from forced scheduling when a task no longer needs a calendar slot.}} {{parentTask:: pnqei6v}} {{datetimeCreated:: 2026-10-30T07:35:32}} {{datetimeModified:: 2026-10-30T07:35:32}}
 
 ## Move Work On Kanban

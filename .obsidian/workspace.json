@@ -100,6 +100,16 @@
               "icon": "lucide-bookmark",
               "title": "Bookmarks"
             }
+          },
+          {
+            "id": "2d7cf2714830ea12",
+            "type": "leaf",
+            "state": {
+              "type": "operon-flow-time",
+              "state": {},
+              "icon": "hourglass",
+              "title": "FlowTime"
+            }
           }
         ]
       }
@@ -235,15 +245,25 @@
       "operon:Operon Calendar": false,
       "operon:Operon Kanban": false,
       "operon:Operon Table": false,
-      "operon:Open Pinned Tasks": false
+      "operon:Open Pinned Tasks": false,
+      "dashboard-hub:Open dashboard hub": false,
+      "notion-bases:Notion Bases": false
     }
   },
   "active": "8cad377f50c64632",
   "lastOpenFiles": [
+    "Untitled 1.md",
+    "_database.md",
+    "Important/To Do List.md",
+    "Untitled.md",
+    "Dashboards/Test.dashboard",
+    "Dashboards/Timeline/Timeline/2026-10-31.md",
+    "Dashboards/Timeline/Timeline",
+    "Dashboards/Timeline",
+    "Dashboards",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Unsorted/Operon 1/Tasks",
     "Unsorted/Operon 1",
-    "Important/To Do List.md",
     "Year 1/Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx",
     "Year 1/Term 1/IT(L)/IT notes (sept 8).docx",
     "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
@@ -254,10 +274,6 @@
     "Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
     "Unsorted/Random/Term 1/Reviewers/reviewer template (new) - Copy.docx",
     "Unsorted/Random/Term 1/Printed Notes/~$M categorical syllogisms & square of opposition.docx",
-    "Unsorted/Random/Term 1/Reviewers/HUM Lesson 1-4 reviewer.docx",
-    "Unsorted/Random/Term 1/Printed Notes/[  [   Printed Notes Template   ]  ].docx",
-    "Unsorted/Random/Term 1/Printed Notes/~$ [   Printed Notes Template   ]  ].docx",
-    "Unsorted/Random/Term 1/Printed Notes/HUM categorical syllogisms & square of opposition.docx",
     "Unsorted/Random/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
     "Unsorted/Random/Term 1/solution.png",
     "Unsorted/Random/Term 1/solution (2).png",
@@ -278,12 +294,9 @@
     "Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
     "Important/Review for hum.md",
     "Term 1/MATH/Module 3/Types of Reasoning (MATH).md",
-    "Untitled.md",
     "Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
     "Term 1/IT/Module 2/Arrays (IT).md",
     "Unsorted/Operon/Demo Workspace/Operon Command Palette.md",
-    "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md",
-    "Unsorted/Operon/Demo Workspace/Operon Basics Project.md",
-    "Term 1/MATH/Descriptive Statistics (MATH).md"
+    "Unsorted/Operon/Demo Workspace/Set Up Your Obsidian Vault with Operon.md"
   ]
 }

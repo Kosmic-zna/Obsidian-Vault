@@ -1,6 +1,9 @@
 ---
 
 kanban-plugin: board
+status: done
+started: 2026-10-31
+completed: 2026-10-31
 
 ---
 
@@ -8,7 +11,7 @@ kanban-plugin: board
 
 - [ ] review for HUM ^zsy0i9
 - [ ] review for IT(L)
-- [ ] make HUM docx reviewer
+- [ ] make HUM docx reviewer ^at692f
 
 
 ## Advanced Tasks

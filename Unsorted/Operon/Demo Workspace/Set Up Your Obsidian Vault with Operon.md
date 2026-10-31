@@ -1,6 +1,6 @@
 ---
 operonId: bui5bdb
-status: Project.Brainstorming
+status: todo
 priority: S
 dateScheduled: 2026-10-31
 dateDue: 2026-11-06

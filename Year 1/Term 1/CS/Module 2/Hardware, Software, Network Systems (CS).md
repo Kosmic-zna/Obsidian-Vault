@@ -1,5 +1,6 @@
 ---
 state: "[[Final]]"
+status: todo
 ---
 # 💻 CS100: Master Architecture & Comprehensive Exam Reviewer
 
