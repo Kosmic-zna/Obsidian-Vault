@@ -22,9 +22,10 @@ kanban-plugin: board
 
 ## Doing
 
+- [ ] Service proposal (NSTP)
 
 
-## FInished
+## Finished
 
 **Complete**
 
