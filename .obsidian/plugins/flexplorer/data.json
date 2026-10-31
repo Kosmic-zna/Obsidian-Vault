@@ -15,6 +15,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Operon 1",
         "Random",
         "Operon",
         "2026-10-30.md"
@@ -753,6 +754,24 @@
       "isHidden": false,
       "ctime": 1793378538483,
       "mtime": 1793378899173
+    },
+    "Unsorted/Operon 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Tasks"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793408527862,
+      "mtime": 1793408527862
+    },
+    "Unsorted/Operon 1/Tasks": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [],
+      "sortOrder": "custom",
+      "ctime": 1793408527928,
+      "mtime": 1793408527928
     }
   },
   "showHidden": false,
