@@ -4,12 +4,12 @@ id: "jvmlnfw2mvvrn5c7"
 title: "School Dashboard"
 color: "#8b72be"
 icon: "📋"
-taskIds: ["[[review-for-hum|Review for hum]]", "[[review-for-it(l)|Review for IT(L)]]", "[[finish-codechum|Finish codechum]]", "[[review-for-math|Review for math]]", "[[ai-ethics,-responsible-use|ai ethics, responsible use]]", "[[correlation-and-regression|Correlation and regression]]", "[[using-functions-methods|Using functions/methods]]"]
+taskIds: ["[[review-for-hum|Review for hum]]", "[[review-for-it(l)|Review for IT(L)]]", "[[finish-codechum|Finish codechum]]", "[[review-for-math|Review for math]]", "[[ai-ethics,-responsible-use|ai ethics, responsible use]]", "[[correlation-and-regression|Correlation and regression]]", "[[using-functions-methods|Using functions/methods]]", "[[test-on-informal-fallacies|Test on informal fallacies]]"]
 customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-10-31T02:27:08.228Z"
+updatedAt: "2026-10-31T02:45:20.886Z"
 config:
   statuses:
     - id: "todo"
@@ -46,3 +46,4 @@ Things to do at school
 - [ ] [[ai-ethics,-responsible-use|ai ethics, responsible use]]
 - [ ] [[correlation-and-regression|Correlation and regression]]
 - [ ] [[using-functions-methods|Using functions/methods]]
+- [ ] [[test-on-informal-fallacies|Test on informal fallacies]]

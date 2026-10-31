@@ -766,6 +766,9 @@
       "isPinned": false,
       "isHidden": true,
       "customOrder": [
+        "graded-test.md",
+        "practice-test.md",
+        "test-on-informal-fallacies.md",
         "using-functions-methods.md",
         "practice-task.md",
         "learning-task.md",
@@ -845,6 +848,24 @@
       "isHidden": false,
       "ctime": 1793375969446,
       "mtime": 1793412887547
+    },
+    "Projects/School Dashboard/_tasks/test-on-informal-fallacies.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793414532281,
+      "mtime": 1793414532281
+    },
+    "Projects/School Dashboard/_tasks/practice-test.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793414532285,
+      "mtime": 1793414532285
+    },
+    "Projects/School Dashboard/_tasks/graded-test.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793414532291,
+      "mtime": 1793414532291
     }
   },
   "showHidden": false,
