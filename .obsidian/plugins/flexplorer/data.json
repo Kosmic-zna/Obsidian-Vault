@@ -766,6 +766,7 @@
       "isPinned": false,
       "isHidden": true,
       "customOrder": [
+        "service-learning-proposal.md",
         "graded-test.md",
         "practice-test.md",
         "test-on-informal-fallacies.md",
@@ -787,7 +788,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793412743639,
-      "mtime": 1793413628239
+      "mtime": 1793414720911
     },
     "Projects/School Dashboard/_tasks/review-for-hum.md": {
       "isPinned": false,
@@ -853,7 +854,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793414532281,
-      "mtime": 1793414532281
+      "mtime": 1793414720898
     },
     "Projects/School Dashboard/_tasks/practice-test.md": {
       "isPinned": false,
@@ -866,6 +867,12 @@
       "isHidden": false,
       "ctime": 1793414532291,
       "mtime": 1793414532291
+    },
+    "Projects/School Dashboard/_tasks/service-learning-proposal.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793419059679,
+      "mtime": 1793419059679
     }
   },
   "showHidden": false,

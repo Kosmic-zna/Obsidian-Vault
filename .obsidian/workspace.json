@@ -25,7 +25,7 @@
             }
           },
           {
-            "id": "8ea51f554edeca7a",
+            "id": "2370d031fddbcffe",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -37,8 +37,42 @@
               "icon": "lucide-file",
               "title": "Formal & Informal Fallacies (HUM)"
             }
+          },
+          {
+            "id": "8ce31d21a8248df9",
+            "type": "leaf",
+            "state": {
+              "type": "pm-project-overview",
+              "state": {
+                "filePath": "Projects/School Dashboard/School Dashboard.md"
+              },
+              "icon": "gauge",
+              "title": "School Dashboard"
+            }
+          },
+          {
+            "id": "2abe5d846779a53d",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "Projects/School Dashboard/To Do List.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "To Do List"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -188,7 +222,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+                "file": "Projects/School Dashboard/To Do List.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -247,13 +281,15 @@
       "project-manager:Project manager": false
     }
   },
-  "active": "9ac3fa34df0cba6a",
+  "active": "8ce31d21a8248df9",
   "lastOpenFiles": [
+    "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+    "Projects/School Dashboard/_tasks/service-learning-proposal.md",
+    "Year 1/Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx",
     "Projects/School Dashboard/_tasks/graded-test.md",
     "Projects/School Dashboard/_tasks/practice-test.md",
     "Projects/School Dashboard/_tasks/test-on-informal-fallacies.md",
     "Projects/School Dashboard/To Do List.md",
-    "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Projects/School Dashboard/_tasks/using-functions-methods.md",
     "Projects/School Dashboard/_tasks/practice-task.md",
     "Projects/School Dashboard/_tasks/learning-task.md",
@@ -279,12 +315,10 @@
     "Projects",
     "Untitled 1.md",
     "_database.md",
-    "Untitled.md",
     "Dashboards/Test.dashboard",
     "Dashboards/Timeline/Timeline",
     "Dashboards/Timeline",
     "Dashboards",
-    "Unsorted/Operon 1/Tasks",
     "Unsorted/Random/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
     "Unsorted/Random/Term 1/solution.png",
     "Unsorted/Random/Term 1/solution (2).png",
