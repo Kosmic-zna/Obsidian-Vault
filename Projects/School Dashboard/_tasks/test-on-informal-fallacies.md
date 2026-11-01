@@ -5,7 +5,7 @@ parentId:
 id: fc0u0zcomvvskuct
 title: Test on informal fallacies
 type: task
-status: blocked
+status: done
 priority: high
 start: 2026-10-31
 due: 2026-10-31
@@ -18,11 +18,12 @@ subtaskIds:
   - "[[graded-test|graded test]]"
 dependencies: []
 createdAt: 2026-10-31T02:38:35.693Z
-updatedAt: 2026-10-31T02:45:20.886Z
+updatedAt: 2026-10-31T15:32:31.769Z
+completed: 2026-10-31
 ---
 
 Project: [[School Dashboard|School Dashboard]]
 
 ## Subtasks
 - [ ] [[practice-test|practice test]]
-- [ ] [[graded-test|graded test]]
+- [x] [[graded-test|graded test]]

@@ -294,41 +294,42 @@ state: "[[Final]]"
 #### 1. **Argumentum ad Baculum (Appeal to Force / Stick)**
 - ⤷ **Definition**: Attempting to win an argument or force the acceptance of a conclusion by threatening physical force, coercion, intimidation, or negative consequences rather than providing logical evidence (*baculum* = Latin for "club" or "stick").
   - ↳ **Mechanism**: Replaces rational justification with fear ("Agree with me, or else you will suffer harm").
-  - → *Example*: "Chairman, you should vote in favour of my budget proposal, because if you don't, I will make sure the board fires you next week."
+  >→ *Example*: "Chairman, you should vote in favour of my budget proposal, because if you don't, I will make sure the board fires you next week."
 
 #### 2. **Argumentum ad Misericordiam (Appeal to Pity)**
 - ⤷ **Definition**: Attempting to prove a factual conclusion or evade a rule by manipulating the listener's sympathy, guilt, or compassion rather than addressing the objective merits of the case (*misericordia* = Latin for "pity" or "mercy").
   - ↳ **Mechanism**: Substitutes emotional heartbreak for logical proof.
-  - → *Example*: "Professor, I deserve an A on this logic exam because my dog passed away last night, I haven't slept in three days, and my parents will disown me if I fail."
+  >→ *Example*: "Professor, I deserve an A on this logic exam because my dog passed away last night, I haven't slept in three days, and my parents will disown me if I fail."
 
 #### 3. **Argumentum ad Hominem (Attack on the Person)**
 - ⤷ **Definition**: Rejecting someone's argument by attacking the **person** making the claim (their character, circumstances, or past actions) rather than refuting their actual reasoning or evidence (*ad hominem* = Latin for "to the man/person").
   - ↳ **Sub-Type 1: Abusive Ad Hominem** (Direct personal insult): Attacking the speaker's intelligence, morals, or appearance.
   - ↳ **Sub-Type 2: Circumstantial Ad Hominem**: Dismissing a person's argument by claiming they are only making it because of their personal situation, job, nationality, or self-interest.
-    - → *Example (Circumstantial)*: "Of course Dr Reyes argues that hospital funding should be increased—she's a surgeon! Naturally she would say that to line her own pockets, so we can ignore her data."
+    >→ *Example (Circumstantial)*: "Of course Dr Reyes argues that hospital funding should be increased—she's a surgeon! Naturally she would say that to line her own pockets, so we can ignore her data."
+
   - ↳ **Sub-Type 3: Tu Quoque ("You Too" / Appeal to Hypocrisy)**: Deflecting a valid criticism or argument by pointing out that the accuser fails to practise what they preach.
-    - → *Example (Tu Quoque)*: "Dad, you say smoking is fatal and that I should quit, but you've been smoking a pack a day since you were twenty! Therefore, smoking isn't bad for me." (Pointing out the father's hypocrisy does not change the medical fact that smoking causes cancer).
+    >→ *Example (Tu Quoque)*: "Dad, you say smoking is fatal and that I should quit, but you've been smoking a pack a day since you were twenty! Therefore, smoking isn't bad for me." (Pointing out the father's hypocrisy does not change the medical fact that smoking causes cancer).
 
 #### 4. **Fallacy of Accident (Destroying the Exception / Dicto Simpliciter)**
 - ⤷ **Definition**: Applying a general rule rigidly to a specific, atypical case where accidental (special) circumstances make the rule inapplicable.
   - ↳ **Mechanism**: Treats a broad rule of thumb as an absolute, exceptionless law, ignoring context.
-  - → *Example*: "Cutting people with a sharp knife is a crime (General Rule). Surgeons cut people with sharp knives during operations (Specific Exceptional Case). Therefore, surgeons are criminals."
+  > → *Example*: "Cutting people with a sharp knife is a crime (General Rule). Surgeons cut people with sharp knives during operations (Specific Exceptional Case). Therefore, surgeons are criminals."
 
 #### 5. **Ignoratio Elenchi (Irrelevant Conclusion / Missing the Point)**
 - ⤷ **Definition**: Presenting premises that legitimately support *one* conclusion, but then claiming that they prove a *completely different* conclusion (*ignoratio elenchi* = Latin for "ignorance of the refutation").
   - ↳ **Mechanism**: The speaker argues passionately and coherently, but misses the specific target of the debate.
-  - → *Example*: In a courtroom trial determining whether a defendant is *guilty of murder*, the prosecutor spends an hour proving that *murder is a horrific, gruesome crime*. (Proving that murder is horrible does not prove that *this specific defendant* committed it).
+  >→ *Example*: In a courtroom trial determining whether a defendant is *guilty of murder*, the prosecutor spends an hour proving that *murder is a horrific, gruesome crime*. (Proving that murder is horrible does not prove that *this specific defendant* committed it).
 
 #### 6. **Red Herring**
 - ⤷ **Definition**: Deliberately introducing an irrelevant, tangential, or emotionally charged topic in the middle of an argument to divert attention away from the original issue.
   - ↳ **Origin / Intuition**: Named after the practice of dragging a pungent smoked kipper (red herring) across a trail to throw hunting hounds off the scent.
   - ↳ **Distinction from *Ignoratio Elenchi***: In *Ignoratio Elenchi*, the speaker genuinely thinks their premises prove the conclusion (they miss the point). In a *Red Herring*, the speaker **changes the subject** mid-conversation to escape a losing topic.
-  - → *Example*: "You ask why our company polluted the local river? Well, think about how many thousands of jobs our factory provides to the community! Without us, families would starve!"
+  >→ *Example*: "You ask why our company polluted the local river? Well, think about how many thousands of jobs our factory provides to the community! Without us, families would starve!"
 
 #### 7. **Genetic Fallacy**
 - ⤷ **Definition**: Judging the truth or falsity of an idea, claim, or institution solely based on its **historical origin, source, or how it began**, rather than evaluating its current evidence or merits.
   - ↳ **Mechanism**: Assumes that if the birthplace or original motive of an idea was flawed (or noble), the idea itself must permanently remain flawed (or true).
-  - → *Example*: "You shouldn't believe the chemical structure of the benzene ring—the scientist Kekulé only discovered it because he had a bizarre daydream about a snake biting its own tail!" (How the idea originated has no bearing on whether the chemical formula is experimentally true).
+  >→ *Example*: "You shouldn't believe the chemical structure of the benzene ring—the scientist Kekulé only discovered it because he had a bizarre daydream about a snake biting its own tail!" (How the idea originated has no bearing on whether the chemical formula is experimentally true).
 
 ---
 
@@ -339,49 +340,49 @@ state: "[[Final]]"
 > Your handout image spells this **`Argumentum ad Vericundiam`** (with an *i*). The classical Latin spelling is **`Argumentum ad Verecundiam`** (with an *e*, meaning "appeal to modesty/reverence"). Recognise both spellings for your test!
 
 - ⤷ **Definition**: Insisting that a claim is true simply because an authority figure, celebrity, or famous person said so—especially when that person **lacks relevant expertise** in the specific field being discussed.
-  - → *Example*: "This cryptocurrency is guaranteed to triple in value by December because my favourite basketball player endorsed it in a commercial."
+  >→ *Example*: "This cryptocurrency is guaranteed to triple in value by December because my favourite basketball player endorsed it in a commercial."
 
 #### 2. **Argumentum ad Ignorantiam (Appeal to Ignorance)**
 - ⤷ **Definition**: Arguing that a statement must be **TRUE** simply because it has never been proven **FALSE**—or, conversely, arguing that a statement must be **FALSE** simply because it has never been proven **TRUE**.
   - ↳ **Intuition**: *"Absence of evidence is not evidence of absence."* A lack of proof only proves that we do not know yet; it cannot be weaponised as positive proof for either side.
-  - → *Example*: "No scientist has ever been able to prove that telepathy does not exist; therefore, telepathy is real."
+  >→ *Example*: "No scientist has ever been able to prove that telepathy does not exist; therefore, telepathy is real."
 
 #### 3. **Hasty Generalisation (*The Part Constitutes the Whole*)**
 - ⤷ **Definition**: Drawing a sweeping, universal conclusion about an entire population or group based on a sample size that is **too small, unrepresentative, or atypical**.
   - ↳ **Mechanism**: Jumping to conclusions from isolated anecdotes ("What is true of one or two instances must be true of all").
-  - → *Example*: "My first two boyfriends from Manila were unfaithful. Therefore, all men from Manila are cheaters."
+  >→ *Example*: "My first two boyfriends from Manila were unfaithful. Therefore, all men from Manila are cheaters."
 
 #### 4. **Post Hoc, Ergo Propter Hoc (*After This, Therefore Because of This*)**
 - ⤷ **Definition**: Assuming that just because Event $A$ happened *before* Event $B$ in time, Event $A$ must have **caused** Event $B$ (also known as the *False Cause* fallacy).
   - ↳ **Mechanism**: Confuses chronological sequence (correlation/coincidence) with causal connection (causation).
-  - → *Example*: "I wore my lucky unwashed socks to the exam this morning and got the highest score in the class. Therefore, my socks caused me to ace the test."
+  >→ *Example*: "I wore my lucky unwashed socks to the exam this morning and got the highest score in the class. Therefore, my socks caused me to ace the test."
 
 #### 5. **Slippery Slope (*"Si O.A." Fallacy*)**
 - ⤷ **Definition**: Arguing without sufficient evidence that permitting a small, harmless first step will inevitably trigger an unstoppable domino effect of extreme, catastrophic consequences.
   - ↳ **Local Mnemonic (*"Si O.A." / Over-Acting Fallacy*)**: Immediately jumping from a minor action to an exaggerated doomsday scenario.
-  - → *Example*: "If you let your daughter go to a study group until 7:00 PM today, tomorrow she'll stay out past midnight, next month she'll drop out of university, and within a year she'll be living on the streets!"
+  >→ *Example*: "If you let your daughter go to a study group until 7:00 PM today, tomorrow she'll stay out past midnight, next month she'll drop out of university, and within a year she'll be living on the streets!"
 
 #### 6. **Weak Analogy (*"Parang ganito lang 'yan" Fallacy*)**
 - ⤷ **Definition**: Comparing two things that share a few superficial similarities to conclude that they must also be alike in another respect, whilst ignoring **massive, fundamental differences** between them.
   - ↳ **Local Mnemonic (*"Parang ganito lang 'yan"*)**: Forcing a flawed comparison ("It's just like this...") where the two items are completely incomparable on the point that matters.
-  - → *Example*: "Employees are just like nails. Just as you have to hit nails on the head to make them work, you have to bully and strike fear into employees to make them productive."
+  >→ *Example*: "Employees are just like nails. Just as you have to hit nails on the head to make them work, you have to bully and strike fear into employees to make them productive."
 
 #### 7. **Petitio Principii (Begging the Question / Circular Reasoning)**
 - ⤷ **Definition**: An argument in which the conclusion to be proven is **already assumed (explicitly or in disguised wording) inside the premises**.
   - ↳ **Intuition**: Trying to lift yourself off the ground by pulling on your own shoelaces. Instead of offering independent evidence, the speaker just repeats the claim in different words ($A \text{ is true because } A \text{ is true}$).
-  - → *Example*: "Paranormal ghosts are real because I have experienced supernatural spirits with my own eyes." (Assuming that what you experienced was a "supernatural spirit" already presupposes that ghosts are real).
+  >→ *Example*: "Paranormal ghosts are real because I have experienced supernatural spirits with my own eyes." (Assuming that what you experienced was a "supernatural spirit" already presupposes that ghosts are real).
 
 #### 8. **Complex Question (*"Wala kang lusot" Fallacy* / Loaded Question)**
 - ⤷ **Definition**: Asking a single question that secretly smuggles in an unproven, incriminating presupposition, such that **any direct answer ("Yes" or "No") traps the respondent into admitting guilt**.
   - ↳ **Local Mnemonic (*"Wala kang lusot" — No Way Out*)**: A rhetorical trap where both "Yes" and "No" condemn you.
-  - → *Example*: "Have you stopped cheating on your logic exams?"
+  >→ *Example*: "Have you stopped cheating on your logic exams?"
     - ↳ If you answer **"Yes"**: You admit you used to cheat in the past.
     - ↳ If you answer **"No"**: You admit you are still cheating right now.
 
 #### 9. **False Dilemma (*"No Choice" Fallacy* / Black-and-White Fallacy)**
 - ⤷ **Definition**: Artificially restricting a complex situation to **only two extreme choices** ("Either $A$ or $B$"), whilst ignoring viable middle ground or alternative options.
   - ↳ **Local Mnemonic (*"No Choice" Fallacy*)**: Forcing the listener into a corner by pretending no third option exists.
-  - → *Example*: "Either you support every single policy of the administration, or you hate your country and want it to collapse." (Ignores the obvious third option: loving your country whilst criticising specific policies).
+  >→ *Example*: "Either you support every single policy of the administration, or you hate your country and want it to collapse." (Ignores the obvious third option: loving your country whilst criticising specific policies).
 
 ---
 

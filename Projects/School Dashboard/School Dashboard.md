@@ -4,12 +4,12 @@ id: "jvmlnfw2mvvrn5c7"
 title: "School Dashboard"
 color: "#8b72be"
 icon: "📋"
-taskIds: ["[[review-for-hum|Review for hum]]", "[[review-for-it(l)|Review for IT(L)]]", "[[finish-codechum|Finish codechum]]", "[[review-for-math|Review for math]]", "[[ai-ethics,-responsible-use|ai ethics, responsible use]]", "[[correlation-and-regression|Correlation and regression]]", "[[using-functions-methods|Using functions/methods]]", "[[test-on-informal-fallacies|Test on informal fallacies]]", "[[service-learning-proposal|Service Learning Proposal]]"]
+taskIds: ["[[review-for-hum|Review for hum]]", "[[review-for-it(l)|Review for IT(L)]]", "[[finish-codechum|Finish codechum]]", "[[review-for-math|Review for math]]", "[[ai-ethics,-responsible-use|ai ethics, responsible use]]", "[[correlation-and-regression|Correlation and regression]]", "[[using-functions-methods|Using functions/methods]]", "[[test-on-informal-fallacies|Test on informal fallacies]]", "[[service-learning-proposal|Service Learning Proposal]]", "[[review-the-service-proposal-|Review the service proposal ]]"]
 customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-10-31T03:58:01.218Z"
+updatedAt: "2026-10-31T15:32:31.770Z"
 config:
   statuses:
     - id: "todo"
@@ -46,5 +46,6 @@ Things to do at school
 - [ ] [[ai-ethics,-responsible-use|ai ethics, responsible use]]
 - [ ] [[correlation-and-regression|Correlation and regression]]
 - [ ] [[using-functions-methods|Using functions/methods]]
-- [ ] [[test-on-informal-fallacies|Test on informal fallacies]]
-- [ ] [[service-learning-proposal|Service Learning Proposal]]
+- [x] [[test-on-informal-fallacies|Test on informal fallacies]]
+- [x] [[service-learning-proposal|Service Learning Proposal]]
+- [ ] [[review-the-service-proposal-|Review the service proposal ]]

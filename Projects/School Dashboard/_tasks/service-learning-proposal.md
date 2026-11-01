@@ -5,11 +5,11 @@ parentId:
 id: pvyauy6cmvvvdmyl
 title: Service Learning Proposal
 type: task
-status: todo
+status: done
 priority: critical
 start: 2026-10-31
 due: 2026-10-31
-progress: 10
+progress: 100
 assignees: []
 tags:
   - BBL
@@ -17,7 +17,8 @@ tags:
 subtaskIds: []
 dependencies: []
 createdAt: 2026-10-31T03:56:58.365Z
-updatedAt: 2026-10-31T03:58:01.218Z
+updatedAt: 2026-10-31T14:57:33.796Z
+completed: 2026-10-31
 ---
 
 Project: [[School Dashboard|School Dashboard]]

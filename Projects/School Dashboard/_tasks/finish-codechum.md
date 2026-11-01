@@ -2,20 +2,21 @@
 pm-task: true
 projectId: "[[School Dashboard|School Dashboard]]"
 parentId:
-id: "dlm4ooi4mvvrtg52"
-title: "Finish codechum"
-type: "task"
-status: "in-progress"
-priority: "high"
-start: "2026-10-31"
+id: dlm4ooi4mvvrtg52
+title: Finish codechum
+type: task
+status: in-progress
+priority: high
+start: 2026-10-31
 due: ""
-progress: 25
+progress: 45
 assignees: []
-tags: ["Codechum"]
+tags:
+  - Codechum
 subtaskIds: []
 dependencies: []
-createdAt: "2026-10-31T02:17:17.558Z"
-updatedAt: "2026-10-31T02:17:17.558Z"
+createdAt: 2026-10-31T02:17:17.558Z
+updatedAt: 2026-10-31T12:10:50.517Z
 ---
 
 Project: [[School Dashboard|School Dashboard]]

@@ -1,1 +1,1 @@
-{"payload":{"format":"operon-settings-backups","version":1,"generation":1,"processedVersion":"4.3.0","backups":[],"pending":null},"sha256":"021b7217a29a180cc80a1dd8090768c8c6bf91fcd2f38c8e4140d9c4252bc426"}
+{"payload":{"format":"operon-settings-backups","version":1,"generation":3,"processedVersion":"4.4.0","backups":[{"name":"data-20261031T060112487Z-before-4.4.0-0025d505-cb55-472e-8d45-e332dfd64951.json","digest":"658b5c4f5c4df7bf5df8b926b3121f6dbb025b10b432c38cd4386e65226c0b16"}],"pending":null},"sha256":"f4800929c5ae08b8fcb80e6e98bbd312e35879579b58b6e02bd372d11ae85635"}

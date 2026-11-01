@@ -30,49 +30,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
+                "file": "Personal Projects/Godot 4/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Formal & Informal Fallacies (HUM)"
-            }
-          },
-          {
-            "id": "8ce31d21a8248df9",
-            "type": "leaf",
-            "state": {
-              "type": "pm-project-overview",
-              "state": {
-                "filePath": "Projects/School Dashboard/School Dashboard.md"
-              },
-              "icon": "gauge",
-              "title": "School Dashboard"
-            }
-          },
-          {
-            "id": "2abe5d846779a53d",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "Projects/School Dashboard/To Do List.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
-              },
-              "icon": "lucide-trello",
-              "title": "To Do List"
+              "title": "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4)"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -136,8 +103,8 @@
             "state": {
               "type": "operon-flow-time",
               "state": {},
-              "icon": "hourglass",
-              "title": "FlowTime"
+              "icon": "lucide-ghost",
+              "title": "operon-flow-time"
             }
           }
         ]
@@ -222,7 +189,6 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Projects/School Dashboard/To Do List.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -242,7 +208,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -262,72 +228,69 @@
       "pdf-plus:PDF++: Toggle auto-focus": true,
       "pdf-plus:PDF++: Toggle auto-paste": true,
       "omnisearch:Omnisearch": false,
-      "obsidian-excalidraw-plugin:New drawing": false,
-      "templater-obsidian:Templater": false,
+      "obsidian-excalidraw-plugin:New drawing": true,
+      "templater-obsidian:Templater": true,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-kanban:Create new board": false,
-      "obsidian-advanced-slides:Show Slide Preview": false,
-      "obsidian-spaced-repetition:Review flashcards": false,
+      "obsidian-advanced-slides:Show Slide Preview": true,
+      "obsidian-spaced-repetition:Review flashcards": true,
+      "project-manager:Project manager": false,
       "operon:Create New Operon Task": false,
       "operon:Operon Filter View": false,
       "operon:Task Finder": false,
       "operon:Operon Calendar": false,
       "operon:Operon Kanban": false,
       "operon:Operon Table": false,
-      "operon:Open Pinned Tasks": false,
-      "dashboard-hub:Open dashboard hub": false,
-      "notion-bases:Notion Bases": false,
-      "progress-tracker:Progress Tracker": false,
-      "project-manager:Project manager": false
+      "operon:Open Pinned Tasks": false
     }
   },
-  "active": "8ce31d21a8248df9",
+  "active": "ae9cee6e079dc279",
   "lastOpenFiles": [
+    "Operon/Tasks",
+    "Operon",
+    "Personal Projects/Godot 4/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
+    "Personal Projects/Godot 4/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
+    "Personal Projects/Godot 4/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
+    "Personal Projects/Godot 4/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+    "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
+    "Personal Projects/Godot 4/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
+    "Personal Projects/Godot 4/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+    "Personal Projects/Godot 4/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
+    "Personal Projects/Godot 4/🎮 Mod V; Universal Gameplay Systems Engineering.md",
+    "Personal Projects/Godot 4/Master Curriculum & Reference Compendium.md",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
-    "Projects/School Dashboard/_tasks/service-learning-proposal.md",
-    "Year 1/Term 1/HUM/Module 2/Categorical syllogisms & square of opposition (HUM).docx",
-    "Projects/School Dashboard/_tasks/graded-test.md",
-    "Projects/School Dashboard/_tasks/practice-test.md",
-    "Projects/School Dashboard/_tasks/test-on-informal-fallacies.md",
-    "Projects/School Dashboard/To Do List.md",
-    "Projects/School Dashboard/_tasks/using-functions-methods.md",
-    "Projects/School Dashboard/_tasks/practice-task.md",
-    "Projects/School Dashboard/_tasks/learning-task.md",
-    "Projects/School Dashboard/_tasks/correlation-and-regression.md",
-    "Projects/School Dashboard/_tasks/ai-ethics,-responsible-use.md",
-    "Projects/School Dashboard/_tasks/review-for-math.md",
-    "Projects/School Dashboard/_tasks/review-math.md",
-    "Projects/School Dashboard/_tasks/finish-codechum.md",
-    "Projects/School Dashboard/_tasks/review-for-it(l).md",
-    "Projects/School Dashboard/_tasks/review-for-hum.md",
-    "Projects/School Dashboard/School Dashboard.md",
-    "Projects/School Dashboard/_tasks",
-    "Projects/School Dashboard",
-    "Projects/test/_tasks/3.md",
-    "Projects/test/_tasks/2.md",
-    "Projects/test/_tasks/1.md",
-    "Projects/test/_tasks/ee.md",
-    "Projects/test/_tasks/wwaw.md",
-    "Projects/test/_tasks/da.md",
-    "Projects/Dashboard/Dashboard.md",
-    "Projects/Dashboard/_tasks",
-    "Projects/Dashboard",
-    "Projects",
-    "Untitled 1.md",
-    "_database.md",
-    "Dashboards/Test.dashboard",
-    "Dashboards/Timeline/Timeline",
-    "Dashboards/Timeline",
-    "Dashboards",
-    "Unsorted/Random/Term 1/When the exam is so hard you pull out ts emote 🙏🤲.png",
-    "Unsorted/Random/Term 1/solution.png",
-    "Unsorted/Random/Term 1/solution (2).png",
-    "Unsorted/Random/Term 1/meme.jpg",
-    "Unsorted/Random/Term 1/Infographic for VE about teamwork.png",
-    "Unsorted/Random/Term 1/Introduce myself.png",
-    "Unsorted/Random/Term 1/b7b85982-bfba-44e8-aaf4-85452563fd58.jpg",
-    "Unsorted/Random/Term 1/868845380_972292148761577_63461927135347969_n.png",
-    "Unsorted/Random/Term 1/al.png",
-    "Year 1/Term 1/MATH/Module 3/Resources/Skewness.png"
+    "Personal Projects/Godot 4",
+    "Personal Projects",
+    "Projects/School Dashboard/_tasks/review-the-service-proposal-.md",
+    "Projects Plus - Демо 2/Финансы/Трата Образование 02.md",
+    "Projects Plus - Демо 2/Финансы/Трата Образование 01.md",
+    "Projects Plus - Демо 2/Финансы/Трата Подарки 03.md",
+    "Projects Plus - Демо 2/Финансы/Трата Подарки 02.md",
+    "Projects Plus - Демо 2/Финансы/Трата Подарки 01.md",
+    "Projects Plus - Демо 2/Финансы/Трата Одежда 04.md",
+    "Projects Plus - Демо 2/Финансы/Трата Одежда 03.md",
+    "Projects Plus - Демо 2/Финансы/Трата Одежда 02.md",
+    "Projects Plus - Демо 2/Финансы/Трата Одежда 01.md",
+    "Projects Plus - Демо 2/Финансы/Трата Здоровье 06.md",
+    "Projects Plus - Демо 2/Финансы/Трата Здоровье 05.md",
+    "Projects Plus - Демо 2/Финансы/Трата Здоровье 04.md",
+    "Projects Plus - Демо 2/Финансы/Трата Здоровье 03.md",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Жанна Соколова.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Егор Морозов.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Дарья Лебедева.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Глеб Орлов.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Вера Павлова.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Борис Кузнецов.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Анна Смирнова.svg",
+    "Projects Plus - Демо 2/Кабинет/Обложки",
+    "Projects Plus - Демо 2/Финансы",
+    "Projects Plus - Демо 2/Трекер",
+    "Projects Plus - Демо 2/Кабинет",
+    "Projects Plus - Демо 2",
+    "Unsorted/Operon/Tasks",
+    "Unsorted/Operon"
   ]
 }
