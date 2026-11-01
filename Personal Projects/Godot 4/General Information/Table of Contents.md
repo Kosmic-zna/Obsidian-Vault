@@ -7,7 +7,7 @@
 =================================================================================
  [ PART I: CORE RUNTIME & DATA MECHANICS ]
  ├── Module I:   Bridging the Paradigm (Python & Roblox Luau -> Godot 4)
- ├── Module II:  Advanced Data Manipulation & Memory Mechanics
+ ├── Module II:  Advanced Data Manipulation, Flyweight Inventories & Memory Mechanics
  └── Module III: Software Architecture & Game Design Patterns
 
  [ PART II: MATHEMATICS, KINEMATICS & PROCEDURAL CONTROL ]
@@ -25,9 +25,10 @@
  ├── Module XI:  Rendering Pipelines, Custom Shaders, Dynamic Audio & Engine Servers
  └── Module XII: Diagnostics, Profiling, Optimisation & Edge-Case Engineering
 
- [ PART V: PRODUCTION RELEASE & VERIFICATION ]
+ [ PART V: TOOLING, EXTENSIONS & PRODUCTION RELEASE ]
  ├── Module XIII: Custom Editor Tooling, Automated Testing, CI/CD DevOps & Release
- └── Module XIV:  Curated Master Resource Library & Architectural Compendium
+ ├── Module XIV:  Curated Master Resource Library & Architectural Compendium
+ └── Module XV:   The Third-Party Ecosystem, Essential Libraries & GDExtension
 ```
 
 ---
@@ -39,34 +40,50 @@
 | **AES-256 Binary Encryption** | Module II / XIII | `FileAccess.open_encrypted_with_pass` | $\mathcal{O}(M_{\text{bytes}})$ |
 | **Analytical Two-Bone IK** | Module VI | `SkeletonModifier3D` | $\mathcal{O}(1)$ |
 | **Area of Interest (AOI) Culling** | Module VIII | `MultiplayerSynchronizer.set_visibility_callback` | $\mathcal{O}(N_{\text{cells}})$ |
+| **Attack Profile Schema** | Module II | `AttackProfile` | $\mathcal{O}(1)$ |
 | **Attack Token System** | Module VII | `CombatDirector` | $\mathcal{O}(1)$ |
-| **Binary Min-Heap (Priority Queue)**| Module II | `PriorityQueue` | $\mathcal{O}(\log n)$ push/pop |
-| **Binary Space Partitioning (BSP)**| Module IX | `BSPDungeonGenerator` | $\mathcal{O}(N \log N)$ |
+| **Binary Min-Heap (Priority Queue)** | Module II | `PriorityQueue` | $\mathcal{O}(\log n)$ push/pop |
+| **Binary Space Partitioning (BSP)** | Module IX | `BSPDungeonGenerator` | $\mathcal{O}(N \log N)$ |
 | **Cellular Automata (Caverns)** | Module IX | `CellularCaveGenerator` | $\mathcal{O}(k \cdot W \cdot H)$ |
 | **Client-Side Prediction** | Module VIII | `NetworkKinematicController` | $\mathcal{O}(T_{\text{rollback}})$ |
 | **Command Pattern (Undo/Redo)** | Module III | `CommandInvoker` | $\mathcal{O}(1)$ execute/undo |
 | **Context Steering** | Module VII | `ContextSteeringController3D` | $\mathcal{O}(N_{\text{slots}})$ |
 | **Coyote Time & Jump Buffers** | Module V | `KinematicPlatformerController` | $\mathcal{O}(1)$ |
 | **Cross Product Normals** | Module IV | `Vector3.cross()` | $\mathcal{O}(1)$ |
-| **Directed Acyclic Graphs (DAG)**| Module II | `DependencyGraph` | $\mathcal{O}(V + E)$ |
+| **Dialogic Narrative Bridge** | Module XV | `Dialogic.start()` | $\mathcal{O}(1)$ dispatch |
+| **Directed Acyclic Graphs (DAG)** | Module II | `DependencyGraph` | $\mathcal{O}(V + E)$ |
 | **Dot Product Similarity** | Module IV | `Vector3.dot()` | $\mathcal{O}(1)$ |
 | **Effective Health Pool ($EHP$)** | Module X | `CombatAnalytics.compute_ehp` | $\mathcal{O}(1)$ |
 | **Exponential Decay Smoothing** | Module IV | $\text{lerp}(a, b, 1 - e^{-\lambda \Delta t})$ | $\mathcal{O}(1)$ |
 | **FABRIK Solver** | Module VI | `FABRIKSolver3D` | $\mathcal{O}(k \cdot N_{\text{joints}})$ |
 | **Floating Origin Shifting** | Module IX | `FloatingOriginManager` | $\mathcal{O}(N_{\text{active}})$ |
+| **Flyweight Item Definition** | Module II | `ItemDefinition` / `ItemDatabase` | $\mathcal{O}(1)$ lookup |
+| **GDExtension Rust Node Binding** | Module XV | `#[derive(GodotClass)]` | Native compiled speed |
 | **Hitstop Kinematics ("Juice")** | Module X | `KinestheticFeedback.trigger_impact` | $\mathcal{O}(1)$ |
-| **Lag Compensation (Time Rewind)**| Module VIII | `LagCompensationManager` | $\mathcal{O}(N_{\text{hitboxes}})$ |
+| **Jolt 3D Physics Server** | Module XV | `PhysicsServer3D` (Jolt GDExtension) | SIMD vectorized $\mathcal{O}(N)$ |
+| **Lag Compensation (Time Rewind)** | Module VIII | `LagCompensationManager` | $\mathcal{O}(N_{\text{hitboxes}})$ |
 | **MultiMesh Batch Rendering** | Module XI | `MultiMeshInstance3D` | $\mathcal{O}(1)$ draw call |
 | **Node Object Pooling** | Module I | `NodePool` | $\mathcal{O}(1)$ acquire/release |
 | **Orphan Node Auditing** | Module XII | `Performance.OBJECT_ORPHAN_NODE_COUNT` | $\mathcal{O}(1)$ |
-| **Pseudo-Random Distribution (PRD)**| Module X | `PseudoRandomDistribution` | $\mathcal{O}(1)$ |
-| **Pushdown Automata (State Stack)**| Module III | `StateMachine` | $\mathcal{O}(1)$ push/pop |
+| **Phantom Camera Shot Priority** | Module XV | `PhantomCamera3D.set_priority()` | $\mathcal{O}(1)$ interpolation |
+| **Pseudo-Random Distribution (PRD)** | Module X | `PseudoRandomDistribution` | $\mathcal{O}(1)$ |
+| **Pushdown Automata (State Stack)** | Module III | `StateMachine` | $\mathcal{O}(1)$ push/pop |
 | **Quaternion "Smallest Three"** | Module VIII | `NetworkBitPacker` | $\mathcal{O}(1)$ compress/decompress |
 | **Root Motion Extraction** | Module VI | `AnimationTree.get_root_motion_position` | $\mathcal{O}(1)$ |
 | **Spatial Hash Grid Partitioning** | Module XII | `SpatialHashGrid2D` | $\mathcal{O}(N)$ proximity search |
 | **Wave Function Collapse (WFC)** | Module IX | `WaveFunctionCollapse2D` | $\mathcal{O}(W \cdot H \cdot K^2)$ |
 | **Weak Reference Resolution** | Module I / XII | `weakref()` | $\mathcal{O}(1)$ |
 | **WorkerThreadPool Concurrency** | Module XII | `WorkerThreadPool.add_task` | $\mathcal{O}(1)$ dispatch |
+
+---
+> [!info] 📖 Lexicon & First Principles: The Architectural Codex
+> This compendium organizes the fifteen foundational disciplines of high-performance engine engineering, applied mathematics, distributed simulation, ludological design, and ecosystem tooling in Godot 4:
+> - ⤷ **Homogeneous Tree Architecture**: An engine hierarchy wherein every scene element inherits from a common base primitive (`Node`), eliminating fixed service boundaries.
+> - ⤷ **Frame Budget Invariant**: The immutable temporal window ($\Delta t \le 16.67\text{ ms}$ at $60\text{ Hz}$ or $\le 6.94\text{ ms}$ at $144\text{ Hz}$) governing all physics, logic, culling, and rendering.
+> - ⤷ **Spatial Kinematics**: Discrete numerical integration of position, velocity, and orientation vectors without unmanaged physical forces.
+> - ⤷ **The Flyweight Architecture**: Separation of static, immutable game data from lightweight dynamic runtime instances to support hundreds of thousands of items without memory thrashing.
+> - ⤷ **GDExtension**: Godot 4's high-speed C-ABI interface permitting native machine-code libraries (C, C++, Rust) to link directly into the engine runtime at bare-metal speeds.
+> - ⤷ **Hermetic Determinism**: Absolute, bit-for-bit repeatability of simulation state across disparate hardware architectures given identical input sequences.
 
 ---
 ## 📑 Detailed Chapter & Sub-Section Breakdown
@@ -88,43 +105,52 @@
   - ↳ *Deferred Message Queue Flushes & GPU Synchronisation*
 - ⤷ **1.4 The Complete Input Pipeline: Preventing UI Contention**
   - ↳ *The Four-Tier Input Propagation Chain (`_input` $\rightarrow$ GUI $\rightarrow$ `_unhandled_input`)*
+  - ↳ *Deconstructed Chunk-by-Chunk Input Handler (`PlayerInputHandler.gd`)*
   - ↳ *Event Consumption & Viewport Interception*
   - ↳ *Mouse Filter Topologies (`STOP`, `PASS`, `IGNORE`)*
 - ⤷ **1.5 GDScript 2.0: Deep Static Typing & Performance Optimisation**
   - ↳ *Unboxed Bytecode Execution & Direct Memory Offsets*
   - ↳ *Opcode Optimization: `OPCODE_CALL_TYPED` vs. Dynamic Variant Dispatch*
+  - ↳ *Deconstructed Chunk-by-Chunk Typed Entity (`KineticEntity.gd`)*
   - ↳ *Type Annotation Hazards and Heterogeneous Arrays*
 - ⤷ **1.6 Architectural Anti-Patterns: Bridging Roblox Habits**
-  - ↳ *Eliminating Polling Loops via Event-Driven Reactive Architecture*
-  - ↳ *Eradicating Fragile Node Paths via Upward Signal Inversion*
+  - ↳ *Eliminating Polling Loops via Event-Driven Reactive Architecture (`ReactiveHealthComponent`)*
+  - ↳ *Eradicating Fragile Node Paths via Upward Signal Inversion (`PassiveHurtbox`)*
 - ⤷ **1.7 Memory Management, Garbage Collection & Lifecycle Mechanics**
   - ↳ *Cyclic Strong Reference Deadlocks*
   - ↳ *Weak Reference Resolution (`WeakRef`)*
-- ⤷ **1.8 Applied System: Generic Production Node Object Pooler**
+- ⤷ **1.8 Applied System: Generic Production Node Object Pooler (`NodePool.gd`)**
+  - ↳ *Deconstructed Chunk-by-Chunk Pre-Warming, Growth, and CPU Deactivation*
 
-#### **Module II: Advanced Data Manipulation & Memory Mechanics**
+#### **Module II: Advanced Data Manipulation, Flyweight Inventories & Memory Mechanics**
 - ⤷ **2.1 Value Types vs. Reference Semantics (The Silent Bug Generator)**
   - ↳ *Inline Stack Primitives vs. Heap-Allocated Pointers*
   - ↳ *The Mutable Reference Mutation Hazard*
   - ↳ *Shallow vs. Deep Copying (`duplicate(false)` vs. `duplicate(true)`)*
   - ↳ *Resource Local to Scene Instantiation*
-- ⤷ **2.2 Functional Array & Dictionary Pipelines**
+- ⤷ **2.2 Enterprise Item Catalogs & Flyweight Inventory Architecture**
+  - ↳ *The Flyweight Pattern: Separating Immutable Definitions from Mutable Instances*
+  - ↳ *Composable Attack & Combat Payloads (`AttackProfile` Schema)*
+  - ↳ *The Static Flyweight `ItemDefinition` Model*
+  - ↳ *Lightweight Dynamic `ItemInstance` Memory Footprints ($48\text{ bytes}$)*
+  - ↳ *Centralized Static `ItemDatabase` Catalogs ($\mathcal{O}(1)$ Lookups)*
+- ⤷ **2.3 Functional Array & Dictionary Pipelines**
   - ↳ *Transformation Pipelines via First-Class Callables (`map`, `filter`, `reduce`)*
   - ↳ *Multi-Tiered Custom Sorting (`sort_custom` Comparator Predicates)*
   - ↳ *Contiguous Memory Buffers vs. Variant Arrays (`PackedByteArray`, `PackedFloat32Array`)*
-- ⤷ **2.3 Beyond Lists: Foundational Engine Data Structures**
-  - ↳ *$\mathcal{O}(1)$ Circular Ring Buffers (Zero-Allocation FIFO Queues)*
+- ⤷ **2.4 Beyond Lists: Essential Classical Data Structures**
+  - ↳ $\mathcal{O}(1)$ *Circular Ring Buffers (Zero-Allocation FIFO Queues)*
   - ↳ *Binary Min-Heaps & Priority Queues ($\mathcal{O}(\log n)$ Task Schedulers)*
   - ↳ *Directed Acyclic Graphs (DAG) for Dependency & Skill Resolution*
-- ⤷ **2.4 Bitwise Operations, Bitmasks & Collision Matrices**
+- ⤷ **2.5 Bitwise Operations, Bitmasks & Collision Matrices**
   - ↳ *Binary Bit Manipulation Gates ($\text{AND}, \text{OR}, \text{XOR}, \text{NOT}$)*
   - ↳ *Dynamic Flag Addition, Removal, Querying, and Toggling*
   - ↳ *Programmatic Physics Layer Mask Construction*
-- ⤷ **2.5 Data Persistence, Serialisation & Cryptographic Security**
+- ⤷ **2.6 Data Persistence, Serialisation & Cryptographic Security**
   - ↳ *File Format Trade-Off Matrix (`ConfigFile`, `JSON`, `.tres`, Binary Streams)*
   - ↳ *The Security Vulnerability of Untrusted `.tres` Deserialisation*
   - ↳ *AES-256 Encrypted Binary Persistence via `FileAccess`*
-- ⤷ **2.6 Applied System: Zero-Allocation Circular Combat Telemetry Buffer**
+- ⤷ **2.7 Applied System: Zero-Allocation Circular Combat Telemetry Buffer**
 
 #### **Module III: Software Architecture & Game Design Patterns**
 - ⤷ **3.1 The Golden Axiom: "Call Down, Signal Up"**
@@ -308,15 +334,18 @@
   - ↳ *Modular 2D Canvas Layering and 3x3 Minimal Terrain Autotiling Bitmasks*
   - ↳ *3D Discrete Grids: Memory Locality and Octree Batching in `GridMap`*
 - ⤷ **9.3 Procedural Generation (PCG): The Algorithmic Engine**
-  - ↳ *Binary Space Partitioning (BSP): Recursive Sub-Space Slicing and Room Packing*
-  - ↳ *Cellular Automata: Moore Neighborhood Erosion (B5678/S45678 Cavern Synthesis)*
-  - ↳ *Wave Function Collapse (WFC): Superposition Entropy and Constraint Stacks*
-  - ↳ *Continuous World Synthesis: Multi-Octave fBm Noise and Whittaker Biomes*
+  - ↳ *Deconstructed BSP Dungeon Slicing & Bound Padding (`BSPDungeonGenerator.gd`)*
+  - ↳ *Double-Buffered Cellular Automata Caverns: Moore Neighborhood (B5678/S45678)*
+  - ↳ *Wave Function Collapse (WFC): Superposition Entropy & Constraint Stack Queue*
+  - ↳ *Continuous World Synthesis: Multi-Octave fBm Noise & Whittaker Biomes*
 - ⤷ **9.4 Open-World Streaming, LOD Management & Floating Origin Shifting**
-  - ↳ *Asynchronous Background Chunk Streaming (`ResourceLoader.load_threaded_request`)*
+  - ↳ *Asynchronous Threaded Chunk Streaming (`ResourceLoader.load_threaded_request`)*
   - ↳ *Hierarchical Levels of Detail (HLOD) and Visibility Ranges*
-  - ↳ *IEEE 754 Precision Degradation and Automated Floating Origin Shifting*
-- ⤷ **9.5 Applied System: Non-Linear Procedural Dungeon Pipeline (MST + Cycle Injection)**
+  - ↳ *IEEE 754 Precision Degradation & The Floating Origin Shifter (`FloatingOriginManager.gd`)*
+- ⤷ **9.5 Applied System: Non-Linear Procedural Dungeon Pipeline (MST + Cycle Loops)**
+  - ↳ *All-Pairs Distance Matrix & Kruskal's Minimum Spanning Tree (MST)*
+  - ↳ *Cyclical Edge Infiltration (15% Re-add) for Anti-Backtracking Flow*
+  - ↳ *Orthogonal L-Shaped Corridor Rasterization (`ProceduralDungeonPipeline.gd`)*
 
 #### **Module X: Formal Game Design Theory, Systems Balancing & Game Economies**
 - ⤷ **10.1 The MDA Framework & Pacing Architecture**
@@ -326,25 +355,31 @@
   - ↳ *Nested Compulsion Scales: Micro (Kinetic), Meso (Tactical), Macro (Meta)*
   - ↳ *Csikszentmihalyi’s Flow Channel: Navigating Anxiety and Boredom Corridors*
   - ↳ *The Cognitive Sawtooth Pacing Curve (Tension Peaks vs. Cathartic Valleys)*
+  - ↳ *Deconstructed Dynamic Difficulty Adjustment Engine (`PacingDirector.gd`)*
 - ⤷ **10.3 Cybernetic Feedback Loops: Amplification vs. Homeostasis**
   - ↳ *Positive Feedback (Snowballing Advantages) and Early Resignation Risks*
   - ↳ *Negative Feedback (Rubber-Banding Parity) and Skill Invalidation Pitfalls*
+  - ↳ *Intransitive Payoff Matrices: Preventing Dominant Exploits*
 - ⤷ **10.4 Combat Mathematics: EHP, DPS, TTK & Diminishing Returns**
   - ↳ *Effective Health Pool ($EHP$) and Hyperbolic Armor Curves ($K / (K + A)$)*
+  - ↳ *Negative Armor Shred Protection without Division-by-Zero Failures*
   - ↳ *Sustained DPS Equations: Factoring Firing Ticks, Reload Cycles, and Crit Expectancy*
-  - ↳ *Exact Analytical Time-to-Kill ($TTK$) Formulation*
+  - ↳ *Exact Analytical Time-to-Kill ($TTK$) Formulation & Lanchester's Square Law*
 - ⤷ **10.5 Economic Engineering: Sources, Sinks, Faucets & Mudflation**
   - ↳ *Currency Circulation Tanks and the Macro-Law of Inflationary Equilibrium*
-  - ↳ *Designing Dynamic Percentage-Based Sinks to Thwart Runaway Mudflation*
+  - ↳ *Sink-to-Faucet Telemetry Ratios (Targeting $0.75\text{--}0.90$)*
+  - ↳ *Exponential Aspirational Sinks (Affix Rerolling & Quadratic Upgrades)*
 - ⤷ **10.6 Probability Engineering: The Pseudo-Random Distribution (PRD)**
   - ↳ *Independent Random Distributions (IRD) vs. Cognitive Human Frustration*
-  - ↳ *Escalating Odds ($P(N) = N \cdot C$) and Nominal Probability Convergence*
+  - ↳ *Exact Markov-Solved Binary Search Engine for Constant $C$ (`PseudoRandomDistribution.gd`)*
 - ⤷ **10.7 Weighted Loot Tables with Pity Bounds**
   - ↳ *Prefix-Sum Array Sampling with $\mathcal{O}(\log n)$ Binary Search*
   - ↳ *Deterministic Hard Pity Counters for Rare Tier Drops*
 - ⤷ **10.8 Tactile "Juice" & Kinesthetic Feedback**
   - ↳ *The Multi-Layered Impact Chain: Hitstop Freezes, Jitter, Shaders, and Trauma*
-- ⤷ **10.9 Applied Synthesis: The Complete Attribute Modifier & Combat Equation**
+  - ↳ *Entity-Local Hitstop vs. Global `Engine.time_scale` Corruption*
+  - ↳ *Instance-Uniform Shaders (`set_instance_shader_parameter`)*
+- ⤷ **10.9 Applied Synthesis: Complete Combat Resolution & Juice Pipeline**
 
 #### **Module XI: Rendering Pipelines, Custom Shaders, Dynamic Audio & Engine Servers**
 - ⤷ **11.1 The Hardware Rendering Pipeline & The Frame Lifecycle**
@@ -388,7 +423,7 @@
 
 ---
 
-### 🛠️ Part V: Production Release & Verification
+### 🛠️ Part V: Tooling, Extensions & Production Release
 
 #### **Module XIII: Custom Editor Tooling, Testing, DevOps & Release Engineering**
 - ⤷ **13.1 Metaprogramming & In-Editor Tooling (`@tool` & `EditorPlugin`)**
@@ -434,4 +469,26 @@
 - ⤷ **14.4 Applied System: Production Architectural Quality Auditor & Disk Logger**
 - ⤷ **14.5 Closing Reflections: From Scripter to Architect**
 
+#### **Module XV: The Third-Party Ecosystem, Essential Libraries & GDExtension**
+- ⤷ **15.1 The Architecture of Engine Extensions: Script vs. Plugin vs. GDExtension**
+  - ↳ *The Three Integration Tiers: Pure Scripts, EditorPlugins, and Compiled Shared Objects*
+  - ↳ *The Extension Selection Decision Matrix (Speed vs. Portability vs. Maintenance)*
+- ⤷ **15.2 The Curated Production Tier: Essential Godot 4 Libraries**
+  - ↳ *Audited Industry-Standard Tools (Jolt, Phantom Camera, Dialogic, LimboAI, GodotSteam)*
+- ⤷ **15.3 Deep Dive: Godot Jolt (Next-Generation 3D Physics)**
+  - ↳ *The Mechanical Failures of GodotPhysics3D & The Jolt C++ Override*
+  - ↳ *Zero-Jitter Multi-Threaded Rigid Body Stacking & Ragdoll Invariants*
+- ⤷ **15.4 Deep Dive: Phantom Camera (Cinemachine-Grade Dynamic Framing)**
+  - ↳ *Decoupling Render Cameras from Shot Choreography*
+  - ↳ *Deconstructed Chunk-by-Chunk Boss Camera Trigger (`BossArenaCameraTrigger.gd`)*
+- ⤷ **15.5 Deep Dive: Dialogic 2.0 (Branching Narrative & Character Systems)**
+  - ↳ *Visual Timelines, Character Definitions, and Variable Ingestion*
+  - ↳ *Bridging Narrative Signals directly into Gameplay Code (`NarrativeTrigger.gd`)*
+- ⤷ **15.6 Deep Dive: GDExtension with Rust (`godot-rust` / `gdext`)**
+  - ↳ *High-Speed Bare-Metal Compilation with Guaranteed Memory Safety*
+  - ↳ *GDExtension Manifest Files (`.gdextension`) and Native Node Bindings*
+- ⤷ **15.7 Third-Party Vetting & Dependency Management Checklist**
+  - ↳ *Licensing Hazards (GPL vs. MIT/Apache) and Version Coupling Audits*
+
 ---
+

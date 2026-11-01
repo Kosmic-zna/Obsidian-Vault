@@ -876,7 +876,6 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "godot_4_systems_architecture_module_xv_the_third_party_ecosystem_essential_libraries_gdextension.md",
         "Table of Contents.md",
         "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
         "🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
@@ -892,16 +891,11 @@
         "⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
         "🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
         "📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+        "🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
         "Masterlist.md"
       ],
       "ctime": 1793500593359,
       "mtime": 1793500593359
-    },
-    "Personal Projects/Godot 4/General Information/Table of Contents.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793500503493,
-      "mtime": 1793500837279
     },
     "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md": {
       "isPinned": false,
@@ -1003,19 +997,13 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793532347694,
-      "mtime": 1793533094716
+      "mtime": 1793541595745
     },
     "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793532997876,
       "mtime": 1793533050659
-    },
-    "Personal Projects/Godot 4/General Information/godot_4_systems_architecture_module_xv_the_third_party_ecosystem_essential_libraries_gdextension.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793541492780,
-      "mtime": 1793541493286
     },
     "Operon": {
       "isPinned": false,
@@ -1034,6 +1022,18 @@
       "sortOrder": "custom",
       "ctime": 1793541543397,
       "mtime": 1793541543397
+    },
+    "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793541492780,
+      "mtime": 1793541493286
+    },
+    "Personal Projects/Godot 4/General Information/Table of Contents.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793541872812,
+      "mtime": 1793541872812
     }
   },
   "showHidden": false,

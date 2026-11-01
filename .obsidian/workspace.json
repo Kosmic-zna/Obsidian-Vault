@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/Masterlist.md",
+                "file": "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Masterlist"
+              "title": "🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture"
             }
           }
         ],
@@ -198,20 +198,6 @@
             }
           },
           {
-            "id": "9677d05bff210ce8",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "followCursor": false,
-                "showSearch": true,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "Outline"
-            }
-          },
-          {
             "id": "ae9cee6e079dc279",
             "type": "leaf",
             "state": {
@@ -219,6 +205,21 @@
               "state": {},
               "icon": "SpacedRepIcon",
               "title": "Notes Review Queue"
+            }
+          },
+          {
+            "id": "9677d05bff210ce8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
+                "followCursor": false,
+                "showSearch": true,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
             }
           }
         ],
@@ -248,27 +249,37 @@
       "obsidian-kanban:Create new board": false,
       "obsidian-advanced-slides:Show Slide Preview": true,
       "obsidian-spaced-repetition:Review flashcards": true,
-      "project-manager:Project manager": false
+      "project-manager:Project manager": false,
+      "operon:Create New Operon Task": false,
+      "operon:Operon Filter View": false,
+      "operon:Task Finder": false,
+      "operon:Operon Calendar": false,
+      "operon:Operon Kanban": false,
+      "operon:Operon Table": false,
+      "operon:Open Pinned Tasks": false
     }
   },
-  "active": "ae9cee6e079dc279",
+  "active": "fee2a2db3f27cfb2",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/General Information/Masterlist.md",
-    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
     "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
-    "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
-    "Personal Projects/Godot 4/General Information/🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
-    "Personal Projects/Godot 4/General Information/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
-    "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
-    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
-    "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
-    "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
     "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
-    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
     "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
     "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
+    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
+    "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
+    "Personal Projects/Godot 4/General Information/Masterlist.md",
     "Personal Projects/Godot 4/General Information/Table of Contents.md",
+    "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
+    "Personal Projects/Godot 4/General Information/🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
+    "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+    "Operon/Tasks",
+    "Operon",
+    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
+    "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
+    "Personal Projects/Godot 4/General Information/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
+    "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
+    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
     "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
     "Unsorted/2026-10-30.md",
     "Personal Projects/Godot 4/General Information",
@@ -294,8 +305,6 @@
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Анна Смирнова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки",
     "Projects Plus - Демо 2/Финансы",
-    "Projects Plus - Демо 2/Трекер",
-    "Projects Plus - Демо 2/Кабинет",
-    "Projects Plus - Демо 2"
+    "Projects Plus - Демо 2/Трекер"
   ]
 }
