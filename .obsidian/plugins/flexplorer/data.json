@@ -20,15 +20,8 @@
         "dashboard-2.md",
         "dashboard.md",
         "Operon",
-        "Random",
-        "2026-10-30.md"
+        "Random"
       ]
-    },
-    "Unsorted/2026-10-30.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793319128833,
-      "mtime": 1793323926829
     },
     "Year 1": {
       "isPinned": false,
@@ -888,7 +881,7 @@
         "📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
         "🎮 Mod V; Universal Gameplay Systems Engineering.md",
         "🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
-        "🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
+        "🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
         "🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
         "🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
         "⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
@@ -919,12 +912,6 @@
       "isHidden": false,
       "ctime": 1793463529763,
       "mtime": 1793463634897
-    },
-    "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793497561269,
-      "mtime": 1793500137847
     },
     "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md": {
       "isPinned": false,
@@ -972,7 +959,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793499999596,
-      "mtime": 1793505627832
+      "mtime": 1793505899040
     },
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md": {
       "isPinned": false,
@@ -1014,7 +1001,13 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793505822227,
-      "mtime": 1793505822227
+      "mtime": 1793505911839
+    },
+    "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793506861138,
+      "mtime": 1793506887917
     }
   },
   "showHidden": false,
