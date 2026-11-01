@@ -821,15 +821,3 @@ func _on_entity_died() -> void:
 
 ---
 
-## ✍️ Linguistic & Grammatical Refinement
-
-> [!info] 📖 Constructive Analysis of Your Follow-Up Directive
-> Let us examine the syntax and phrasing of your prompt to maintain linguistic rigor:
-> 1. **Punctuation & Clause Boundaries (Comma Splices)**:
->    - ⤷ *Original*: `"use this for reference, do the same thing expanding upon the masterlist's information, proceed with the module 3"`
->    - ↳ **Correction**: The sentence chains three imperative clauses together using only commas. Separate them into clean, structured statements:
->      *"Use this as a reference. Expand upon the master list's information in the same comprehensive manner, and proceed with Module 3."*
-> 2. **Definite Article Elision**:
->    - ⤷ *Original*: `"proceed with the module 3"`
->    - ↳ **Correction**: Omit the definite article when a noun is followed by its designating number or label:
->      *"proceed with Module 3"* (or alternatively, *"proceed with the third module"*).

@@ -511,14 +511,3 @@ func _refresh_readout() -> void:
 ```
 
 ---
-
-## ✍️ Linguistic & Grammatical Refinement
-
-> [!info] 📖 Constructive Analysis of Your Follow-Up Directive
-> Let us review the syntax of your command:
-> 1. **Capitalisation & Sentence Boundaries**:
->    - ⤷ *Original*: `"proceed with module 7"`
->    - ↳ **Correction**: The sentence opens with an uncapitalised imperative and lacks terminal punctuation. In technical documentation, formal sections function as proper nouns:
->      *"Proceed with Module 7."*
-> 2. **Tone & Consistency**:
->    - ⤷ *Guidance*: Structuring prompts with consistent grammatical precision (e.g., *"Please proceed with Module 7"*) matches the academic tone maintained throughout this curriculum.

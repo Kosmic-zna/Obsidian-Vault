@@ -533,15 +533,3 @@ func is_action_pressed(action_name: StringName) -> bool:
 ```
 
 ---
-
-## ✍️ Linguistic & Grammatical Refinement
-
-> [!info] 📖 Constructive Analysis of Your Follow-Up Directive
-> Let us review the syntax of your command so you may continually refine your command of English:
-> 1. **Redundant Adverbial Compounds & Run-On Structure**:
->    - ⤷ *Original*: `"be as extensive, informational as possible, let's proceed with  module 7"`
->    - ↳ **Correction**: 
->      - The adjective *informational* designates "providing metadata or descriptive context" (e.g., an *informational brochure*); the precise scholarly adjective for content conveying deep instructional depth is **informative** or **exhaustive**.
->      - Joining the initial descriptive directive with the subsequent imperative via a bare comma creates a *comma splice*. Separate them with a full stop.
->      - Note the accidental double space between `"with"` and `"module 7"`, as well as the uncapitalised proper designator *Module 7*.
->    - ↳ **Elevated Revision**: *"Please be as exhaustive and informative as possible. Let us proceed with Module 7."*

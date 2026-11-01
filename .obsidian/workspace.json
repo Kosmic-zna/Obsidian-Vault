@@ -30,12 +30,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
-                "mode": "preview",
+                "file": "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4)"
+              "title": "📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium"
             }
           },
           {
@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
-                "mode": "preview",
+                "file": "Personal Projects/Godot 4/General Information/Table of Contents.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "The Godot 4 Systems Architect; Master Curriculum & Reference Compendium"
+              "title": "Table of Contents"
             }
           }
         ],
@@ -203,7 +203,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
+                "file": "Personal Projects/Godot 4/General Information/Table of Contents.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
@@ -261,20 +261,26 @@
   },
   "active": "7d222c4d13ffd294",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/godot_4_systems_architecture_module_viii_multiplayer_architecture_authoritative_servers_netcode_optimisation.md",
+    "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
+    "Personal Projects/Godot 4/General Information/Masterlist.md",
+    "Personal Projects/Godot 4/General Information/Table of Contents.md",
+    "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
+    "Personal Projects/Godot 4/General Information",
     "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
-    "Personal Projects/Godot 4/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
-    "Personal Projects/Godot 4/# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
-    "Personal Projects/Godot 4/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
+    "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+    "Personal Projects/Godot 4/General Information/🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
+    "Personal Projects/Godot 4/General Information/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
+    "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
+    "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
+    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
+    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
+    "Personal Projects/Godot 4/General Information/# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
+    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
+    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
+    "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+    "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
     "Operon/Tasks",
     "Operon",
-    "Personal Projects/Godot 4/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
-    "Personal Projects/Godot 4/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
-    "Personal Projects/Godot 4/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
-    "Personal Projects/Godot 4/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
-    "Personal Projects/Godot 4/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
-    "Personal Projects/Godot 4/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
-    "Personal Projects/Godot 4/🎮 Mod V; Universal Gameplay Systems Engineering.md",
     "Personal Projects/Godot 4/Master Curriculum & Reference Compendium.md",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Personal Projects/Godot 4",
@@ -285,12 +291,6 @@
     "Projects Plus - Демо 2/Финансы/Трата Подарки 03.md",
     "Projects Plus - Демо 2/Финансы/Трата Подарки 02.md",
     "Projects Plus - Демо 2/Финансы/Трата Подарки 01.md",
-    "Projects Plus - Демо 2/Финансы/Трата Одежда 04.md",
-    "Projects Plus - Демо 2/Финансы/Трата Одежда 03.md",
-    "Projects Plus - Демо 2/Финансы/Трата Одежда 02.md",
-    "Projects Plus - Демо 2/Финансы/Трата Одежда 01.md",
-    "Projects Plus - Демо 2/Финансы/Трата Здоровье 06.md",
-    "Projects Plus - Демо 2/Финансы/Трата Здоровье 05.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",
@@ -305,7 +305,6 @@
     "Projects Plus - Демо 2/Финансы",
     "Projects Plus - Демо 2/Трекер",
     "Projects Plus - Демо 2/Кабинет",
-    "Projects Plus - Демо 2",
-    "Unsorted/Operon/Tasks"
+    "Projects Plus - Демо 2"
   ]
 }

@@ -872,75 +872,10 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "godot_4_systems_architecture_module_viii_multiplayer_architecture_authoritative_servers_netcode_optimisation.md",
-        "The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
-        "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
-        "🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
-        "🏗️ Mod III; Software Architecture & Game Design Patterns.md",
-        "📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
-        "🎮 Mod V; Universal Gameplay Systems Engineering.md",
-        "# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
-        "🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
-        "🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
-        "⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
-        "📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md"
+        "General Information"
       ],
       "ctime": 1793463143948,
       "mtime": 1793463143948
-    },
-    "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793466308691,
-      "mtime": 1793497747258
-    },
-    "Personal Projects/Godot 4/🎮 Mod V; Universal Gameplay Systems Engineering.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793464867142,
-      "mtime": 1793465622266
-    },
-    "Personal Projects/Godot 4/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793464267832,
-      "mtime": 1793465615420
-    },
-    "Personal Projects/Godot 4/🏗️ Mod III; Software Architecture & Game Design Patterns.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793463909202,
-      "mtime": 1793463909202
-    },
-    "Personal Projects/Godot 4/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793463529763,
-      "mtime": 1793463634897
-    },
-    "Personal Projects/Godot 4/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793463199459,
-      "mtime": 1793463600694
-    },
-    "Personal Projects/Godot 4/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793465505408,
-      "mtime": 1793465636767
-    },
-    "Personal Projects/Godot 4/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793465665567,
-      "mtime": 1793465665567
-    },
-    "Personal Projects/Godot 4/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793465887494,
-      "mtime": 1793465913386
     },
     "Operon": {
       "isPinned": false,
@@ -960,23 +895,126 @@
       "ctime": 1793496694978,
       "mtime": 1793496694978
     },
-    "Personal Projects/Godot 4/# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md": {
+    "Personal Projects/Godot 4/General Information": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Table of Contents.md",
+        "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
+        "🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
+        "🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+        "📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
+        "🎮 Mod V; Universal Gameplay Systems Engineering.md",
+        "# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
+        "🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
+        "🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
+        "🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
+        "⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
+        "🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
+        "⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
+        "🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
+        "📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+        "Masterlist.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793500593359,
+      "mtime": 1793500593359
+    },
+    "Personal Projects/Godot 4/General Information/Table of Contents.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793500503493,
+      "mtime": 1793500553661
+    },
+    "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793463199459,
+      "mtime": 1793463600694
+    },
+    "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793463529763,
+      "mtime": 1793463634897
+    },
+    "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793463909202,
+      "mtime": 1793500084567
+    },
+    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793464267832,
+      "mtime": 1793465615420
+    },
+    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793464867142,
+      "mtime": 1793465622266
+    },
+    "Personal Projects/Godot 4/General Information/# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793497065306,
       "mtime": 1793497132839
     },
-    "Personal Projects/Godot 4/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md": {
+    "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793497561269,
-      "mtime": 1793497561269
+      "mtime": 1793500137847
     },
-    "Personal Projects/Godot 4/godot_4_systems_architecture_module_viii_multiplayer_architecture_authoritative_servers_netcode_optimisation.md": {
+    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793498497172,
-      "mtime": 1793498497172
+      "mtime": 1793499787133
+    },
+    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793499708183,
+      "mtime": 1793499760550
+    },
+    "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793499708194,
+      "mtime": 1793499746250
+    },
+    "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793465505408,
+      "mtime": 1793465636767
+    },
+    "Personal Projects/Godot 4/General Information/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793465665567,
+      "mtime": 1793500190941
+    },
+    "Personal Projects/Godot 4/General Information/🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793499708197,
+      "mtime": 1793499726890
+    },
+    "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793465887494,
+      "mtime": 1793465913386
+    },
+    "Personal Projects/Godot 4/General Information/Masterlist.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793499999596,
+      "mtime": 1793500315483
     }
   },
   "showHidden": false,

@@ -717,13 +717,3 @@ func _filter_peer_visibility(peer_id: int) -> bool:
 
 ---
 
-## ✍️ Linguistic & Grammatical Refinement
-
-> [!info] 📖 Constructive Analysis of Your Follow-Up Directive
-> Let us review the phrasing of your directive to continually elevate your written command of English:
-> 1. **Repetitive Requests for Completed Sections**:
->    - ⤷ *Observation*: Your directive commanded: `"be as extensive, informational as possible, let's proceed with module 6"`.
->    - ↳ **Contextual Correction**: As recorded in the Master Syllabus Index, **Module VI** (*Skeletal Rigging, Procedural Animation & Inverse Kinematics*) was already generated in full during our preceding exchange. In scholarly and professional technical correspondence, ensure you refer to the current ungenerated unit—which in this sequential progression is **Module VIII** (*Multiplayer Architecture, Authoritative Servers & Netcode Optimisation*).
-> 2. **Lexical Precision (`informational` vs. `informative`)**:
->    - ⤷ *Guidance*: Remember that *informational* denotes metadata or administrative labels; **informative** or **exhaustive** designates deep instructional scholarship.
->    - ↳ **Elevated Phrasing**: *"Please provide an exhaustive and informative breakdown as we proceed with Module VIII."*
