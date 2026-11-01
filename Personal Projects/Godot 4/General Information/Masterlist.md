@@ -795,7 +795,6 @@ func _exit_tree() -> void:
 ```
 
 ---
----
 # 🗂️ Module II: Advanced Data Manipulation & Memory Mechanics
 
 > [!info] 📖 Lexicon & First Principles: Memory & Data Mechanics
@@ -1834,8 +1833,6 @@ func calculate_aggregate_impact(required_flags: int) -> float:
 ```
 
 ---
-
-
 # 🏗️ Module III: Software Architecture & Game Design Patterns
 
 > [!info] 📖 Lexicon & First Principles: Architectural Engineering Terminology
@@ -2896,7 +2893,6 @@ func _on_entity_died() -> void:
 ```
 
 ---
-
 # 📐 Module IV: The Mathematical Engine (Applied Game Mathematics)
 
 > [!info] 📖 Lexicon & First Principles: Linear Algebra & Spatial Calculus
@@ -5128,8 +5124,6 @@ func _compute_cohesion(neighbors: Array[FlockingAgent2D]) -> Vector2:
 ```
 
 ---
-
-
 # 🦴 Module VI: Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK)
 
 > [!info] 📖 Lexicon & First Principles: Skeletal & Kinematic Terminology
@@ -6321,7 +6315,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 ```
 
 ---
-
 # 🤖 Module VII: Autonomous AI Enemies, Tactical Combat & Bot Synthesis
 
 > [!info] 📖 Lexicon & First Principles: Artificial Intelligence Architecture
@@ -8062,12 +8055,13 @@ func _filter_peer_visibility(peer_id: int) -> bool:
 # 🗺️ Module IX: Level Architecture, Procedural Generation (PCG) & World Streaming
 
 > [!info] 📖 Lexicon & First Principles: Spatial Design & Algorithmic Synthesis
-> Moving from localized mechanics to expansive game worlds requires a rigorous understanding of architectural psychology, discrete procedural topology, and physical memory limits:
-> - ⤷ **Greyboxing (Blockmesh)**: The rapid iterative prototyping of playable levels using primitive untextured geometric volumes, calibrating spatial pacing, jump trajectories, and sightlines before committing to art assets.
-> - ⤷ **Weenie (Landmark)**: An architectural term coined by Walt Disney for a visually dominant vertical beacon placed on the horizon, enabling players to orient themselves intuitively via spatial triangulation without relying on intrusive mini-maps.
-> - ⤷ **Binary Space Partitioning (BSP)**: A geometric algorithm that recursively divides Euclidean space into convex sub-spaces using hyperplanes, generating hierarchical spatial trees for room distribution and visibility sorting.
-> - ⤷ **Cellular Automata**: A discrete mathematical model consisting of a regular grid of cells, each evolving through discrete time steps according to fixed deterministic rules based on the states of its local neighbours.
+> Moving from localized player mechanics to expansive, responsive game worlds requires a rigorous understanding of architectural psychology, discrete procedural topology, and hardware memory limits:
+> - ⤷ **Greyboxing (Blockmesh Prototyping)**: The rapid iterative construction of playable spaces using untextured geometric primitives, calibrating spatial pacing, jump trajectories, cover metrics, and sightlines before committing to production art assets.
+> - ⤷ **Weenie (Landmark Beacon)**: An architectural term coined by Walt Disney for a towering, visually dominant vertical structure placed on the horizon, enabling players to orient themselves intuitively via spatial triangulation without relying on intrusive mini-maps or navigational UI markers.
+> - ⤷ **Binary Space Partitioning (BSP)**: A geometric algorithm that recursively divides Euclidean space into convex sub-spaces using hyperplanes, generating a hierarchical binary tree for non-overlapping room distribution and visibility sorting.
+> - ⤷ **Cellular Automaton**: A discrete mathematical model consisting of a regular grid of cells, each evolving through discrete time steps according to fixed deterministic rules based on the states of its local Moore or von Neumann neighbours.
 > - ⤷ **Wave Function Collapse (WFC)**: A constraint-satisfaction algorithm based on quantum mechanics terminology, wherein a grid of unobserved possibilities (superpositions) collapses into deterministic modules while preserving strict socket-adjacency rules.
+> - ⤷ **Shannon Entropy**: A formal information-theoretic measure ($H = -\sum p \log_2 p$) of uncertainty within a probability distribution, utilized in WFC to select the cell with the fewest remaining valid choices.
 > - ⤷ **Floating Origin Shift**: An architectural coordinate transformation that offsets the physical root of the virtual world relative to the player to combat the severe floating-point precision degradation inherent to IEEE 754 representations at vast distances.
 
 ---
@@ -8163,7 +8157,9 @@ Procedural Content Generation is not an arbitrary scattering of seeds; it is the
  A* & Minimum Spanning Tree ──► Non-linear dungeon room pathing & hallway networks
 ```
 
-### 1. Binary Space Partitioning (BSP) Dungeon Generation
+---
+
+### Step-by-Step Architectural Construction: Binary Space Partitioning (BSP)
 
 The BSP algorithm recursively subdivides a 2D bounding volume into a binary tree of smaller rectangular leaves until a minimum threshold dimension is reached. Each leaf then spawns an interior room, which are subsequently connected via hallways along the tree's split planes.
 
@@ -8178,99 +8174,190 @@ The BSP algorithm recursively subdivides a 2D bounding volume into a binary tree
   └───────────────────────┘   └───────────┴───────────┘    └───────────┴───────────┘
 ```
 
+#### Chunk 1.1: The BSP Leaf Node & Splitting Constraints
+
+```gdscript
+class_name BSPDungeonGenerator
+extends RefCounted
+
+class BSPLeaf:
+	var rect: Rect2i
+	var left_child: BSPLeaf = null
+	var right_child: BSPLeaf = null
+	var room: Rect2i = Rect2i()
+
+	func _init(p_rect: Rect2i) -> void:
+		rect = p_rect
+
+	func split(min_leaf_size: int) -> bool:
+		if left_child != null or right_child != null:
+			return false
+			
+		var split_horizontal: bool = randf() > 0.5
+		if rect.size.x > rect.size.y and float(rect.size.x) / float(rect.size.y) >= 1.25:
+			split_horizontal = false
+		elif rect.size.y > rect.size.x and float(rect.size.y) / float(rect.size.x) >= 1.25:
+			split_horizontal = true
+
+		var max_split: int = (rect.size.y if split_horizontal else rect.size.x) - min_leaf_size
+		if max_split <= min_leaf_size:
+			return false
+
+		var split_pos: int = randi_range(min_leaf_size, max_split)
+
+		if split_horizontal:
+			left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, rect.size.x, split_pos))
+			right_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y + split_pos, rect.size.x, rect.size.y - split_pos))
+		else:
+			left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, split_pos, rect.size.y))
+			right_child = BSPLeaf.new(Rect2i(rect.position.x + split_pos, rect.position.y, rect.size.x - split_pos, rect.size.y))
+
+		return true
+```
+
+- **Aspect Ratio Balancing (`float(rect.size.x) / float(rect.size.y) >= 1.25`)**: Prevents long, degenerate sliver leaves. If a leaf is significantly wider than it is tall, the algorithm forces a vertical split; if taller, it forces a horizontal split.
+- **`max_split <= min_leaf_size`**: Bounds checking. Ensures that both resulting child partitions have enough room to contain a viable, playable room without violating the `min_leaf_size` threshold.
+
+#### Chunk 1.2: Interior Room Carving & Grid Baking
+
+```gdscript
+	func create_rooms(min_room_size: int) -> void:
+		if left_child != null or right_child != null:
+			if left_child != null: left_child.create_rooms(min_room_size)
+			if right_child != null: right_child.create_rooms(min_room_size)
+		else:
+			var room_w: int = randi_range(min_room_size, rect.size.x - 2)
+			var room_h: int = randi_range(min_room_size, rect.size.y - 2)
+			var room_x: int = randi_range(rect.position.x + 1, rect.position.x + rect.size.x - room_w - 1)
+			var room_y: int = randi_range(rect.position.y + 1, rect.position.y + rect.size.y - room_h - 1)
+			room = Rect2i(room_x, room_y, room_w, room_h)
+
+	func get_all_rooms() -> Array[Rect2i]:
+		if left_child == null and right_child == null:
+			return [room] if room.size.x > 0 else []
+		var result: Array[Rect2i] = []
+		if left_child != null: result.append_array(left_child.get_all_rooms())
+		if right_child != null: result.append_array(right_child.get_all_rooms())
+		return result
+```
+
+- **`rect.position.x + 1` & `- 2` Padding**: Enforces a mandatory structural buffer along the leaf perimeter, ensuring that rooms spawned in adjacent partitions do not accidentally fuse together into an amorphous blob before corridors are carved.
+- **Recursive Leaf Harvesting (`get_all_rooms()`)**: Gathers all carved leaf rooms into a flat array for downstream corridor generation and graph triangulation.
+
+---
+
+#### The Fully Assembled `BSPDungeonGenerator.gd`
+
 ```gdscript
 # ==============================================================================
-# RECURSIVE BINARY SPACE PARTITIONING (BSP) DUNGEON GENERATOR
+# SCRIPT: BSPDungeonGenerator.gd
+# Architecture: Recursive Binary Space Partitioning Dungeon Synthesizer
 # ==============================================================================
 class_name BSPDungeonGenerator
 extends RefCounted
 
 class BSPLeaf:
-    var rect: Rect2i
-    var left_child: BSPLeaf = null
-    var right_child: BSPLeaf = null
-    var room: Rect2i
+	var rect: Rect2i
+	var left_child: BSPLeaf = null
+	var right_child: BSPLeaf = null
+	var room: Rect2i = Rect2i()
 
-    func _init(p_rect: Rect2i) -> void:
-        rect = p_rect
+	func _init(p_rect: Rect2i) -> void:
+		rect = p_rect
 
-    func split(min_leaf_size: int) -> bool:
-        if left_child != null or right_child != null:
-            return false # Already partitioned
-            
-        # Determine split orientation based on dimensional aspect ratio
-        var split_horizontal: bool = randf() > 0.5
-        if rect.size.x > rect.size.y and float(rect.size.x) / float(rect.size.y) >= 1.25:
-            split_horizontal = false
-        elif rect.size.y > rect.size.x and float(rect.size.y) / float(rect.size.x) >= 1.25:
-            split_horizontal = true
+	## Attempts to partition the leaf into two sub-rectangles
+	func split(min_leaf_size: int) -> bool:
+		if left_child != null or right_child != null:
+			return false
+			
+		# Enforce aspect ratio balancing to prevent narrow corridors
+		var split_horizontal: bool = randf() > 0.5
+		if rect.size.x > rect.size.y and float(rect.size.x) / float(rect.size.y) >= 1.25:
+			split_horizontal = false
+		elif rect.size.y > rect.size.x and float(rect.size.y) / float(rect.size.x) >= 1.25:
+			split_horizontal = true
 
-        var max_split: int = (rect.size.y if split_horizontal else rect.size.x) - min_leaf_size
-        if max_split <= min_leaf_size:
-            return false # Sub-space is too constrained to split further
+		var max_split: int = (rect.size.y if split_horizontal else rect.size.x) - min_leaf_size
+		if max_split <= min_leaf_size:
+			return false
 
-        var split_pos: int = randi_range(min_leaf_size, max_split)
+		var split_pos: int = randi_range(min_leaf_size, max_split)
 
-        if split_horizontal:
-            left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, rect.size.x, split_pos))
-            right_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y + split_pos, rect.size.x, rect.size.y - split_pos))
-        else:
-            left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, split_pos, rect.size.y))
-            right_child = BSPLeaf.new(Rect2i(rect.position.x + split_pos, rect.position.y, rect.size.x - split_pos, rect.size.y))
+		if split_horizontal:
+			left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, rect.size.x, split_pos))
+			right_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y + split_pos, rect.size.x, rect.size.y - split_pos))
+		else:
+			left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, split_pos, rect.size.y))
+			right_child = BSPLeaf.new(Rect2i(rect.position.x + split_pos, rect.position.y, rect.size.x - split_pos, rect.size.y))
 
-        return true
+		return true
 
-    func create_rooms(min_room_size: int) -> void:
-        if left_child != null or right_child != null:
-            if left_child != null: left_child.create_rooms(min_room_size)
-            if right_child != null: right_child.create_rooms(min_room_size)
-        else:
-            # Carve room safely inside leaf boundaries with 1-tile structural padding
-            var room_w: int = randi_range(min_room_size, rect.size.x - 2)
-            var room_h: int = randi_range(min_room_size, rect.size.y - 2)
-            var room_x: int = randi_range(rect.position.x + 1, rect.position.x + rect.size.x - room_w - 1)
-            var room_y: int = randi_range(rect.position.y + 1, rect.position.y + rect.size.y - room_h - 1)
-            room = Rect2i(room_x, room_y, room_w, room_h)
+	## Recursively carves interior rooms into terminal leaf nodes
+	func create_rooms(min_room_size: int) -> void:
+		if left_child != null or right_child != null:
+			if left_child != null: left_child.create_rooms(min_room_size)
+			if right_child != null: right_child.create_rooms(min_room_size)
+		else:
+			# Carve interior room with 1-tile wall padding
+			var room_w: int = randi_range(min_room_size, rect.size.x - 2)
+			var room_h: int = randi_range(min_room_size, rect.size.y - 2)
+			var room_x: int = randi_range(rect.position.x + 1, rect.position.x + rect.size.x - room_w - 1)
+			var room_y: int = randi_range(rect.position.y + 1, rect.position.y + rect.size.y - room_h - 1)
+			room = Rect2i(room_x, room_y, room_w, room_h)
 
-## Generates a complete floor plan array: 0 = Empty/Void, 1 = Floor, 2 = Wall
-static func generate_dungeon_grid(width: int, height: int, min_size: int = 10) -> Array:
-    var root: BSPLeaf = BSPLeaf.new(Rect2i(0, 0, width, height))
-    var leaves: Array[BSPLeaf] = [root]
-    
-    var did_split: bool = true
-    while did_split:
-        did_split = false
-        for leaf in leaves.duplicate():
-            if leaf.left_child == null and leaf.right_child == null:
-                if leaf.split(min_size):
-                    leaves.append(leaf.left_child)
-                    leaves.append(leaf.right_child)
-                    did_split = true
+	## Collects all carved rooms from terminal leaves
+	func get_all_rooms() -> Array[Rect2i]:
+		if left_child == null and right_child == null:
+			return [room] if room.size.x > 0 else []
+		var result: Array[Rect2i] = []
+		if left_child != null: result.append_array(left_child.get_all_rooms())
+		if right_child != null: result.append_array(right_child.get_all_rooms())
+		return result
 
-    root.create_rooms(min_size / 2)
-    
-    # Allocate discrete 2D grid
-    var grid: Array = []
-    grid.resize(width)
-    for x in range(width):
-        var col: Array = []
-        col.resize(height)
-        col.fill(0)
-        grid[x] = col
+## Generates a 2D grid dictionary containing the carved layout and harvested rooms
+static func generate_dungeon(width: int, height: int, min_leaf_size: int = 12) -> Dictionary:
+	var root: BSPLeaf = BSPLeaf.new(Rect2i(0, 0, width, height))
+	var leaves: Array[BSPLeaf] = [root]
+	
+	var did_split: bool = true
+	while did_split:
+		did_split = false
+		for leaf in leaves.duplicate():
+			if leaf.left_child == null and leaf.right_child == null:
+				if leaf.split(min_leaf_size):
+					leaves.append(leaf.left_child)
+					leaves.append(leaf.right_child)
+					did_split = true
 
-    # Carve terminal leaf rooms into the grid
-    for leaf in leaves:
-        if leaf.room.size.x > 0:
-            for rx in range(leaf.room.position.x, leaf.room.end.x):
-                for ry in range(leaf.room.position.y, leaf.room.end.y):
-                    grid[rx][ry] = 1 # Carve Walkable Floor
-                    
-    return grid
+	root.create_rooms(maxi(4, min_leaf_size / 2))
+	var extracted_rooms: Array[Rect2i] = root.get_all_rooms()
+	
+	# Allocate 2D integer grid: 0 = Void, 1 = Floor
+	var grid: Array = []
+	grid.resize(width)
+	for x in range(width):
+		var col: Array = []
+		col.resize(height)
+		col.fill(0)
+		grid[x] = col
+
+	# Rasterize rooms into the grid
+	for r in extracted_rooms:
+		for rx in range(r.position.x, r.end.x):
+			for ry in range(r.position.y, r.end.y):
+				grid[rx][ry] = 1
+				
+	return {
+		"grid": grid,
+		"rooms": extracted_rooms
+	}
 ```
 
-### 2. Cellular Automata: Organic Subterranean Cavern Synthesis
+---
 
-To generate natural cave systems, we model physical rock erosion using a discrete 2D Cellular Automaton governed by the **Moore Neighborhood** ($8$ adjacent cells):
+### Step-by-Step Architectural Construction: Cellular Automata Caverns
+
+To generate organic cavern systems, we model rock erosion using a discrete 2D Cellular Automaton governed by the **Moore Neighborhood** ($8$ adjacent surrounding cells):
 
 ```
                         MOORE NEIGHBORHOOD (Radius = 1)
@@ -8280,79 +8367,127 @@ To generate natural cave systems, we model physical rock erosion using a discret
                          [x-1, y+1]  [ x, y+1 ]  [x+1, y+1]
 ```
 
-#### The Cave Transformation Rule (B5678 / S45678)
-1. Initialize the grid randomly: each cell has a $45\%$ probability of being a solid **Wall** ($1$) and $55\%$ probability of being **Empty Air** ($0$).
-2. For each simulation step, compute the count of solid wall neighbors $W_N$:
-   - If $W_N \ge 5$: The cell becomes a solid **Wall** (consolidation).
-   - If $W_N \le 3$: The cell becomes **Empty Air** (erosion).
-   - If $W_N == 4$: The cell maintains its existing state.
-3. Iterate $4\text{--}6$ generations. The random noise coalesces into smooth, winding natural limestone corridors!
+#### Chunk 2.1: Stochastic Seeding & Border Clamping
+
+```gdscript
+class_name CellularCaveGenerator
+extends RefCounted
+
+static func generate_caves(width: int, height: int, fill_ratio: float = 0.45, iterations: int = 5) -> Array:
+	var grid: Array = []
+	grid.resize(width)
+	
+	for x in range(width):
+		var col: Array = []
+		col.resize(height)
+		for y in range(height):
+			if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+				col[y] = 1
+			else:
+				col[y] = 1 if randf() < fill_ratio else 0
+		grid[x] = col
+```
+
+- **Perimeter Invariant (`x == 0 or x == width - 1 ...`)**: Forcing outer boundary cells to solid wall ($1$) guarantees that subsequent smoothing passes cannot erode holes in the edge of the world, preventing players and physics objects from falling into infinite void space.
+- **`fill_ratio: float = 0.45`**: Initial thermodynamic density. At $45\%$ initial wall density, Moore-neighborhood erosion reliably converges into open, winding limestone caverns. Values $> 52\%$ collapse into isolated, impassable pockets.
+
+#### Chunk 2.2: The Moore Neighborhood Filter & Double Buffering
+
+```gdscript
+	for _step in range(iterations):
+		var buffer: Array = []
+		buffer.resize(width)
+		for x in range(width):
+			var col: Array = []
+			col.resize(height)
+			for y in range(height):
+				var wall_count: int = _count_moore_walls(grid, x, y, width, height)
+				if wall_count > 4:
+					col[y] = 1
+				elif wall_count < 4:
+					col[y] = 0
+				else:
+					col[y] = grid[x][y]
+			buffer[x] = col
+		grid = buffer
+
+	return grid
+```
+
+- **Double-Buffering (`var buffer = ...; grid = buffer`)**: **Critical Simulation Invariant**. If you mutate `grid[x][y]` in-place while looping through cells, subsequent cell evaluations read the *already updated* states from earlier in the same frame, introducing severe diagonal directional bias. Writing updates to an isolated secondary buffer and swapping arrays at the end of the pass guarantees isotropic, uniform erosion.
+- **The B5678/S45678 Rule**: A cell with $\ge 5$ wall neighbors solidifies into a wall; $\le 3$ erodes into empty air; $4$ preserves its current state.
+
+---
+
+#### The Fully Assembled `CellularCaveGenerator.gd`
 
 ```gdscript
 # ==============================================================================
-# ORGANIC CELLULAR AUTOMATA CAVERN SYNTHESIS
+# SCRIPT: CellularCaveGenerator.gd
+# Architecture: Double-Buffered Cellular Automata Cavern Synthesizer
 # ==============================================================================
 class_name CellularCaveGenerator
 extends RefCounted
 
-## Executes smoothing generations on a randomized boolean grid
+## Synthesizes organic caves via iterative Moore-neighborhood smoothing
 static func generate_caves(width: int, height: int, fill_ratio: float = 0.45, iterations: int = 5) -> Array:
-    var grid: Array = []
-    grid.resize(width)
-    
-    # 1. Stochastic Seeding
-    for x in range(width):
-        var col: Array = []
-        col.resize(height)
-        for y in range(height):
-            # Enforce solid bounding border around level perimeter
-            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
-                col[y] = 1
-            else:
-                col[y] = 1 if randf() < fill_ratio else 0
-        grid[x] = col
+	var grid: Array = []
+	grid.resize(width)
+	
+	# 1. Stochastic Seeding with solid perimeter enforcement
+	for x in range(width):
+		var col: Array = []
+		col.resize(height)
+		for y in range(height):
+			if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+				col[y] = 1
+			else:
+				col[y] = 1 if randf() < fill_ratio else 0
+		grid[x] = col
 
-    # 2. Iterative Cellular Automata Simulation Steps
-    for step in range(iterations):
-        var buffer: Array = []
-        buffer.resize(width)
-        for x in range(width):
-            var col: Array = []
-            col.resize(height)
-            for y in range(height):
-                var wall_count: int = _count_moore_walls(grid, x, y, width, height)
-                
-                # B5678 / S45678 Rule evaluation
-                if wall_count > 4:
-                    col[y] = 1
-                elif wall_count < 4:
-                    col[y] = 0
-                else:
-                    col[y] = grid[x][y]
-            buffer[x] = col
-        grid = buffer
+	# 2. Double-Buffered Smoothing Passes
+	for _step in range(iterations):
+		var buffer: Array = []
+		buffer.resize(width)
+		for x in range(width):
+			var col: Array = []
+			col.resize(height)
+			for y in range(height):
+				var wall_count: int = _count_moore_walls(grid, x, y, width, height)
+				
+				# B5678 / S45678 Transition Rule
+				if wall_count > 4:
+					col[y] = 1
+				elif wall_count < 4:
+					col[y] = 0
+				else:
+					col[y] = grid[x][y]
+			buffer[x] = col
+		grid = buffer
 
-    return grid
+	return grid
 
 static func _count_moore_walls(map: Array, grid_x: int, grid_y: int, max_w: int, max_h: int) -> int:
-    var walls: int = 0
-    for ox in range(-1, 2):
-        for oy in range(-1, 2):
-            if ox == 0 and oy == 0:
-                continue
-            var nx: int = grid_x + ox
-            var ny: int = grid_y + oy
-            # Out-of-bounds cells evaluate as solid rock (walls)
-            if nx < 0 or nx >= max_w or ny < 0 or ny >= max_h:
-                walls += 1
-            elif map[nx][ny] == 1:
-                walls += 1
-    return walls
+	var walls: int = 0
+	for ox in range(-1, 2):
+		for oy in range(-1, 2):
+			if ox == 0 and oy == 0:
+				continue
+			var nx: int = grid_x + ox
+			var ny: int = grid_y + oy
+			# Out-of-bounds coordinates evaluate as solid rock
+			if nx < 0 or nx >= max_w or ny < 0 or ny >= max_h:
+				walls += 1
+			elif map[nx][ny] == 1:
+				walls += 1
+	return walls
 ```
 
-### 3. Wave Function Collapse (WFC): Local Adjacency Constraint Propagation
+---
 
-Wave Function Collapse (WFC) generates structured patterns (such as complex pipe networks, city streets, or detailed building interiors) by treating each grid cell as a quantum-like **Superposition** of all possible structural tiles.
+### Step-by-Step Architectural Construction: Wave Function Collapse (WFC)
+
+Wave Function Collapse (WFC) treats each grid coordinate as a quantum-like **Superposition** of all possible structural tiles. It collapses the cell with the lowest Shannon entropy, then propagates socket-matching constraints outward across adjacent cells.
 
 ```
                         THE WFC REDUCTION PIPELINE
@@ -8370,145 +8505,235 @@ Wave Function Collapse (WFC) generates structured patterns (such as complex pipe
                        (Repeat until all cells collapsed, or backtrack on Contradiction!)
 ```
 
-#### Mathematical Entropy & Constraint Propagation
-The **Shannon Entropy** $H$ of a cell containing $N$ valid tile candidates is computed as:
-
-$$H = \log_2(N)$$
-
-When tile weights $w_i$ are assigned (e.g., plain grass is 10x more common than a road crossing):
-
-$$H = \log_2\left(\sum_{i=1}^{N} w_i\right) - \frac{\sum_{i=1}^{N} w_i \log_2(w_i)}{\sum_{i=1}^{N} w_i}$$
+#### Chunk 3.1: Tile Sockets & Superposition Wave Grid
 
 ```gdscript
-# ==============================================================================
-# PRODUCTION WAVE FUNCTION COLLAPSE (WFC) MODEL (2D Socket-Based)
-# ==============================================================================
 class_name WaveFunctionCollapse2D
 extends RefCounted
 
-## Sockets define boundary compatibility: [North, East, South, West]
 class WFCTile:
-    var id: int
-    var sockets: Array[String] # e.g. ["Grass", "Road", "Grass", "Grass"]
-    var weight: float = 1.0
-    
-    func _init(p_id: int, p_sockets: Array[String], p_weight: float = 1.0) -> void:
-        id = p_id
-        sockets = p_sockets
-        weight = p_weight
+	var id: int
+	var sockets: Array[String] # [North, East, South, West]
+	var weight: float = 1.0
+	
+	func _init(p_id: int, p_sockets: Array[String], p_weight: float = 1.0) -> void:
+		id = p_id
+		sockets = p_sockets
+		weight = p_weight
 
 var _tile_palette: Array[WFCTile] = []
 var _grid_width: int
 var _grid_height: int
-## 2D Array where each element is an Array[WFCTile] representing active superposition
+var _wave: Array = [] # 2D Array of Array[WFCTile]
+```
+
+- **`sockets: Array[String]`**: Sockets define boundary compatibility along four directional interfaces: `[North (0), East (1), South (2), West (3)]`. For example, a road tile might declare sockets `["Road", "Grass", "Road", "Grass"]`.
+- **`_wave: Array`**: The superposition grid. At initialization, every coordinate contains an array containing *all possible tiles* in the palette.
+
+#### Chunk 3.2: Entropy Minimization & Weighted Collapse
+
+```gdscript
+func _find_lowest_entropy_cell() -> Vector2i:
+	var lowest_count: int = INF
+	var best_coord: Vector2i = Vector2i(-1, -1)
+	
+	for x in range(_grid_width):
+		for y in range(_grid_height):
+			var count: int = _wave[x][y].size()
+			if count > 1 and count < lowest_count:
+				lowest_count = count
+				best_coord = Vector2i(x, y)
+				
+	return best_coord
+
+func _sample_weighted_tile(options: Array) -> WFCTile:
+	var total_weight: float = 0.0
+	for tile in options: total_weight += tile.weight
+	var roll: float = randf_range(0.0, total_weight)
+	var accum: float = 0.0
+	for tile in options:
+		accum += tile.weight
+		if roll <= accum:
+			return tile
+	return options.back()
+```
+
+- **Lowest Entropy Selection**: Scans the grid for uncollapsed cells (`count > 1`) with the fewest remaining valid possibilities. Collapsing the most constrained cell first dramatically minimizes the probability of hitting an unresolvable contradiction later in generation.
+- **Weighted Sampling**: Selects a tile using normalized weights, allowing common tiles (like grass) to appear frequently while preserving rare structures (like shrines or intersections).
+
+#### Chunk 3.3: Constraint Propagation Stack
+
+```gdscript
+func _propagate_constraints(start_pos: Vector2i) -> void:
+	var stack: Array[Vector2i] = [start_pos]
+	var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
+	
+	while not stack.is_empty():
+		var current: Vector2i = stack.pop_back()
+		var current_options: Array = _wave[current.x][current.y]
+
+		for dir_idx in range(4):
+			var offset: Vector2i = directions[dir_idx]
+			var neighbor: Vector2i = current + offset
+			
+			if neighbor.x < 0 or neighbor.x >= _grid_width or neighbor.y < 0 or neighbor.y >= _grid_height:
+				continue
+
+			var neighbor_options: Array = _wave[neighbor.x][neighbor.y]
+			if neighbor_options.size() <= 1:
+				continue
+
+			var opposing_dir: int = (dir_idx + 2) % 4
+			var valid_neighbor_tiles: Array = []
+
+			for candidate in neighbor_options:
+				var is_compatible: bool = false
+				for source in current_options:
+					if source.sockets[dir_idx] == candidate.sockets[opposing_dir]:
+						is_compatible = true
+						break
+				if is_compatible:
+					valid_neighbor_tiles.append(candidate)
+
+			if valid_neighbor_tiles.size() < neighbor_options.size():
+				_wave[neighbor.x][neighbor.y] = valid_neighbor_tiles
+				stack.append(neighbor)
+```
+
+- **`opposing_dir: int = (dir_idx + 2) % 4`**: Evaluates the shared directional interface. The North socket (index 0) of the source cell must match the South socket (index 2) of the neighbor above it; East (1) matches West (3).
+- **Stack-Based Wave Front**: When a neighbor's superposition is pruned (`valid_neighbor_tiles.size() < neighbor_options.size()`), that neighbor is pushed onto the stack. Its own neighbors must now be evaluated, propagating the constraint outward across the level until equilibrium is reached.
+
+---
+
+#### The Fully Assembled `WaveFunctionCollapse2D.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: WaveFunctionCollapse2D.gd
+# Architecture: Constraint Propagation Wave Function Collapse Synthesizer
+# ==============================================================================
+class_name WaveFunctionCollapse2D
+extends RefCounted
+
+class WFCTile:
+	var id: int
+	var sockets: Array[String] # [North, East, South, West]
+	var weight: float = 1.0
+	
+	func _init(p_id: int, p_sockets: Array[String], p_weight: float = 1.0) -> void:
+		id = p_id
+		sockets = p_sockets
+		weight = p_weight
+
+var _tile_palette: Array[WFCTile] = []
+var _grid_width: int
+var _grid_height: int
 var _wave: Array = []
 
 func _init(width: int, height: int, palette: Array[WFCTile]) -> void:
-    _grid_width = width
-    _grid_height = height
-    _tile_palette = palette
-    _initialize_wave()
+	_grid_width = width
+	_grid_height = height
+	_tile_palette = palette
+	_initialize_wave()
 
 func _initialize_wave() -> void:
-    _wave.resize(_grid_width)
-    for x in range(_grid_width):
-        var col: Array = []
-        col.resize(_grid_height)
-        for y in range(_grid_height):
-            # Every cell starts in full superposition of all possible tiles
-            col[y] = _tile_palette.duplicate()
-        _wave[x] = col
+	_wave.resize(_grid_width)
+	for x in range(_grid_width):
+		var col: Array = []
+		col.resize(_grid_height)
+		for y in range(_grid_height):
+			col[y] = _tile_palette.duplicate()
+		_wave[x] = col
 
-## Runs the complete collapse simulation loop; returns false on Contradiction
+## Executes the iterative collapse loop; returns false on contradiction
 func run_collapse() -> bool:
-    while true:
-        var candidate_cell: Vector2i = _find_lowest_entropy_cell()
-        if candidate_cell == Vector2i(-1, -1):
-            return true # All cells collapsed successfully! Zero entropy remains.
+	while true:
+		var candidate_cell: Vector2i = _find_lowest_entropy_cell()
+		if candidate_cell == Vector2i(-1, -1):
+			return true # All cells successfully collapsed to single states
 
-        var cell_options: Array = _wave[candidate_cell.x][candidate_cell.y]
-        if cell_options.is_empty():
-            push_error("WFC Contradiction: Cell reached 0 valid states at %s" % str(candidate_cell))
-            return false
+		var cell_options: Array = _wave[candidate_cell.x][candidate_cell.y]
+		if cell_options.is_empty():
+			push_error("WFC Contradiction: Zero valid choices remain at %s" % str(candidate_cell))
+			return false
 
-        # Collapse cell to a single choice based on relative weights
-        var chosen_tile: WFCTile = _sample_weighted_tile(cell_options)
-        _wave[candidate_cell.x][candidate_cell.y] = [chosen_tile]
+		# Collapse target coordinate
+		var chosen_tile: WFCTile = _sample_weighted_tile(cell_options)
+		_wave[candidate_cell.x][candidate_cell.y] = [chosen_tile]
 
-        # Propagate constraints outwards via stack-based queue
-        _propagate_constraints(candidate_cell)
-        
-    return true
+		# Propagate adjacency rules
+		_propagate_constraints(candidate_cell)
+		
+	return true
 
 func _find_lowest_entropy_cell() -> Vector2i:
-    var lowest_count: int = INF
-    var best_coord: Vector2i = Vector2i(-1, -1)
-    
-    for x in range(_grid_width):
-        for y in range(_grid_height):
-            var count: int = _wave[x][y].size()
-            if count > 1 and count < lowest_count:
-                lowest_count = count
-                best_coord = Vector2i(x, y)
-                
-    return best_coord
+	var lowest_count: int = INF
+	var best_coord: Vector2i = Vector2i(-1, -1)
+	
+	for x in range(_grid_width):
+		for y in range(_grid_height):
+			var count: int = _wave[x][y].size()
+			if count > 1 and count < lowest_count:
+				lowest_count = count
+				best_coord = Vector2i(x, y)
+				
+	return best_coord
 
 func _sample_weighted_tile(options: Array) -> WFCTile:
-    var total_weight: float = 0.0
-    for tile in options: total_weight += tile.weight
-    var roll: float = randf_range(0.0, total_weight)
-    var accum: float = 0.0
-    for tile in options:
-        accum += tile.weight
-        if roll <= accum:
-            return tile
-    return options.back()
+	var total_weight: float = 0.0
+	for tile in options: total_weight += tile.weight
+	var roll: float = randf_range(0.0, total_weight)
+	var accum: float = 0.0
+	for tile in options:
+		accum += tile.weight
+		if roll <= accum:
+			return tile
+	return options.back()
 
 func _propagate_constraints(start_pos: Vector2i) -> void:
-    var stack: Array[Vector2i] = [start_pos]
-    var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)] # N, E, S, W
-    
-    while not stack.is_empty():
-        var current: Vector2i = stack.pop_back()
-        var current_options: Array = _wave[current.x][current.y]
+	var stack: Array[Vector2i] = [start_pos]
+	var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
+	
+	while not stack.is_empty():
+		var current: Vector2i = stack.pop_back()
+		var current_options: Array = _wave[current.x][current.y]
 
-        for dir_idx in range(4):
-            var offset: Vector2i = directions[dir_idx]
-            var neighbor: Vector2i = current + offset
-            
-            if neighbor.x < 0 or neighbor.x >= _grid_width or neighbor.y < 0 or neighbor.y >= _grid_height:
-                continue
+		for dir_idx in range(4):
+			var offset: Vector2i = directions[dir_idx]
+			var neighbor: Vector2i = current + offset
+			
+			if neighbor.x < 0 or neighbor.x >= _grid_width or neighbor.y < 0 or neighbor.y >= _grid_height:
+				continue
 
-            var neighbor_options: Array = _wave[neighbor.x][neighbor.y]
-            if neighbor_options.size() <= 1:
-                continue # Already collapsed
+			var neighbor_options: Array = _wave[neighbor.x][neighbor.y]
+			if neighbor_options.size() <= 1:
+				continue
 
-            var opposing_dir: int = (dir_idx + 2) % 4
-            var valid_neighbor_tiles: Array = []
+			var opposing_dir: int = (dir_idx + 2) % 4
+			var valid_neighbor_tiles: Array = []
 
-            for candidate in neighbor_options:
-                var is_compatible: bool = false
-                for source in current_options:
-                    # Check socket identity across the shared interface edge
-                    if source.sockets[dir_idx] == candidate.sockets[opposing_dir]:
-                        is_compatible = true
-                        break
-                if is_compatible:
-                    valid_neighbor_tiles.append(candidate)
+			for candidate in neighbor_options:
+				var is_compatible: bool = false
+				for source in current_options:
+					if source.sockets[dir_idx] == candidate.sockets[opposing_dir]:
+						is_compatible = true
+						break
+				if is_compatible:
+					valid_neighbor_tiles.append(candidate)
 
-            # If choices were pruned, push neighbor onto propagation stack
-            if valid_neighbor_tiles.size() < neighbor_options.size():
-                _wave[neighbor.x][neighbor.y] = valid_neighbor_tiles
-                stack.append(neighbor)
+			# If choices were eliminated, push neighbor onto propagation stack
+			if valid_neighbor_tiles.size() < neighbor_options.size():
+				_wave[neighbor.x][neighbor.y] = valid_neighbor_tiles
+				stack.append(neighbor)
 ```
 
-### 4. Continuous World Generation: Multi-Octave fBm Noise & Biomes
+---
 
-Large outdoor worlds cannot be generated via discrete room-splitting. We compute continuous, smooth elevation and moisture fields using **Fractional Brownian Motion (fBm)**, sampling multi-octave coherent Simplex noise:
+### Step-by-Step Architectural Construction: Continuous Multi-Octave fBm & Whittaker Biomes
+
+Continuous open worlds rely on **Fractional Brownian Motion (fBm)**, evaluating multi-octave coherent noise for elevation and moisture:
 
 $$H(x, z) = \sum_{k=0}^{M-1} g^k \cdot \text{Noise}\left(\ell^k \cdot x, \; \ell^k \cdot z\right)$$
-
-where $M$ is the octave count, $g$ is **Gain / Persistence** ($g \approx 0.5$), and $\ell$ is **Lacunarity** ($\ell \approx 2.0$).
 
 ```
                       THE WHITTAKER BIOME LOOKUP DIAGRAM
@@ -8525,9 +8750,72 @@ where $M$ is the octave count, $g$ is **Gain / Persistence** ($g \approx 0.5$), 
                                                                   Temperature (T)
 ```
 
+#### Chunk 4.1: Octave Configuration & Noise Sampling
+
+```gdscript
+class_name BiomeSynthesizer
+extends RefCounted
+
+enum BiomeType { ARCTIC, TUNDRA, GRASSLAND, DESERT, FOREST, RAINFOREST }
+
+var _elevation_noise: FastNoiseLite
+var _moisture_noise: FastNoiseLite
+
+func _init(world_seed: int) -> void:
+	_elevation_noise = FastNoiseLite.new()
+	_elevation_noise.seed = world_seed
+	_elevation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	_elevation_noise.fractal_octaves = 5
+	_elevation_noise.fractal_lacunarity = 2.0
+	_elevation_noise.fractal_gain = 0.5
+	_elevation_noise.frequency = 0.003
+
+	_moisture_noise = FastNoiseLite.new()
+	_moisture_noise.seed = world_seed + 101
+	_moisture_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	_moisture_noise.fractal_octaves = 4
+	_moisture_noise.frequency = 0.002
+```
+
+- **`fractal_octaves = 5`**: Layers 5 progressive octaves of noise. Octave 0 generates continental mountain masses; Octave 4 generates small rocky surface bumps.
+- **`fractal_lacunarity = 2.0` & `fractal_gain = 0.5`**: Each subsequent octave doubles in frequency ($2\times$) while halving in amplitude ($0.5\times$).
+- **Seed De-correlation (`seed + 101`)**: Sampling elevation and moisture with identical seeds causes mountains to always align with rivers. Offsetting the seed ensures elevation and moisture vary independently.
+
+#### Chunk 4.2: Biome Classification Matrix
+
+```gdscript
+func sample_world(x: float, z: float) -> Dictionary:
+	var elevation: float = (_elevation_noise.get_noise_2d(x, z) + 1.0) * 0.5
+	var moisture: float = (_moisture_noise.get_noise_2d(x, z) + 1.0) * 0.5
+	
+	var biome: BiomeType
+	if elevation < 0.2:
+		biome = BiomeType.ARCTIC
+	elif moisture < 0.25:
+		biome = BiomeType.DESERT if elevation > 0.4 else BiomeType.GRASSLAND
+	elif moisture > 0.70:
+		biome = BiomeType.RAINFOREST if elevation > 0.3 else BiomeType.FOREST
+	else:
+		biome = BiomeType.TUNDRA if elevation > 0.6 else BiomeType.FOREST
+
+	return {
+		"elevation": elevation * 120.0,
+		"moisture": moisture,
+		"biome": biome
+	}
+```
+
+- **Normalized Mapping (`+ 1.0) * 0.5`**: Maps raw Simplex output $[-1.0, 1.0]$ into a clean $[0.0, 1.0]$ range.
+- **Bi-Variate Whittaker Lookup**: Uses elevation and moisture coordinates to assign categorical gameplay rules, foliage sets, and ground shader materials.
+
+---
+
+#### The Fully Assembled `BiomeSynthesizer.gd`
+
 ```gdscript
 # ==============================================================================
-# BIOME ALLOCATION MATRIX & FBM ELEVATION SAMPLER
+# SCRIPT: BiomeSynthesizer.gd
+# Architecture: Multi-Octave fBm Elevation & Whittaker Biome Matrix
 # ==============================================================================
 class_name BiomeSynthesizer
 extends RefCounted
@@ -8538,41 +8826,40 @@ var _elevation_noise: FastNoiseLite
 var _moisture_noise: FastNoiseLite
 
 func _init(world_seed: int) -> void:
-    _elevation_noise = FastNoiseLite.new()
-    _elevation_noise.seed = world_seed
-    _elevation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-    _elevation_noise.fractal_octaves = 5
-    _elevation_noise.fractal_lacunarity = 2.0
-    _elevation_noise.fractal_gain = 0.5
-    _elevation_noise.frequency = 0.003
+	_elevation_noise = FastNoiseLite.new()
+	_elevation_noise.seed = world_seed
+	_elevation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	_elevation_noise.fractal_octaves = 5
+	_elevation_noise.fractal_lacunarity = 2.0
+	_elevation_noise.fractal_gain = 0.5
+	_elevation_noise.frequency = 0.003
 
-    _moisture_noise = FastNoiseLite.new()
-    _moisture_noise.seed = world_seed + 101
-    _moisture_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-    _moisture_noise.fractal_octaves = 4
-    _moisture_noise.frequency = 0.002
+	_moisture_noise = FastNoiseLite.new()
+	_moisture_noise.seed = world_seed + 101
+	_moisture_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	_moisture_noise.fractal_octaves = 4
+	_moisture_noise.frequency = 0.002
 
-## Returns continuous height and discrete BiomeType for any world coordinate (x, z)
+## Returns continuous height and categorical biome type at world coordinate (x, z)
 func sample_world(x: float, z: float) -> Dictionary:
-    # Samples normalized to [0.0, 1.0]
-    var elevation: float = (_elevation_noise.get_noise_2d(x, z) + 1.0) * 0.5
-    var moisture: float = (_moisture_noise.get_noise_2d(x, z) + 1.0) * 0.5
-    
-    var biome: BiomeType
-    if elevation < 0.2:
-        biome = BiomeType.ARCTIC
-    elif moisture < 0.25:
-        biome = BiomeType.DESERT if elevation > 0.4 else BiomeType.GRASSLAND
-    elif moisture > 0.70:
-        biome = BiomeType.RAINFOREST if elevation > 0.3 else BiomeType.FOREST
-    else:
-        biome = BiomeType.TUNDRA if elevation > 0.6 else BiomeType.FOREST
+	var elevation: float = (_elevation_noise.get_noise_2d(x, z) + 1.0) * 0.5
+	var moisture: float = (_moisture_noise.get_noise_2d(x, z) + 1.0) * 0.5
+	
+	var biome: BiomeType
+	if elevation < 0.2:
+		biome = BiomeType.ARCTIC
+	elif moisture < 0.25:
+		biome = BiomeType.DESERT if elevation > 0.4 else BiomeType.GRASSLAND
+	elif moisture > 0.70:
+		biome = BiomeType.RAINFOREST if elevation > 0.3 else BiomeType.FOREST
+	else:
+		biome = BiomeType.TUNDRA if elevation > 0.6 else BiomeType.FOREST
 
-    return {
-        "elevation": elevation * 120.0, # Scaled height in metres
-        "moisture": moisture,
-        "biome": biome
-    }
+	return {
+		"elevation": elevation * 120.0,
+		"moisture": moisture,
+		"biome": biome
+	}
 ```
 
 ---
@@ -8593,67 +8880,57 @@ Rendering and simulating vast worlds ($10\text{ km} \times 10\text{ km}$) requir
 
 ### 1. Asynchronous Threaded Chunk Streaming
 
-Loading heavy `.tscn` chunks synchronously via `load()` blocks the main thread, dropping frames and causing noticeable stutter. Godot 4 resolves this via **`ResourceLoader.load_threaded_request()`**:
+Loading heavy `.tscn` chunks synchronously via `load()` blocks the main thread, dropping frames and causing noticeable stutter. Godot 4 resolves this via **`ResourceLoader.load_threaded_request()`**.
+
+---
+
+### Step-by-Step Architectural Construction: Threaded Chunk Streamer
+
+#### Chunk 5.1: Threaded Loading Request & Polling
 
 ```gdscript
-# ==============================================================================
-# ASYNCHRONOUS RESOURCE CHUNK STREAMER
-# ==============================================================================
 class_name ChunkStreamer
 extends Node
 
 signal chunk_loaded(coord: Vector2i, scene: PackedScene)
 
-var _loading_queue: Dictionary = {} # Vector2i -> ResourceLoader.ThreadLoadStatus
+var _loading_queue: Dictionary = {}
 
 func request_chunk_stream(coord: Vector2i, file_path: String) -> void:
-    if _loading_queue.has(coord):
-        return
-        
-    var err: Error = ResourceLoader.load_threaded_request(file_path, "PackedScene")
-    if err == OK:
-        _loading_queue[coord] = file_path
+	if _loading_queue.has(coord):
+		return
+		
+	var err: Error = ResourceLoader.load_threaded_request(file_path, "PackedScene")
+	if err == OK:
+		_loading_queue[coord] = file_path
 
 func _process(_delta: float) -> void:
-    for coord in _loading_queue.keys():
-        var file_path: String = _loading_queue[coord]
-        var progress: Array = []
-        var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(file_path, progress)
+	for coord in _loading_queue.keys():
+		var file_path: String = _loading_queue[coord]
+		var progress: Array = []
+		var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(file_path, progress)
 
-        if status == ResourceLoader.THREAD_LOAD_LOADED:
-            var scene: PackedScene = ResourceLoader.load_threaded_get(file_path) as PackedScene
-            _loading_queue.erase(coord)
-            chunk_loaded.emit(coord, scene)
-        elif status == ResourceLoader.THREAD_LOAD_FAILED or status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
-            push_error("ChunkStreamer: Failed to stream chunk at %s" % file_path)
-            _loading_queue.erase(coord)
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
+			var scene: PackedScene = ResourceLoader.load_threaded_get(file_path) as PackedScene
+			_loading_queue.erase(coord)
+			chunk_loaded.emit(coord, scene)
+		elif status == ResourceLoader.THREAD_LOAD_FAILED or status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+			push_error("ChunkStreamer: Failed to stream chunk at %s" % file_path)
+			_loading_queue.erase(coord)
 ```
 
-### 2. Floating-Point Precision Degradation & The Floating Origin Solution
+- **`ResourceLoader.load_threaded_request(...)`**: Offloads disk read and scene deserialization to Godot's internal worker thread pool, keeping the main thread running at full frame rate.
+- **`THREAD_LOAD_LOADED`**: Polls non-blocking progress. Once loading completes, it retrieves the `PackedScene` and signals the scene spawner to mount it into the active tree.
 
-Modern GPUs and game engine physics run on **32-bit single-precision floating-point numbers** (IEEE 754). A 32-bit float reserves only $23\text{ bits}$ of mantissa precision.
+---
 
-```
-                 IEEE 754 PRECISION DRIFT ACROSS DISTANCE
-=================================================================================
- Distance from World Origin (0,0,0)  │ Effective Minimum Spatial Precision (Step Size)
- ────────────────────────────────────┼────────────────────────────────────────────
- Under 1,000 metres (1 km)           │ ~0.00006 mm  (Sub-microscopic precision)
- At 8,192 metres (8.2 km)            │ ~1.0 mm      (Slight vertex wobble)
- At 65,536 metres (65.5 km)          │ ~8.0 mm      (Noticeable jitter & physics pops)
- At 262,144 metres (262 km)          │ ~32.0 mm     (Violent camera vibrating; FAIL!)
-```
+### Step-by-Step Architectural Construction: Floating Origin Shifter
 
-> [!bug] 🚨 The Open-World Jitter Bug
-> When a player travels far from the origin, their character's mesh and the surrounding terrain begin vibrating violently ("vertex jitter"). Physics raycasts pass through walls because collision contacts can no longer resolve sub-centimeter vertices.
+Modern GPUs and physics engines run on **32-bit single-precision floating-point numbers** (IEEE 754), reserving only 23 bits of mantissa precision. Beyond $8,192\text{ metres}$, precision drops below $1\text{ mm}$, causing visible mesh vibrating and collision pass-through bugs.
 
-#### The Architectural Solution: Origin Shifting
-When the player crosses a distance threshold $D_{\text{threshold}}$ (typically $4,000\text{ m}$) away from the origin $(0, 0, 0)$, **shift the entire world backwards** by $-\vec{P}_{\text{player}}$, snapping the player back to $(0, 0, 0)$!
+#### Chunk 6.1: Planar Distance Thresholding & Scene Shifting
 
 ```gdscript
-# ==============================================================================
-# FLOATING ORIGIN SHIFT MANAGER
-# ==============================================================================
 class_name FloatingOriginManager
 extends Node
 
@@ -8663,27 +8940,71 @@ signal origin_shifted(offset_vector: Vector3)
 @export var shift_threshold_meters: float = 4000.0
 
 func _physics_process(_delta: float) -> void:
-    if player_target == null:
-        return
+	if player_target == null:
+		return
 
-    var player_pos: Vector3 = player_target.global_position
-    # Evaluate planar horizontal threshold
-    if Vector2(player_pos.x, player_pos.z).length_squared() > (shift_threshold_meters * shift_threshold_meters):
-        _execute_origin_shift(player_pos)
+	var player_pos: Vector3 = player_target.global_position
+	if Vector2(player_pos.x, player_pos.z).length_squared() > (shift_threshold_meters * shift_threshold_meters):
+		_execute_origin_shift(player_pos)
 
 func _execute_origin_shift(shift_vector: Vector3) -> void:
-    # 1. Offset the player back to local origin
-    player_target.global_position -= shift_vector
+	player_target.global_position -= shift_vector
 
-    # 2. Offset all active spatial entities and chunks in the simulation
-    var world_nodes: Array[Node] = get_tree().get_nodes_in_group(&"floating_origin_affected")
-    for entity in world_nodes:
-        if entity is Node3D and entity != player_target:
-            (entity as Node3D).global_position -= shift_vector
+	var world_nodes: Array[Node] = get_tree().get_nodes_in_group(&"floating_origin_affected")
+	for entity in world_nodes:
+		if entity is Node3D and entity != player_target:
+			(entity as Node3D).global_position -= shift_vector
 
-    # 3. Inform particles, audio listeners, and physics queries
-    origin_shifted.emit(shift_vector)
-    print("FloatingOriginManager: Origin shifted by %s. Coordinates stabilized." % str(shift_vector))
+	origin_shifted.emit(shift_vector)
+```
+
+- **`shift_threshold_meters: float = 4000.0`**: Triggers origin shifts well before floating-point jitter becomes perceptible ($8,192\text{ m}$).
+- **`global_position -= shift_vector`**: Offsets the player and all active world entities backward by $-\vec{P}_{\text{player}}$, snapping the player back to $[0, 0, 0]$ and preserving maximum floating-point precision indefinitely.
+
+---
+
+#### The Fully Assembled `FloatingOriginManager.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: FloatingOriginManager.gd
+# Architecture: Large-World IEEE 754 Floating Origin Coordinator
+# ==============================================================================
+class_name FloatingOriginManager
+extends Node
+
+## Dispatched when world coordinates are reset, notifying physics queries and VFX
+signal origin_shifted(offset_vector: Vector3)
+
+@export_group("Target Tracking")
+## The focal player node whose distance from origin drives the shift
+@export var player_target: Node3D
+## Maximum distance from (0,0,0) permitted before triggering a shift (metres)
+@export var shift_threshold_meters: float = 4000.0
+
+func _physics_process(_delta: float) -> void:
+	if player_target == null:
+		return
+
+	var player_pos: Vector3 = player_target.global_position
+	# Check horizontal distance against threshold squared
+	if Vector2(player_pos.x, player_pos.z).length_squared() > (shift_threshold_meters * shift_threshold_meters):
+		_execute_origin_shift(player_pos)
+
+## Shifts the player and registered entities back toward origin
+func _execute_origin_shift(shift_vector: Vector3) -> void:
+	# 1. Reset player position
+	player_target.global_position -= shift_vector
+
+	# 2. Shift all active world entities
+	var world_nodes: Array[Node] = get_tree().get_nodes_in_group(&"floating_origin_affected")
+	for entity in world_nodes:
+		if entity is Node3D and entity != player_target:
+			(entity as Node3D).global_position -= shift_vector
+
+	# 3. Notify listeners
+	origin_shifted.emit(shift_vector)
+	print("FloatingOriginManager: World origin shifted by %s. Precision stabilized." % str(shift_vector))
 ```
 
 ---
@@ -8704,16 +9025,17 @@ It generates a non-linear network of rooms using BSP, connects their centroids v
     [ Room 3 ] ══════════════════════════════ [ Room 4 ]
 ```
 
+---
+
+### Step-by-Step Architectural Construction: Procedural Dungeon Pipeline
+
+Let us deconstruct our graph compilation, MST pruning, cyclical edge injection, and orthogonal corridor rasterization line by line.
+
+#### Chunk 7.1: Euclidean Distance Edge Matrix
+
 ```gdscript
-# ==============================================================================
-# NON-LINEAR GRAPH-BASED PROCEDURAL DUNGEON CARVER
-# ==============================================================================
 class_name ProceduralDungeonPipeline
 extends Node
-
-struct CorridorSegment:
-    var start: Vector2i
-    var end: Vector2i
 
 @export var grid_width: int = 80
 @export var grid_height: int = 80
@@ -8723,201 +9045,510 @@ struct CorridorSegment:
 var _grid: Array = []
 var _rooms: Array[Rect2i] = []
 
-func build_dungeon() -> void:
-    _rooms.clear()
-    _grid = BSPDungeonGenerator.generate_dungeon_grid(grid_width, grid_height, min_leaf_size)
-    _gather_extracted_rooms()
-    _connect_rooms_with_corridors()
+func _build_distance_graph() -> Array[Dictionary]:
+	var edges: Array[Dictionary] = []
+	for i in range(_rooms.size()):
+		for j in range(i + 1, _rooms.size()):
+			var p1: Vector2 = Vector2(_rooms[i].get_center())
+			var p2: Vector2 = Vector2(_rooms[j].get_center())
+			edges.append({
+				"room_a": i,
+				"room_b": j,
+				"weight": p1.distance_squared_to(p2)
+			})
 
-func _gather_extracted_rooms() -> void:
-    # Find disjoint carved floor islands to locate room centers
-    # (In production, leaves store Rect2i rooms directly in the BSP tree)
-    pass
+	edges.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["weight"] < b["weight"])
+	return edges
+```
 
-func _connect_rooms_with_corridors() -> void:
-    if _rooms.size() < 2:
-        return
+- **All-Pairs Edge Construction**: Builds a complete graph connecting every room centroid to every other room centroid.
+- **`edges.sort_custom(...)`**: Sorts edges ascending by squared distance, establishing the greedy selection order required by Kruskal's algorithm.
 
-    # 1. Construct Complete Euclidean Distance Graph
-    var edges: Array[Dictionary] = []
-    for i in range(_rooms.size()):
-        for j in range(i + 1, _rooms.size()):
-            var p1: Vector2 = Vector2(_rooms[i].get_center())
-            var p2: Vector2 = Vector2(_rooms[j].get_center())
-            edges.append({
-                "room_a": i,
-                "room_b": j,
-                "weight": p1.distance_squared_to(p2)
-            })
+#### Chunk 7.2: Kruskal's Minimum Spanning Tree (MST) & Cycle Loop Injection
 
-    # Sort edges ascending by squared distance
-    edges.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["weight"] < b["weight"])
+```gdscript
+func _solve_mst_with_loops(edges: Array[Dictionary]) -> Array[Dictionary]:
+	var parent: Array[int] = []
+	parent.resize(_rooms.size())
+	for i in range(_rooms.size()): parent[i] = i
 
-    # 2. Kruskal's / Prim's Algorithm for Minimum Spanning Tree (MST)
-    var parent: Array[int] = []
-    parent.resize(_rooms.size())
-    for i in range(_rooms.size()): parent[i] = i
+	var find_set = func(v: int, p_arr: Array[int], self_ref: Callable) -> int:
+		if v == p_arr[v]: return v
+		p_arr[v] = self_ref.call(p_arr[v], p_arr, self_ref)
+		return p_arr[v]
 
-    func find_set(v: int, p: Array[int]) -> int:
-        if v == p[v]: return v
-        p[v] = find_set(p[v], p)
-        return p[v]
+	var mst_edges: Array[Dictionary] = []
+	var discarded_edges: Array[Dictionary] = []
 
-    var mst_edges: Array[Dictionary] = []
-    var extra_edges: Array[Dictionary] = []
+	for edge in edges:
+		var root_a: int = find_set.call(edge["room_a"], parent, find_set)
+		var root_b: int = find_set.call(edge["room_b"], parent, find_set)
+		
+		if root_a != root_b:
+			parent[root_a] = root_b
+			mst_edges.append(edge)
+		else:
+			discarded_edges.append(edge)
 
-    for edge in edges:
-        var root_a: int = find_set(edge["room_a"], parent)
-        var root_b: int = find_set(edge["room_b"], parent)
-        
-        if root_a != root_b:
-            parent[root_a] = root_b
-            mst_edges.append(edge)
-        else:
-            extra_edges.append(edge)
+	# Inject cyclical loops
+	for edge in discarded_edges:
+		if randf() < cyclical_loop_ratio:
+			mst_edges.append(edge)
 
-    # 3. Inject Cyclical Loops: Re-add 15% of discarded edges to create non-linear gameplay loops
-    for edge in extra_edges:
-        if randf() < cyclical_loop_ratio:
-            mst_edges.append(edge)
+	return mst_edges
+```
 
-    # 4. Carve Orthogonal L-Shaped Hallways into the Grid
-    for edge in mst_edges:
-        var c1: Vector2i = _rooms[edge["room_a"]].get_center()
-        var c2: Vector2i = _rooms[edge["room_b"]].get_center()
-        _carve_l_shaped_hallway(c1, c2)
+- **Union-Find / Disjoint-Set Forest (`find_set`)**: Detects cycles in near-$\mathcal{O}(1)$ time with path compression. If two rooms already share a common root parent, adding the edge would form a closed loop.
+- **Cyclical Edge Injection (`randf() < cyclical_loop_ratio`)**: **The Non-Linear Pacing Invariant**. A pure Minimum Spanning Tree forms a single branching tree with zero loops. If the player reaches a dead end, they are forced to backtrack along the exact path they walked. Injecting $15\%$ of discarded edges creates circular loops, allowing dynamic flanking and natural dungeon navigation.
 
-func _carve_l_shaped_hallway(start: Vector2i, end: Vector2i) -> void:
-    var horizontal_first: bool = randf() > 0.5
-    
-    if horizontal_first:
-        _carve_horizontal(start.x, end.x, start.y)
-        _carve_vertical(start.y, end.y, end.x)
-    else:
-        _carve_vertical(start.y, end.y, start.x)
-        _carve_horizontal(start.x, end.x, end.y)
+#### Chunk 7.3: Orthogonal L-Shaped Corridor Rasterization
+
+```gdscript
+func _carve_corridors(mst_edges: Array[Dictionary]) -> void:
+	for edge in mst_edges:
+		var c1: Vector2i = _rooms[edge["room_a"]].get_center()
+		var c2: Vector2i = _rooms[edge["room_b"]].get_center()
+		
+		if randf() > 0.5:
+			_carve_horizontal(c1.x, c2.x, c1.y)
+			_carve_vertical(c1.y, c2.y, c2.x)
+		else:
+			_carve_vertical(c1.y, c2.y, c1.x)
+			_carve_horizontal(c1.x, c2.x, c2.y)
 
 func _carve_horizontal(x1: int, x2: int, y: int) -> void:
-    var min_x: int = mini(x1, x2)
-    var max_x: int = maxi(x1, x2)
-    for x in range(min_x, max_x + 1):
-        _grid[x][y] = 1 # Carve floor
+	for x in range(mini(x1, x2), maxi(x1, x2) + 1):
+		_grid[x][y] = 1
 
 func _carve_vertical(y1: int, y2: int, x: int) -> void:
-    var min_y: int = mini(y1, y2)
-    var max_y: int = maxi(y1, y2)
-    for y in range(min_y, max_y + 1):
-        _grid[x][y] = 1 # Carve floor
+	for y in range(mini(y1, y2), maxi(y1, y2) + 1):
+		_grid[x][y] = 1
 ```
+
+- **Randomized L-Bend Orientation (`randf() > 0.5`)**: Alternates between horizontal-first and vertical-first dog-leg corridors, producing varied architectural layouts rather than repetitive parallel hallways.
+
+---
+
+#### The Fully Assembled `ProceduralDungeonPipeline.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: ProceduralDungeonPipeline.gd
+# Architecture: Non-Linear Graph-Based Procedural Dungeon Carver (MST + Loops)
+# ==============================================================================
+class_name ProceduralDungeonPipeline
+extends Node
+
+@export_group("Grid Constraints")
+## Width of the discrete generation grid in cells
+@export var grid_width: int = 80
+## Height of the discrete generation grid in cells
+@export var grid_height: int = 80
+## Minimum dimension threshold for recursive BSP leaf splitting
+@export var min_leaf_size: int = 14
+
+@export_group("Topology")
+## Percentage of non-spanning edges re-injected to form cyclical gameplay loops
+@export_range(0.0, 1.0) var cyclical_loop_ratio: float = 0.15
+
+var _grid: Array = []
+var _rooms: Array[Rect2i] = []
+
+## Builds a complete non-linear procedural floor plan
+func build_dungeon() -> Dictionary:
+	# 1. Subdivide space and generate rooms via BSP
+	var bsp_data: Dictionary = BSPDungeonGenerator.generate_dungeon(grid_width, grid_height, min_leaf_size)
+	_grid = bsp_data["grid"]
+	_rooms = bsp_data["rooms"]
+
+	if _rooms.size() < 2:
+		return {"grid": _grid, "rooms": _rooms}
+
+	# 2. Build sorted Euclidean distance graph
+	var edges: Array[Dictionary] = _build_distance_graph()
+
+	# 3. Solve Minimum Spanning Tree with cyclical loop injection
+	var final_edges: Array[Dictionary] = _solve_mst_with_loops(edges)
+
+	# 4. Rasterize orthogonal corridors into the grid
+	_carve_corridors(final_edges)
+
+	return {
+		"grid": _grid,
+		"rooms": _rooms
+	}
+
+func _build_distance_graph() -> Array[Dictionary]:
+	var edges: Array[Dictionary] = []
+	for i in range(_rooms.size()):
+		for j in range(i + 1, _rooms.size()):
+			var p1: Vector2 = Vector2(_rooms[i].get_center())
+			var p2: Vector2 = Vector2(_rooms[j].get_center())
+			edges.append({
+				"room_a": i,
+				"room_b": j,
+				"weight": p1.distance_squared_to(p2)
+			})
+
+	edges.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["weight"] < b["weight"])
+	return edges
+
+func _solve_mst_with_loops(edges: Array[Dictionary]) -> Array[Dictionary]:
+	var parent: Array[int] = []
+	parent.resize(_rooms.size())
+	for i in range(_rooms.size()): parent[i] = i
+
+	var find_set = func(v: int, p_arr: Array[int], self_ref: Callable) -> int:
+		if v == p_arr[v]: return v
+		p_arr[v] = self_ref.call(p_arr[v], p_arr, self_ref)
+		return p_arr[v]
+
+	var mst_edges: Array[Dictionary] = []
+	var discarded_edges: Array[Dictionary] = []
+
+	for edge in edges:
+		var root_a: int = find_set.call(edge["room_a"], parent, find_set)
+		var root_b: int = find_set.call(edge["room_b"], parent, find_set)
+		
+		if root_a != root_b:
+			parent[root_a] = root_b
+			mst_edges.append(edge)
+		else:
+			discarded_edges.append(edge)
+
+	# Re-add discarded edges to create loops
+	for edge in discarded_edges:
+		if randf() < cyclical_loop_ratio:
+			mst_edges.append(edge)
+
+	return mst_edges
+
+func _carve_corridors(mst_edges: Array[Dictionary]) -> void:
+	for edge in mst_edges:
+		var c1: Vector2i = _rooms[edge["room_a"]].get_center()
+		var c2: Vector2i = _rooms[edge["room_b"]].get_center()
+		
+		if randf() > 0.5:
+			_carve_horizontal(c1.x, c2.x, c1.y)
+			_carve_vertical(c1.y, c2.y, c2.x)
+		else:
+			_carve_vertical(c1.y, c2.y, c1.x)
+			_carve_horizontal(c1.x, c2.x, c2.y)
+
+func _carve_horizontal(x1: int, x2: int, y: int) -> void:
+	for x in range(mini(x1, x2), maxi(x1, x2) + 1):
+		_grid[x][y] = 1
+
+func _carve_vertical(y1: int, y2: int, x: int) -> void:
+	for y in range(mini(y1, y2), maxi(y1, y2) + 1):
+		_grid[x][y] = 1
+```
+
 
 ---
 # ⚖️ Module X: Formal Game Design Theory, Systems Balancing & Game Economies
 
 > [!info] 📖 Lexicon & First Principles: Ludological & Systems Engineering
-> Software architecture provides the functional skeleton; **Game Design** is the mathematical and psychological engineering of player agency, cognitive load, systemic feedback, and economic equilibrium:
-> - ⤷ **Ludology**: The formal academic study of games, rule systems, and play activities, distinct from narrative or visual media analysis.
-> - ⤷ **MDA Framework (Mechanics, Dynamics, Aesthetics)**: A formal post-mortem and design framework establishing that rules (**Mechanics**) produce runtime systemic interactions (**Dynamics**), which evoke subjective emotional responses (**Aesthetics**) in the human player.
-> - ⤷ **Intransitive Dynamic (Cyclical Dominance)**: A relational loop where no single element is universally superior ($A > B > C > A$, typified by Rock-Paper-Scissors), precluding degenerative dominant tactics.
-> - ⤷ **Mudflation**: The runaway economic devaluation of currency, equipment, or statistical power caused by continuous, unthrottled generation without commensurate, permanent sinks.
-> - ⤷ **Pseudo-Random Distribution (PRD)**: A statistical algorithm that alters event probabilities dynamically on consecutive successes or failures to minimize variance, aligning true mathematical odds with human cognitive perception.
-> - ⤷ **Hitstop (Freeze-Frame)**: The deliberate temporal freezing of character kinematics and animation updates for several frames ($50\text{--}100\text{ ms}$) upon verified weapon impact, imparting psychological weight and kinetic tactile feedback ("juice").
+> Software architecture provides the functional skeleton of an application; **Game Design** is the mathematical, cybernetic, and psychological engineering of human agency, cognitive load, systemic feedback, and economic equilibrium:
+> - ⤷ **Ludology**: The formal scientific study of games, rule systems, and play mechanics, distinct from cinematography or narrative prose.
+> - ⤷ **MDA Framework (Mechanics $\rightarrow$ Dynamics $\rightarrow$ Aesthetics)**: The foundational architectural model of game design (Hunicke, LeBlanc, Zubek). **Mechanics** are the concrete code rules and data structures; **Dynamics** are the emergent runtime behaviors produced when mechanics interact; **Aesthetics** are the emotional and cognitive states evoked inside the player.
+> - ⤷ **Intransitive Relationship (Cyclical Dominance)**: A non-linear mathematical graph where no single strategy dominates all others ($A \succ B \succ C \succ A$, typified by Rock-Paper-Scissors or Spear-Cavalry-Archers). It prevents degenerate **Dominant Strategies** that render player choice obsolete.
+> - ⤷ **Cybernetic Feedback Loop**: A closed-loop control system where the output of an action is routed back as an input to modify subsequent states. **Positive Feedback** amplifies divergence (snowballing); **Negative Feedback** enforces homeostasis (rubber-banding).
+> - ⤷ **Effective Health Pool ($EHP$)**: The true amount of raw, unmitigated damage an entity can absorb before dying after factoring in armor, shields, and evasion probabilities.
+> - ⤷ **Mudflation**: The runaway macroeconomic devaluation of currency and mid-tier items caused by unthrottled currency generation (**Faucets**) outpacing permanent destruction (**Sinks**).
+> - ⤷ **Pseudo-Random Distribution (PRD)**: A stateful probability algorithm that dynamically scales proc chances based on consecutive failure streaks, eliminating extreme variance so mathematical randomness matches human psychological intuition.
+> - ⤷ **Kinesthetic "Juice" (Game Feel)**: Non-functional, multi-sensory micro-feedback (hitstop frame-freezes, screen trauma, shader flashes, pitch modulation) triggered within $< 16.67\text{ ms}$ of player input to convey physical weight and impact.
 
 ---
 
-## 10.1 The MDA Framework & Pacing Architecture
+## 10.1 The MDA Framework & The Designer's Paradox
 
-A common failure mode in game development is designing backwards—beginning with a disconnected visual theme or narrative premise and grafting mechanical rules onto it. The **MDA Framework** formalizes the architectural divide between developer intent and player perception:
+Amateurs routinely design games backwards: they start with a superficial theme (*"A cyberpunk game with katanas"*) or copy mechanics blindly from other titles without understanding what emotional state those mechanics actually generate.
+
+The **MDA Framework** exposes the fundamental cognitive divide between the engineer who builds the system and the player who consumes it:
 
 ```
                          THE MDA PERSPECTIVE PARADOX
 =================================================================================
- DESIGNER PERSPECTIVE (Creation Pipeline):
- [ MECHANICS ] ──────────► [ DYNAMICS ] ──────────► [ AESTHETICS ]
- Concrete Rules            Runtime System           Emotional & Cognitive
- & GDScript Code           Interactions             Player Experience
-       ▲                                                    │
-       │                                                    ▼
+ ENGINEER / DESIGNER PERSPECTIVE (Causal Construction):
+ [ 1. MECHANICS ] ────────► [ 2. DYNAMICS ] ────────► [ 3. AESTHETICS ]
+ "Ammo is scarce (Max 12);   "Players avoid open       "Player feels vulnerable,
+  Reload takes 3.5 seconds;   gunfights, count shots,   anxious, and experiences
+  Headshots deal 4.0x dmg."   and panic when cornered." Survival Horror Tension."
+        ▲                                                        │
+        │                                                        ▼
  PLAYER PERSPECTIVE (Experiential Consumption):
- (Players consume Aesthetics FIRST, deduce Dynamics, and rarely see Mechanics directly!)
+ (The player feels the TENSION first, discovers the DYNAMICS of ammo conservation,
+  and never sees the raw GDScript MECHANICS underneath!)
 ```
 
-### The Taxonomy of Formal Aesthetics (Hunicke, LeBlanc, Zubek)
+### Why Mechanics Must Be Engineered Backwards from Aesthetics
 
-When architecting a game, define its target aesthetic profile from the eight foundational ludic emotional drivers:
+If your target **Aesthetic** is *Heroic Power Fantasy* (e.g., *DOOM Eternal*), making ammo scarce and reloads slow creates a contradictory **Dynamic** (hiding behind cover and waiting), which destroys the intended feeling. 
+- **To engineer Power Fantasy**: You must design **Mechanics** where aggressive forward movement is the primary **Faucet** for health and ammunition (e.g., melee glory kills drop health), forcing the **Dynamic** of relentless aggression.
 
-1. **Sensation**: Play as sensory pleasure (tactile kinematics, punchy soundscapes, screen trauma).
-2. **Fantasy**: Play as make-believe (world immersion, atmospheric coherence).
-3. **Narrative**: Play as drama (dynamic quest state machines, dramatic pacing curves).
-4. **Challenge**: Play as obstacle mastery (high skill ceiling, tight hitboxes, rigorous combat mechanics).
-5. **Fellowship**: Play as social framework (multiplayer coordination, squad roles, cooperative dependency).
-6. **Discovery**: Play as uncharted territory (procedural generation, branching world streaming, hidden mechanics).
-7. **Expression**: Play as self-discovery (custom loadouts, sandbox crafting, aesthetic customization).
-8. **Submission**: Play as pastime (compulsion loops, idle accumulation, ritualistic progression).
+### The Eight Formal Ludic Aesthetics & Their Mechanical Drivers
+
+| Formal Aesthetic | Psychological Definition | Required Runtime Dynamics | Concrete GDScript Mechanics to Implement |
+| :--- | :--- | :--- | :--- |
+| **1. Sensation** | Play as visceral sensory pleasure | High-impact kinetic feedback, rhythmic motion | Hitstop frame freezes, 6DOF Perlin camera trauma, shader emission flashes, transient sub-bass audio |
+| **2. Fantasy** | Play as immersion in an alternate reality | Diegetic world consistency, believable AI | Multi-modal AI perception (sight/sound), diegetic UI (ammo counters on gun meshes), environmental physics |
+| **3. Narrative** | Play as unfolding dramatic tension | Consequential choices, environmental storytelling | Directed Acyclic Graph (DAG) dialogue state machines, persistent world-state bitmasks |
+| **4. Challenge** | Play as obstacle mastery & skill testing | Tight execution windows, punishable mistakes | Deterministic boss state machines, animation commitment (no cancelling mid-swing), stamina management |
+| **5. Fellowship** | Play as social cooperation & synergy | Role interdependence, shared triumphs | Cross-class combo primers/detonators, revive mechanics, shared squad buff auras |
+| **6. Discovery** | Play as charting the unknown | Rewarding curiosity, hidden systemic depth | Procedural Wave Function Collapse (WFC) biomes, off-path secret areas, emergent physics chemistry |
+| **7. Expression** | Play as creative self-identity | Viable build variety, sandbox problem-solving | Modular component equipment, deep stat modifier pipelines, dye/transmog shaders |
+| **8. Submission** | Play as effortless relaxation ("abnegation") | Low cognitive friction, steady incremental rewards | Predictable farm loops, generous coyote/jump buffers, automated resource collection |
 
 ---
 
-## 10.2 Compulsion Loops & Flow Channel Calibration
+## 10.2 Nested Compulsion Loops, Pacing & Dynamic Difficulty Adjustment (DDA)
 
-A game's systemic retention relies on **Nested Compulsion Loops** operating across different temporal scales:
+A game that only has moment-to-moment combat grows repetitive after 15 minutes; a game that only has long-term strategy feels sluggish from second to second. Retention requires weaving three **Nested Compulsion Loops** together, where completing the smaller loop fuels the next larger loop:
 
 ```
                          NESTED COMPULSION ARCHITECTURE
 =================================================================================
- [ 1. MICRO LOOP (200ms - 5s) ]
- Tactical Kinematics: Aim ──► Discharge Weapon ──► Hitstop / Recoil ──► Dash
-               │
-               ▼
- [ 2. MESO LOOP (3m - 20m) ]
- Encounter Strategy: Clear Room ──► Collect Loot ──► Resolve Objectives ──► Re-equip
-               │
-               ▼
- [ 3. MACRO LOOP (2h - 50h+) ]
- Long-Term Mastery: Unlock Skill DAG ──► Optimize Meta-Build ──► Defeat Boss ──► NG+
+ [ 1. MICRO LOOP (Every 0.5s - 5s: Kinesthetic Execution) ]
+ Input: Spot Threat ──► Action: Dodge & Strike ──► Feedback: Hitstop, SFX, Blood VFX
+                                  │
+                                  ▼ (Feeds Meso Loop)
+ [ 2. MESO LOOP (Every 3m - 15m: Tactical Encounter & Reward) ]
+ Input: Enter Dungeon Room ──► Action: Clear Wave ──► Feedback: Chest Unlocks, Gold/XP
+                                  │
+                                  ▼ (Feeds Macro Loop)
+ [ 3. MACRO LOOP (Every 1h - 40h: Strategic Meta-Progression) ]
+ Input: Return to Hub ──► Action: Spend Gold on Skill DAG ──► Feedback: New Playstyle Unlocked!
 ```
 
-### Csikszentmihalyi’s Flow Channel & Dynamic Tension
+### Csikszentmihalyi’s Flow Channel & The Sawtooth Tension Wave
 
-To keep a player engaged, the difficulty of the game must scale in lockstep with their developing mental model and mechanical dexterity. Deviations from this corridor result in psychological failure states:
+Psychologist Mihaly Csikszentmihalyi demonstrated that human beings achieve peak cognitive immersion (**"Flow"**) only when the perceived **Challenge** of a task matches their current **Skill Level**.
 
 ```
                       THE MENTAL FLOW EQUILIBRIUM
 =================================================================================
  Challenge (Difficulty)
-    ▲                                    / ANXIETY & FRUSTRATION ZONE
-    │                                  /  (Task exceeds player capacity)
+    ▲                                    / ANXIETY & RAGE-QUIT ZONE
+    │                                  /  (Challenge >> Skill: Player feels helpless)
     │                                / 
     │                     ╭─────────╯
-    │                   ╭─╯  THE FLOW CHANNEL
-    │                 ╭─╯    (Optimal Engagement Corridor)
+    │                   ╭─╯  THE FLOW CHANNEL (Target Equilibrium)
+    │                 ╭─╯    Challenge ≈ Skill * 1.05
     │               ╭─╯ 
     │             ╭─╯   
     │           ╭─╯    BOREDOM & APATHY ZONE
-    │         ╭─╯      (Player mastery renders task trivial)
+    │         ╭─╯      (Skill >> Challenge: Brain disengages)
     └─────────┴──────────────────────────────────────────────────────►
    Low                                                             High
                              Player Skill / Competence
 ```
 
-#### The Sawtooth Pacing Curve
+#### The Sawtooth Pacing Law
+Even inside the Flow Channel, if you hold tension at $100\%$ continuously, the player's sympathetic nervous system suffers **adrenaline exhaustion**—intense combat stops feeling exciting and starts feeling like exhausting chores.
+- **The Architectural Rule**: Modulate encounter intensity using a **Sawtooth Wave**. Follow every high-intensity peak (Boss Fight / Ambush) with an immediate **Cathartic Valley** (a quiet safe room, a scenic vista, a merchant campfire, or low-stakes loot sorting) so the player's heart rate recovers before the next climb.
 
-Never subject a player to uninterrupted, escalating difficulty. The human sympathetic nervous system experiences fatigue under sustained cognitive stress. Professional pacing introduces an oscillatory **Sawtooth Wave**:
+---
 
+### Step-by-Step Architectural Construction: Dynamic Difficulty & Pacing Director
+
+How do we implement Csikszentmihalyi's Flow Channel and Sawtooth Pacing in actual code? Inspired by *Left 4 Dead*'s AI Director and *Resident Evil 4*'s adaptive difficulty, we build an autonomous **Pacing & Dynamic Difficulty Adjustment (DDA) Director**.
+
+It monitors the player's real-time stress (health ratio, recent damage taken, accuracy, deaths) and dynamically adjusts enemy spawn budgets, aggression tokens, and loot drop rates behind the scenes.
+
+#### Chunk 1.1: Pacing Phases & Stress Telemetry Variables
+
+```gdscript
+class_name PacingDirector
+extends Node
+
+signal pacing_phase_changed(new_phase: PacingPhase)
+signal difficulty_rank_updated(effective_multiplier: float)
+
+enum PacingPhase { BUILD_UP, PEAK_INTENSITY, PEAK_FADE, RELAX_VALLEY }
+
+@export_group("Flow Channel Calibration")
+@export var base_difficulty_rank: float = 5.0 # Scale of 1.0 (Easy) to 10.0 (Brutal)
+@export var min_difficulty_bound: float = 2.0
+@export var max_difficulty_bound: float = 9.5
+
+@export_group("Sawtooth Pacing Timings")
+@export var peak_stress_threshold: float = 0.85
+@export var relax_valley_duration: float = 25.0
+
+var current_phase: PacingPhase = PacingPhase.BUILD_UP
+var dynamic_difficulty_rank: float = 5.0
+var player_stress_score: float = 0.0 # Normalized [0.0, 1.0]
+var _phase_timer: float = 0.0
 ```
- Tension / Cognitive Load
-    ▲             Peak Encounter (Boss)
-    │                 ▲
-    │        ▲       / │
-    │       / \     /  │ (Cathartic Valley: Safe Room / Merchant / Dialogue)
-    │  ▲   /   \   /   └───┐
-    │ / \ /     \ /        │
-    └─┴───┴───────┴────────┴─────────────────────────────────────────► Time (t)
+
+- **`enum PacingPhase`**: Explicitly models the four stages of the Sawtooth Pacing Wave:
+  1. `BUILD_UP`: Spawns normal patrols; stress climbs steadily.
+  2. `PEAK_INTENSITY`: Stress hits `0.85`; triggers climax horde/elite wave.
+  3. `PEAK_FADE`: Climax wave defeated; stops new spawns until remaining enemies are cleared.
+  4. `RELAX_VALLEY`: Enforces $25.0\text{ seconds}$ of calm exploration so the player can heal and reload.
+- **`dynamic_difficulty_rank`**: A continuous floating-point rank $\in [2.0, 9.5]$ that shifts subtly inside the Flow Channel based on player performance.
+
+#### Chunk 1.2: Quantifying Player Stress & Adjusting Difficulty Rank
+
+```gdscript
+func record_combat_telemetry(
+	player_hp_ratio: float,
+	damage_taken_last_10s: float,
+	recent_hit_accuracy: float
+) -> void:
+	# 1. Calculate instantaneous stress [0.0 to 1.0]
+	var health_vulnerability: float = 1.0 - clampf(player_hp_ratio, 0.0, 1.0)
+	var damage_pressure: float = clampf(damage_taken_last_10s / 60.0, 0.0, 1.0)
+	
+	var target_stress: float = (health_vulnerability * 0.55) + (damage_pressure * 0.45)
+	player_stress_score = lerpf(player_stress_score, target_stress, 0.3)
+	
+	# 2. Adjust Dynamic Difficulty Rank (Flow Channel Homeostasis)
+	if player_hp_ratio > 0.80 and recent_hit_accuracy > 0.65 and damage_taken_last_10s < 5.0:
+		# Player is dominating effortlessly (Boredom Risk) -> Nudge rank UP
+		dynamic_difficulty_rank = minf(max_difficulty_bound, dynamic_difficulty_rank + 0.15)
+	elif player_hp_ratio < 0.25 and damage_taken_last_10s > 45.0:
+		# Player is overwhelmed and near death (Anxiety Risk) -> Nudge rank DOWN
+		dynamic_difficulty_rank = maxf(min_difficulty_bound, dynamic_difficulty_rank - 0.30)
+		
+	difficulty_rank_updated.emit(get_damage_taken_multiplier())
+```
+
+- **`health_vulnerability * 0.55 + damage_pressure * 0.45`**: Combines low remaining health with rapid recent damage to measure how close the player is to panicking.
+- **Asymmetric DDA Nudging (`+0.15` vs `-0.30`)**: Notice that difficulty climbs *slowly* (`+0.15`) when the player plays well, but drops *twice as fast* (`-0.30`) when the player is getting crushed. This prevents a single lucky room from spiking difficulty into an unplayable wall, while quickly rescuing a struggling player before they rage-quit.
+
+#### Chunk 1.3: Sawtooth State Transitions & Output Multipliers
+
+```gdscript
+func update_pacing_cycle(delta: float, active_enemy_count: int) -> void:
+	_phase_timer += delta
+	
+	match current_phase:
+		PacingPhase.BUILD_UP:
+			if player_stress_score >= peak_stress_threshold:
+				_transition_to(PacingPhase.PEAK_INTENSITY)
+		PacingPhase.PEAK_INTENSITY:
+			if _phase_timer >= 8.0:
+				_transition_to(PacingPhase.PEAK_FADE)
+		PacingPhase.PEAK_FADE:
+			if active_enemy_count == 0:
+				_transition_to(PacingPhase.RELAX_VALLEY)
+		PacingPhase.RELAX_VALLEY:
+			if _phase_timer >= relax_valley_duration:
+				_transition_to(PacingPhase.BUILD_UP)
+
+func _transition_to(next_phase: PacingPhase) -> void:
+	current_phase = next_phase
+	_phase_timer = 0.0
+	pacing_phase_changed.emit(current_phase)
+
+func get_damage_taken_multiplier() -> float:
+	# Maps rank [2.0, 9.5] around baseline 5.0 -> Multiplier [0.65x to 1.45x]
+	return 1.0 + ((dynamic_difficulty_rank - base_difficulty_rank) * 0.10)
+```
+
+- **`PacingPhase.PEAK_FADE` $\rightarrow$ `active_enemy_count == 0`**: Crucial design detail. Never start the relaxation timer while enemies are still biting the player! The valley timer only begins *after* the last enemy in the peak wave is dead.
+
+---
+
+#### The Fully Assembled `PacingDirector.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: PacingDirector.gd
+# Architecture: Sawtooth Pacing State Machine & Flow-Channel DDA Controller
+# ==============================================================================
+class_name PacingDirector
+extends Node
+
+signal pacing_phase_changed(new_phase: PacingPhase)
+signal difficulty_rank_updated(effective_multiplier: float)
+
+enum PacingPhase { BUILD_UP, PEAK_INTENSITY, PEAK_FADE, RELAX_VALLEY }
+
+@export_group("Flow Channel Calibration")
+## Baseline design difficulty (Scale 1.0 to 10.0)
+@export var base_difficulty_rank: float = 5.0
+## Floor clamp so the game never becomes trivially broken
+@export var min_difficulty_bound: float = 2.0
+## Ceiling clamp so the game never becomes mathematically impossible
+@export var max_difficulty_bound: float = 9.5
+
+@export_group("Sawtooth Pacing Timings")
+## Normalized stress score [0.0, 1.0] that triggers climax peak transition
+@export var peak_stress_threshold: float = 0.85
+## Mandatory calm recovery duration after clearing a peak wave (seconds)
+@export var relax_valley_duration: float = 25.0
+
+var current_phase: PacingPhase = PacingPhase.BUILD_UP
+var dynamic_difficulty_rank: float = 5.0
+var player_stress_score: float = 0.0
+var _phase_timer: float = 0.0
+
+func _ready() -> void:
+	dynamic_difficulty_rank = base_difficulty_rank
+
+## Ingests periodic combat metrics to quantify player stress and tune DDA rank
+func record_combat_telemetry(
+	player_hp_ratio: float,
+	damage_taken_last_10s: float,
+	recent_hit_accuracy: float
+) -> void:
+	# 1. Quantify physiological stress [0.0 to 1.0]
+	var health_vulnerability: float = 1.0 - clampf(player_hp_ratio, 0.0, 1.0)
+	var damage_pressure: float = clampf(damage_taken_last_10s / 60.0, 0.0, 1.0)
+	
+	var target_stress: float = (health_vulnerability * 0.55) + (damage_pressure * 0.45)
+	player_stress_score = lerpf(player_stress_score, target_stress, 0.3)
+	
+	# 2. Homeostatic Flow Channel Calibration
+	if player_hp_ratio > 0.80 and recent_hit_accuracy > 0.65 and damage_taken_last_10s < 5.0:
+		dynamic_difficulty_rank = minf(max_difficulty_bound, dynamic_difficulty_rank + 0.15)
+	elif player_hp_ratio < 0.25 and damage_taken_last_10s > 45.0:
+		dynamic_difficulty_rank = maxf(min_difficulty_bound, dynamic_difficulty_rank - 0.30)
+		
+	difficulty_rank_updated.emit(get_damage_taken_multiplier())
+
+## Ticks the Sawtooth Pacing state machine
+func update_pacing_cycle(delta: float, active_enemy_count: int) -> void:
+	_phase_timer += delta
+	
+	match current_phase:
+		PacingPhase.BUILD_UP:
+			if player_stress_score >= peak_stress_threshold:
+				_transition_to(PacingPhase.PEAK_INTENSITY)
+		PacingPhase.PEAK_INTENSITY:
+			if _phase_timer >= 8.0:
+				_transition_to(PacingPhase.PEAK_FADE)
+		PacingPhase.PEAK_FADE:
+			if active_enemy_count == 0:
+				_transition_to(PacingPhase.RELAX_VALLEY)
+		PacingPhase.RELAX_VALLEY:
+			if _phase_timer >= relax_valley_duration:
+				_transition_to(PacingPhase.BUILD_UP)
+
+func _transition_to(next_phase: PacingPhase) -> void:
+	current_phase = next_phase
+	_phase_timer = 0.0
+	pacing_phase_changed.emit(current_phase)
+
+## Returns false during Peak Fade and Relax Valley to halt enemy spawners
+func is_spawning_permitted() -> bool:
+	return current_phase == PacingPhase.BUILD_UP or current_phase == PacingPhase.PEAK_INTENSITY
+
+## Returns enemy damage multiplier scaled by current DDA rank
+func get_damage_taken_multiplier() -> float:
+	return 1.0 + ((dynamic_difficulty_rank - base_difficulty_rank) * 0.10)
 ```
 
 ---
 
-## 10.3 Cybernetic Feedback Loops: Amplification vs. Homeostasis
+## 10.3 Cybernetic Feedback Loops & Intransitive Counter-Play
 
-Game systems are cybernetic machines governed by closed-loop information circuits:
+### 1. Positive vs. Negative Cybernetic Feedback Loops
+
+Game systems are cybernetic circuits. Every resource reward or penalty creates either a **Positive (Amplifying)** or **Negative (Stabilising)** loop:
 
 ```
                      CYBERNETIC FEEDBACK SYSTEM TOPOLOGY
@@ -8935,21 +9566,37 @@ Game systems are cybernetic machines governed by closed-loop information circuit
  (Dampens divergence; preserves tension; risks frustrating high-skill players)
 ```
 
-### 1. Positive Feedback (Reinforcing / Snowballing)
-- ⤷ **Mathematical Behavior**: Divergent ($\frac{dy}{dt} = +k \cdot y$).
-- ↳ **Function**: Rewards skillful execution with compounding advantages, accelerating resolution.
-- ↳ **Pathology**: The **"Rich Get Richer"** trap. If an RTS player loses their first squad and falls behind economically, the winner's output grows exponentially, making the remainder of the match a drawn-out formality.
+#### Engineering Guidelines for Feedback Loops:
+1. **Never leave a Positive Feedback Loop unbounded**: If killing enemies grants stronger weapons, and stronger weapons kill enemies faster, the game becomes trivially easy by the midpoint. Pair every positive loop with an escalating **Negative Feedback constraint**—such as **Progressive Upkeep Taxes**, **Equipment Degradation**, or **Heat/Bounty Systems** where higher power attracts deadlier elite hunters.
+2. **Make Negative Feedback skill-based rather than automatic**: Players despise automatic rubber-banding (e.g., AI cars magically driving $30\%$ faster when behind). Instead, implement **Skill-Contingent Catch-Up Mechanics**—such as granting a trailing player a high-bounty objective when they successfully take down the match leader.
 
-### 2. Negative Feedback (Self-Correcting / Homeostatic)
-- ⤷ **Mathematical Behavior**: Convergent ($\frac{dy}{dt} = -k \cdot (y - y_{\text{target}})$).
-- ↳ **Function**: Preserves contest parity by penalizing leaders (e.g., death-bounties in MOBAs, dynamic rubber-banding in arcade racing).
-- ↳ **Pathology**: If over-tuned, skilled players feel their effort is invalidated because early leads are artificially erased.
+### 2. Intransitive Mechanics (Preventing Dominant Strategies)
+
+If Sword $A$ has higher DPS, longer reach, and faster swing speed than Sword $B$, Sword $A$ **strictly dominates** Sword $B$. Players will calculate the optimal choice once and never use Sword $B$ again.
+
+To make all weapons, units, or abilities viable simultaneously, structure them inside an **Intransitive Counter-Play Matrix**:
+
+```
+                    INTRANSITIVE COUNTER-PLAY TRIANGLE
+=================================================================================
+                          [ Heavy Armor / Shield ]
+                         ╱                        ╲
+        Blocks / Shrugs Off                      Crushed By (Armor Piercing)
+                       ╱                            ╲
+                      ▼                              │
+          [ Fast Light Blades ] ───────────────► [ Slow Heavy Great-Axes ]
+                               Interrupts Wind-Up
+```
+
+$$\mathbf{M}_{\text{payoff}} = \begin{bmatrix} 1.0 & 1.5 & 0.6 \\ 0.6 & 1.0 & 1.5 \\ 1.5 & 0.6 & 1.0 \end{bmatrix}$$
+
+In this payoff matrix, row $i$ attacking column $j$ always has a $1.5\times$ advantage against one archetype and a $0.6\times$ disadvantage against another. Because the determinant cycles, **no single archetype can dominate the meta**.
 
 ---
 
-## 10.4 Combat Mathematics: EHP, DPS, TTK & Diminishing Returns
+## 10.4 Combat Mathematics: EHP, DPS, TTK & Lanchester's Laws
 
-Amateur combat design frequently balances characters by tweaking arbitrary numbers until "it feels okay." Systems architects balance combat through **Kinematic and Statistical Invariants**.
+Amateur combat design balances fights by guessing numbers until "it feels okay." Systems architects balance combat through **Analytical Invariants**.
 
 ```
                    THE TIME-TO-KILL (TTK) RELATIONSHIP
@@ -8959,219 +9606,495 @@ Amateur combat design frequently balances characters by tweaking arbitrary numbe
                    Attacker Sustained Damage (DPS)
 ```
 
-### 1. Effective Health Pool ($EHP$) & Non-Linear Armor Scaling
+### 1. Why Linear Armor Fails & Why Hyperbolic Armor Works
 
-When calculating damage reduction from armor ($A$), a linear formula ($\text{Damage} = \text{Raw} - A$) is fundamentally flawed: high-rate-of-fire weapons become useless against moderate armor, while heavy-hitting sniper weapons ignore it entirely.
+Suppose you implement **Linear Subtractive Armor**:
+$$\text{Damage Taken} = \max(1, \, \text{Raw Damage} - \text{Armor})$$
+- **The Failure Mode**: Against an enemy with $20\text{ Armor}$, a fast submachine gun dealing $22\text{ damage}$ at $10\text{ shots/sec}$ drops from $220\text{ DPS}$ down to **$20\text{ DPS}$** (a $91\%$ nerf!), whereas a slow sniper rifle dealing $200\text{ damage}$ drops to $180\text{ damage}$ (only a $10\%$ nerf). Linear subtraction makes fast weapons completely useless against armor.
 
-Instead, implement the classic **Diminishing Returns Hyperbolic Curve**:
+Suppose instead you implement **Percentage Armor**:
+$$\text{Damage Taken} = \text{Raw Damage} \times (1.0 - \text{Armor}\%)$$
+- **The Failure Mode**: Each point of armor becomes *exponentially more valuable* the closer you get to $100\%$. Going from $0\% \to 10\%$ armor reduces damage by $10\%$. Going from $98\% \to 99\%$ armor **cuts all remaining incoming damage in half** (doubling the player's survivability with just $1\%$ more armor!), allowing players to become unkillable gods by stacking armor items.
+
+#### The Solution: The Hyperbolic Diminishing Returns Curve
+Used in *League of Legends*, *Dota 2*, and *Diablo*, hyperbolic mitigation scales damage via a constant $K$ (typically $K = 100$):
 
 $$\text{Damage Multiplier} = \frac{K}{K + A} \quad \implies \quad \text{Damage Taken} = \text{Raw Damage} \times \left(\frac{K}{K + A}\right)$$
 
-where $K$ is the design constant (typically $K = 100$). Under this formulation, **every point of armor provides a constant, linear increase to Effective Health Pool ($EHP$)**:
+Let us prove why this formula is mathematically ideal by solving for **Effective Health Pool ($EHP$)**:
 
-$$EHP = \frac{\text{Base HP}}{\text{Damage Multiplier}} = \text{Base HP} \times \left(1.0 + \frac{A}{K}\right)$$
+$$EHP = \frac{\text{Base HP}}{\text{Damage Multiplier}} = \frac{\text{Base HP}}{\frac{K}{K + A}} = \text{Base HP} \times \left(1.0 + \frac{A}{K}\right)$$
 
+Look at the right side of that equation: **$EHP$ is strictly linear with respect to Armor $A$!**
+- If $K = 100$, every $100$ points of Armor adds **exactly $+100\%$ of Base HP** to the character's Effective Health Pool, whether they currently have $0$ armor or $1,000$ armor.
+- It never reaches $100\%$ immunity ($\lim_{A \to \infty} \frac{K}{K+A} = 0$), and it treats fast-firing and slow-firing weapons identically!
+
+### 2. Lanchester’s Square Law (Balancing Group Encounters)
+
+Why do $4$ weak goblins feel more than $4\times$ deadlier than $1$ goblin? Because of **Lanchester’s Square Law** of ranged/focused combat:
+- While the player can only focus-fire $1$ goblin at a time, all $4$ goblins deal damage to the player simultaneously.
+- As the player kills them one by one, the total number of enemy attacks endured by the player over the encounter is proportional to the **triangular number** $\frac{N(N+1)}{2} \approx \frac{N^2}{2}$:
+
+$$\text{Total Group Threat} \propto N^2 \times \text{Unit DPS} \times \text{Unit EHP}$$
+
+- **The Design Rule**: Two enemies are not $2\times$ as hard as one enemy; they are **$3\times$ to $4\times$ as hard** (unless the player uses Area-of-Effect [AoE] weapons or the AI is throttled via the **Attack Token System** from Module VII).
+
+---
+
+### Step-by-Step Architectural Construction: Combat Analytics & TTK Solver
+
+Let us construct our static combat math library chunk by chunk, including hyperbolic $EHP$, sustained $DPS$, $TTK$, and Lanchester group threat evaluation.
+
+#### Chunk 2.1: Hyperbolic Mitigation & Effective Health Pool ($EHP$)
+
+```gdscript
+class_name CombatAnalytics
+extends RefCounted
+
+static func compute_damage_multiplier(armor: float, k_constant: float = 100.0) -> float:
+	if armor >= 0.0:
+		return k_constant / (k_constant + armor)
+	else:
+		# Negative armor (armor shred debuffs) amplifies damage smoothly without dividing by zero
+		return 2.0 - (k_constant / (k_constant - armor))
+
+static func compute_ehp(base_hp: float, armor: float, k_constant: float = 100.0) -> float:
+	var mult: float = compute_damage_multiplier(armor, k_constant)
+	return base_hp / maxf(0.0001, mult)
 ```
-                         ARMOR MITIGATION BEHAVIOR (K = 100)
-┌───────────────┬──────────────────────┬──────────────────────┬───────────────────┐
-│ Armor Value A │ Damage Taken Multi   │ Damage Reduction %   │ Relative EHP      │
-├───────────────┼──────────────────────┼──────────────────────┼───────────────────┤
-│ 0             │ 100 / (100 + 0) = 1.0│ 0.0%                 │ 1.00x Base HP     │
-│ 50            │ 100 / 150 = 0.6667   │ 33.3%                │ 1.50x Base HP     │
-│ 100           │ 100 / 200 = 0.5000   │ 50.0%                │ 2.00x Base HP     │
-│ 200           │ 100 / 300 = 0.3333   │ 66.7%                │ 3.00x Base HP     │
-│ 300           │ 100 / 400 = 0.2500   │ 75.0%                │ 4.00x Base HP     │
-└───────────────┴──────────────────────┴──────────────────────┴───────────────────┘
-Notice the elegance: Each 100 points of Armor adds EXACTLY +100% of Base HP to EHP!
+
+- **`if armor >= 0.0:`**: Standard hyperbolic reduction ($\frac{K}{K+A}$).
+- **`else: return 2.0 - (k_constant / (k_constant - armor))`**: **The Negative Armor Edge Case**. What happens if a boss casts an "Armor Shred" curse that reduces the player's armor to $-100$? In the standard formula $\frac{100}{100 + (-100)} = \frac{100}{0}$, **the game crashes with a Division by Zero error**! Mirroring the hyperbolic curve for negative values safely caps maximum damage amplification at $2.0\times$ without ever dividing by zero.
+
+#### Chunk 2.2: Sustained DPS & Exact Time-to-Kill ($TTK$)
+
+```gdscript
+static func compute_sustained_dps(
+	damage_per_hit: float,
+	magazine_size: int,
+	fire_rate_hz: float,
+	reload_duration: float,
+	crit_chance: float = 0.0,
+	crit_multiplier: float = 2.0
+) -> float:
+	assert(magazine_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
+	
+	# Time spent discharging the full magazine
+	var firing_window: float = float(magazine_size) / fire_rate_hz
+	var total_cycle_duration: float = firing_window + reload_duration
+	
+	# Expected value of critical strike multiplier: E[M] = 1 + p * (M - 1)
+	var p_crit: float = clampf(crit_chance, 0.0, 1.0)
+	var expected_crit_boost: float = 1.0 + (p_crit * (crit_multiplier - 1.0))
+	
+	var total_cycle_damage: float = float(magazine_size) * damage_per_hit * expected_crit_boost
+	return total_cycle_damage / total_cycle_duration
+
+static func compute_ttk(
+	target_hp: float,
+	target_armor: float,
+	attacker_dps: float,
+	k_constant: float = 100.0
+) -> float:
+	var target_ehp: float = compute_ehp(target_hp, target_armor, k_constant)
+	return target_ehp / maxf(0.0001, attacker_dps)
 ```
 
-### 2. Sustained vs. Burst Damage per Second ($DPS$)
+- **`1.0 + (p_crit * (crit_multiplier - 1.0))`**: Computes the mathematical expected value of critical strikes. Note that we subtract $1.0$ from `crit_multiplier` because the base $1.0\times$ damage is already accounted for on every hit.
+- **`firing_window + reload_duration`**: Accounts for reload downtime. A shotgun with massive burst damage but a $4.0\text{ second}$ reload has a vastly lower sustained DPS over a long boss fight than its raw fire rate suggests.
 
-Sustained damage accounts for magazine capacity, fire rate, reload durations, and critical strike profiles:
+---
 
-$$\text{DPS}_{\text{sustained}} = \frac{D_{\text{bullet}} \times N_{\text{mag}} \times \left(1.0 + P_{\text{crit}} \cdot (M_{\text{crit}} - 1.0)\right)}{\left(\frac{N_{\text{mag}}}{R_{\text{fire}}}\right) + T_{\text{reload}}}$$
-
-where:
-- $D_{\text{bullet}}$: Base damage per projectile.
-- $N_{\text{mag}}$: Magazine round capacity.
-- $R_{\text{fire}}$: Fire rate in rounds per second ($\text{Hz}$).
-- $T_{\text{reload}}$: Duration of reload sequence in seconds.
-- $P_{\text{crit}}$: Critical hit probability $\in [0.0, 1.0]$.
-- $M_{\text{crit}}$: Critical hit damage multiplier (e.g., $2.0\times$).
+#### The Fully Assembled `CombatAnalytics.gd`
 
 ```gdscript
 # ==============================================================================
-# COMBAT METRIC SOLVER & TIME-TO-KILL (TTK) ANALYSER
+# SCRIPT: CombatAnalytics.gd
+# Architecture: Hyperbolic Armor Mitigation, Sustained DPS & TTK Solver
 # ==============================================================================
 class_name CombatAnalytics
 extends RefCounted
 
-## Calculates the exact Effective Health Pool (EHP) given Base HP and Armor
+## Computes hyperbolic damage multiplier; safely handles negative armor shred without zero-division
+static func compute_damage_multiplier(armor: float, k_constant: float = 100.0) -> float:
+	if armor >= 0.0:
+		return k_constant / (k_constant + armor)
+	else:
+		return 2.0 - (k_constant / (k_constant - armor))
+
+## Computes Effective Health Pool (EHP) given base health and armor rating
 static func compute_ehp(base_hp: float, armor: float, k_constant: float = 100.0) -> float:
-    assert(armor >= 0.0, "Armor rating cannot be negative.")
-    return base_hp * (1.0 + (armor / k_constant))
+	var mult: float = compute_damage_multiplier(armor, k_constant)
+	return base_hp / maxf(0.0001, mult)
 
-## Calculates sustained DPS factoring in reload cycles and critical hit expectations
+## Computes sustained DPS factoring in magazine depletion, reload downtime, and crit expectancy
 static func compute_sustained_dps(
-    bullet_dmg: float,
-    mag_size: int,
-    fire_rate_hz: float,
-    reload_time: float,
-    crit_chance: float,
-    crit_mult: float
+	damage_per_hit: float,
+	magazine_size: int,
+	fire_rate_hz: float,
+	reload_duration: float,
+	crit_chance: float = 0.0,
+	crit_multiplier: float = 2.0
 ) -> float:
-    assert(mag_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
-    var cycle_firing_time: float = float(mag_size) / fire_rate_hz
-    var total_cycle_time: float = cycle_firing_time + reload_time
-    
-    var expected_crit_factor: float = 1.0 + (clampf(crit_chance, 0.0, 1.0) * (crit_mult - 1.0))
-    var total_damage_per_mag: float = float(mag_size) * bullet_dmg * expected_crit_factor
-    
-    return total_damage_per_mag / total_cycle_time
+	assert(magazine_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
+	
+	var firing_window: float = float(magazine_size) / fire_rate_hz
+	var total_cycle_duration: float = firing_window + reload_duration
+	
+	var p_crit: float = clampf(crit_chance, 0.0, 1.0)
+	var expected_crit_boost: float = 1.0 + (p_crit * (crit_multiplier - 1.0))
+	
+	var total_cycle_damage: float = float(magazine_size) * damage_per_hit * expected_crit_boost
+	return total_cycle_damage / total_cycle_duration
 
-## Computes precise TTK in seconds between an attacker profile and target profile
+## Computes exact Time-To-Kill (TTK) in seconds
 static func compute_ttk(
-    target_hp: float,
-    target_armor: float,
-    bullet_dmg: float,
-    mag_size: int,
-    fire_rate_hz: float,
-    reload_time: float,
-    crit_chance: float = 0.0,
-    crit_mult: float = 1.0
+	target_hp: float,
+	target_armor: float,
+	attacker_dps: float,
+	k_constant: float = 100.0
 ) -> float:
-    var ehp: float = compute_ehp(target_hp, target_armor)
-    var dps: float = compute_sustained_dps(bullet_dmg, mag_size, fire_rate_hz, reload_time, crit_chance, crit_mult)
-    return ehp / maxf(0.0001, dps)
+	var target_ehp: float = compute_ehp(target_hp, target_armor, k_constant)
+	return target_ehp / maxf(0.0001, attacker_dps)
+
+## Evaluates total encounter damage taken by a solo player fighting N focused enemies (Lanchester's Law)
+static func estimate_group_damage_taken(
+	enemy_count: int,
+	single_enemy_ehp: float,
+	single_enemy_dps: float,
+	player_single_target_dps: float
+) -> float:
+	var ttk_one_enemy: float = single_enemy_ehp / maxf(0.0001, player_single_target_dps)
+	# Triangular number sum: N + (N-1) + ... + 1 = N * (N + 1) / 2
+	var cumulative_enemy_lifetimes: float = float(enemy_count * (enemy_count + 1)) * 0.5 * ttk_one_enemy
+	return cumulative_enemy_lifetimes * single_enemy_dps
 ```
 
 ---
 
-## 10.5 Economic Engineering: Sources, Sinks, Faucets & Mudflation
+## 10.5 Economic Engineering: Faucets, Sinks & Mudflation Control
 
-Virtual economies in RPGs, MMOs, and survival games fail when treated like real-world national economies. In the real world, goods deteriorate and money circulates; in video games, **players extract currency from infinite voids and hoard it permanently**.
+In a real-world economy, central banks control the money supply. In a video game, **every monster killed is a miniature mint printing brand-new currency out of thin air**.
 
 ```
                        THE ECONOMIC EQUILIBRIUM TANK
 =================================================================================
- FAUCETS / SOURCES (Infinite Spigots)
- [ Quest Rewards ]  [ Mob Loot Drops ]  [ Salvage Returns ]  [ Mining Nodes ]
+ FAUCETS / SOURCES (Currency Inflow)
+ [ Quest Rewards ]  [ Mob Loot Drops ]  [ Salvage Returns ]  [ Chest Spawns ]
         │                   │                   │                   │
         ▼                   ▼                   ▼                   ▼
  ═════════════════════════════════════════════════════════════════════════════
-                       CIRCULATING PLAYER CURRENCY TANK
+                 ACTIVE MONEY SUPPLY (Total Gold in Circulation)
  ═════════════════════════════════════════════════════════════════════════════
         │                   │                   │                   │
         ▼                   ▼                   ▼                   ▼
- [ Repair Costs ]   [ Tax / Auction ]   [ Crafting Fees ]   [ Consumables ]
- SINKS / DRAINS (Permanent Destruction of Value)
+ [ Gear Repairs ]   [ Reroll / Enchant ] [ Fast Travel ]     [ Consumables ]
+ SINKS / DRAINS (Permanent Destruction of Currency)
 ```
 
-### The Law of Economic Stability
+### The Macroeconomic Differential Equation
 
-Let $F(t)$ denote the total currency created across all faucets at time $t$, and $S(t)$ denote the currency permanently removed via sinks:
+Let $M(t)$ be the total currency held by the player (or server population) at playtime $t$:
 
-$$\Delta M = \int_{0}^{T} \left( \sum F_i(t) - \sum S_j(t) \right) dt$$
+$$\frac{dM}{dt} = \sum_{i} F_i(t) - \sum_{j} S_j(t)$$
 
-1. **If $\sum F > \sum S$ (Mudflation)**: The circulating supply of gold balloons. Common vendor items lose all psychological value. High-end player-to-player auction prices escalate to arbitrary caps, creating an insurmountable wealth barrier for novice players.
-2. **If $\sum S > \sum F$ (Deflationary Starvation)**: Players cannot afford baseline repairs or core consumables, causing them to disengage from risk-bearing activities.
-3. **The Target Invariant**: Design **Percentage-Based Dynamic Sinks** rather than flat numerical sinks:
-   - Tax player-to-player trade via a flat percentage fee ($\text{Tax} = \text{Price} \times 0.08$).
-   - Scale repair costs relative to character wealth or item rarity tiers ($C_{\text{repair}} \propto \text{Tier}^2$).
+1. **Why Flat Sinks Fail**: If a health potion costs a flat $50\text{ Gold}$ all game, it is a meaningful sink at Level 1 (when enemies drop $10\text{ Gold}$), but becomes completely negligible at Level 50 (when enemies drop $5,000\text{ Gold}$). The player accumulates millions of unspendable gold (**Mudflation**).
+2. **How to Engineer Effective Sinks**:
+   - **Proportional Wealth/Tier Sinks**: Scale equipment repair and upgrade costs quadratically with item power tier ($C_{\text{upgrade}} = B \cdot \text{Tier}^{2.2}$).
+   - **Voluntary Aspirational Sinks (Gambling / Affix Rerolling)**: Players hate mandatory taxes (like hunger meters or harsh durability decay), which feel like punishment. Conversely, players *eagerly* dump 90% of their fortune into **Optional Aspirational Sinks**—such as paying an enchanter escalating sums of gold to reroll a weapon affix in pursuit of a perfect "God Roll", or purchasing cosmetic stronghold upgrades.
 
 ---
 
-## 10.6 Probability Engineering: The Pseudo-Random Distribution (PRD)
+### Step-by-Step Architectural Construction: Dynamic Economy & Sink Controller
 
-Humans are notoriously poor at evaluating true mathematical independence. Under pure Independent Random Distribution (IRD) with $P = 20\%$:
-- The chance of failing $6$ times in a row is $(0.8)^6 \approx 26.2\%$.
-- The chance of failing $12$ times in a row is $(0.8)^{12} \approx 6.87\%$.
+Let us build an economic controller that tracks currency faucets and sinks, monitors the inflation ratio, and calculates exponential upgrade and reroll sinks.
 
-When a player misses a $20\%$ critical strike or dodge $12$ times in a row, they do not think *"Ah, a standard Poisson distribution variance!"* They perceive the game as broken or maliciously rigged.
+#### Chunk 3.1: Faucet/Sink Ledger & Inflation Index
+
+```gdscript
+class_name EconomyController
+extends RefCounted
+
+var total_faucet_inflow: int = 0
+var total_sink_outflow: int = 0
+var current_balance: int = 0
+
+func record_faucet(amount: int) -> void:
+	assert(amount >= 0, "Faucet amount must be non-negative.")
+	current_balance += amount
+	total_faucet_inflow += amount
+
+func execute_sink(cost: int) -> bool:
+	if cost < 0 or current_balance < cost:
+		return false
+	current_balance -= cost
+	total_sink_outflow += cost
+	return true
+
+func get_sink_to_faucet_ratio() -> float:
+	if total_faucet_inflow == 0:
+		return 1.0
+	return float(total_sink_outflow) / float(total_faucet_inflow)
+```
+
+- **`get_sink_to_faucet_ratio()`**: **The Economic Telemetry Metric**. In a healthy RPG economy, your target Sink-to-Faucet ratio should sit between **$0.75$ and $0.90$** (meaning $75\%\text{--}90\%$ of all currency earned by the player is eventually drained back out by repairs, upgrades, and consumables). If this ratio drops below $0.40$, your economy is suffering from severe mudflation.
+
+#### Chunk 3.2: Escalating Affix Reroll & Upgrade Sinks
+
+```gdscript
+static func compute_upgrade_cost(base_cost: int, item_level: int, growth_exponent: float = 2.15) -> int:
+	return int(round(float(base_cost) * pow(float(item_level), growth_exponent)))
+
+static func compute_reroll_sink_cost(base_reroll_cost: int, previous_reroll_count: int) -> int:
+	# Soft-exponential cost escalation: Cost = Base * (1.35 ^ count)
+	var multiplier: float = pow(1.35, float(previous_reroll_count))
+	return int(round(float(base_reroll_cost) * multiplier))
+```
+
+- **`pow(1.35, previous_reroll_count)`**: Implements the classic ARPG (*Diablo* / *Path of Exile*) voluntary gold sink. The first reroll on a sword is cheap, enticing the player to engage. Each subsequent reroll on that same item multiplies the cost by $1.35\times$, naturally draining late-game hoards from wealthy min-maxers without punishing casual players.
+
+---
+
+#### The Fully Assembled `EconomyController.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: EconomyController.gd
+# Architecture: Macroeconomic Faucet/Sink Ledger & Escalating Cost Calculator
+# ==============================================================================
+class_name EconomyController
+extends RefCounted
+
+var total_faucet_inflow: int = 0
+var total_sink_outflow: int = 0
+var current_balance: int = 0
+
+## Injects newly generated currency into the economy (Faucet)
+func record_faucet(amount: int) -> void:
+	assert(amount >= 0, "Faucet amount must be non-negative.")
+	current_balance += amount
+	total_faucet_inflow += amount
+
+## Attempts to permanently destroy currency for a service/item (Sink)
+func execute_sink(cost: int) -> bool:
+	if cost < 0 or current_balance < cost:
+		return false
+	current_balance -= cost
+	total_sink_outflow += cost
+	return true
+
+## Returns the macroeconomic drain ratio (Healthy target: 0.75 to 0.90)
+func get_sink_to_faucet_ratio() -> float:
+	if total_faucet_inflow == 0:
+		return 1.0
+	return float(total_sink_outflow) / float(total_faucet_inflow)
+
+## Polynomial gear upgrade sink scaling with item level
+static func compute_upgrade_cost(base_cost: int, item_level: int, growth_exponent: float = 2.15) -> int:
+	return int(round(float(base_cost) * pow(float(maxi(1, item_level)), growth_exponent)))
+
+## Exponentially escalating voluntary sink for item enchantment/affix rerolling
+static func compute_reroll_sink_cost(base_reroll_cost: int, previous_reroll_count: int) -> int:
+	var multiplier: float = pow(1.35, float(maxi(0, previous_reroll_count)))
+	return int(round(float(base_reroll_cost) * multiplier))
+```
+
+---
+
+## 10.6 Probability Engineering: Pseudo-Random Distribution (PRD)
+
+Why do players complain that a $90\%$ hit chance in *XCOM* or a $25\%$ critical strike chance in an RPG is "broken"? Because the human brain suffers from the **Gambler's Fallacy**: humans intuitively expect a $25\%$ chance to succeed roughly once every $4$ swings.
+
+Under pure **Independent Random Distribution (IRD)** (`randf() < 0.25`):
+- The probability of getting **two crits back-to-back** on swings 1 and 2 is $0.25^2 = 6.25\%$ (which feels like an unfair burst spike in PvP).
+- The probability of **failing 10 times in a row** is $(1 - 0.25)^{10} = 0.75^{10} \approx 5.63\%$ (which happens multiple times per match and infuriates the player).
 
 ```
                    PURE RANDOM (IRD) VS. PSEUDO-RANDOM (PRD)
 =================================================================================
  Pure Random (Flat 20%):   [ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ X ] 
- (Extremely prone to dry spells and jarring multi-crit streaks!)
+ (Prone to frustrating 10-swing dry spells and lucky back-to-back double crits!)
 
- Pseudo-Random (C = 0.055):[ 5.5% ][ 11% ][ 16.5% ][ 22% ][ 27.5% -> PROC! ]
- (Probability climbs with every failure; resets immediately after success!)
+ Pseudo-Random (C = 0.055):[ 5.5% ][ 11.1% ][ 16.7% ][ 22.2% ][ 27.8% -> PROC! ]
+ (Starts below 20%, climbs linearly on every miss, and guarantees a proc by swing 18!)
 ```
 
-### The PRD Mathematical Formulation (Warcraft III / Dota 2 Standard)
+### The Mathematical Mechanics of PRD
 
-Rather than checking against a flat probability $P$, PRD computes an escalating probability $P(N)$ where $N$ is the number of swings since the last successful event:
+In a **Pseudo-Random Distribution**, the probability on the $N$-th consecutive attempt is:
 
-$$P(N) = N \times C$$
+$$P(N) = \min(1.0, \, N \times C)$$
 
-If the roll fails, $N$ increments by $1$, increasing the probability for the next attempt. When the roll succeeds, $N$ resets to $1$. 
+where $C$ is a pre-computed base constant smaller than the nominal probability $P_{\text{nominal}}$.
+- **On Attempt $N = 1$**: The chance is only $1 \cdot C$ (for a $20\%$ nominal crit chance, $C \approx 5.57\%$). This makes lucky back-to-back double crits nearly four times rarer!
+- **On Every Miss**: $N$ increments by $1$, raising the chance to $2C, 3C, 4C \dots$
+- **Maximum Dry Spell Bound**: By attempt $N_{\max} = \lceil \frac{1.0}{C} \rceil$, the probability reaches $100\%$, making long unlucky streaks **mathematically impossible**.
+- **Exact Convergence**: Despite changing every swing, the average proc rate over time equals the exact nominal probability $P_{\text{nominal}}$!
 
-The design constant $C$ is solved mathematically such that the **aggregate observed rate across infinite samples equals the nominal probability $P$**:
+---
 
-$$P_{\text{nominal}} \approx \sum_{N=1}^{N_{\text{max}}} P(\text{precisely on } N\text{th attempt}) = \sum_{N=1}^{N_{\text{max}}} N \cdot C \cdot \prod_{j=1}^{N-1} (1 - j \cdot C)$$
+### Step-by-Step Architectural Construction: Exact PRD Solver & Roller
+
+Instead of relying on an incomplete lookup table, let us write a self-contained PRD engine that **computes the exact constant $C$ for any arbitrary probability $P \in (0, 1)$ using Binary Search over Markov Chain expectations**.
+
+#### Chunk 4.1: Exact Constant $C$ Derivation via Binary Search
+
+Given any test constant $C$, the expected number of trials $E[N]$ required to achieve one success is:
+
+$$E[N] = \sum_{N=1}^{N_{\max}} N \cdot \left( \min(1.0, N \cdot C) \cdot \prod_{j=1}^{N-1} (1.0 - j \cdot C) \right)$$
+
+And the resulting true overall probability for that $C$ is simply $P_{\text{true}}(C) = \frac{1.0}{E[N]}$. Because $P_{\text{true}}(C)$ is strictly monotonic, we can solve for $C$ to 6 decimal places in $\approx 20$ iterations of binary search!
+
+```gdscript
+class_name PseudoRandomDistribution
+extends RefCounted
+
+var _nominal_probability: float
+var _c_constant: float
+var _attempt_counter: int = 1
+
+func _init(nominal_prob: float = 0.20) -> void:
+	set_probability(nominal_prob)
+
+func set_probability(prob: float) -> void:
+	_nominal_probability = clampf(prob, 0.001, 1.0)
+	_c_constant = solve_c_from_probability(_nominal_probability)
+	_attempt_counter = 1
+```
+
+- **`_attempt_counter: int = 1`**: Tracks how many swings have occurred since the last successful proc. Initialized to `1` so the first swing rolls against $1 \times C$.
+
+#### Chunk 4.2: The Binary Search Solver & Stateful Roll Execution
+
+```gdscript
+static func solve_c_from_probability(target_p: float) -> float:
+	if target_p >= 1.0:
+		return 1.0
+		
+	var low: float = 0.0
+	var high: float = target_p
+	var mid: float = target_p
+	
+	# 24 iterations of binary search achieves sub-10^-7 precision
+	for _i in range(24):
+		mid = (low + high) * 0.5
+		var tested_p: float = _probability_from_c(mid)
+		if absf(tested_p - target_p) <= 0.000001:
+			break
+		if tested_p > target_p:
+			high = mid
+		else:
+			low = mid
+			
+	return mid
+
+static func _probability_from_c(c: float) -> float:
+	var p_proc_on_n: float = 0.0
+	var p_fail_all_previous: float = 1.0
+	var expected_attempts: float = 0.0
+	var max_attempts: int = int(ceil(1.0 / c))
+	
+	for n in range(1, max_attempts + 1):
+		p_proc_on_n = minf(1.0, float(n) * c) * p_fail_all_previous
+		expected_attempts += float(n) * p_proc_on_n
+		p_fail_all_previous *= (1.0 - minf(1.0, float(n) * c))
+		
+	return 1.0 / expected_attempts
+
+func roll() -> bool:
+	var current_threshold: float = minf(1.0, float(_attempt_counter) * _c_constant)
+	if randf() <= current_threshold:
+		_attempt_counter = 1
+		return true
+	else:
+		_attempt_counter += 1
+		return false
+```
+
+- **`solve_c_from_probability(...)`**: Runs only once when the skill or weapon is initialized. It computes the exact mathematical $C$ constant for any percentage (e.g., $17.5\%$ or $33\%$) without needing hardcoded lookup tables.
+- **`roll()`**: Runs in $\mathcal{O}(1)$ constant time. Multiplies `_attempt_counter * _c_constant` and compares against `randf()`.
+
+---
+
+#### The Fully Assembled `PseudoRandomDistribution.gd`
 
 ```gdscript
 # ==============================================================================
-# PSEUDO-RANDOM DISTRIBUTION (PRD) ENGINE
+# SCRIPT: PseudoRandomDistribution.gd
+# Architecture: Exact Markov-Solved Pseudo-Random Distribution (PRD) Engine
 # ==============================================================================
 class_name PseudoRandomDistribution
 extends RefCounted
 
-## Lookup table: Nominal Probability -> Optimal C Base Constant
-## Derived from Monte Carlo simulation / Markov chain convergence
-const C_LOOKUP: Dictionary = {
-    0.05: 0.00380,
-    0.10: 0.01475,
-    0.15: 0.03222,
-    0.20: 0.05564,
-    0.25: 0.08474,
-    0.30: 0.11939,
-    0.35: 0.15962,
-    0.40: 0.20541,
-    0.45: 0.25686,
-    0.50: 0.31382
-}
-
 var _nominal_probability: float
 var _c_constant: float
-var _fail_count: int = 1
+var _attempt_counter: int = 1
 
 func _init(nominal_prob: float = 0.20) -> void:
-    set_probability(nominal_prob)
+	set_probability(nominal_prob)
 
+## Configures the nominal probability and solves the exact C constant
 func set_probability(prob: float) -> void:
-    _nominal_probability = clampf(prob, 0.01, 0.99)
-    _c_constant = _approximate_c(_nominal_probability)
-    _fail_count = 1
+	_nominal_probability = clampf(prob, 0.001, 1.0)
+	_c_constant = solve_c_from_probability(_nominal_probability)
+	_attempt_counter = 1
 
-## Rolls for success using escalating PRD logic
+## Executes a stateful PRD roll in O(1) time
 func roll() -> bool:
-    var current_chance: float = float(_fail_count) * _c_constant
-    var sample: float = randf()
-    
-    if sample <= current_chance:
-        _fail_count = 1 # Reset fail counter upon verified success
-        return true
-    else:
-        _fail_count += 1 # Increment failure counter to escalate subsequent odds
-        return false
+	var current_threshold: float = minf(1.0, float(_attempt_counter) * _c_constant)
+	if randf() <= current_threshold:
+		_attempt_counter = 1
+		return true
+	else:
+		_attempt_counter += 1
+		return false
 
-func _approximate_c(p: float) -> float:
-    # Snap to nearest discrete key in pre-computed table if available
-    var rounded_key: float = snappedf(p, 0.05)
-    if C_LOOKUP.has(rounded_key):
-        return C_LOOKUP[rounded_key]
-        
-    # Heuristic approximation polynomial for arbitrary values: C ≈ 0.31 * P^1.8
-    return 0.315 * pow(p, 1.82)
+## Returns the exact probability of the next roll succeeding (useful for UI tooltips)
+func peek_next_roll_chance() -> float:
+	return minf(1.0, float(_attempt_counter) * _c_constant)
+
+## Solves the PRD constant C for any nominal probability P using binary search
+static func solve_c_from_probability(target_p: float) -> float:
+	if target_p >= 1.0:
+		return 1.0
+		
+	var low: float = 0.0
+	var high: float = target_p
+	var mid: float = target_p
+	
+	for _i in range(24):
+		mid = (low + high) * 0.5
+		var tested_p: float = _probability_from_c(mid)
+		if absf(tested_p - target_p) <= 0.000001:
+			break
+		if tested_p > target_p:
+			high = mid
+		else:
+			low = mid
+			
+	return mid
+
+static func _probability_from_c(c: float) -> float:
+	var p_proc_on_n: float = 0.0
+	var p_fail_all_previous: float = 1.0
+	var expected_attempts: float = 0.0
+	var max_attempts: int = int(ceil(1.0 / c))
+	
+	for n in range(1, max_attempts + 1):
+		p_proc_on_n = minf(1.0, float(n) * c) * p_fail_all_previous
+		expected_attempts += float(n) * p_proc_on_n
+		p_fail_all_previous *= (1.0 - minf(1.0, float(n) * c))
+		
+	return 1.0 / expected_attempts
 ```
 
 ---
 
-## 10.7 Weighted Loot Tables with Pity Bounds
+## 10.7 Weighted Loot Tables with $\mathcal{O}(\log n)$ Binary Search & Pity Bounds
 
-Dropping randomized items requires balancing weighted item generation with deterministic bounds ("pity counters") to cap negative player streaks on legendary tier drops.
+Why use **Weights** instead of **Percentages** for loot tables?
+- **The Percentage Trap**: If you assign percentages (`Common = 70%`, `Rare = 25%`, `Epic = 5%`), the total must always equal $100\%$. If a designer wants to add a new item with a $10\%$ drop chance, they have to manually recalculate and edit the percentages of every other item in the table so the sum stays $100\%$.
+- **The Weight Solution**: You assign arbitrary relative weights (`Common = 70`, `Rare = 25`, `Epic = 5`). If you add a new item with weight `10`, the total weight automatically becomes $110$, and every item's probability scales proportionally ($\frac{w_i}{\sum w}$) with zero manual editing!
 
 ```
                       PREFIX-SUM ARRAY BINARY SEARCH
@@ -9182,181 +10105,367 @@ Dropping randomized items requires balancing weighted item generation with deter
  Result: UNCOMMON TIER! (Resolved in O(log N) via Binary Search!)
 ```
 
+### Step-by-Step Architectural Construction: Weighted Loot Table & Pity System
+
+#### Chunk 5.1: Prefix-Sum Compilation & Soft/Hard Pity State
+
 ```gdscript
-# ==============================================================================
-# WEIGHTED DROP TABLE SYSTEM WITH HARD PITY ENGINE
-# ==============================================================================
 class_name LootTableSystem
 extends RefCounted
 
 class DropEntry:
-    var item_resource: Resource
-    var weight: float
-    var is_legendary: bool
-    
-    func _init(res: Resource, w: float, legendary: bool = false) -> void:
-        item_resource = res
-        weight = w
-        is_legendary = legendary
+	var item_id: StringName
+	var weight: float
+	var is_rare_pity_target: bool
+	
+	func _init(p_id: StringName, p_weight: float, p_rare: bool = false) -> void:
+		item_id = p_id
+		weight = p_weight
+		is_rare_pity_target = p_rare
 
 var _entries: Array[DropEntry] = []
 var _prefix_sums: PackedFloat32Array = PackedFloat32Array()
 var _total_weight: float = 0.0
 
-# Pity Subsystem tracking
-var rolls_since_last_legendary: int = 0
-const HARD_PITY_THRESHOLD: int = 50
+var rolls_since_last_rare: int = 0
+var hard_pity_limit: int = 50
+```
 
-func add_entry(item: Resource, weight: float, is_legendary: bool = false) -> void:
-    assert(weight > 0.0, "Drop weight must be positive.")
-    var entry: DropEntry = DropEntry.new(item, weight, is_legendary)
-    _entries.append(entry)
-    _recalculate_prefix_sums()
+- **`_prefix_sums: PackedFloat32Array`**: Stores the cumulative running total of weights (`[60.0, 85.0, 97.0, 100.0]`). Because weights are strictly positive, the prefix-sum array is **guaranteed to be sorted in ascending order**, allowing us to search it in $\mathcal{O}(\log n)$ time via binary search rather than looping over every item in $\mathcal{O}(n)$ time.
 
-func _recalculate_prefix_sums() -> void:
-    _prefix_sums.clear()
-    _total_weight = 0.0
-    for entry in _entries:
-        _total_weight += entry.weight
-        _prefix_sums.append(_total_weight)
+#### Chunk 5.2: Binary Search Lookup & Hard Pity Enforcement
 
-## Evaluates a weighted drop with O(log N) complexity and hard pity enforcement
-func evaluate_drop() -> Resource:
-    if _entries.is_empty():
-        return null
-        
-    rolls_since_last_legendary += 1
+```gdscript
+func add_entry(item_id: StringName, weight: float, is_rare_target: bool = false) -> void:
+	assert(weight > 0.0, "Drop weight must be strictly positive.")
+	_entries.append(DropEntry.new(item_id, weight, is_rare_target))
+	_total_weight += weight
+	_prefix_sums.append(_total_weight)
 
-    # 1. HARD PITY OVERRIDE: Force legendary drop if streak threshold is exceeded
-    if rolls_since_last_legendary >= HARD_PITY_THRESHOLD:
-        for entry in _entries:
-            if entry.is_legendary:
-                rolls_since_last_legendary = 0
-                return entry.item_resource
+func roll_drop() -> StringName:
+	if _entries.is_empty():
+		return &""
+		
+	rolls_since_last_rare += 1
 
-    # 2. STANDARD WEIGHTED RANDOM DRAW
-    var roll: float = randf_range(0.0, _total_weight)
-    
-    # Binary Search over Prefix-Sum array: O(log N)
-    var low: int = 0
-    var high: int = _prefix_sums.size() - 1
-    var selected_idx: int = high
-    
-    while low <= high:
-        var mid: int = (low + high) / 2
-        if _prefix_sums[mid] >= roll:
-            selected_idx = mid
-            high = mid - 1 # Search left for lower boundary
-        else:
-            low = mid + 1
+	# 1. Hard Pity Override: Guarantee rare item if dry spell hits limit
+	if rolls_since_last_rare >= hard_pity_limit:
+		for entry in _entries:
+			if entry.is_rare_pity_target:
+				rolls_since_last_rare = 0
+				return entry.item_id
 
-    var picked: DropEntry = _entries[selected_idx]
-    if picked.is_legendary:
-        rolls_since_last_legendary = 0
-        
-    return picked.item_resource
+	# 2. O(log N) Binary Search over Prefix Sums
+	var random_ticket: float = randf_range(0.0, _total_weight)
+	var selected_index: int = _prefix_sums.bsearch(random_ticket, true)
+	selected_index = clampi(selected_index, 0, _entries.size() - 1)
+	
+	var picked: DropEntry = _entries[selected_index]
+	if picked.is_rare_pity_target:
+		rolls_since_last_rare = 0
+		
+	return picked.item_id
+```
+
+- **`_prefix_sums.bsearch(random_ticket, true)`**: Uses Godot's native C++ binary search on the contiguous `PackedFloat32Array`. Even if a loot table contains $10,000$ items, `bsearch` finds the exact winning bucket in at most $14$ comparisons!
+
+---
+
+#### The Fully Assembled `LootTableSystem.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: LootTableSystem.gd
+# Architecture: Prefix-Sum O(log N) Weighted Loot Table with Hard Pity Bounds
+# ==============================================================================
+class_name LootTableSystem
+extends RefCounted
+
+class DropEntry:
+	var item_id: StringName
+	var weight: float
+	var is_rare_pity_target: bool
+	
+	func _init(p_id: StringName, p_weight: float, p_rare: bool = false) -> void:
+		item_id = p_id
+		weight = p_weight
+		is_rare_pity_target = p_rare
+
+var _entries: Array[DropEntry] = []
+var _prefix_sums: PackedFloat32Array = PackedFloat32Array()
+var _total_weight: float = 0.0
+
+var rolls_since_last_rare: int = 0
+var hard_pity_limit: int = 50
+
+## Appends a weighted item entry and updates the cumulative prefix-sum buffer in O(1)
+func add_entry(item_id: StringName, weight: float, is_rare_target: bool = false) -> void:
+	assert(weight > 0.0, "Drop weight must be strictly positive.")
+	_entries.append(DropEntry.new(item_id, weight, is_rare_target))
+	_total_weight += weight
+	_prefix_sums.append(_total_weight)
+
+## Evaluates a weighted drop in O(log N) time with deterministic hard-pity protection
+func roll_drop() -> StringName:
+	if _entries.is_empty():
+		return &""
+		
+	rolls_since_last_rare += 1
+
+	# 1. Hard Pity Override
+	if rolls_since_last_rare >= hard_pity_limit:
+		for entry in _entries:
+			if entry.is_rare_pity_target:
+				rolls_since_last_rare = 0
+				return entry.item_id
+
+	# 2. Native C++ Binary Search over Prefix Sums
+	var random_ticket: float = randf_range(0.0, _total_weight)
+	var selected_index: int = _prefix_sums.bsearch(random_ticket, true)
+	selected_index = clampi(selected_index, 0, _entries.size() - 1)
+	
+	var picked: DropEntry = _entries[selected_index]
+	if picked.is_rare_pity_target:
+		rolls_since_last_rare = 0
+		
+	return picked.item_id
 ```
 
 ---
 
-## 10.8 Tactile "Juice" & Kinesthetic Feedback
+## 10.8 Kinesthetic "Juice" & The Psychology of Impact
 
-A mechanic can be mathematically balanced yet feel terrible to play. **"Juice"** (or Game Feel) is the non-functional audiovisual feedback that accentuates player actions.
+Why does swinging a greatsword in *Monster Hunter* or *God of War* feel like cleaving solid granite, while swinging a sword in an amateur project feels like waving a cardboard tube through air?
+
+Because in the real world, **a blade striking bone experiences physical resistance (deceleration)**. In a video game, polygons pass effortlessly through other polygons with zero physical resistance unless you engineer **Kinesthetic Feedback ("Juice")**.
 
 ```
                           THE KINESTHETIC HIT PIPELINE
 =================================================================================
- Melee Sword Impacts Hurtbox!
+ Melee Sword Impacts Hurtbox! (Frame 0)
            │
-           ├── 1. HITSTOP FREEZE ──► Freeze actor frames for 60ms (Zero displacement)
-           ├── 2. MESH JITTER   ──► Apply high-frequency noise offset to Victim
-           ├── 3. AUDIO SYSTEM  ──► Play pitched impact SFX + Transient Sub-bass
-           ├── 4. GPU SHADER    ──► Trigger 1-frame pure white Hit-Flash (EMISSION)
-           └── 5. CAMERA RIG    ──► Inject +0.3 Trauma onto Camera (Rotational shake)
+           ├── 1. HITSTOP FREEZE ──► Freeze attacker & victim animations for 60ms
+           │                         (Simulates physical blade resistance on bone!)
+           ├── 2. MESH JITTER    ──► Oscillate victim mesh horizontally (+/- 8cm)
+           │                         while frozen (conveys stored kinetic energy!)
+           ├── 3. GPU SHADER     ──► Set Emission Whiteout = 1.0 for 1 frame
+           │                         (Draws human eye peripheral attention instantly)
+           ├── 4. AUDIO TRANSIENT──► Layer pitched meat-thud + sub-bass sine drop
+           └── 5. CAMERA RIG     ──► Inject +0.35 Trauma (Triggers on Frame 60ms!)
 ```
+
+### The Three Temporal Laws of Game Feel
+
+1. **Zero-Frame Input Confirmation**: The visual and auditory wind-up of an action must begin on the **exact frame** the button is pressed ($0\text{ ms}$ delay).
+2. **Local Hitstop vs. Global Time Scale**:
+   > [!warning] ⚠️ Production Trap: `Engine.time_scale = 0.0` in Multiplayer or Bullet-Hell Games
+   > Many tutorials implement hitstop by setting `Engine.time_scale = 0.05`. While acceptable for a solo single-player cinematic hit, **modifying global `Engine.time_scale` freezes background projectiles, messes up audio sync, and is completely impossible in multiplayer**!
+   > **The Architectural Solution**: Implement **Entity-Local Hitstop** by temporarily pausing the `AnimationTree` (`parameters/TimeScale/scale = 0.0`) and zeroing the velocity integration of *only* the attacker and the victim, while the rest of the world continues running at $60\text{ Hz}$!
+3. **Vibrational Shake During Hitstop**: While the victim is frozen in hitstop for $60\text{ ms}$, rapidly offset their visual `MeshInstance3D` left and right by $\pm 5\text{ cm}$ every frame, then release them into their knockback velocity the moment hitstop ends. This creates the iconic *Street Fighter* / *Hollow Knight* kinetic release!
+
+---
+
+### Step-by-Step Architectural Construction: Entity-Local Hitstop & Juice Orchestrator
+
+Let us deconstruct our multi-sensory impact orchestrator chunk by chunk.
+
+#### Chunk 6.1: Hit-Flash Shader & Camera Trauma Trigger
+
+```gdscript
+class_name KinestheticFeedback
+extends RefCounted
+
+static func trigger_impact(
+	attacker: Node3D,
+	victim: Node3D,
+	victim_visual_mesh: GeometryInstance3D,
+	camera_rig: CinematicCameraRig,
+	hitstop_duration: float = 0.07,
+	trauma_amount: float = 0.35
+) -> void:
+	if camera_rig != null:
+		camera_rig.add_trauma(trauma_amount)
+
+	if victim_visual_mesh != null:
+		_trigger_shader_flash(victim_visual_mesh)
+
+	_execute_local_hitstop_and_jitter(attacker, victim, victim_visual_mesh, hitstop_duration)
+```
+
+- **Decoupled Visual Mesh (`victim_visual_mesh`)**: Notice we pass the visual `MeshInstance3D` separately from the physics root `victim`. Why? Because we want to jitter the *visual mesh* back and forth during hitstop without jittering the physics `CollisionShape3D` (which would cause physics engine collision glitches!).
+
+#### Chunk 6.2: Instance-Uniform Shader Flash (Zero Material Duplication)
+
+```gdscript
+static func _trigger_shader_flash(mesh: GeometryInstance3D) -> void:
+	# Uses per-instance shader uniforms so shared materials do not flash all enemies at once!
+	mesh.set_instance_shader_parameter(&"flash_intensity", 1.0)
+	
+	var tween: Tween = mesh.create_tween()
+	tween.tween_Method(
+		func(val: float) -> void:
+			if is_instance_valid(mesh):
+				mesh.set_instance_shader_parameter(&"flash_intensity", val),
+		1.0,
+		0.0,
+		0.12
+	)
+```
+
+- **`mesh.set_instance_shader_parameter(&"flash_intensity", 1.0)`**: **Critical Memory Optimization**. If $20$ goblins share the same material and you modify `material.set_shader_parameter()`, **all 20 goblins flash white when you hit one**! In Godot 4, declaring `instance uniform float flash_intensity` in your shader and calling `set_instance_shader_parameter()` modifies the value *exclusively* for that single mesh instance in VRAM without duplicating the material!
+
+#### Chunk 6.3: Entity-Local Hitstop & High-Frequency Mesh Jitter
+
+```gdscript
+static func _execute_local_hitstop_and_jitter(
+	attacker: Node3D,
+	victim: Node3D,
+	victim_mesh: GeometryInstance3D,
+	duration: float
+) -> void:
+	if duration <= 0.0:
+		return
+
+	var tree: SceneTree = attacker.get_tree()
+	var original_mesh_pos: Vector3 = victim_mesh.position if victim_mesh != null else Vector3.ZERO
+
+	# Freeze physics processing locally on attacker and victim only
+	attacker.set_physics_process(false)
+	victim.set_physics_process(false)
+
+	var elapsed: float = 0.0
+	var jitter_sign: float = 1.0
+
+	while elapsed < duration:
+		await tree.process_frame
+		var delta: float = tree.root.get_process_delta_time()
+		elapsed += delta
+		
+		# Oscillate victim visual mesh horizontally during the freeze window
+		if is_instance_valid(victim_mesh):
+			jitter_sign = -jitter_sign
+			victim_mesh.position = original_mesh_pos + Vector3(0.06 * jitter_sign, 0.0, 0.0)
+
+	# Restore exact local mesh origin and resume kinematic physics
+	if is_instance_valid(victim_mesh):
+		victim_mesh.position = original_mesh_pos
+	if is_instance_valid(attacker):
+		attacker.set_physics_process(true)
+	if is_instance_valid(victim):
+		victim.set_physics_process(true)
+```
+
+- **`while elapsed < duration: await tree.process_frame`**: Frame-by-frame coroutine loop during the freeze window. On every rendered frame while the physics body is frozen in place, `jitter_sign` flips between $+1.0$ and $-1.0$, vibrating the visual mesh horizontally by $\pm 6\text{ cm}$ before snapping it cleanly back to `original_mesh_pos` when the freeze releases.
+
+---
+
+#### The Fully Assembled `KinestheticFeedback.gd`
 
 ```gdscript
 # ==============================================================================
-# TACTILE GAME FEEL & HITSTOP ORCHESTRATOR
+# SCRIPT: KinestheticFeedback.gd
+# Architecture: Entity-Local Hitstop, Mesh Jitter & Per-Instance Shader Flash
 # ==============================================================================
 class_name KinestheticFeedback
-extends Node
+extends RefCounted
 
-## Executes multi-layered impact feedback across time-scale, mesh, and camera
+## Executes multi-layered kinesthetic impact feedback without halting global time
 static func trigger_impact(
-    attacker: Node, 
-    victim: Node, 
-    camera_rig: CinematicCameraRig,
-    hitstop_duration_sec: float = 0.06
+	attacker: Node3D,
+	victim: Node3D,
+	victim_visual_mesh: GeometryInstance3D,
+	camera_rig: CinematicCameraRig,
+	hitstop_duration: float = 0.07,
+	trauma_amount: float = 0.35
 ) -> void:
-    
-    # 1. CAMERA TRAUMA INJECTION
-    if camera_rig != null:
-        camera_rig.add_trauma(0.35)
+	if camera_rig != null:
+		camera_rig.add_trauma(trauma_amount)
 
-    # 2. TRANSIENT HIT-FLASH SHADER TRIGGER
-    _apply_hit_flash(victim)
+	if victim_visual_mesh != null:
+		_trigger_shader_flash(victim_visual_mesh)
 
-    # 3. KINEMATIC HITSTOP (Temporarily freezes processing without engine pausing)
-    _execute_hitstop(attacker, victim, hitstop_duration_sec)
+	_execute_local_hitstop_and_jitter(attacker, victim, victim_visual_mesh, hitstop_duration)
 
-static func _apply_hit_flash(target: Node) -> void:
-    var mesh: GeometryInstance3D = target.find_child("MeshInstance3D", true, false) as GeometryInstance3D
-    if mesh != null and mesh.material_override != null:
-        var mat: Material = mesh.material_override
-        # Trigger hit-flash uniform parameter on shader
-        mat.set("shader_parameter/flash_intensity", 1.0)
-        
-        # Smooth decay via SceneTree Tween
-        var tween: Tween = target.get_tree().create_tween()
-        tween.tween_property(mat, "shader_parameter/flash_intensity", 0.0, 0.15)
+## Triggers a 1-frame whiteout flash using per-instance shader uniforms
+static func _trigger_shader_flash(mesh: GeometryInstance3D) -> void:
+	mesh.set_instance_shader_parameter(&"flash_intensity", 1.0)
+	
+	var tween: Tween = mesh.create_tween()
+	tween.tween_method(
+		func(val: float) -> void:
+			if is_instance_valid(mesh):
+				mesh.set_instance_shader_parameter(&"flash_intensity", val),
+		1.0,
+		0.0,
+		0.12
+	)
 
-static func _execute_hitstop(attacker: Node, victim: Node, duration: float) -> void:
-    # Disable process updates locally to preserve physical position without pausing the world
-    attacker.set_physics_process(false)
-    victim.set_physics_process(false)
-    
-    # Resume after asynchronous duration
-    await attacker.get_tree().create_timer(duration, true, false, true).timeout
-    
-    if is_instance_valid(attacker):
-        attacker.set_physics_process(true)
-    if is_instance_valid(victim):
-        victim.set_physics_process(true)
+## Freezes attacker and victim kinematics locally while vibrating the victim's visual mesh
+static func _execute_local_hitstop_and_jitter(
+	attacker: Node3D,
+	victim: Node3D,
+	victim_mesh: GeometryInstance3D,
+	duration: float
+) -> void:
+	if duration <= 0.0 or attacker == null or victim == null:
+		return
+
+	var tree: SceneTree = attacker.get_tree()
+	var original_mesh_pos: Vector3 = victim_mesh.position if victim_mesh != null else Vector3.ZERO
+
+	attacker.set_physics_process(false)
+	victim.set_physics_process(false)
+
+	var elapsed: float = 0.0
+	var jitter_sign: float = 1.0
+
+	while elapsed < duration:
+		await tree.process_frame
+		if not is_instance_valid(attacker) or not is_instance_valid(victim):
+			break
+		var delta: float = attacker.get_process_delta_time()
+		elapsed += delta
+		
+		if is_instance_valid(victim_mesh):
+			jitter_sign = -jitter_sign
+			victim_mesh.position = original_mesh_pos + Vector3(0.06 * jitter_sign, 0.0, 0.0)
+
+	if is_instance_valid(victim_mesh):
+		victim_mesh.position = original_mesh_pos
+	if is_instance_valid(attacker):
+		attacker.set_physics_process(true)
+	if is_instance_valid(victim):
+		victim.set_physics_process(true)
 ```
 
 ---
 
-## 10.9 Applied Synthesis: The Complete Attribute Modifier & Combat Equation
+## 10.9 Applied Synthesis: Complete Combat Resolution & Juice Pipeline
 
-To integrate combat invariants, hyperbolic mitigation, and deterministic modifiers, review the unified **Combat Resolution Pipeline**:
+To see how **Attack Profiles (Module II)**, **Stat Modifier Pipelines (Module V)**, **PRD Critical Rolls**, **Hyperbolic Armor Mitigation**, **DDA Multipliers**, and **Kinesthetic Hitstop** unite into a single cohesive transaction, examine this complete **Combat Resolver**:
 
 ```
                        UNIFIED DAMAGE RESOLUTION PIPELINE
 =================================================================================
- [ ATTACKER ]                                        [ VICTIM ]
- Base Weapon Damage: 40.0                            Base Armor Rating: 75.0
- Buff Pipeline (Additive + Mult)                     Equipment Armor Modifiers: +25.0
- ────────────────────────────────                    ────────────────────────────────
- Final Raw Damage: 58.0                              Total Armor: 100.0 (K = 100)
-        │                                                   │
-        ▼                                                   ▼
- Critical Hit Check (PRD)                            Hyperbolic Mitigation Factor
- (20% Nominal -> 5.5% Base C)                        Mitigation = 100 / (100 + 100) = 0.50
+ [ 1. ATTACKER STAT PIPELINE ]                      [ 2. VICTIM MITIGATION ]
+ AttackProfile Base Damage: 40.0                    Victim Armor Stat: 100.0 (K=100)
+ Attacker Damage StatMult:  x1.25                   Hyperbolic Mult: 100/(100+100) = 0.50
+ PRD Critical Strike Roll:  20% Nominal -> PROC!    DDA Pacing Multiplier: x1.00
+ Crit Multiplier (x2.0):    50.0 * 2.0 = 100.0 Raw
         │                                                   │
         └─────────────────────────┬─────────────────────────┘
+                                  ▼
+                     [ 3. RESOLVED EFFECTIVE DAMAGE ]
+                     Final Damage = 100.0 * 0.50 = 50.0 HP
                                   │
                                   ▼
-                     [ RESOLVED EFFECTIVE DAMAGE ]
-                     Damage = 58.0 * 0.50 = 29.0 HP
-                                  │
-                                  ▼
-                     [ KINESTHETIC JUICE FLUSH ]
-                     Hitstop (60ms) + Flash + Trauma (0.35)
+                     [ 4. KINESTHETIC JUICE FLUSH ]
+                     Hitstop (70ms, 1.5x on Crit!) + Jitter + Per-Instance Flash
 ```
 
 ---
-# 🎨 Module VI: Rendering Pipelines, Shaders, Audio & Engine Servers
+
+# 🎨 Module XI: Rendering Pipelines, Shaders, Audio & Engine Servers
 
 > [!info] 📖 Lexicon & First Principles: Hardware, Shading & Server Terminology
 > Elevating your engineering requires looking past high-level node wrappers into the underlying graphics hardware and engine low-level servers:
@@ -9369,7 +10478,7 @@ To integrate combat invariants, hyperbolic mitigation, and deterministic modifie
 
 ---
 
-## 6.1 The Hardware Rendering Pipeline & The Frame Lifecycle
+## 11.1 The Hardware Rendering Pipeline & The Frame Lifecycle
 
 To write performant shaders and avoid rendering bottlenecks, an architect must understand the physical pipeline traversed by every geometric vertex before it becomes a coloured pixel on the monitor:
 
@@ -9409,7 +10518,7 @@ $$\vec{v}_{\text{clip}} = \mathbf{P} \cdot \mathbf{V} \cdot \mathbf{M} \cdot \ve
 
 ---
 
-## 6.2 Modern Shader Programming (`gdshader`)
+## 611.2 Modern Shader Programming (`gdshader`)
 
 Godot 4 features its own shading language based on GLSL ES 3.0. Unlike standard GDScript, which executes sequentially on CPU cores, shaders run **massively parallel** across thousands of small GPU arithmetic logic units (ALUs) concurrently.
 
@@ -9540,7 +10649,7 @@ void fragment() {
 
 ---
 
-## 6.3 Dynamic Audio Architecture & DSP Effects (`AudioServer`)
+## 11.3 Dynamic Audio Architecture & DSP Effects (`AudioServer`)
 
 Treating audio as mere one-shot sound calls (`$AudioStreamPlayer.play()`) leads to a flat, sterile game experience. Professional games treat the audio mix as an interactive, real-time reactive landscape.
 
@@ -9641,7 +10750,7 @@ static func transition_underwater_state(is_underwater: bool, duration: float = 0
 
 ---
 
-## 6.4 Bypassing Nodes: The Direct Engine Servers (`RenderingServer`)
+## 11.4 Bypassing Nodes: The Direct Engine Servers (`RenderingServer`)
 
 The biggest mental shift from an amateur scripter to an engine architect is recognising that **Nodes are optional**.
 
@@ -9670,7 +10779,7 @@ Every `MeshInstance3D`, `Sprite2D`, and `Light3D` in your scene tree is merely a
 
 ---
 
-## 6.5 Concrete Applied System: High-Speed MultiMesh Particle & Debris Engine
+## 11.5 Concrete Applied System: High-Speed MultiMesh Particle & Debris Engine
 
 To synthesize **RenderingServer APIs, MultiMesh instance batching, and high-performance transform math**, consider this complete, high-speed debris manager capable of driving thousands of flying physical debris particles at a locked $144\text{ FPS}$:
 
@@ -9765,7 +10874,7 @@ func _physics_process(delta: float) -> void:
 ```
 
 ---
-# ⚡ Module VII: Diagnostics, Profiling, Optimisation & Edge-Case Engineering
+# ⚡ Module XII: Diagnostics, Profiling, Optimisation & Edge-Case Engineering
 
 > [!info] 📖 Lexicon & First Principles: Performance & Runtime Diagnostics
 > Transitioning from amateur scripting to senior systems architecture requires diagnosing computational bottlenecks at the hardware, memory, and engine server layers:
@@ -9778,7 +10887,7 @@ func _physics_process(delta: float) -> void:
 
 ---
 
-## 7.1 The $16.67\text{ ms}$ Frame Budget & Profiler Diagnostics
+## 12.1 The $16.67\text{ ms}$ Frame Budget & Profiler Diagnostics
 
 The primary constraint of real-time software is that physical time never stops. If your game targets a fluid refresh rate, every subsystem must complete its work within a hard temporal budget:
 
@@ -9830,7 +10939,7 @@ Never refactor code based on intuition or unmeasured speculation. Profile using 
 
 ---
 
-## 7.2 Algorithmic Complexity (Big-$\mathcal{O}$) in Real-Time Loops
+## 12.2 Algorithmic Complexity (Big-$\mathcal{O}$) in Real-Time Loops
 
 Amateur code often runs smoothly in testing with $20$ entities, only to slow down in production when handling $1,000$ entities. This slowdown stems directly from asymptotic complexity scaling.
 
@@ -9947,7 +11056,7 @@ func query_radius(world_pos: Vector2, radius: float) -> Array[Node2D]:
 
 ---
 
-## 7.3 Memory Lifecycles, Orphan Leak Detection & Weak References
+## 12.3 Memory Lifecycles, Orphan Leak Detection & Weak References
 
 Memory leaks in garbage-collected environments differ from manual languages like C. In GDScript, leaks rarely manifest as crashes; instead, they appear as **retained references that prevent objects from being freed**, steadily increasing RAM usage until the operating system terminates the process.
 
@@ -10031,7 +11140,7 @@ func get_owner_stats() -> RefCounted:
 
 ---
 
-## 7.4 Floating-Point Precision Drift (IEEE 754) & Physics Deferral
+## 12.4 Floating-Point Precision Drift (IEEE 754) & Physics Deferral
 
 Writing game logic that assumes exact decimal equality inevitably produces elusive, hard-to-reproduce bugs:
 
@@ -10100,7 +11209,7 @@ func _safe_detach_sensor() -> void:
 
 ---
 
-## 7.5 Concurrency: Safe Multithreading via `WorkerThreadPool`
+## 12.5 Concurrency: Safe Multithreading via `WorkerThreadPool`
 
 Modern desktop and mobile CPUs use parallel multi-core architectures ($8\text{--}16$ hardware threads). Running heavy calculations (such as procedural map generation, path recalculations, or file decompression) entirely on the main thread causes hitching and stutter.
 
@@ -10186,7 +11295,7 @@ func _notify_task_complete(coord: Vector2i, heightmap: PackedFloat32Array) -> vo
 
 ---
 
-## 7.6 Diagnostics and Profiling Metrics Matrix
+## 12.6 Diagnostics and Profiling Metrics Matrix
 
 | Diagnostic Metric | Engine Monitor Identifier | Normal Threshold | Red-Flag Threshold | Remedial Action |
 | :--- | :--- | :--- | :--- | :--- |
@@ -10198,2945 +11307,7 @@ func _notify_task_complete(coord: Vector2i, heightmap: PackedFloat32Array) -> vo
 
 ---
 
-## 7.7 Concrete Applied System: Frame-Pacing Telemetry & Performance Monitor
-
-To synthesize **profiling diagnostics, floating-point analysis, orphan tracking, and telemetry display**, consider this production-grade, in-game performance monitor:
-
-```gdscript
-# ==============================================================================
-# FRAME-PACING TELEMETRY HUD & DIAGNOSTIC PROBE
-# ==============================================================================
-class_name PerformanceTelemetryProbe
-extends CanvasLayer
-
-@export var sampling_window: float = 0.5
-@export var warning_frame_time_ms: float = 16.67
-
-@onready var readout_label: Label = $MarginContainer/ReadoutLabel
-
-var _elapsed_window: float = 0.0
-var _frame_count: int = 0
-var _worst_frame_time_ms: float = 0.0
-
-func _ready() -> void:
-    # Ensure diagnostics render above all gameplay and UI layers
-    layer = 128
-    process_mode = Node.PROCESS_MODE_ALWAYS
-
-func _process(delta: float) -> void:
-    _frame_count += 1
-    _elapsed_window += delta
-    
-    # Convert delta to milliseconds
-    var current_frame_ms: float = delta * 1000.0
-    if current_frame_ms > _worst_frame_time_ms:
-        _worst_frame_time_ms = current_frame_ms
-        
-    # Aggregate data over sampling window
-    if _elapsed_window >= sampling_window:
-        _refresh_readout()
-        _elapsed_window = 0.0
-        _frame_count = 0
-        _worst_frame_time_ms = 0.0
-
-func _refresh_readout() -> void:
-    var fps: float = Engine.get_frames_per_second()
-    var process_ms: float = Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
-    var physics_ms: float = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0
-    var memory_ram_mb: float = Performance.get_monitor(Performance.MEMORY_STATIC) / (1024.0 * 1024.0)
-    var orphan_nodes: int = Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT) as int
-    var draw_calls: int = Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME) as int
-
-    var format_template: String = (
-        "PERFORMANCE TELEMETRY\n" +
-        "───────────────────────────────\n" +
-        "FPS (Frames/sec) : %3d\n" +
-        "Frame Time Avg   : %6.2f ms\n" +
-        "Worst Spike      : %6.2f ms %s\n" +
-        "Process Time     : %6.2f ms\n" +
-        "Physics Time     : %6.2f ms\n" +
-        "Draw Calls       : %5d\n" +
-        "Static Memory    : %6.2f MB\n" +
-        "Orphan Nodes     : %3d %s"
-    )
-
-    var spike_alert: String = "🚨" if _worst_frame_time_ms > warning_frame_time_ms else "✅"
-    var orphan_alert: String = "⚠️ LEAK!" if orphan_nodes > 0 else "✅"
-
-    readout_label.text = format_template % [
-        fps,
-        (1000.0 / maxf(1.0, fps)),
-        _worst_frame_time_ms,
-        spike_alert,
-        process_ms,
-        physics_ms,
-        draw_calls,
-        memory_ram_mb,
-        orphan_nodes,
-        orphan_alert
-    ]
-```
-
----
-# 🌐 Module VIII: Multiplayer Architecture, Authoritative Servers & Netcode Optimisation
-
-> [!info] 📖 Lexicon & First Principles: Distributed Systems & Netcode Engineering
-> Transitioning from local game loops to networked multiplayer requires abandoning the illusion of instantaneous state. Over a network, no two machines share the same point in time:
-> - ⤷ **Round-Trip Time ($\text{RTT}$)**: The total duration in milliseconds required for a data packet to travel from Client to Server and return ($\text{RTT} = 2 \times \text{Latency}$).
-> - ⤷ **Jitter**: The mathematical variance (first derivative) of packet latency over time. Erratic jitter disrupts linear state playback far more severely than constant high ping.
-> - ⤷ **Head-of-Line (HoL) Blocking**: A transmission bottleneck inherent to TCP where a single dropped packet stalls the delivery of all subsequent arrived packets in the OS socket buffer until the dropped packet is retransmitted.
-> - ⤷ **Authoritative Server**: A network topology wherein the server possesses the sole canonical copy of game state. Clients send only *ephemeral inputs*; the server simulates reality and broadcasts *ground truth*.
-> - ⤷ **Client-Side Prediction**: An optimistic simulation technique where a local client executes user inputs immediately without awaiting server confirmation, retroactively reconciling errors if the server rejects the prediction.
-> - ⤷ **Hermetic Determinism**: The engineering guarantee that given an identical initial state $S_0$ and identical sequence of inputs $I_0 \dots I_n$, two independent machines will produce the exact same IEEE 754 bit-for-bit world state $S_n$.
-
----
-
-## 8.1 Transport Layer Foundations: UDP vs. TCP vs. WebSockets
-
-Before writing a single network Remote Procedure Call (`@rpc`), you must select the transport protocol that governs the physical transmission of packets across the global internet.
-
-```
-                   TRANSPORT PROTOCOL CHARACTERISTICS
-=================================================================================
- TCP (Transmission Control Protocol):
- [ Packet 1 ] ──► [ Packet 2 (DROPPED!) ] ──► [ Packet 3 ] ──► [ Packet 4 ]
-                                                  │                 │
- OS Socket Queue STALLS! ─────────────────────────┴─────────────────┘
- (Packets 3 and 4 held hostage in memory until Packet 2 retransmits!)
-
- UDP / ENet (User Datagram Protocol):
- [ Packet 1 ] ──► [ Packet 2 (DROPPED!) ] ──► [ Packet 3 ] ──► [ Packet 4 ]
-                        │                          │                 │
-                        ▼                          ▼                 ▼
-                   (Discarded)              Processed NOW!    Processed NOW!
-```
-
-### Transport Protocol Decision Matrix
-
-| Metric / Dimension | TCP (`StreamPeerTCP`) | UDP / ENet (`ENetMultiplayerPeer`) | WebSockets (`WebSocketMultiplayerPeer`) | WebRTC (`WebRTCMultiplayerPeer`) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Delivery Model** | Strictly Ordered, Reliable | Unreliable / Configurable Channels | Reliable, Ordered (TCP frame) | Unreliable / Configurable Datachannel |
-| **Connection Handshake** | 3-Way SYN/ACK ($\approx 1.5\text{ RTT}$) | Lightweight custom handshake | HTTP Upgrade $\rightarrow$ TLS Handshake | SDP Offer/Answer + ICE / STUN / TURN |
-| **Retransmission Penalty** | Extreme (HoL Blocking) | ==Zero (Drops dead packets instantly)== | Extreme (HoL Blocking) | Zero |
-| **Packet Overhead** | $20\text{--}60\text{ bytes}$ header | $8\text{ bytes}$ UDP header + ENet metadata | Masking key + framing overhead | DTLS + SRTP + SCTP overhead |
-| **Platform Target** | Dedicated launchers, Steam | Desktop PC, Consoles, Mobile | Web Browsers (HTML5 builds) | Direct Browser P2P mesh / Crossplay |
-| **Ideal Use Case** | Account login, Chat, Turn-based | Real-time action, FPS, Racing, Action | Web-browser fallback servers | Browser-to-browser peer networking |
-
-> [!warning] ⚠️ Core Architectural Invariant: Never Use TCP for Fast Kinematics
-> A common beginner error is attempting to run real-time physics or movement over standard TCP or plain WebSockets. If a player experiences $2\%$ packet loss on a home Wi-Fi network, TCP will freeze the entire simulation pipeline for $200\text{--}500\text{ ms}$ while demanding retransmission of outdated position coordinates that are no longer relevant! Real-time kinematics require **ENet over UDP**.
-
----
-
-## 8.2 Network Topologies: Dedicated Server vs. Listen Server vs. Deterministic Rollback
-
-```
-                            NETWORK TOPOLOGY MODELS
-=================================================================================
- DEDICATED SERVER:               LISTEN SERVER:                  PEER-TO-PEER ROLLBACK:
-   [ Headless Server ]             [ Host (Client 1) ]             [ Peer A ] ◄── Inputs ──► [ Peer B ]
-      /     │     \                   /           \                     \                   /
-     ▼      ▼      ▼                 ▼             ▼                     ▼                 ▼
- [Client] [Client] [Client]     [Client 2]     [Client 3]             Simulate S_n      Simulate S_n
- (No host advantage)            (Host has 0ms latency!)        (Requires exact bit-determinism)
-```
-
-1. **Dedicated Authoritative Server (`--headless`)**:
-   - The game binary runs on an off-site Linux virtual machine with no window, GPU, or audio drivers initialized (`DisplayServerMock`, `AudioServerDummy`).
-   - *Strengths*: Total authority; complete immunity to host-advantage exploits; clients cannot tamper with memory.
-   - *Weaknesses*: Continuous operational server hosting costs.
-2. **Listen Server (Client-Host)**:
-   - One player's machine acts concurrently as the simulation authority and a visual client.
-   - *Strengths*: Zero server hosting costs; ideal for small co-op titles ($2\text{--}4$ players).
-   - *Weaknesses*: The hosting player has $0\text{ ms}$ latency (massive competitive advantage); if the host quits or alt-tabs, the entire game collapses without complex host-migration architecture.
-3. **P2P Deterministic Lockstep / Rollback (GGPO Style)**:
-   - No world states are transmitted across the wire. Machines broadcast strictly **raw player inputs** (e.g., bitmasks of buttons pressed on Tick $T$).
-   - *Strengths*: Negligible bandwidth consumption ($\approx 1\text{--}2\text{ KB/s}$); scales to thousands of units in RTS games.
-   - *Weaknesses*: Requires absolute determinism across all platforms. Any floating-point discrepancy (e.g., ARM vs. x86 rounding differences) results in a silent **desynchronisation catastrophe**.
-
----
-
-## 8.3 Godot 4 High-Level Multiplayer Architecture
-
-Godot 4 unifies its networking pipeline under the **`MultiplayerAPI`** and **`MultiplayerPeer`** abstractions, exposing Remote Procedure Calls (`@rpc`), `MultiplayerSpawner`, and `MultiplayerSynchronizer`.
-
-### The `@rpc` Annotation Syntax & Transfer Modes
-
-Every networked method must explicitly declare its security scope and transfer channel:
-
-```gdscript
-@rpc(mode, sync, transfer_mode, transfer_channel)
-```
-
-1. **Security Mode**:
-   - `authority`: Can only be invoked by the peer designated as the multiplayer authority of that node (`set_multiplayer_authority(1)`).
-   - `any_peer`: Any connected client can invoke this method on remote peers. Must be sanitized thoroughly to prevent malicious arbitrary execution!
-2. **Sync Target**:
-   - `call_remote` (Default): Executes strictly on remote machines; skips the local caller.
-   - `call_local`: Executes on remote machines **and** invokes immediately on the calling machine.
-3. **Transfer Mode**:
-   - `reliable`: Guaranteed delivery and order via ACK tracking. Drops cause retries.
-   - `unreliable`: Fire-and-forget. Packets may arrive out of order or be lost completely. Zero retransmission overhead.
-   - `unreliable_ordered`: Drops out-of-order stale packets automatically. If Packet #10 arrives after Packet #11, #10 is discarded!
-
-```gdscript
-# ==============================================================================
-# AUTHORITATIVE NETWORK MANAGER & CONNECTION ORCHESTRATOR
-# ==============================================================================
-class_name NetworkManager
-extends Node
-
-signal connection_succeeded
-signal connection_failed
-signal player_registered(peer_id: int, player_data: Dictionary)
-
-const DEFAULT_PORT: int = 7777
-const MAX_CLIENTS: int = 16
-
-var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-var connected_players: Dictionary = {}
-
-func _ready() -> void:
-    multiplayer.peer_connected.connect(_on_peer_connected)
-    multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-    multiplayer.connected_to_server.connect(_on_connected_to_server)
-    multiplayer.connection_failed.connect(_on_connection_failed)
-
-## Boots a headless dedicated authoritative server
-func start_dedicated_server(port: int = DEFAULT_PORT) -> Error:
-    var err: Error = peer.create_server(port, MAX_CLIENTS)
-    if err != OK:
-        push_error("NetworkManager: Failed to bind server on port %d. Error: %s" % [port, error_string(err)])
-        return err
-        
-    multiplayer.multiplayer_peer = peer
-    print("NetworkManager: Dedicated authoritative server listening on port %d" % port)
-    return OK
-
-## Connects a client to a remote dedicated or listen host
-func connect_to_host(ip_address: String, port: int = DEFAULT_PORT) -> Error:
-    var err: Error = peer.create_client(ip_address, port)
-    if err != OK:
-        push_error("NetworkManager: Failed to initialize client socket. Error: %s" % error_string(err)])
-        return err
-        
-    multiplayer.multiplayer_peer = peer
-    print("NetworkManager: Connecting to host at %s:%d..." % [ip_address, port])
-    return OK
-
-func _on_peer_connected(id: int) -> void:
-    print("NetworkManager: Peer connected with ID: %d" % id)
-    if multiplayer.is_server():
-        # Spawn canonical player avatar node for new client
-        _spawn_player_avatar(id)
-
-func _on_peer_disconnected(id: int) -> void:
-    print("NetworkManager: Peer disconnected with ID: %d" % id)
-    connected_players.erase(id)
-    if multiplayer.is_server():
-        _despawn_player_avatar(id)
-
-func _on_connected_to_server() -> void:
-    print("NetworkManager: Client connected to server successfully. Assigned ID: %d" % multiplayer.get_unique_id())
-    connection_succeeded.emit()
-
-func _on_connection_failed() -> void:
-    push_error("NetworkManager: Client connection attempt failed.")
-    multiplayer.multiplayer_peer = null
-    connection_failed.emit()
-
-func _spawn_player_avatar(peer_id: int) -> void:
-    var avatar_scene: PackedScene = load("res://scenes/network_player.tscn")
-    var avatar: Node = avatar_scene.instantiate()
-    avatar.name = "Player_" + str(peer_id)
-    # SERVER STRICT INVARIANT: Set network authority to the controlling client
-    avatar.set_multiplayer_authority(peer_id)
-    $World/Players.add_child(avatar, true)
-
-func _despawn_player_avatar(peer_id: int) -> void:
-    var node_name: String = "Player_" + str(peer_id)
-    if $World/Players.has_node(node_name):
-        $World/Players.get_node(node_name).queue_free()
-```
-
----
-
-## 8.4 Client-Side Prediction & Server Reconciliation
-
-If an actor with $100\text{ ms}$ ping presses `W` and must wait for the server to process the input and return the new position, movement feels sticky, unresponsive, and unplayable ($100\text{ ms}$ input lag).
-
-**Client-Side Prediction** solves this by letting the client simulate local physics **immediately**. However, because the client cannot anticipate external influences (such as an enemy body-blocking the path, or a server-side physics impulse), the client's local trajectory will eventually diverge from the server's canonical simulation.
-
-```
-                      PREDICTION & RECONCILIATION TIMELINE
-=================================================================================
- CLIENT TICK T:
- 1. Samples Hardware Input (I_T: Move Forward)
- 2. Simulates local Kinematics: P_{T+1} = P_T + V * dt
- 3. Appends { tick: T, input: I_T, predicted_pos: P_{T+1} } into History Ring Buffer
- 4. Transmits [ Packet: Tick T, Input I_T ] to Server ───► (1/2 RTT Delay)
-                                                                 │
- SERVER TICK T (Arrives delayed):                                │
- 5. Validates Input I_T                                          ▼
- 6. Computes Authoritative State S_T
- 7. Broadcasts [ State Packet: Tick T, Authoritative_P_T ] ◄─────┘
-      │
-      ▼ (1/2 RTT Delay)
- CLIENT RECEIVES SERVER STATE FOR TICK T:
- 8. Retrieves historical predicted state from Ring Buffer for Tick T
- 9. Divergence Error: E = ||Authoritative_P_T - Predicted_P_T||
- 10. IF E > Error_Threshold:
-      A. Snaps local position back to Authoritative_P_T
-      B. RE-SIMULATES all buffered inputs from Tick T+1 to Current_Tick in ONE FRAME!
-      C. Result: Player snaps to correct position with ZERO perceptible control stall!
-```
-
-### Mathematical Re-Simulation Loop (The Roll-Forward Phase)
-
-Given an error detected at historical tick $k$, where the client's current simulation tick is $N$ ($N > k$):
-
-$$\vec{P}_{k} = \vec{P}_{\text{server\_authoritative}}$$
-
-$$\text{For } i = k \text{ to } N - 1: \quad \vec{P}_{i+1} = \vec{P}_i + \text{KinematicStep}(\vec{I}_i, \Delta t)$$
-
-```gdscript
-# ==============================================================================
-# CLIENT-SIDE PREDICTION & DETERMINISTIC RECONCILIATION ENGINE
-# ==============================================================================
-class_name NetworkKinematicController
-extends CharacterBody3D
-
-struct PlayerInputPacket:
-    var tick: int
-    var move_vector: Vector2
-    var is_jumping: bool
-
-struct StateSnapshot:
-    var tick: int
-    var position: Vector3
-    var velocity: Vector3
-
-@export var move_speed: float = 8.0
-@export var reconciliation_threshold: float = 0.05 # 5cm tolerance before snapping
-
-var current_tick: int = 0
-var input_history: Array[Dictionary] = [] # Ring buffer of inputs
-var state_history: Array[Dictionary] = [] # Ring buffer of predicted states
-
-func _physics_process(delta: float) -> void:
-    current_tick += 1
-    
-    if is_multiplayer_authority():
-        # --- LOCAL CONTROLLING CLIENT LOGIC ---
-        var input_data: Dictionary = _sample_local_input(current_tick)
-        input_history.append(input_data)
-        
-        # 1. Optimistic Local Prediction Step
-        _apply_kinematic_step(input_data["vector"], input_data["jump"], delta)
-        move_and_slide()
-        
-        # 2. Store Predicted State in History Buffer
-        state_history.append({
-            "tick": current_tick,
-            "position": global_position,
-            "velocity": velocity
-        })
-        
-        # 3. Transmit Input Packet to Server via Unreliable Ordered channel
-        _send_input_to_server.rpc_id(1, input_data["tick"], input_data["vector"], input_data["jump"])
-        
-        # Prune history buffers older than 1.5 seconds (90 ticks at 60Hz)
-        if input_history.size() > 90:
-            input_history.pop_front()
-            state_history.pop_front()
-
-## EXECUTED ON THE DEDICATED SERVER: Receive client input and simulate canonical state
-@rpc("any_peer", "call_remote", "unreliable_ordered")
-func _send_input_to_server(client_tick: int, move_vec: Vector2, jump: bool) -> void:
-    if not multiplayer.is_server():
-        return
-        
-    var sender_id: int = multiplayer.get_remote_sender_id()
-    if sender_id != get_multiplayer_authority():
-        return # Reject spoofed packets from unauthorized peers!
-
-    # Server performs identical kinematic step
-    var delta: float = 1.0 / float(Engine.physics_ticks_per_second)
-    _apply_kinematic_step(move_vec, jump, delta)
-    move_and_slide()
-    
-    # Broadcast authoritative result back to the controlling client
-    _reconcile_client_state.rpc_id(sender_id, client_tick, global_position, velocity)
-
-## EXECUTED BACK ON LOCAL CLIENT: Compare prediction against server reality
-@rpc("authority", "call_remote", "unreliable_ordered")
-func _reconcile_client_state(server_tick: int, auth_pos: Vector3, auth_vel: Vector3) -> void:
-    var matching_idx: int = -1
-    for i in range(state_history.size()):
-        if state_history[i]["tick"] == server_tick:
-            matching_idx = i
-            break
-            
-    if matching_idx == -1:
-        return # State was already pruned from client history
-
-    var predicted_record: Dictionary = state_history[matching_idx]
-    var error_distance: float = predicted_record["position"].distance_to(auth_pos)
-    
-    # IF ERROR EXCEEDS TOLERANCE: EXECUTE ROLL-FORWARD RE-SIMULATION
-    if error_distance > reconciliation_threshold:
-        # 1. Hard reset to server canonical truth
-        global_position = auth_pos
-        velocity = auth_vel
-        
-        # 2. Re-simulate all inputs from server_tick + 1 forward to current_tick
-        var delta: float = 1.0 / float(Engine.physics_ticks_per_second)
-        for i in range(matching_idx + 1, input_history.size()):
-            var replay_input: Dictionary = input_history[i]
-            _apply_kinematic_step(replay_input["vector"], replay_input["jump"], delta)
-            move_and_slide()
-            
-            # Update history entry with corrected prediction
-            state_history[i]["position"] = global_position
-            state_history[i]["velocity"] = velocity
-
-func _apply_kinematic_step(move_vec: Vector2, jump: bool, delta: float) -> void:
-    var horizontal: Vector3 = Vector3(move_vec.x, 0.0, move_vec.y) * move_speed
-    velocity.x = horizontal.x
-    velocity.z = horizontal.z
-    
-    if not is_on_floor():
-        velocity.y -= 9.8 * delta
-    elif jump:
-        velocity.y = 4.5
-
-func _sample_local_input(tick_id: int) -> Dictionary:
-    var vec: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
-    return {
-        "tick": tick_id,
-        "vector": vec,
-        "jump": Input.is_action_pressed(&"jump")
-    }
-```
-
----
-
-## 8.5 Remote Entity Interpolation & Snapshot Buffering
-
-While the local player runs through client-side prediction, **remote opponents and entities cannot be predicted identically** because their future inputs are unknown. 
-
-If remote entities are rendered at the exact position specified in the latest arrived network packet, movement appears stuttery and jittery due to variable packet arrival intervals.
-
-```
-                          SNAPSHOT BUFFERING & PLAYBACK
-=================================================================================
- Network Packets Arrive:  [ Snap 1 ] ──────► [ Snap 2 ] ──────► [ Snap 3 ]
- Real Time (t):           t = 100ms           t = 150ms          t = 200ms
-                                                 │
- Client Playback Clock (Delayed by 100ms):       ▼
- Interpolation Render Time: t_render = t_real - Interpolation_Delay (100ms)
- Render Frame evaluates strictly BETWEEN [ Snap 1 ] and [ Snap 2 ]!
- Result: 100% Smooth visual motion regardless of network packet jitter!
-```
-
-### The Hermite / Spherical Interpolation Equation
-
-Given an interpolation target time $t_{\text{render}}$ falling between historical snapshot $S_A$ (at $t_A$) and $S_B$ (at $t_B$):
-
-$$\alpha = \frac{t_{\text{render}} - t_A}{t_B - t_A} \quad \text{where } \alpha \in [0.0, 1.0]$$
-
-$$\vec{P}_{\text{render}} = \text{lerp}\left(\vec{P}_A, \vec{P}_B, \alpha\right) \qquad \mathbf{q}_{\text{render}} = \text{slerp}\left(\mathbf{q}_A, \mathbf{q}_B, \alpha\right)$$
-
-```gdscript
-# ==============================================================================
-# REMOTE ENTITY SNAPSHOT INTERPOLATOR
-# ==============================================================================
-class_name SnapshotInterpolator
-extends Node3D
-
-struct TransformSnapshot:
-    var timestamp_ms: int
-    var position: Vector3
-    var rotation: Quaternion
-
-@export var interpolation_delay_ms: int = 100 # Interpolation back-buffer duration
-
-var _snapshot_buffer: Array[Dictionary] = []
-
-## Consumes incoming state snapshots transmitted from the server
-func push_network_snapshot(remote_time_ms: int, pos: Vector3, rot: Quaternion) -> void:
-    _snapshot_buffer.append({
-        "time": remote_time_ms,
-        "pos": pos,
-        "rot": rot
-    })
-    
-    # Prune ancient snapshots beyond 1 second of history
-    while _snapshot_buffer.size() > 2 and _snapshot_buffer[0]["time"] < remote_time_ms - 1000:
-        _snapshot_buffer.pop_front()
-
-func _process(_delta: float) -> void:
-    if is_multiplayer_authority() or _snapshot_buffer.size() < 2:
-        return # Controlling local player skips interpolation
-        
-    var render_time: int = Time.get_ticks_msec() - interpolation_delay_ms
-    
-    # Find two enclosing snapshots: Snapshot A (older) and Snapshot B (newer)
-    var snap_a: Dictionary
-    var snap_b: Dictionary
-    var found_bracket: bool = false
-    
-    for i in range(_snapshot_buffer.size() - 1):
-        if _snapshot_buffer[i]["time"] <= render_time and _snapshot_buffer[i + 1]["time"] >= render_time:
-            snap_a = _snapshot_buffer[i]
-            snap_b = _snapshot_buffer[i + 1]
-            found_bracket = true
-            break
-            
-    if found_bracket:
-        var time_span: float = float(snap_b["time"] - snap_a["time"])
-        var alpha: float = clampf(float(render_time - snap_a["time"]) / maxf(1.0, time_span), 0.0, 1.0)
-        
-        # Linear positional interpolation + Spherical rotational interpolation
-        global_position = snap_a["pos"].lerp(snap_b["pos"], alpha)
-        global_basis = Basis(snap_a["rot"].slerp(snap_b["rot"], alpha))
-    elif not _snapshot_buffer.is_empty():
-        # Fallback extrapolation clamp: snap to most recent available state
-        var latest: Dictionary = _snapshot_buffer.back()
-        global_position = latest["pos"]
-        global_basis = Basis(latest["rot"])
-```
-
----
-
-## 8.6 Server-Side Lag Compensation (The Backward Time Rewind)
-
-In a competitive shooter, Client $A$ (with $100\text{ ms}$ ping) aims directly at Client $B$'s head and fires. However, due to transmission delay, by the time the shot packet reaches the Server, Client $B$ has already moved $1.5\text{ metres}$ to the right! 
-
-Without **Lag Compensation**, the Server evaluates the raycast against Client $B$'s *present* position, registering a miss. The player sees bullets passing through targets without registering ("blood splatters, zero damage").
-
-```
-                      SERVER-SIDE LAG COMPENSATION REWIND
-=================================================================================
- 1. Client A fires weapon at local view time: t_shot = 500ms
- 2. Fire Packet travels across internet (50ms latency) ──► Server receives at t = 550ms
- 3. Server examines packet timestamp: t_shot = 500ms
- 4. REWIND PHASE:
-    Server temporarily fetches all player hitboxes from 50ms in the past (t = 500ms)!
-    ┌──────────────────────────┐
-    │  [ Hitbox at Present ]   │
-    │  (Empty space!)          │
-    │             ▲            │
-    │             │ (Rewound)  │
-    │  [ Hitbox at t = 500ms ] │ ◄── Bullet Raycast intersects perfectly!
-    └──────────────────────────┘
- 5. Server registers hit, deals authoritative damage.
- 6. RESTORE PHASE: Hitboxes immediately restored to present tick (t = 550ms)!
-```
-
-```gdscript
-# ==============================================================================
-# SERVER-SIDE LAG COMPENSATION & HISTORICAL HITBOX REWIND
-# ==============================================================================
-class_name LagCompensationManager
-extends Node
-
-struct HistoricalTransform:
-    var server_time_ms: int
-    var hitbox_transform: Transform3D
-
-## Dictionary mapping HurtboxComponent -> Array[HistoricalTransform]
-var _hitbox_histories: Dictionary = {}
-
-const HISTORY_WINDOW_MS: int = 1000
-
-func register_hurtbox(hurtbox: HurtboxComponent) -> void:
-    _hitbox_histories[hurtbox] = []
-
-func unregister_hurtbox(hurtbox: HurtboxComponent) -> void:
-    _hitbox_histories.erase(hurtbox)
-
-func _physics_process(_delta: float) -> void:
-    if not multiplayer.is_server():
-        return
-        
-    var now: int = Time.get_ticks_msec()
-    
-    # Record authoritative spatial transform for every registered hitbox
-    for hurtbox in _hitbox_histories.keys():
-        if not is_instance_valid(hurtbox):
-            continue
-            
-        var buffer: Array = _hitbox_histories[hurtbox]
-        buffer.append({
-            "time": now,
-            "transform": hurtbox.global_transform
-        })
-        
-        # Prune records older than the maximum history window (1000ms)
-        while not buffer.is_empty() and buffer[0]["time"] < now - HISTORY_WINDOW_MS:
-            buffer.pop_front()
-
-## Executes an authoritative raycast rewound to the client's past perspective
-func fire_lag_compensated_raycast(
-    shooter_peer_id: int, 
-    shot_timestamp_ms: int, 
-    ray_origin: Vector3, 
-    ray_direction: Vector3, 
-    max_range: float
-) -> Dictionary:
-    assert(multiplayer.is_server(), "Lag compensation can only be executed by the Server!")
-    
-    # 1. Sanitize timestamp: Prevent malicious clients from rewinding arbitrarily into ancient past
-    var server_now: int = Time.get_ticks_msec()
-    var clamped_shot_time: int = clampi(shot_timestamp_ms, server_now - HISTORY_WINDOW_MS, server_now)
-    
-    # 2. CACHE PRESENT STATE & REWIND HITBOXES
-    var cached_present_transforms: Dictionary = {}
-    for hurtbox in _hitbox_histories.keys():
-        if not is_instance_valid(hurtbox):
-            continue
-            
-        cached_present_transforms[hurtbox] = hurtbox.global_transform
-        hurtbox.global_transform = _interpolate_historical_transform(hurtbox, clamped_shot_time)
-        # Force Physics Server query tree synchronization
-        hurtbox.get_parent().force_update_transform()
-
-    # 3. EXECUTE RAYCAST IN REWOUND SPACE
-    var space_state: PhysicsDirectSpaceState3D = (get_tree().root as Node3D).get_world_3d().direct_space_state
-    var ray_end: Vector3 = ray_origin + (ray_direction.normalized() * max_range)
-    var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
-    var hit_result: Dictionary = space_state.intersect_ray(query)
-
-    # 4. RESTORE HITBOXES BACK TO PRESENT TICK (Zero physical displacement leakage!)
-    for hurtbox in cached_present_transforms.keys():
-        if is_instance_valid(hurtbox):
-            hurtbox.global_transform = cached_present_transforms[hurtbox]
-            hurtbox.get_parent().force_update_transform()
-
-    return hit_result
-
-func _interpolate_historical_transform(hurtbox: HurtboxComponent, target_time: int) -> Transform3D:
-    var history: Array = _hitbox_histories[hurtbox]
-    if history.is_empty():
-        return hurtbox.global_transform
-        
-    for i in range(history.size() - 1, 0, -1):
-        if history[i]["time"] <= target_time:
-            var t_a: Dictionary = history[i]
-            var t_b: Dictionary = history[i + 1] if i + 1 < history.size() else t_a
-            
-            var span: float = float(t_b["time"] - t_a["time"])
-            var alpha: float = 0.0 if is_zero_approx(span) else float(target_time - t_a["time"]) / span
-            alpha = clampf(alpha, 0.0, 1.0)
-            
-            var pos: Vector3 = t_a["transform"].origin.lerp(t_b["transform"].origin, alpha)
-            var rot: Quaternion = t_a["transform"].basis.get_rotation_quaternion().slerp(
-                t_b["transform"].basis.get_rotation_quaternion(), alpha
-            )
-            return Transform3D(Basis(rot), pos)
-            
-    return history.front()["transform"]
-```
-
----
-
-## 8.7 Bandwidth Optimisation: Fixed-Point Quantisation & "Smallest Three" Compression
-
-Transmitting raw, uncompressed 32-bit floats over the network wastes colossal bandwidth. A full 3D Transform (`Vector3` position + `Quaternion` rotation) costs **$28\text{ bytes}$** ($7 \times 4\text{ bytes}$). At $60\text{ ticks/sec}$ for $16\text{ players}$, raw transforms alone consume over **$420\text{ KB/s}$** per client!
-
-```
-                    QUATERNION "SMALLEST THREE" COMPRESSION
-=================================================================================
- Mathematical Invariant: ||Q|| = x^2 + y^2 + z^2 + w^2 = 1.0
- Therefore: The largest absolute component can ALWAYS be dropped and reconstructed!
- 
- [ 2 Bits: Index of Largest Component (0=X, 1=Y, 2=Z, 3=W) ]
- [ 10 Bits: Signed Fixed-Point Integer for Smallest Component 1 ]
- [ 10 Bits: Signed Fixed-Point Integer for Smallest Component 2 ]
- [ 10 Bits: Signed Fixed-Point Integer for Smallest Component 3 ]
- ──────────────────────────────────────────────────────────────
- TOTAL: 32 BITS (4 BYTES) vs. ORIGINAL 128 BITS (16 BYTES) — 75% BANDWIDTH SAVINGS!
-```
-
-### The Reconstruction Proof
-
-Given the three transmitted smallest components $a, b, c \in \left[-\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right]$:
-
-$$m = \sqrt{1.0 - (a^2 + b^2 + c^2)}$$
-
-The missing largest component is reconstructed with zero ambiguity!
-
-```gdscript
-# ==============================================================================
-# HIGH-DENSITY NETWORK BIT-PACKER & QUANTISATION UTILITY
-# ==============================================================================
-class_name NetworkBitPacker
-extends RefCounted
-
-## Compresses a 3D unit Quaternion into a single 32-bit unsigned integer (4 bytes)
-static func compress_quaternion(q: Quaternion) -> int:
-    var normalized_q: Quaternion = q.normalized()
-    # Enforce positive sign on largest component to avoid sign ambiguity
-    var components: Array[float] = [normalized_q.x, normalized_q.y, normalized_q.z, normalized_q.w]
-    
-    var largest_idx: int = 0
-    var max_val: float = absf(components[0])
-    for i in range(1, 4):
-        var c_abs: float = absf(components[i])
-        if c_abs > max_val:
-            max_val = c_abs
-            largest_idx = i
-            
-    if components[largest_idx] < 0.0:
-        for i in range(4):
-            components[i] = -components[i]
-
-    # Pack 3 non-largest components into 10-bit signed integers [-512, 511]
-    # Maximum value of any non-largest component in unit quaternion is 1 / sqrt(2) ≈ 0.7071
-    var packed_bits: int = largest_idx & 0x03 # First 2 bits store largest index
-    var bit_offset: int = 2
-    
-    var inv_sqrt_two: float = 1.0 / sqrt(2.0)
-    for i in range(4):
-        if i == largest_idx:
-            continue
-        var normalized_val: float = clampf(components[i] / inv_sqrt_two, -1.0, 1.0)
-        # Quantize to 10-bit signed integer [-511, 511] mapped to unsigned [0, 1023]
-        var quantized: int = clampi(int(round((normalized_val + 1.0) * 0.5 * 1023.0)), 0, 1023)
-        packed_bits |= (quantized << bit_offset)
-        bit_offset += 10
-        
-    return packed_bits
-
-## Decompresses a 32-bit integer back into a continuous unit Quaternion
-static func decompress_quaternion(packed_int: int) -> Quaternion:
-    var largest_idx: int = packed_int & 0x03
-    var bit_offset: int = 2
-    var inv_sqrt_two: float = 1.0 / sqrt(2.0)
-    
-    var unpacked: Array[float] = [0.0, 0.0, 0.0, 0.0]
-    var sum_squares: float = 0.0
-    
-    for i in range(4):
-        if i == largest_idx:
-            continue
-        var quantized: int = (packed_int >> bit_offset) & 0x3FF # Extract 10 bits
-        bit_offset += 10
-        var normalized_val: float = (float(quantized) / 1023.0 * 2.0) - 1.0
-        var val: float = normalized_val * inv_sqrt_two
-        unpacked[i] = val
-        sum_squares += val * val
-        
-    # Reconstruct largest component via identity: ||Q|| = 1.0
-    var reconstructed_largest: float = sqrt(maxf(0.0, 1.0 - sum_squares))
-    unpacked[largest_idx] = reconstructed_largest
-    
-    return Quaternion(unpacked[0], unpacked[1], unpacked[2], unpacked[3]).normalized()
-```
-
----
-
-## 8.8 Area of Interest (AOI) & Network Visibility Filtering
-
-In large multiplayer worlds ($64\text{--}100+$ players), broadcasting every entity update to every connected client saturates server upload bandwidth and enables **wallhack/radar cheats** (malicious clients inspecting packets to locate players hidden across the map).
-
-**Area of Interest (AOI)** uses spatial hashing on the server to cull network transmission to relevant peers:
-
-```
-                      AREA OF INTEREST (AOI) SPATIAL CULLING
-=================================================================================
-  Level Grid (Cell Size = 64m)
-  ┌─────────────┬─────────────┬─────────────┐
-  │ Cell (0,2)  │ Cell (1,2)  │ Cell (2,2)  │
-  │             │ [Distant D] │             │ <── Server NEVER sends D to Client A!
-  ├─────────────┼─────────────┼─────────────┤     (Bandwidth saved; Cheats blocked!)
-  │ Cell (0,1)  │ Cell (1,1)  │ Cell (2,1)  │
-  │ [Enemy B]   │ [Client A]  │ [Enemy C]   │
-  ├─────────────┼─────────────┼─────────────┤
-  │ Cell (0,0)  │ Cell (1,0)  │ Cell (2,0)  │
-  └─────────────┴─────────────┴─────────────┘
-  Server replicates ONLY entities residing within adjacent cells (9 cells total)!
-```
-
-```gdscript
-# ==============================================================================
-# SPATIAL NETWORK VISIBILITY CONTROLLER (MultiplayerSynchronizer Filter)
-# ==============================================================================
-class_name NetworkVisibilityFilter
-extends Node
-
-@export var synchronizer: MultiplayerSynchronizer
-@export var aoi_radius_meters: float = 80.0
-
-var _aoi_radius_sq: float
-
-func _ready() -> void:
-    _aoi_radius_sq = aoi_radius_meters * aoi_radius_meters
-    if multiplayer.is_server() and synchronizer != null:
-        # Override default public broadcast with custom dynamic peer filter
-        synchronizer.set_visibility_callback(_filter_peer_visibility)
-
-## Executed per-peer on server: returns true if this node is relevant to peer_id
-func _filter_peer_visibility(peer_id: int) -> bool:
-    if peer_id == 1:
-        return true # Server always retains visibility
-        
-    var player_node_name: String = "Player_" + str(peer_id)
-    var peer_avatar: Node3D = get_tree().root.find_child(player_node_name, true, false) as Node3D
-    if peer_avatar == null:
-        return false
-        
-    var owning_entity: Node3D = owner as Node3D
-    if owning_entity == null:
-        return true
-        
-    # Fast squared-distance spatial culling
-    var dist_sq: float = owning_entity.global_position.distance_squared_to(peer_avatar.global_position)
-    return dist_sq <= _aoi_radius_sq
-```
-
----
-
-# 🗺️ Module IX: Level Architecture, Procedural Generation (PCG) & World Streaming
-
-> [!info] 📖 Lexicon & First Principles: Spatial Design & Algorithmic Synthesis
-> Moving from localized mechanics to expansive game worlds requires a rigorous understanding of architectural psychology, discrete procedural topology, and physical memory limits:
-> - ⤷ **Greyboxing (Blockmesh)**: The rapid iterative prototyping of playable levels using primitive untextured geometric volumes, calibrating spatial pacing, jump trajectories, and sightlines before committing to art assets.
-> - ⤷ **Weenie (Landmark)**: An architectural term coined by Walt Disney for a visually dominant vertical beacon placed on the horizon, enabling players to orient themselves intuitively via spatial triangulation without relying on intrusive mini-maps.
-> - ⤷ **Binary Space Partitioning (BSP)**: A geometric algorithm that recursively divides Euclidean space into convex sub-spaces using hyperplanes, generating hierarchical spatial trees for room distribution and visibility sorting.
-> - ⤷ **Cellular Automata**: A discrete mathematical model consisting of a regular grid of cells, each evolving through discrete time steps according to fixed deterministic rules based on the states of its local neighbours.
-> - ⤷ **Wave Function Collapse (WFC)**: A constraint-satisfaction algorithm based on quantum mechanics terminology, wherein a grid of unobserved possibilities (superpositions) collapses into deterministic modules while preserving strict socket-adjacency rules.
-> - ⤷ **Floating Origin Shift**: An architectural coordinate transformation that offsets the physical root of the virtual world relative to the player to combat the severe floating-point precision degradation inherent to IEEE 754 representations at vast distances.
-
----
-
-## 9.1 Level Design Foundations: Composition, Spatial Flow & Arena Metrics
-
-Engineers frequently treat level design as mere "art placement." In reality, level design is **spatial psychology and mechanical guidance**. A level functions as an unscripted tutor guiding the player through geometry, lighting contrast, and architectural apertures.
-
-```
-                      THE SPATIAL COMPOSITION HIERARCHY
-=================================================================================
- [ THE WEENIE (Beacon) ]   ──► Distant vertical reference point (Triangulation)
-           │
-           ▼
- [ APERTURES & FRAMING ]   ──► Gateways, doorways, and arches that limit sightlines
-           │
-           ▼
- [ LEADING LINES & EDGES ] ──► Linear architectural contours directing eye gaze
-           │
-           ▼
- [ INTENSITY CONTRAST ]    ──► High-value luminance pooling over critical paths
-```
-
-### 1. Spatial Framing & Leading Lines
-- ⤷ **Architectural Framing**: Use foreground structures (collapsed archways, cave mouths, tunnel apertures) to frame focal points. The human visual cortex naturally filters out dark peripheral boundaries and locks onto brightly illuminated geometric centers.
-- ⤷ **Leading Lines**: Run continuous geometry (cables, road curbs, ceiling pipes, floor tiles) directly toward the objective. If the player is lost, their subconscious follows planar contours.
-- ⤷ **Choke Points & Valve Design**: Design one-way drops (ledges, collapsed tunnels) to prevent tedious backtracking and partition levels into discrete memory zones.
-
-### 2. Combat Arena Topology
-Never construct flat, symmetrical boxes for combat encounters. Professional action spaces rely on three topological invariants:
-
-```
-                         ARENA TOPOLOGY TOPOGRAPHY
-=================================================================================
- (Planar Elevation Split)              (The Circulation Loop)
-         [ High Perch ]                      ┌───────────┐
-            /      \                         │  Cover A  │ ◄── Flank Vector
-     Ramps /        \ Drops                  └─────┬─────┘
-          v          v                             │
-  [ Low Trenches / Flanks ]                  ┌─────┴─────┐
-  (Forces dynamic relocation)                │  Cover B  │
-                                             └───────────┘
-```
-
-- ⤷ **Vertical Asymmetry**: Provide at least two distinct elevation planes ($y = 0.0\text{ m}$ and $y = 3.5\text{ m}$). High ground grants tactical line-of-sight advantages but limits egress routes; low ground provides visual cover but sacrifices battlefield overview.
-- ⤷ **Circulation Loops (Continuous Flow)**: Eliminate dead-end corridors within combat spaces. Every flank must connect to an outer circular loop, ensuring the player and AI can execute repositioning maneuvers without becoming cornered.
-
-### 3. Rapid Greyboxing with Godot 4 CSG Nodes
-
-Godot 4 features native **Constructive Solid Geometry (CSG)** nodes (`CSGBox3D`, `CSGCylinder3D`, `CSGCombiner3D`) supporting real-time boolean operations (**Union**, **Intersection**, **Subtraction**).
-
-> [!warning] ⚠️ Production Trap: Shipping CSG Nodes in Release Builds
-> CSG nodes dynamically rebuild non-manifold polygon meshes on the CPU whenever transformations change, incurring massive draw-call penalties and preventing secondary-UV lightmap baking.
-> **The Engineering Law**: Prototype levels using CSG. Once layout metrics are validated, select the root `CSGCombiner3D` in the editor, click **Export to Mesh**, and replace the CSG hierarchy with a static, pre-indexed `MeshInstance3D` paired with a simplified `ConcavePolygonShape3D`!
-
----
-
-## 9.2 The Tile & Grid Server Ecosystem: `TileMapLayer` & `GridMap`
-
-### 1. 2D TileMap Architecture (Godot 4.3+ `TileMapLayer`)
-In Godot 4.3+, the bloated legacy `TileMap` node was refactored into modular, high-speed **`TileMapLayer`** nodes. Each layer operates as a distinct 2D canvas item with its own Y-sorting, navigation masks, and physics collision parameters.
-
-```
-                      MODULAR TILEMAP LAYER TOPOLOGY
-=================================================================================
- [ World Node2D ]
-  ├── GroundLayer (TileMapLayer)       ──► Z-Index: 0 (No collision, basic terrain)
-  ├── ObstaclesLayer (TileMapLayer)    ──► Z-Index: 1 (Y-Sort: True, StaticBody shapes)
-  ├── ForegroundLayer (TileMapLayer)   ──► Z-Index: 2 (Roofs, bridges, foliage canopies)
-  └── NavigationLayer (TileMapLayer)   ──► Z-Index: -1 (Baked AStar2D navigation polygons)
-```
-
-- ⤷ **Terrain Autotiling Bitmasks**: Godot's terrain system evaluates adjacent cells using **3x3 Minimal** or **16-pipe Connect** bitmasks. Cells identify their neighbors using compass bit flags:
-  $$\text{Neighbor Mask} = \sum_{k=0}^{7} 2^k \cdot B_k \quad \text{where } B_k \in \{0, 1\}$$
-
-### 2. 3D Discrete Gridded Worlds (`GridMap`)
-The 3D equivalent of a `TileMap` is the **`GridMap`**, which positions static `MeshLibrary` items into discrete 3D spatial integer cells ($x, y, z \in \mathbb{Z}^3$).
-- ⤷ **Memory Locality**: Under the hood, `GridMap` does not allocate separate `Node3D` instances. It registers octree-partitioned batches of meshes directly with the `RenderingServer` and `PhysicsServer3D`, rendering thousands of structural blocks in a fraction of a millisecond.
-
----
-
-## 9.3 Procedural Generation (PCG): The Algorithmic Engine
-
-Procedural Content Generation is not an arbitrary scattering of seeds; it is the **computational synthesis of structured spaces governed by formal mathematical constraints**.
-
-```
-                         PCG ALGORITHM DOMAIN MAPPING
-=================================================================================
- BSP Room Slicing           ──► Rectangular interior dungeons, corporate offices
- Cellular Automata          ──► Organic caverns, subterranean tunnels, erosion
- Wave Function Collapse     ──► Detailed urban structures, architectural pipe grids
- Simplex Noise / fBm        ──► Planetary heightmaps, biome continental distributions
- A* & Minimum Spanning Tree ──► Non-linear dungeon room pathing & hallway networks
-```
-
-### 1. Binary Space Partitioning (BSP) Dungeon Generation
-
-The BSP algorithm recursively subdivides a 2D bounding volume into a binary tree of smaller rectangular leaves until a minimum threshold dimension is reached. Each leaf then spawns an interior room, which are subsequently connected via hallways along the tree's split planes.
-
-```
-                         BSP RECURSIVE SUBDIVISION
-=================================================================================
-  Step 0: Root Container      Step 1: Vertical Slice       Step 2: Horizontal Slices
-  ┌───────────────────────┐   ┌───────────┬───────────┐    ┌───────────┬───────────┐
-  │                       │   │           │           │    │  Room A   │  Room C   │
-  │                       │   │           │           │    ├───────────┼───────────┤
-  │                       │   │  Leaf 1   │  Leaf 2   │    │  Room B   │  Room D   │
-  └───────────────────────┘   └───────────┴───────────┘    └───────────┴───────────┘
-```
-
-```gdscript
-# ==============================================================================
-# RECURSIVE BINARY SPACE PARTITIONING (BSP) DUNGEON GENERATOR
-# ==============================================================================
-class_name BSPDungeonGenerator
-extends RefCounted
-
-class BSPLeaf:
-    var rect: Rect2i
-    var left_child: BSPLeaf = null
-    var right_child: BSPLeaf = null
-    var room: Rect2i
-
-    func _init(p_rect: Rect2i) -> void:
-        rect = p_rect
-
-    func split(min_leaf_size: int) -> bool:
-        if left_child != null or right_child != null:
-            return false # Already partitioned
-            
-        # Determine split orientation based on dimensional aspect ratio
-        var split_horizontal: bool = randf() > 0.5
-        if rect.size.x > rect.size.y and float(rect.size.x) / float(rect.size.y) >= 1.25:
-            split_horizontal = false
-        elif rect.size.y > rect.size.x and float(rect.size.y) / float(rect.size.x) >= 1.25:
-            split_horizontal = true
-
-        var max_split: int = (rect.size.y if split_horizontal else rect.size.x) - min_leaf_size
-        if max_split <= min_leaf_size:
-            return false # Sub-space is too constrained to split further
-
-        var split_pos: int = randi_range(min_leaf_size, max_split)
-
-        if split_horizontal:
-            left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, rect.size.x, split_pos))
-            right_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y + split_pos, rect.size.x, rect.size.y - split_pos))
-        else:
-            left_child = BSPLeaf.new(Rect2i(rect.position.x, rect.position.y, split_pos, rect.size.y))
-            right_child = BSPLeaf.new(Rect2i(rect.position.x + split_pos, rect.position.y, rect.size.x - split_pos, rect.size.y))
-
-        return true
-
-    func create_rooms(min_room_size: int) -> void:
-        if left_child != null or right_child != null:
-            if left_child != null: left_child.create_rooms(min_room_size)
-            if right_child != null: right_child.create_rooms(min_room_size)
-        else:
-            # Carve room safely inside leaf boundaries with 1-tile structural padding
-            var room_w: int = randi_range(min_room_size, rect.size.x - 2)
-            var room_h: int = randi_range(min_room_size, rect.size.y - 2)
-            var room_x: int = randi_range(rect.position.x + 1, rect.position.x + rect.size.x - room_w - 1)
-            var room_y: int = randi_range(rect.position.y + 1, rect.position.y + rect.size.y - room_h - 1)
-            room = Rect2i(room_x, room_y, room_w, room_h)
-
-## Generates a complete floor plan array: 0 = Empty/Void, 1 = Floor, 2 = Wall
-static func generate_dungeon_grid(width: int, height: int, min_size: int = 10) -> Array:
-    var root: BSPLeaf = BSPLeaf.new(Rect2i(0, 0, width, height))
-    var leaves: Array[BSPLeaf] = [root]
-    
-    var did_split: bool = true
-    while did_split:
-        did_split = false
-        for leaf in leaves.duplicate():
-            if leaf.left_child == null and leaf.right_child == null:
-                if leaf.split(min_size):
-                    leaves.append(leaf.left_child)
-                    leaves.append(leaf.right_child)
-                    did_split = true
-
-    root.create_rooms(min_size / 2)
-    
-    # Allocate discrete 2D grid
-    var grid: Array = []
-    grid.resize(width)
-    for x in range(width):
-        var col: Array = []
-        col.resize(height)
-        col.fill(0)
-        grid[x] = col
-
-    # Carve terminal leaf rooms into the grid
-    for leaf in leaves:
-        if leaf.room.size.x > 0:
-            for rx in range(leaf.room.position.x, leaf.room.end.x):
-                for ry in range(leaf.room.position.y, leaf.room.end.y):
-                    grid[rx][ry] = 1 # Carve Walkable Floor
-                    
-    return grid
-```
-
-### 2. Cellular Automata: Organic Subterranean Cavern Synthesis
-
-To generate natural cave systems, we model physical rock erosion using a discrete 2D Cellular Automaton governed by the **Moore Neighborhood** ($8$ adjacent cells):
-
-```
-                        MOORE NEIGHBORHOOD (Radius = 1)
-=================================================================================
-                         [x-1, y-1]  [ x, y-1 ]  [x+1, y-1]
-                         [x-1,  y ]  [ Cell   ]  [x+1,  y ]
-                         [x-1, y+1]  [ x, y+1 ]  [x+1, y+1]
-```
-
-#### The Cave Transformation Rule (B5678 / S45678)
-1. Initialize the grid randomly: each cell has a $45\%$ probability of being a solid **Wall** ($1$) and $55\%$ probability of being **Empty Air** ($0$).
-2. For each simulation step, compute the count of solid wall neighbors $W_N$:
-   - If $W_N \ge 5$: The cell becomes a solid **Wall** (consolidation).
-   - If $W_N \le 3$: The cell becomes **Empty Air** (erosion).
-   - If $W_N == 4$: The cell maintains its existing state.
-3. Iterate $4\text{--}6$ generations. The random noise coalesces into smooth, winding natural limestone corridors!
-
-```gdscript
-# ==============================================================================
-# ORGANIC CELLULAR AUTOMATA CAVERN SYNTHESIS
-# ==============================================================================
-class_name CellularCaveGenerator
-extends RefCounted
-
-## Executes smoothing generations on a randomized boolean grid
-static func generate_caves(width: int, height: int, fill_ratio: float = 0.45, iterations: int = 5) -> Array:
-    var grid: Array = []
-    grid.resize(width)
-    
-    # 1. Stochastic Seeding
-    for x in range(width):
-        var col: Array = []
-        col.resize(height)
-        for y in range(height):
-            # Enforce solid bounding border around level perimeter
-            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
-                col[y] = 1
-            else:
-                col[y] = 1 if randf() < fill_ratio else 0
-        grid[x] = col
-
-    # 2. Iterative Cellular Automata Simulation Steps
-    for step in range(iterations):
-        var buffer: Array = []
-        buffer.resize(width)
-        for x in range(width):
-            var col: Array = []
-            col.resize(height)
-            for y in range(height):
-                var wall_count: int = _count_moore_walls(grid, x, y, width, height)
-                
-                # B5678 / S45678 Rule evaluation
-                if wall_count > 4:
-                    col[y] = 1
-                elif wall_count < 4:
-                    col[y] = 0
-                else:
-                    col[y] = grid[x][y]
-            buffer[x] = col
-        grid = buffer
-
-    return grid
-
-static func _count_moore_walls(map: Array, grid_x: int, grid_y: int, max_w: int, max_h: int) -> int:
-    var walls: int = 0
-    for ox in range(-1, 2):
-        for oy in range(-1, 2):
-            if ox == 0 and oy == 0:
-                continue
-            var nx: int = grid_x + ox
-            var ny: int = grid_y + oy
-            # Out-of-bounds cells evaluate as solid rock (walls)
-            if nx < 0 or nx >= max_w or ny < 0 or ny >= max_h:
-                walls += 1
-            elif map[nx][ny] == 1:
-                walls += 1
-    return walls
-```
-
-### 3. Wave Function Collapse (WFC): Local Adjacency Constraint Propagation
-
-Wave Function Collapse (WFC) generates structured patterns (such as complex pipe networks, city streets, or detailed building interiors) by treating each grid cell as a quantum-like **Superposition** of all possible structural tiles.
-
-```
-                        THE WFC REDUCTION PIPELINE
-=================================================================================
- [ Superposition ] ──► [ 1. Find Cell with Lowest Shannon Entropy (Fewest Choices) ]
-                                │
-                                ▼
-                       [ 2. Collapse Cell to ONE Random Valid Tile ]
-                                │
-                                ▼
-                       [ 3. Propagate Adjacency Constraints to Neighbors ]
-                         (Prune invalid socket choices from neighbor superpositions)
-                                │
-                                ▼
-                       (Repeat until all cells collapsed, or backtrack on Contradiction!)
-```
-
-#### Mathematical Entropy & Constraint Propagation
-The **Shannon Entropy** $H$ of a cell containing $N$ valid tile candidates is computed as:
-
-$$H = \log_2(N)$$
-
-When tile weights $w_i$ are assigned (e.g., plain grass is 10x more common than a road crossing):
-
-$$H = \log_2\left(\sum_{i=1}^{N} w_i\right) - \frac{\sum_{i=1}^{N} w_i \log_2(w_i)}{\sum_{i=1}^{N} w_i}$$
-
-```gdscript
-# ==============================================================================
-# PRODUCTION WAVE FUNCTION COLLAPSE (WFC) MODEL (2D Socket-Based)
-# ==============================================================================
-class_name WaveFunctionCollapse2D
-extends RefCounted
-
-## Sockets define boundary compatibility: [North, East, South, West]
-class WFCTile:
-    var id: int
-    var sockets: Array[String] # e.g. ["Grass", "Road", "Grass", "Grass"]
-    var weight: float = 1.0
-    
-    func _init(p_id: int, p_sockets: Array[String], p_weight: float = 1.0) -> void:
-        id = p_id
-        sockets = p_sockets
-        weight = p_weight
-
-var _tile_palette: Array[WFCTile] = []
-var _grid_width: int
-var _grid_height: int
-## 2D Array where each element is an Array[WFCTile] representing active superposition
-var _wave: Array = []
-
-func _init(width: int, height: int, palette: Array[WFCTile]) -> void:
-    _grid_width = width
-    _grid_height = height
-    _tile_palette = palette
-    _initialize_wave()
-
-func _initialize_wave() -> void:
-    _wave.resize(_grid_width)
-    for x in range(_grid_width):
-        var col: Array = []
-        col.resize(_grid_height)
-        for y in range(_grid_height):
-            # Every cell starts in full superposition of all possible tiles
-            col[y] = _tile_palette.duplicate()
-        _wave[x] = col
-
-## Runs the complete collapse simulation loop; returns false on Contradiction
-func run_collapse() -> bool:
-    while true:
-        var candidate_cell: Vector2i = _find_lowest_entropy_cell()
-        if candidate_cell == Vector2i(-1, -1):
-            return true # All cells collapsed successfully! Zero entropy remains.
-
-        var cell_options: Array = _wave[candidate_cell.x][candidate_cell.y]
-        if cell_options.is_empty():
-            push_error("WFC Contradiction: Cell reached 0 valid states at %s" % str(candidate_cell))
-            return false
-
-        # Collapse cell to a single choice based on relative weights
-        var chosen_tile: WFCTile = _sample_weighted_tile(cell_options)
-        _wave[candidate_cell.x][candidate_cell.y] = [chosen_tile]
-
-        # Propagate constraints outwards via stack-based queue
-        _propagate_constraints(candidate_cell)
-        
-    return true
-
-func _find_lowest_entropy_cell() -> Vector2i:
-    var lowest_count: int = INF
-    var best_coord: Vector2i = Vector2i(-1, -1)
-    
-    for x in range(_grid_width):
-        for y in range(_grid_height):
-            var count: int = _wave[x][y].size()
-            if count > 1 and count < lowest_count:
-                lowest_count = count
-                best_coord = Vector2i(x, y)
-                
-    return best_coord
-
-func _sample_weighted_tile(options: Array) -> WFCTile:
-    var total_weight: float = 0.0
-    for tile in options: total_weight += tile.weight
-    var roll: float = randf_range(0.0, total_weight)
-    var accum: float = 0.0
-    for tile in options:
-        accum += tile.weight
-        if roll <= accum:
-            return tile
-    return options.back()
-
-func _propagate_constraints(start_pos: Vector2i) -> void:
-    var stack: Array[Vector2i] = [start_pos]
-    var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)] # N, E, S, W
-    
-    while not stack.is_empty():
-        var current: Vector2i = stack.pop_back()
-        var current_options: Array = _wave[current.x][current.y]
-
-        for dir_idx in range(4):
-            var offset: Vector2i = directions[dir_idx]
-            var neighbor: Vector2i = current + offset
-            
-            if neighbor.x < 0 or neighbor.x >= _grid_width or neighbor.y < 0 or neighbor.y >= _grid_height:
-                continue
-
-            var neighbor_options: Array = _wave[neighbor.x][neighbor.y]
-            if neighbor_options.size() <= 1:
-                continue # Already collapsed
-
-            var opposing_dir: int = (dir_idx + 2) % 4
-            var valid_neighbor_tiles: Array = []
-
-            for candidate in neighbor_options:
-                var is_compatible: bool = false
-                for source in current_options:
-                    # Check socket identity across the shared interface edge
-                    if source.sockets[dir_idx] == candidate.sockets[opposing_dir]:
-                        is_compatible = true
-                        break
-                if is_compatible:
-                    valid_neighbor_tiles.append(candidate)
-
-            # If choices were pruned, push neighbor onto propagation stack
-            if valid_neighbor_tiles.size() < neighbor_options.size():
-                _wave[neighbor.x][neighbor.y] = valid_neighbor_tiles
-                stack.append(neighbor)
-```
-
-### 4. Continuous World Generation: Multi-Octave fBm Noise & Biomes
-
-Large outdoor worlds cannot be generated via discrete room-splitting. We compute continuous, smooth elevation and moisture fields using **Fractional Brownian Motion (fBm)**, sampling multi-octave coherent Simplex noise:
-
-$$H(x, z) = \sum_{k=0}^{M-1} g^k \cdot \text{Noise}\left(\ell^k \cdot x, \; \ell^k \cdot z\right)$$
-
-where $M$ is the octave count, $g$ is **Gain / Persistence** ($g \approx 0.5$), and $\ell$ is **Lacunarity** ($\ell \approx 2.0$).
-
-```
-                      THE WHITTAKER BIOME LOOKUP DIAGRAM
-=================================================================================
- Moisture (M)
-   ▲
-1.0│  [ Tundra / Boreal ]      [ Temperate Forest ]      [ Tropical Rainforest ]
-   │
-0.5│  [ Grassland / Steppe ]   [ Shrubland / Woodland ]  [ Seasonal Savanna ]
-   │
-0.0│  [ Arctic Ice Sheet ]     [ Rocky Badlands ]        [ Arid Sand Desert ]
-   └───────────────────────────────────────────────────────────────────────────►
-  0.0                               0.5                                     1.0
-                                                                  Temperature (T)
-```
-
-```gdscript
-# ==============================================================================
-# BIOME ALLOCATION MATRIX & FBM ELEVATION SAMPLER
-# ==============================================================================
-class_name BiomeSynthesizer
-extends RefCounted
-
-enum BiomeType { ARCTIC, TUNDRA, GRASSLAND, DESERT, FOREST, RAINFOREST }
-
-var _elevation_noise: FastNoiseLite
-var _moisture_noise: FastNoiseLite
-
-func _init(world_seed: int) -> void:
-    _elevation_noise = FastNoiseLite.new()
-    _elevation_noise.seed = world_seed
-    _elevation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-    _elevation_noise.fractal_octaves = 5
-    _elevation_noise.fractal_lacunarity = 2.0
-    _elevation_noise.fractal_gain = 0.5
-    _elevation_noise.frequency = 0.003
-
-    _moisture_noise = FastNoiseLite.new()
-    _moisture_noise.seed = world_seed + 101
-    _moisture_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-    _moisture_noise.fractal_octaves = 4
-    _moisture_noise.frequency = 0.002
-
-## Returns continuous height and discrete BiomeType for any world coordinate (x, z)
-func sample_world(x: float, z: float) -> Dictionary:
-    # Samples normalized to [0.0, 1.0]
-    var elevation: float = (_elevation_noise.get_noise_2d(x, z) + 1.0) * 0.5
-    var moisture: float = (_moisture_noise.get_noise_2d(x, z) + 1.0) * 0.5
-    
-    var biome: BiomeType
-    if elevation < 0.2:
-        biome = BiomeType.ARCTIC
-    elif moisture < 0.25:
-        biome = BiomeType.DESERT if elevation > 0.4 else BiomeType.GRASSLAND
-    elif moisture > 0.70:
-        biome = BiomeType.RAINFOREST if elevation > 0.3 else BiomeType.FOREST
-    else:
-        biome = BiomeType.TUNDRA if elevation > 0.6 else BiomeType.FOREST
-
-    return {
-        "elevation": elevation * 120.0, # Scaled height in metres
-        "moisture": moisture,
-        "biome": biome
-    }
-```
-
----
-
-## 9.4 Open-World Streaming, LOD Management & Floating Origin Shifting
-
-Rendering and simulating vast worlds ($10\text{ km} \times 10\text{ km}$) requires streaming geometry dynamically in the background while circumventing hardware memory and precision constraints.
-
-```
-                      HIERARCHICAL WORLD CHUNK MANAGEMENT
-=================================================================================
- [ Camera View Frustum ]
-         │
-         ├── Outer Radius (> 500m)  ──► Chunk Instantiation: Low-Poly Mesh Impostors
-         ├── Medium Radius (150-500m)──► Standard Geometry (HLOD Tier 1, Shadows off)
-         └── Active Radius (< 150m) ──► Full Collision, Navigation, Dynamic Actors
-```
-
-### 1. Asynchronous Threaded Chunk Streaming
-
-Loading heavy `.tscn` chunks synchronously via `load()` blocks the main thread, dropping frames and causing noticeable stutter. Godot 4 resolves this via **`ResourceLoader.load_threaded_request()`**:
-
-```gdscript
-# ==============================================================================
-# ASYNCHRONOUS RESOURCE CHUNK STREAMER
-# ==============================================================================
-class_name ChunkStreamer
-extends Node
-
-signal chunk_loaded(coord: Vector2i, scene: PackedScene)
-
-var _loading_queue: Dictionary = {} # Vector2i -> ResourceLoader.ThreadLoadStatus
-
-func request_chunk_stream(coord: Vector2i, file_path: String) -> void:
-    if _loading_queue.has(coord):
-        return
-        
-    var err: Error = ResourceLoader.load_threaded_request(file_path, "PackedScene")
-    if err == OK:
-        _loading_queue[coord] = file_path
-
-func _process(_delta: float) -> void:
-    for coord in _loading_queue.keys():
-        var file_path: String = _loading_queue[coord]
-        var progress: Array = []
-        var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(file_path, progress)
-
-        if status == ResourceLoader.THREAD_LOAD_LOADED:
-            var scene: PackedScene = ResourceLoader.load_threaded_get(file_path) as PackedScene
-            _loading_queue.erase(coord)
-            chunk_loaded.emit(coord, scene)
-        elif status == ResourceLoader.THREAD_LOAD_FAILED or status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
-            push_error("ChunkStreamer: Failed to stream chunk at %s" % file_path)
-            _loading_queue.erase(coord)
-```
-
-### 2. Floating-Point Precision Degradation & The Floating Origin Solution
-
-Modern GPUs and game engine physics run on **32-bit single-precision floating-point numbers** (IEEE 754). A 32-bit float reserves only $23\text{ bits}$ of mantissa precision.
-
-```
-                 IEEE 754 PRECISION DRIFT ACROSS DISTANCE
-=================================================================================
- Distance from World Origin (0,0,0)  │ Effective Minimum Spatial Precision (Step Size)
- ────────────────────────────────────┼────────────────────────────────────────────
- Under 1,000 metres (1 km)           │ ~0.00006 mm  (Sub-microscopic precision)
- At 8,192 metres (8.2 km)            │ ~1.0 mm      (Slight vertex wobble)
- At 65,536 metres (65.5 km)          │ ~8.0 mm      (Noticeable jitter & physics pops)
- At 262,144 metres (262 km)          │ ~32.0 mm     (Violent camera vibrating; FAIL!)
-```
-
-> [!bug] 🚨 The Open-World Jitter Bug
-> When a player travels far from the origin, their character's mesh and the surrounding terrain begin vibrating violently ("vertex jitter"). Physics raycasts pass through walls because collision contacts can no longer resolve sub-centimeter vertices.
-
-#### The Architectural Solution: Origin Shifting
-When the player crosses a distance threshold $D_{\text{threshold}}$ (typically $4,000\text{ m}$) away from the origin $(0, 0, 0)$, **shift the entire world backwards** by $-\vec{P}_{\text{player}}$, snapping the player back to $(0, 0, 0)$!
-
-```gdscript
-# ==============================================================================
-# FLOATING ORIGIN SHIFT MANAGER
-# ==============================================================================
-class_name FloatingOriginManager
-extends Node
-
-signal origin_shifted(offset_vector: Vector3)
-
-@export var player_target: Node3D
-@export var shift_threshold_meters: float = 4000.0
-
-func _physics_process(_delta: float) -> void:
-    if player_target == null:
-        return
-
-    var player_pos: Vector3 = player_target.global_position
-    # Evaluate planar horizontal threshold
-    if Vector2(player_pos.x, player_pos.z).length_squared() > (shift_threshold_meters * shift_threshold_meters):
-        _execute_origin_shift(player_pos)
-
-func _execute_origin_shift(shift_vector: Vector3) -> void:
-    # 1. Offset the player back to local origin
-    player_target.global_position -= shift_vector
-
-    # 2. Offset all active spatial entities and chunks in the simulation
-    var world_nodes: Array[Node] = get_tree().get_nodes_in_group(&"floating_origin_affected")
-    for entity in world_nodes:
-        if entity is Node3D and entity != player_target:
-            (entity as Node3D).global_position -= shift_vector
-
-    # 3. Inform particles, audio listeners, and physics queries
-    origin_shifted.emit(shift_vector)
-    print("FloatingOriginManager: Origin shifted by %s. Coordinates stabilized." % str(shift_vector))
-```
-
----
-
-## 9.5 Complete Applied System: Non-Linear Dungeon Graph & Hallway Carver
-
-To synthesize **BSP Room Partitioning, Graph Triangulation, and GridMap Tile Baking**, consider this complete production dungeon builder. 
-
-It generates a non-linear network of rooms using BSP, connects their centroids via **Delaunay Triangulation**, prunes the graph down to a **Minimum Spanning Tree (Prim's Algorithm)** with $15\%$ re-added cyclical edges to prevent linear backtracking, and carves orthogonal L-shaped corridors:
-
-```
-                      DUNGEON ROOM GRAPH TOPOLOGY
-=================================================================================
-    [ Room 1 ] ══════════════════════════════ [ Room 2 ]
-        ║                                         ║
-        ║ (MST Backbone)                          ║ (Cycle Loop: 15% edge re-add)
-        ║                                         ║
-    [ Room 3 ] ══════════════════════════════ [ Room 4 ]
-```
-
-```gdscript
-# ==============================================================================
-# NON-LINEAR GRAPH-BASED PROCEDURAL DUNGEON CARVER
-# ==============================================================================
-class_name ProceduralDungeonPipeline
-extends Node
-
-struct CorridorSegment:
-    var start: Vector2i
-    var end: Vector2i
-
-@export var grid_width: int = 80
-@export var grid_height: int = 80
-@export var min_leaf_size: int = 14
-@export_range(0.0, 1.0) var cyclical_loop_ratio: float = 0.15
-
-var _grid: Array = []
-var _rooms: Array[Rect2i] = []
-
-func build_dungeon() -> void:
-    _rooms.clear()
-    _grid = BSPDungeonGenerator.generate_dungeon_grid(grid_width, grid_height, min_leaf_size)
-    _gather_extracted_rooms()
-    _connect_rooms_with_corridors()
-
-func _gather_extracted_rooms() -> void:
-    # Find disjoint carved floor islands to locate room centers
-    # (In production, leaves store Rect2i rooms directly in the BSP tree)
-    pass
-
-func _connect_rooms_with_corridors() -> void:
-    if _rooms.size() < 2:
-        return
-
-    # 1. Construct Complete Euclidean Distance Graph
-    var edges: Array[Dictionary] = []
-    for i in range(_rooms.size()):
-        for j in range(i + 1, _rooms.size()):
-            var p1: Vector2 = Vector2(_rooms[i].get_center())
-            var p2: Vector2 = Vector2(_rooms[j].get_center())
-            edges.append({
-                "room_a": i,
-                "room_b": j,
-                "weight": p1.distance_squared_to(p2)
-            })
-
-    # Sort edges ascending by squared distance
-    edges.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["weight"] < b["weight"])
-
-    # 2. Kruskal's / Prim's Algorithm for Minimum Spanning Tree (MST)
-    var parent: Array[int] = []
-    parent.resize(_rooms.size())
-    for i in range(_rooms.size()): parent[i] = i
-
-    func find_set(v: int, p: Array[int]) -> int:
-        if v == p[v]: return v
-        p[v] = find_set(p[v], p)
-        return p[v]
-
-    var mst_edges: Array[Dictionary] = []
-    var extra_edges: Array[Dictionary] = []
-
-    for edge in edges:
-        var root_a: int = find_set(edge["room_a"], parent)
-        var root_b: int = find_set(edge["room_b"], parent)
-        
-        if root_a != root_b:
-            parent[root_a] = root_b
-            mst_edges.append(edge)
-        else:
-            extra_edges.append(edge)
-
-    # 3. Inject Cyclical Loops: Re-add 15% of discarded edges to create non-linear gameplay loops
-    for edge in extra_edges:
-        if randf() < cyclical_loop_ratio:
-            mst_edges.append(edge)
-
-    # 4. Carve Orthogonal L-Shaped Hallways into the Grid
-    for edge in mst_edges:
-        var c1: Vector2i = _rooms[edge["room_a"]].get_center()
-        var c2: Vector2i = _rooms[edge["room_b"]].get_center()
-        _carve_l_shaped_hallway(c1, c2)
-
-func _carve_l_shaped_hallway(start: Vector2i, end: Vector2i) -> void:
-    var horizontal_first: bool = randf() > 0.5
-    
-    if horizontal_first:
-        _carve_horizontal(start.x, end.x, start.y)
-        _carve_vertical(start.y, end.y, end.x)
-    else:
-        _carve_vertical(start.y, end.y, start.x)
-        _carve_horizontal(start.x, end.x, end.y)
-
-func _carve_horizontal(x1: int, x2: int, y: int) -> void:
-    var min_x: int = mini(x1, x2)
-    var max_x: int = maxi(x1, x2)
-    for x in range(min_x, max_x + 1):
-        _grid[x][y] = 1 # Carve floor
-
-func _carve_vertical(y1: int, y2: int, x: int) -> void:
-    var min_y: int = mini(y1, y2)
-    var max_y: int = maxi(y1, y2)
-    for y in range(min_y, max_y + 1):
-        _grid[x][y] = 1 # Carve floor
-```
-
----
-# ⚖️ Module X: Formal Game Design Theory, Systems Balancing & Game Economies
-
-> [!info] 📖 Lexicon & First Principles: Ludological & Systems Engineering
-> Software architecture provides the functional skeleton; **Game Design** is the mathematical and psychological engineering of player agency, cognitive load, systemic feedback, and economic equilibrium:
-> - ⤷ **Ludology**: The formal academic study of games, rule systems, and play activities, distinct from narrative or visual media analysis.
-> - ⤷ **MDA Framework (Mechanics, Dynamics, Aesthetics)**: A formal post-mortem and design framework establishing that rules (**Mechanics**) produce runtime systemic interactions (**Dynamics**), which evoke subjective emotional responses (**Aesthetics**) in the human player.
-> - ⤷ **Intransitive Dynamic (Cyclical Dominance)**: A relational loop where no single element is universally superior ($A > B > C > A$, typified by Rock-Paper-Scissors), precluding degenerative dominant tactics.
-> - ⤷ **Mudflation**: The runaway economic devaluation of currency, equipment, or statistical power caused by continuous, unthrottled generation without commensurate, permanent sinks.
-> - ⤷ **Pseudo-Random Distribution (PRD)**: A statistical algorithm that alters event probabilities dynamically on consecutive successes or failures to minimize variance, aligning true mathematical odds with human cognitive perception.
-> - ⤷ **Hitstop (Freeze-Frame)**: The deliberate temporal freezing of character kinematics and animation updates for several frames ($50\text{--}100\text{ ms}$) upon verified weapon impact, imparting psychological weight and kinetic tactile feedback ("juice").
-
----
-
-## 10.1 The MDA Framework & Pacing Architecture
-
-A common failure mode in game development is designing backwards—beginning with a disconnected visual theme or narrative premise and grafting mechanical rules onto it. The **MDA Framework** formalizes the architectural divide between developer intent and player perception:
-
-```
-                         THE MDA PERSPECTIVE PARADOX
-=================================================================================
- DESIGNER PERSPECTIVE (Creation Pipeline):
- [ MECHANICS ] ──────────► [ DYNAMICS ] ──────────► [ AESTHETICS ]
- Concrete Rules            Runtime System           Emotional & Cognitive
- & GDScript Code           Interactions             Player Experience
-       ▲                                                    │
-       │                                                    ▼
- PLAYER PERSPECTIVE (Experiential Consumption):
- (Players consume Aesthetics FIRST, deduce Dynamics, and rarely see Mechanics directly!)
-```
-
-### The Taxonomy of Formal Aesthetics (Hunicke, LeBlanc, Zubek)
-
-When architecting a game, define its target aesthetic profile from the eight foundational ludic emotional drivers:
-
-1. **Sensation**: Play as sensory pleasure (tactile kinematics, punchy soundscapes, screen trauma).
-2. **Fantasy**: Play as make-believe (world immersion, atmospheric coherence).
-3. **Narrative**: Play as drama (dynamic quest state machines, dramatic pacing curves).
-4. **Challenge**: Play as obstacle mastery (high skill ceiling, tight hitboxes, rigorous combat mechanics).
-5. **Fellowship**: Play as social framework (multiplayer coordination, squad roles, cooperative dependency).
-6. **Discovery**: Play as uncharted territory (procedural generation, branching world streaming, hidden mechanics).
-7. **Expression**: Play as self-discovery (custom loadouts, sandbox crafting, aesthetic customization).
-8. **Submission**: Play as pastime (compulsion loops, idle accumulation, ritualistic progression).
-
----
-
-## 10.2 Compulsion Loops & Flow Channel Calibration
-
-A game's systemic retention relies on **Nested Compulsion Loops** operating across different temporal scales:
-
-```
-                         NESTED COMPULSION ARCHITECTURE
-=================================================================================
- [ 1. MICRO LOOP (200ms - 5s) ]
- Tactical Kinematics: Aim ──► Discharge Weapon ──► Hitstop / Recoil ──► Dash
-               │
-               ▼
- [ 2. MESO LOOP (3m - 20m) ]
- Encounter Strategy: Clear Room ──► Collect Loot ──► Resolve Objectives ──► Re-equip
-               │
-               ▼
- [ 3. MACRO LOOP (2h - 50h+) ]
- Long-Term Mastery: Unlock Skill DAG ──► Optimize Meta-Build ──► Defeat Boss ──► NG+
-```
-
-### Csikszentmihalyi’s Flow Channel & Dynamic Tension
-
-To keep a player engaged, the difficulty of the game must scale in lockstep with their developing mental model and mechanical dexterity. Deviations from this corridor result in psychological failure states:
-
-```
-                      THE MENTAL FLOW EQUILIBRIUM
-=================================================================================
- Challenge (Difficulty)
-    ▲                                    / ANXIETY & FRUSTRATION ZONE
-    │                                  /  (Task exceeds player capacity)
-    │                                / 
-    │                     ╭─────────╯
-    │                   ╭─╯  THE FLOW CHANNEL
-    │                 ╭─╯    (Optimal Engagement Corridor)
-    │               ╭─╯ 
-    │             ╭─╯   
-    │           ╭─╯    BOREDOM & APATHY ZONE
-    │         ╭─╯      (Player mastery renders task trivial)
-    └─────────┴──────────────────────────────────────────────────────►
-   Low                                                             High
-                             Player Skill / Competence
-```
-
-#### The Sawtooth Pacing Curve
-
-Never subject a player to uninterrupted, escalating difficulty. The human sympathetic nervous system experiences fatigue under sustained cognitive stress. Professional pacing introduces an oscillatory **Sawtooth Wave**:
-
-```
- Tension / Cognitive Load
-    ▲             Peak Encounter (Boss)
-    │                 ▲
-    │        ▲       / │
-    │       / \     /  │ (Cathartic Valley: Safe Room / Merchant / Dialogue)
-    │  ▲   /   \   /   └───┐
-    │ / \ /     \ /        │
-    └─┴───┴───────┴────────┴─────────────────────────────────────────► Time (t)
-```
-
----
-
-## 10.3 Cybernetic Feedback Loops: Amplification vs. Homeostasis
-
-Game systems are cybernetic machines governed by closed-loop information circuits:
-
-```
-                     CYBERNETIC FEEDBACK SYSTEM TOPOLOGY
-=================================================================================
- POSITIVE FEEDBACK (Destabilizing / Snowballing):
- [ Win Combat ] ──► [ Extra Gold / XP ] ──► [ Superior Stats ] ──► [ Easier Wins ]
-       ▲                                                                 │
-       └─────────────────────────────────────────────────────────────────┘
- (Amplifies initial advantage; shortens match duration; risks early resignations)
-
- NEGATIVE FEEDBACK (Homeostatic / Rubber-Banding):
- [ Leader Pulls Ahead ] ──► [ Higher Maintenance / Bounties ] ──► [ Catch-up Windows ]
-       ▲                                                                 │
-       └─────────────────────────────────────────────────────────────────┘
- (Dampens divergence; preserves tension; risks frustrating high-skill players)
-```
-
-### 1. Positive Feedback (Reinforcing / Snowballing)
-- ⤷ **Mathematical Behavior**: Divergent ($\frac{dy}{dt} = +k \cdot y$).
-- ↳ **Function**: Rewards skillful execution with compounding advantages, accelerating resolution.
-- ↳ **Pathology**: The **"Rich Get Richer"** trap. If an RTS player loses their first squad and falls behind economically, the winner's output grows exponentially, making the remainder of the match a drawn-out formality.
-
-### 2. Negative Feedback (Self-Correcting / Homeostatic)
-- ⤷ **Mathematical Behavior**: Convergent ($\frac{dy}{dt} = -k \cdot (y - y_{\text{target}})$).
-- ↳ **Function**: Preserves contest parity by penalizing leaders (e.g., death-bounties in MOBAs, dynamic rubber-banding in arcade racing).
-- ↳ **Pathology**: If over-tuned, skilled players feel their effort is invalidated because early leads are artificially erased.
-
----
-
-## 10.4 Combat Mathematics: EHP, DPS, TTK & Diminishing Returns
-
-Amateur combat design frequently balances characters by tweaking arbitrary numbers until "it feels okay." Systems architects balance combat through **Kinematic and Statistical Invariants**.
-
-```
-                   THE TIME-TO-KILL (TTK) RELATIONSHIP
-=================================================================================
-                 Target Effective Health Pool (EHP)
-  TTK (seconds) = ──────────────────────────────────
-                   Attacker Sustained Damage (DPS)
-```
-
-### 1. Effective Health Pool ($EHP$) & Non-Linear Armor Scaling
-
-When calculating damage reduction from armor ($A$), a linear formula ($\text{Damage} = \text{Raw} - A$) is fundamentally flawed: high-rate-of-fire weapons become useless against moderate armor, while heavy-hitting sniper weapons ignore it entirely.
-
-Instead, implement the classic **Diminishing Returns Hyperbolic Curve**:
-
-$$\text{Damage Multiplier} = \frac{K}{K + A} \quad \implies \quad \text{Damage Taken} = \text{Raw Damage} \times \left(\frac{K}{K + A}\right)$$
-
-where $K$ is the design constant (typically $K = 100$). Under this formulation, **every point of armor provides a constant, linear increase to Effective Health Pool ($EHP$)**:
-
-$$EHP = \frac{\text{Base HP}}{\text{Damage Multiplier}} = \text{Base HP} \times \left(1.0 + \frac{A}{K}\right)$$
-
-```
-                         ARMOR MITIGATION BEHAVIOR (K = 100)
-┌───────────────┬──────────────────────┬──────────────────────┬───────────────────┐
-│ Armor Value A │ Damage Taken Multi   │ Damage Reduction %   │ Relative EHP      │
-├───────────────┼──────────────────────┼──────────────────────┼───────────────────┤
-│ 0             │ 100 / (100 + 0) = 1.0│ 0.0%                 │ 1.00x Base HP     │
-│ 50            │ 100 / 150 = 0.6667   │ 33.3%                │ 1.50x Base HP     │
-│ 100           │ 100 / 200 = 0.5000   │ 50.0%                │ 2.00x Base HP     │
-│ 200           │ 100 / 300 = 0.3333   │ 66.7%                │ 3.00x Base HP     │
-│ 300           │ 100 / 400 = 0.2500   │ 75.0%                │ 4.00x Base HP     │
-└───────────────┴──────────────────────┴──────────────────────┴───────────────────┘
-Notice the elegance: Each 100 points of Armor adds EXACTLY +100% of Base HP to EHP!
-```
-
-### 2. Sustained vs. Burst Damage per Second ($DPS$)
-
-Sustained damage accounts for magazine capacity, fire rate, reload durations, and critical strike profiles:
-
-$$\text{DPS}_{\text{sustained}} = \frac{D_{\text{bullet}} \times N_{\text{mag}} \times \left(1.0 + P_{\text{crit}} \cdot (M_{\text{crit}} - 1.0)\right)}{\left(\frac{N_{\text{mag}}}{R_{\text{fire}}}\right) + T_{\text{reload}}}$$
-
-where:
-- $D_{\text{bullet}}$: Base damage per projectile.
-- $N_{\text{mag}}$: Magazine round capacity.
-- $R_{\text{fire}}$: Fire rate in rounds per second ($\text{Hz}$).
-- $T_{\text{reload}}$: Duration of reload sequence in seconds.
-- $P_{\text{crit}}$: Critical hit probability $\in [0.0, 1.0]$.
-- $M_{\text{crit}}$: Critical hit damage multiplier (e.g., $2.0\times$).
-
-```gdscript
-# ==============================================================================
-# COMBAT METRIC SOLVER & TIME-TO-KILL (TTK) ANALYSER
-# ==============================================================================
-class_name CombatAnalytics
-extends RefCounted
-
-## Calculates the exact Effective Health Pool (EHP) given Base HP and Armor
-static func compute_ehp(base_hp: float, armor: float, k_constant: float = 100.0) -> float:
-    assert(armor >= 0.0, "Armor rating cannot be negative.")
-    return base_hp * (1.0 + (armor / k_constant))
-
-## Calculates sustained DPS factoring in reload cycles and critical hit expectations
-static func compute_sustained_dps(
-    bullet_dmg: float,
-    mag_size: int,
-    fire_rate_hz: float,
-    reload_time: float,
-    crit_chance: float,
-    crit_mult: float
-) -> float:
-    assert(mag_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
-    var cycle_firing_time: float = float(mag_size) / fire_rate_hz
-    var total_cycle_time: float = cycle_firing_time + reload_time
-    
-    var expected_crit_factor: float = 1.0 + (clampf(crit_chance, 0.0, 1.0) * (crit_mult - 1.0))
-    var total_damage_per_mag: float = float(mag_size) * bullet_dmg * expected_crit_factor
-    
-    return total_damage_per_mag / total_cycle_time
-
-## Computes precise TTK in seconds between an attacker profile and target profile
-static func compute_ttk(
-    target_hp: float,
-    target_armor: float,
-    bullet_dmg: float,
-    mag_size: int,
-    fire_rate_hz: float,
-    reload_time: float,
-    crit_chance: float = 0.0,
-    crit_mult: float = 1.0
-) -> float:
-    var ehp: float = compute_ehp(target_hp, target_armor)
-    var dps: float = compute_sustained_dps(bullet_dmg, mag_size, fire_rate_hz, reload_time, crit_chance, crit_mult)
-    return ehp / maxf(0.0001, dps)
-```
-
----
-
-## 10.5 Economic Engineering: Sources, Sinks, Faucets & Mudflation
-
-Virtual economies in RPGs, MMOs, and survival games fail when treated like real-world national economies. In the real world, goods deteriorate and money circulates; in video games, **players extract currency from infinite voids and hoard it permanently**.
-
-```
-                       THE ECONOMIC EQUILIBRIUM TANK
-=================================================================================
- FAUCETS / SOURCES (Infinite Spigots)
- [ Quest Rewards ]  [ Mob Loot Drops ]  [ Salvage Returns ]  [ Mining Nodes ]
-        │                   │                   │                   │
-        ▼                   ▼                   ▼                   ▼
- ═════════════════════════════════════════════════════════════════════════════
-                       CIRCULATING PLAYER CURRENCY TANK
- ═════════════════════════════════════════════════════════════════════════════
-        │                   │                   │                   │
-        ▼                   ▼                   ▼                   ▼
- [ Repair Costs ]   [ Tax / Auction ]   [ Crafting Fees ]   [ Consumables ]
- SINKS / DRAINS (Permanent Destruction of Value)
-```
-
-### The Law of Economic Stability
-
-Let $F(t)$ denote the total currency created across all faucets at time $t$, and $S(t)$ denote the currency permanently removed via sinks:
-
-$$\Delta M = \int_{0}^{T} \left( \sum F_i(t) - \sum S_j(t) \right) dt$$
-
-1. **If $\sum F > \sum S$ (Mudflation)**: The circulating supply of gold balloons. Common vendor items lose all psychological value. High-end player-to-player auction prices escalate to arbitrary caps, creating an insurmountable wealth barrier for novice players.
-2. **If $\sum S > \sum F$ (Deflationary Starvation)**: Players cannot afford baseline repairs or core consumables, causing them to disengage from risk-bearing activities.
-3. **The Target Invariant**: Design **Percentage-Based Dynamic Sinks** rather than flat numerical sinks:
-   - Tax player-to-player trade via a flat percentage fee ($\text{Tax} = \text{Price} \times 0.08$).
-   - Scale repair costs relative to character wealth or item rarity tiers ($C_{\text{repair}} \propto \text{Tier}^2$).
-
----
-
-## 10.6 Probability Engineering: The Pseudo-Random Distribution (PRD)
-
-Humans are notoriously poor at evaluating true mathematical independence. Under pure Independent Random Distribution (IRD) with $P = 20\%$:
-- The chance of failing $6$ times in a row is $(0.8)^6 \approx 26.2\%$.
-- The chance of failing $12$ times in a row is $(0.8)^{12} \approx 6.87\%$.
-
-When a player misses a $20\%$ critical strike or dodge $12$ times in a row, they do not think *"Ah, a standard Poisson distribution variance!"* They perceive the game as broken or maliciously rigged.
-
-```
-                   PURE RANDOM (IRD) VS. PSEUDO-RANDOM (PRD)
-=================================================================================
- Pure Random (Flat 20%):   [ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ X ] 
- (Extremely prone to dry spells and jarring multi-crit streaks!)
-
- Pseudo-Random (C = 0.055):[ 5.5% ][ 11% ][ 16.5% ][ 22% ][ 27.5% -> PROC! ]
- (Probability climbs with every failure; resets immediately after success!)
-```
-
-### The PRD Mathematical Formulation (Warcraft III / Dota 2 Standard)
-
-Rather than checking against a flat probability $P$, PRD computes an escalating probability $P(N)$ where $N$ is the number of swings since the last successful event:
-
-$$P(N) = N \times C$$
-
-If the roll fails, $N$ increments by $1$, increasing the probability for the next attempt. When the roll succeeds, $N$ resets to $1$. 
-
-The design constant $C$ is solved mathematically such that the **aggregate observed rate across infinite samples equals the nominal probability $P$**:
-
-$$P_{\text{nominal}} \approx \sum_{N=1}^{N_{\text{max}}} P(\text{precisely on } N\text{th attempt}) = \sum_{N=1}^{N_{\text{max}}} N \cdot C \cdot \prod_{j=1}^{N-1} (1 - j \cdot C)$$
-
-```gdscript
-# ==============================================================================
-# PSEUDO-RANDOM DISTRIBUTION (PRD) ENGINE
-# ==============================================================================
-class_name PseudoRandomDistribution
-extends RefCounted
-
-## Lookup table: Nominal Probability -> Optimal C Base Constant
-## Derived from Monte Carlo simulation / Markov chain convergence
-const C_LOOKUP: Dictionary = {
-    0.05: 0.00380,
-    0.10: 0.01475,
-    0.15: 0.03222,
-    0.20: 0.05564,
-    0.25: 0.08474,
-    0.30: 0.11939,
-    0.35: 0.15962,
-    0.40: 0.20541,
-    0.45: 0.25686,
-    0.50: 0.31382
-}
-
-var _nominal_probability: float
-var _c_constant: float
-var _fail_count: int = 1
-
-func _init(nominal_prob: float = 0.20) -> void:
-    set_probability(nominal_prob)
-
-func set_probability(prob: float) -> void:
-    _nominal_probability = clampf(prob, 0.01, 0.99)
-    _c_constant = _approximate_c(_nominal_probability)
-    _fail_count = 1
-
-## Rolls for success using escalating PRD logic
-func roll() -> bool:
-    var current_chance: float = float(_fail_count) * _c_constant
-    var sample: float = randf()
-    
-    if sample <= current_chance:
-        _fail_count = 1 # Reset fail counter upon verified success
-        return true
-    else:
-        _fail_count += 1 # Increment failure counter to escalate subsequent odds
-        return false
-
-func _approximate_c(p: float) -> float:
-    # Snap to nearest discrete key in pre-computed table if available
-    var rounded_key: float = snappedf(p, 0.05)
-    if C_LOOKUP.has(rounded_key):
-        return C_LOOKUP[rounded_key]
-        
-    # Heuristic approximation polynomial for arbitrary values: C ≈ 0.31 * P^1.8
-    return 0.315 * pow(p, 1.82)
-```
-
----
-
-## 10.7 Weighted Loot Tables with Pity Bounds
-
-Dropping randomized items requires balancing weighted item generation with deterministic bounds ("pity counters") to cap negative player streaks on legendary tier drops.
-
-```
-                      PREFIX-SUM ARRAY BINARY SEARCH
-=================================================================================
- Items:      [ Common (60) ]  [ Uncommon (25) ]  [ Rare (12) ]  [ Mythic (3) ]
- Prefix Sum: 0 ──────────── 60 ──────────────── 85 ─────────── 97 ────────── 100
- Roll: 72.4  ──────────────────────────────────────► Falls in [60, 85) Interval!
- Result: UNCOMMON TIER! (Resolved in O(log N) via Binary Search!)
-```
-
-```gdscript
-# ==============================================================================
-# WEIGHTED DROP TABLE SYSTEM WITH HARD PITY ENGINE
-# ==============================================================================
-class_name LootTableSystem
-extends RefCounted
-
-class DropEntry:
-    var item_resource: Resource
-    var weight: float
-    var is_legendary: bool
-    
-    func _init(res: Resource, w: float, legendary: bool = false) -> void:
-        item_resource = res
-        weight = w
-        is_legendary = legendary
-
-var _entries: Array[DropEntry] = []
-var _prefix_sums: PackedFloat32Array = PackedFloat32Array()
-var _total_weight: float = 0.0
-
-# Pity Subsystem tracking
-var rolls_since_last_legendary: int = 0
-const HARD_PITY_THRESHOLD: int = 50
-
-func add_entry(item: Resource, weight: float, is_legendary: bool = false) -> void:
-    assert(weight > 0.0, "Drop weight must be positive.")
-    var entry: DropEntry = DropEntry.new(item, weight, is_legendary)
-    _entries.append(entry)
-    _recalculate_prefix_sums()
-
-func _recalculate_prefix_sums() -> void:
-    _prefix_sums.clear()
-    _total_weight = 0.0
-    for entry in _entries:
-        _total_weight += entry.weight
-        _prefix_sums.append(_total_weight)
-
-## Evaluates a weighted drop with O(log N) complexity and hard pity enforcement
-func evaluate_drop() -> Resource:
-    if _entries.is_empty():
-        return null
-        
-    rolls_since_last_legendary += 1
-
-    # 1. HARD PITY OVERRIDE: Force legendary drop if streak threshold is exceeded
-    if rolls_since_last_legendary >= HARD_PITY_THRESHOLD:
-        for entry in _entries:
-            if entry.is_legendary:
-                rolls_since_last_legendary = 0
-                return entry.item_resource
-
-    # 2. STANDARD WEIGHTED RANDOM DRAW
-    var roll: float = randf_range(0.0, _total_weight)
-    
-    # Binary Search over Prefix-Sum array: O(log N)
-    var low: int = 0
-    var high: int = _prefix_sums.size() - 1
-    var selected_idx: int = high
-    
-    while low <= high:
-        var mid: int = (low + high) / 2
-        if _prefix_sums[mid] >= roll:
-            selected_idx = mid
-            high = mid - 1 # Search left for lower boundary
-        else:
-            low = mid + 1
-
-    var picked: DropEntry = _entries[selected_idx]
-    if picked.is_legendary:
-        rolls_since_last_legendary = 0
-        
-    return picked.item_resource
-```
-
----
-
-## 10.8 Tactile "Juice" & Kinesthetic Feedback
-
-A mechanic can be mathematically balanced yet feel terrible to play. **"Juice"** (or Game Feel) is the non-functional audiovisual feedback that accentuates player actions.
-
-```
-                          THE KINESTHETIC HIT PIPELINE
-=================================================================================
- Melee Sword Impacts Hurtbox!
-           │
-           ├── 1. HITSTOP FREEZE ──► Freeze actor frames for 60ms (Zero displacement)
-           ├── 2. MESH JITTER   ──► Apply high-frequency noise offset to Victim
-           ├── 3. AUDIO SYSTEM  ──► Play pitched impact SFX + Transient Sub-bass
-           ├── 4. GPU SHADER    ──► Trigger 1-frame pure white Hit-Flash (EMISSION)
-           └── 5. CAMERA RIG    ──► Inject +0.3 Trauma onto Camera (Rotational shake)
-```
-
-```gdscript
-# ==============================================================================
-# TACTILE GAME FEEL & HITSTOP ORCHESTRATOR
-# ==============================================================================
-class_name KinestheticFeedback
-extends Node
-
-## Executes multi-layered impact feedback across time-scale, mesh, and camera
-static func trigger_impact(
-    attacker: Node, 
-    victim: Node, 
-    camera_rig: CinematicCameraRig,
-    hitstop_duration_sec: float = 0.06
-) -> void:
-    
-    # 1. CAMERA TRAUMA INJECTION
-    if camera_rig != null:
-        camera_rig.add_trauma(0.35)
-
-    # 2. TRANSIENT HIT-FLASH SHADER TRIGGER
-    _apply_hit_flash(victim)
-
-    # 3. KINEMATIC HITSTOP (Temporarily freezes processing without engine pausing)
-    _execute_hitstop(attacker, victim, hitstop_duration_sec)
-
-static func _apply_hit_flash(target: Node) -> void:
-    var mesh: GeometryInstance3D = target.find_child("MeshInstance3D", true, false) as GeometryInstance3D
-    if mesh != null and mesh.material_override != null:
-        var mat: Material = mesh.material_override
-        # Trigger hit-flash uniform parameter on shader
-        mat.set("shader_parameter/flash_intensity", 1.0)
-        
-        # Smooth decay via SceneTree Tween
-        var tween: Tween = target.get_tree().create_tween()
-        tween.tween_property(mat, "shader_parameter/flash_intensity", 0.0, 0.15)
-
-static func _execute_hitstop(attacker: Node, victim: Node, duration: float) -> void:
-    # Disable process updates locally to preserve physical position without pausing the world
-    attacker.set_physics_process(false)
-    victim.set_physics_process(false)
-    
-    # Resume after asynchronous duration
-    await attacker.get_tree().create_timer(duration, true, false, true).timeout
-    
-    if is_instance_valid(attacker):
-        attacker.set_physics_process(true)
-    if is_instance_valid(victim):
-        victim.set_physics_process(true)
-```
-
----
-
-## 10.9 Applied Synthesis: The Complete Attribute Modifier & Combat Equation
-
-To integrate combat invariants, hyperbolic mitigation, and deterministic modifiers, review the unified **Combat Resolution Pipeline**:
-
-```
-                       UNIFIED DAMAGE RESOLUTION PIPELINE
-=================================================================================
- [ ATTACKER ]                                        [ VICTIM ]
- Base Weapon Damage: 40.0                            Base Armor Rating: 75.0
- Buff Pipeline (Additive + Mult)                     Equipment Armor Modifiers: +25.0
- ────────────────────────────────                    ────────────────────────────────
- Final Raw Damage: 58.0                              Total Armor: 100.0 (K = 100)
-        │                                                   │
-        ▼                                                   ▼
- Critical Hit Check (PRD)                            Hyperbolic Mitigation Factor
- (20% Nominal -> 5.5% Base C)                        Mitigation = 100 / (100 + 100) = 0.50
-        │                                                   │
-        └─────────────────────────┬─────────────────────────┘
-                                  │
-                                  ▼
-                     [ RESOLVED EFFECTIVE DAMAGE ]
-                     Damage = 58.0 * 0.50 = 29.0 HP
-                                  │
-                                  ▼
-                     [ KINESTHETIC JUICE FLUSH ]
-                     Hitstop (60ms) + Flash + Trauma (0.35)
-```
-
----
-# 🎨 Module VI: Rendering Pipelines, Shaders, Audio & Engine Servers
-
-> [!info] 📖 Lexicon & First Principles: Hardware, Shading & Server Terminology
-> Elevating your engineering requires looking past high-level node wrappers into the underlying graphics hardware and engine low-level servers:
-> - ⤷ **Draw Call**: A command issued by the CPU to the GPU graphics API (Vulkan, Direct3D, Metal) instructing it to draw a specific batch of geometry using a specific material and shader pipeline.
-> - ⤷ **Fragment (Pixel)**: A candidate pixel generated by the hardware rasteriser during screen-space projection, carrying interpolated colour, normal, and depth values.
-> - ⤷ **UV Coordinates**: A normalised 2D texture coordinate space where $U$ represents the horizontal axis and $V$ represents the vertical axis ($U, V \in [0.0, 1.0]$).
-> - ⤷ **Digital Signal Processing (DSP)**: The mathematical manipulation of continuous audio waveforms represented as discrete numeric buffers, applying real-time filters such as convolution, low-pass equalization, and dynamic range compression.
-> - ⤷ **Engine Server (`RenderingServer`, `AudioServer`)**: Low-level, thread-safe C++ subsystems in Godot that execute the actual heavy lifting. Nodes are merely friendly high-level orchestrators; servers manage the real hardware state via lightweight identifiers (`RID`).
-> - ⤷ **RID (Resource Identifier)**: An opaque, ultra-fast 64-bit integer handle pointing directly to a server-side resource in unmanaged engine memory, completely bypassing Node tree overhead.
-
----
-
-## 6.1 The Hardware Rendering Pipeline & The Frame Lifecycle
-
-To write performant shaders and avoid rendering bottlenecks, an architect must understand the physical pipeline traversed by every geometric vertex before it becomes a coloured pixel on the monitor:
-
-```
-                            THE GPU GRAPHICS PIPELINE
-=================================================================================
- [ CPU Culling & Batching ]  ---> Frustum & occlusion culling; gathers draw calls
-           │
-           ▼ (Vulkan Command Buffer)
- [ 1. Vertex Shader Stage ]  ---> Transforms local vertices to Clip Space (MVP Matrix)
-           │
-           ▼
- [ 2. Primitive Assembly ]   ---> Connects vertices into lines or triangles
-           │
-           ▼
- [ 3. Hardware Rasteriser ]  ---> Interpolates vertices across triangles into Fragments
-           │
-           ▼
- [ 4. Fragment Shader ]      ---> Computes pixel albedo, roughness, normals, & lighting
-           │
-           ▼
- [ 5. Depth & Stencil Tests] ---> Culls occluded fragments behind existing geometry
-           │
-           ▼
- [ 6. Blending & Output ]    ---> Writes final colour values into the Framebuffer
-```
-
-### The Three Spatial Matrix Multiplications (MVP Matrix)
-
-Every vertex in your 3D mesh is translated to your screen through three foundational linear algebra transformations:
-
-$$\vec{v}_{\text{clip}} = \mathbf{P} \cdot \mathbf{V} \cdot \mathbf{M} \cdot \vec{v}_{\text{local}}$$
-
-1. **Model Matrix ($\mathbf{M}$)**: Transforms local model coordinates into the Global World coordinate system (Node translation, rotation, scale).
-2. **View Matrix ($\mathbf{V}$)**: Transforms world coordinates into Camera Space (placing the camera lens at the origin looking down $-Z$).
-3. **Projection Matrix ($\mathbf{P}$)**: Scales and distorts 3D coordinates into 4D Clip Space, compressing distant geometry to create perspective foreshortening.
-
----
-
-## 6.2 Modern Shader Programming (`gdshader`)
-
-Godot 4 features its own shading language based on GLSL ES 3.0. Unlike standard GDScript, which executes sequentially on CPU cores, shaders run **massively parallel** across thousands of small GPU arithmetic logic units (ALUs) concurrently.
-
-```
-                      ANATOMY OF A GODOT SHADER PROGRAMME
-=================================================================================
- shader_type spatial; // canvas_item (2D), spatial (3D), or particles
-
- // UNIFORMS: Parameters exposed to CPU scripts and the Inspector
- uniform vec4 hit_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
- uniform float dissolve_amount : hint_range(0.0, 1.0) = 0.0;
-
- // VERTEX(): Executed once per vertex point in the mesh
- void vertex() {
-     // Manipulate geometry, vertex positions, normals, and tangents
- }
-
- // FRAGMENT(): Executed once per rasterised candidate pixel (Fragment)
- void fragment() {
-     // Compute ALBEDO, EMISSION, METALLIC, ROUGHNESS, and ALPHA
- }
-
- // LIGHT(): Executed once per light source affecting this specific fragment
- void light() {
-     // Custom lighting models (e.g., Cel-shading / Toon lighting)
- }
-```
-
-### 1. Vertex Displacement: Procedural Swaying Foliage
-
-Rather than skinning vegetation meshes with complex CPU skeletal rigs, we displace vertices directly on the GPU using trigonometric sine waves modulated by vertex height ($y$):
-
-```glsl
-shader_type spatial;
-render_mode cull_disabled; // Render both sides of grass blades
-
-uniform vec4 grass_albedo : source_color = vec4(0.2, 0.7, 0.3, 1.0);
-uniform float wind_speed = 2.5;
-uniform float wind_amplitude = 0.15;
-uniform float wind_frequency = 1.2;
-
-void vertex() {
-    // Only sway the upper tips of the mesh; anchor the root (VERTEX.y near 0.0)
-    float height_factor = max(0.0, VERTEX.y);
-    
-    // Compute phase-offset sinusoidal displacement across world space coordinates
-    vec3 world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-    float time = TIME * wind_speed;
-    
-    float wave_x = sin(time + (world_pos.x * wind_frequency) + (world_pos.z * 0.5));
-    float wave_z = cos(time * 0.8 + (world_pos.z * wind_frequency));
-    
-    // Apply displacement proportional to height squared (quadratic bending)
-    VERTEX.x += wave_x * wind_amplitude * (height_factor * height_factor);
-    VERTEX.z += wave_z * wind_amplitude * 0.5 * (height_factor * height_factor);
-}
-
-void fragment() {
-    ALBEDO = grass_albedo.rgb;
-    ROUGHNESS = 0.6;
-}
-```
-
-### 2. Fragment Shading: Multi-Pass Dissolve with Burning Ember Edge
-
-This production shader dissolves an entity using procedural gradient noise while rendering a luminous, glowing border along the erosion threshold:
-
-```glsl
-shader_type spatial;
-
-uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
-uniform sampler2D noise_texture : hint_default_black, filter_linear_mipmap;
-
-uniform float dissolve_threshold : hint_range(0.0, 1.0) = 0.0;
-uniform float burn_width : hint_range(0.0, 0.2) = 0.04;
-uniform vec4 burn_color : source_color = vec4(2.5, 0.8, 0.1, 1.0); // HDR emission values > 1.0
-
-void fragment() {
-    vec4 tex_color = texture(albedo_texture, UV);
-    float noise_val = texture(noise_texture, UV).r;
-    
-    // 1. Fragment Discard Threshold
-    // If the noise value falls below the threshold, eliminate the fragment entirely
-    if (noise_val < dissolve_threshold) {
-        discard;
-    }
-    
-    // 2. Burning Ember Border Calculation
-    // Detect fragments that lie precisely within the border boundary
-    float border = dissolve_threshold + burn_width;
-    if (noise_val < border && dissolve_threshold > 0.0) {
-        // Interpolate burn intensity across the boundary band
-        float t = (noise_val - dissolve_threshold) / burn_width;
-        ALBEDO = mix(burn_color.rgb, tex_color.rgb, t);
-        EMISSION = burn_color.rgb * (1.0 - t) * 4.0; // Glow intensifies at edge
-    } else {
-        ALBEDO = tex_color.rgb;
-        EMISSION = vec3(0.0);
-    }
-    
-    METALLIC = 0.1;
-    ROUGHNESS = 0.7;
-}
-```
-
-### 3. Screen-Reading Shaders: Dynamic Hit-Flash & Post-Processing (2D/3D)
-
-In 2D (`canvas_item`), shaders can sample the pixels already drawn beneath them using `hint_screen_texture` for glass refraction, chromatic aberration, or thermal heat distortion:
-
-```glsl
-shader_type canvas_item;
-
-// hint_screen_texture allows reading the already-rendered background pixels
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
-uniform float distortion_intensity : hint_range(0.0, 0.1) = 0.02;
-
-void fragment() {
-    // Generate an offset using UV center radial displacement
-    vec2 center = vec2(0.5, 0.5);
-    vec2 offset = normalize(UV - center) * distortion_intensity;
-    
-    // Sample the background screen with offset coordinates
-    vec4 background_pixel = texture(screen_texture, SCREEN_UV + offset);
-    
-    COLOR = background_pixel;
-}
-```
-
----
-
-## 6.3 Dynamic Audio Architecture & DSP Effects (`AudioServer`)
-
-Treating audio as mere one-shot sound calls (`$AudioStreamPlayer.play()`) leads to a flat, sterile game experience. Professional games treat the audio mix as an interactive, real-time reactive landscape.
-
-```
-                         THE DYNAMIC AUDIO ROUTING GRAPH
-=================================================================================
-  [ Gunfire SFX ]  ──► [ SFX Bus ] ─────────────┐
-                                                ▼
-  [ Steps SFX ]    ──► [ Footsteps Bus ] ──► [ World Bus ] ──► [ Master Bus ]
-                                                ▲                      ▲
-  [ Ambience SFX ] ─────────────────────────────┘                      │
-                                                                       │
-  [ Dynamic BGM ]  ──► [ Music Bus ] ──────────────────────────────────┘
-                            │
-                            ▼ (Sidechain Signal / Ducking Trigger)
-```
-
-### 1. High-Yield Audio Bus Layout
-
-Configure a professional bus hierarchy in Godot's Audio Tab:
-1. **Master Bus**: Final output stage. Place a subtle `Limiter` here to prevent hard digital clipping (distortion over $0\text{ dBFS}$).
-2. **Music Bus**: Receives interactive stems. Contains low-pass filters that engage dynamically during menus, pause states, or death sequences.
-3. **SFX Bus**: Receives impact, UI, and world noises.
-4. **Voice / Dialogue Bus**: Sidechained to duck the Music Bus automatically whenever a speech waveform is present.
-
-### 2. Eliminating Ear Fatigue via `AudioStreamRandomizer`
-
-Repeatedly playing the identical audio sample (such as footsteps or gunfire) triggers rapid auditory fatigue in players. Never trigger raw, static audio files repeatedly. Use Godot 4's native **`AudioStreamRandomizer`** resource:
-
-```gdscript
-# ==============================================================================
-# PROCEDURAL AUDIO EMITTER (Pitch Modulation & Polyphonic Playback)
-# ==============================================================================
-class_name ResponsiveAudioEmitter
-extends AudioStreamPlayer3D
-
-@export_group("Dynamic Modulation")
-## Percentage variation applied to playback pitch (e.g., 0.08 = +/- 8%)
-@export var pitch_variance: float = 0.08
-## Decibel variation applied to playback volume
-@export var volume_variance_db: float = 1.5
-
-var _base_pitch: float
-var _base_volume_db: float
-
-func _ready() -> void:
-    _base_pitch = pitch_scale
-    _base_volume_db = volume_db
-
-## Plays the audio stream with subtle humanised variation
-func play_varied(from_position: float = 0.0) -> void:
-    var pitch_mod: float = randf_range(-pitch_variance, pitch_variance)
-    var vol_mod: float = randf_range(-volume_variance_db, volume_variance_db)
-    
-    pitch_scale = _base_pitch + pitch_mod
-    volume_db = _base_volume_db + vol_mod
-    
-    play(from_position)
-```
-
-### 3. Programmatic DSP Modulation: Real-Time Underwater Muffling
-
-To simulate submerging underwater or suffering a concussive blast, smoothly modulate an `AudioEffectLowPassFilter` via GDScript:
-
-```gdscript
-# ==============================================================================
-# DYNAMIC DSP FILTER CONTROLLER
-# ==============================================================================
-class_name AudioFilterController
-extends Node
-
-## Smoothly toggles an underwater low-pass filter effect on the Master bus
-static func transition_underwater_state(is_underwater: bool, duration: float = 0.5) -> void:
-    var bus_idx: int = AudioServer.get_bus_index(&"Master")
-    var effect_idx: int = -1
-    
-    # Locate existing LowPassFilter in bus effects chain
-    for i in range(AudioServer.get_bus_effect_count(bus_idx)):
-        if AudioServer.get_bus_effect(bus_idx, i) is AudioEffectLowPassFilter:
-            effect_idx = i
-            break
-            
-    if effect_idx == -1:
-        push_error("AudioFilterController: No AudioEffectLowPassFilter detected on Master bus.")
-        return
-
-    var lpf: AudioEffectLowPassFilter = AudioServer.get_bus_effect(bus_idx, effect_idx) as AudioEffectLowPassFilter
-    
-    # 20500 Hz = Open human hearing (Dry/Normal); 800 Hz = Heavy underwater muffle
-    var target_cutoff: float = 800.0 if is_underwater else 20500.0
-    
-    # Create smooth scene tree tween to interpolate cutoff frequency
-    var tween: Tween = Engine.get_main_loop().create_tween()
-    tween.tween_property(lpf, "cutoff_hz", target_cutoff, duration)\
-         .set_trans(Tween.TRANS_QUAD)\
-         .set_ease(Tween.EASE_OUT)
-```
-
----
-
-## 6.4 Bypassing Nodes: The Direct Engine Servers (`RenderingServer`)
-
-The biggest mental shift from an amateur scripter to an engine architect is recognising that **Nodes are optional**.
-
-Every `MeshInstance3D`, `Sprite2D`, and `Light3D` in your scene tree is merely a high-level wrapper holding an unmanaged **Resource Identifier (`RID`)** targeting the underlying C++ `RenderingServer`.
-
-```
-                    THE NODE VS. SERVER OVERHEAD GAP
-=================================================================================
- SCENE TREE NODE APPROACH (High Memory, High CPU Overhead):
- [ Node ] ---> [ CanvasItem / Spatial ] ---> [ Transform ] ---> [ SceneTree Tick ]
-   └─ Holds RID pointer to RenderingServer
-
- DIRECT SERVER API (Bypasses Tree entirely, zero node allocations):
- GDScript Logic ═══════════════════════════════════════► [ RenderingServer (C++) ]
- (Passes pure RIDs & Transform matrices directly)
-```
-
-> [!tip] 💡 Intuition & Mental Model: The Restaurant Analogy
-> - **The Scene Tree**: A waiter who takes your order, carries it to the kitchen, checks your table every minute, and arranges the condiments. Great for a table of four (Player, Boss, UI).
-> - **The Direct Server API**: Walking directly through the kitchen doors and handing the chef a spreadsheet of 20,000 raw meals to prepare all at once. Necessary when spawning 20,000 bullets, raindrops, or asteroids.
-
-### Scalability Limits: 10,000 Entities
-
-- Spawning $10,000$ individual `Sprite2D` or `MeshInstance3D` nodes incurs catastrophic CPU Scene Tree traversal costs, cache misses, and Garbage Collection stalls.
-- Allocating $10,000$ items directly through `RenderingServer` or rendering them via a single **`MultiMeshInstance3D`** executes in a single GPU draw call with near-zero CPU footprint!
-
----
-
-## 6.5 Concrete Applied System: High-Speed MultiMesh Particle & Debris Engine
-
-To synthesize **RenderingServer APIs, MultiMesh instance batching, and high-performance transform math**, consider this complete, high-speed debris manager capable of driving thousands of flying physical debris particles at a locked $144\text{ FPS}$:
-
-```gdscript
-# ==============================================================================
-# BATCHED MULTIMESH DEBRIS ENGINE (Direct Server Allocation)
-# ==============================================================================
-class_name MultiMeshDebrisEngine
-extends Node3D
-
-@export var debris_mesh: Mesh
-@export var max_particles: int = 5000
-@export var gravity: Vector3 = Vector3(0.0, -9.8, 0.0)
-
-var _multimesh: MultiMesh
-var _multimesh_instance: MultiMeshInstance3D
-
-# Flat contiguous memory tracking for kinematic updates
-var _velocities: PackedVector3Array
-var _positions: PackedVector3Array
-var _lifetimes: PackedFloat32Array
-var _active_count: int = 0
-
-func _ready() -> void:
-    assert(debris_mesh != null, "MultiMeshDebrisEngine requires an assigned debris_mesh.")
-    _setup_multimesh()
-
-func _setup_multimesh() -> void:
-    _multimesh = MultiMesh.new()
-    _multimesh.transform_format = MultiMesh.TRANSFORM_3D
-    _multimesh.mesh = debris_mesh
-    _multimesh.instance_count = max_particles
-    _multimesh.visible_instance_count = 0
-    
-    _multimesh_instance = MultiMeshInstance3D.new()
-    _multimesh_instance.multimesh = _multimesh
-    add_child(_multimesh_instance)
-    
-    _velocities.resize(max_particles)
-    _positions.resize(max_particles)
-    _lifetimes.resize(max_particles)
-
-## Spawns a high-velocity particle burst at the target world position
-func spawn_burst(origin: Vector3, count: int, max_speed: float) -> void:
-    for i in range(count):
-        if _active_count >= max_particles:
-            break
-            
-        var idx: int = _active_count
-        _positions[idx] = origin
-        
-        # Spherical random direction vector
-        var random_dir: Vector3 = Vector3(
-            randf_range(-1.0, 1.0),
-            randf_range(-1.0, 1.0),
-            randf_range(-1.0, 1.0)
-        ).normalized()
-        
-        _velocities[idx] = random_dir * randf_range(max_speed * 0.3, max_speed)
-        _lifetimes[idx] = randf_range(1.5, 3.0)
-        _active_count += 1
-
-func _physics_process(delta: float) -> void:
-    if _active_count == 0:
-        _multimesh.visible_instance_count = 0
-        return
-        
-    var write_idx: int = 0
-    
-    for read_idx in range(_active_count):
-        _lifetimes[read_idx] -= delta
-        
-        if _lifetimes[read_idx] > 0.0:
-            # Integrate physics step
-            _velocities[read_idx] += gravity * delta
-            _positions[read_idx] += _velocities[read_idx] * delta
-            
-            # Construct transform matrix in-place
-            var t: Transform3D = Transform3D(Basis(), _positions[read_idx])
-            _multimesh.set_instance_transform(write_idx, t)
-            
-            # Keep element alive in array
-            if write_idx != read_idx:
-                _positions[write_idx] = _positions[read_idx]
-                _velocities[write_idx] = _velocities[read_idx]
-                _lifetimes[write_idx] = _lifetimes[read_idx]
-                
-            write_idx += 1
-            
-    _active_count = write_idx
-    _multimesh.visible_instance_count = _active_count
-```
-
----
-# ⚡ Module VII: Diagnostics, Profiling, Optimisation & Edge-Case Engineering
-
-> [!info] 📖 Lexicon & First Principles: Performance & Runtime Diagnostics
-> Transitioning from amateur scripting to senior systems architecture requires diagnosing computational bottlenecks at the hardware, memory, and engine server layers:
-> - ⤷ **Frame Budget**: The total window of real time ($\Delta t$) available to execute all simulation logic, physics integration, audio processing, driver synchronization, and GPU rasterisation before a frame drop occurs.
-> - ⤷ **Frame-Time Pacing (Jitter)**: Irregular variance in the duration of individual frames. A game running at an average of $60\text{ FPS}$ with erratic frame times ($8\text{ ms} \rightarrow 32\text{ ms} \rightarrow 5\text{ ms}$) feels noticeably stuttery compared to a locked, uniform $16.66\text{ ms}$ delivery.
-> - ⤷ **Spatial Hash Grid**: An associative data structure that maps continuous 2D/3D Euclidean coordinates into discrete, integer-keyed spatial buckets, reducing pair-wise proximity testing complexity from quadratic to near-linear scale.
-> - ⤷ **Orphan Node**: A heap-allocated `Node` instance detached from the `SceneTree` via `remove_child()` but never explicitly freed via `queue_free()`. It lingers permanently in RAM, leaking memory and native resources.
-> - ⤷ **WorkerThreadPool**: Godot 4's native multi-threaded task scheduler that distributes arbitrary, thread-safe computational jobs across all available CPU host cores.
-> - ⤷ **IEEE 754 Representation**: The international standard for binary floating-point computation, which represents real numbers using fixed bit fields (sign, biased exponent, mantissa), inherently causing rounding discrepancies in base-10 fractional math.
-
----
-
-## 7.1 The $16.67\text{ ms}$ Frame Budget & Profiler Diagnostics
-
-The primary constraint of real-time software is that physical time never stops. If your game targets a fluid refresh rate, every subsystem must complete its work within a hard temporal budget:
-
-$$\text{Budget} = \frac{1000\text{ ms}}{\text{Target FPS}} \qquad \implies \qquad 60\text{ FPS} \approx 16.67\text{ ms}, \quad 144\text{ FPS} \approx 6.94\text{ ms}$$
-
-```
-                       THE 16.67ms FRAME TIME BUDGET SLICE
-=================================================================================
- [ Engine Overhead & OS Events: ~1.5ms ]
- [ Fixed Physics Step (_physics_process): ~3.0ms ]
- [ Gameplay Scripting & AI Logic (_process): ~4.0ms ]
- [ SceneTree Updates, Visibility & Culling: ~2.0ms ]
- [ Vulkan Draw-Call Assembly & State Dispatch: ~2.5ms ]
- [ GPU Fragment Shading, Lighting & Post-Processing: ~3.67ms ]
- ───────────────────────────────────────────────────────────────────────────────
- TOTAL TIME CONSUMED: 16.67ms (Target met. Exceeding this causes dropped frames)
-```
-
-### The Analytical Diagnostic Workflow
-
-Never refactor code based on intuition or unmeasured speculation. Profile using Godot's built-in **Profiler**, **Visual Profiler**, and **Monitors**:
-
-```
-                       PROFILER TRIAGE DECISION TREE
-=================================================================================
- Is Frame Time > 16.67ms?
-    │
-    ├── YES ──► Check "Process Time" vs. "Physics Time"
-    │             │
-    │             ├── Process Spike ──► Inspect GDScript Profiler:
-    │             │                     Identify functions with high "Self Time"
-    │             │                     or calls exceeding 1,000/frame.
-    │             │
-    │             └── Physics Spike ──► Check Physics 2D/3D Monitors:
-    │                                   Are Active Objects or Collision Pairs
-    │                                   scaling quadratically?
-    │
-    └── NO  ──► Inspect "Frame-Time Graph" for periodic spikes:
-                  │
-                  ├── Regular 1-second cadence ──► Heap allocations (Garbage collection)
-                  └── Sporadic multi-frame stalls ─► Resource loading / Pipeline compilation
-```
-
-1. **Inclusive Time vs. Self Time**:
-   - ⤷ **Inclusive Time**: The total time spent inside a function *plus* all child functions and engine methods it calls.
-   - ⤷ **Self Time**: The time spent *strictly* inside the function's own local instructions. ==High Self Time highlights algorithmic inefficiencies== within that specific function body.
-2. **Visual Profiler**:
-   - Isolates CPU culling, shadow pass generation, transparent object passes, and post-processing passes. If the shadow pass consumes $> 4\text{ ms}$, adjust shadow cascade distances and directional shadow resolutions rather than rewriting GDScript.
-
----
-
-## 7.2 Algorithmic Complexity (Big-$\mathcal{O}$) in Real-Time Loops
-
-Amateur code often runs smoothly in testing with $20$ entities, only to slow down in production when handling $1,000$ entities. This slowdown stems directly from asymptotic complexity scaling.
-
-```
-                    BIG-O SCALABILITY COMPARISON MATRIX
-┌───────────────┬─────────────────┬───────────────────┬─────────────────────────┐
-│ Complexity    │ Class Name      │ $N = 50$ Ops      │ $N = 2,000$ Ops         │
-├───────────────┼─────────────────┼───────────────────┼─────────────────────────┤
-│ $\mathcal{O}(1)$       │ Constant        │ $1$ op            │ $1$ op (Hash map)       │
-│ $\mathcal{O}(\log N)$   │ Logarithmic     │ $\approx 6$ ops   │ $\approx 11$ ops (Tree) │
-│ $\mathcal{O}(N)$       │ Linear          │ $50$ ops          │ $2,000$ ops (Single loop)│
-│ $\mathcal{O}(N \log N)$│ Linearithmic    │ $\approx 282$ ops │ $\approx 21,931$ ops    │
-│ $\mathcal{O}(N^2)$     │ Quadratic       │ $2,500$ ops       │ $4,000,000$ ops 🚨 FAIL │
-└───────────────┴─────────────────┴───────────────────┴─────────────────────────┘
-```
-
-### The $N^2$ Proximity Detection Anti-Pattern
-
-Checking whether any entity in the game is within melee range of another entity using nested loops is a common source of quadratic slowdown:
-
-```gdscript
-# ANTI-PATTERN: O(N^2) Nested Spatial Testing
-# 1,000 entities = 1,000,000 distance calculations EVERY frame!
-func _process(delta: float) -> void:
-    for i in range(entities.size()):
-        for j in range(i + 1, entities.size()):
-            var dist_sq: float = entities[i].global_position.distance_squared_to(entities[j].global_position)
-            if dist_sq < 4.0:
-                resolve_overlap(entities[i], entities[j])
-```
-
-### The Solution: 2D/3D Spatial Hash Partitioning
-
-A **Spatial Hash Grid** subdivides continuous Euclidean space into a virtual grid of uniform cells. Instead of comparing an entity against every other entity in the level, it registers each entity into a cell coordinate based on its position:
-
-$$\text{CellX} = \lfloor x / S \rfloor, \quad \text{CellY} = \lfloor y / S \rfloor, \quad \text{CellZ} = \lfloor z / S \rfloor$$
-
-where $S$ is the cell size (typically chosen as twice the maximum query radius). Proximity searches then query only the entity's current cell and its immediate neighbours ($9$ cells in 2D, $27$ in 3D), bringing average complexity down to near-linear $\mathcal{O}(N)$ performance:
-
-```
-                      SPATIAL HASH GRID PARTITIONING
-=================================================================================
-    Grid Cell Size S = 10m
-    ┌─────────────┬─────────────┬─────────────┐
-    │ Cell (-1,1) │ Cell (0,1)  │ Cell (1,1)  │
-    │             │   [Entity B]│             │
-    ├─────────────┼─────────────┼─────────────┤
-    │ Cell (-1,0) │ Cell (0,0)  │ Cell (1,0)  │
-    │             │  [Player]   │   [Entity C]│
-    ├─────────────┼─────────────┼─────────────┤
-    │ Cell (-1,-1)│ Cell (0,-1) │ Cell (1,-1) │
-    │ [Distant D] │             │             │
-    └─────────────┴─────────────┴─────────────┘
-    Player queries ONLY adjacent 9 cells. Distant Entity D is NEVER evaluated!
-```
-
-```gdscript
-# ==============================================================================
-# HIGH-SPEED 2D SPATIAL HASH GRID (Near O(1) Localised Queries)
-# ==============================================================================
-class_name SpatialHashGrid2D
-extends RefCounted
-
-var _cell_size: float
-var _inv_cell_size: float
-## Dictionary mapping Vector2i (cell coordinate) -> Array[Node2D]
-var _grid: Dictionary = {}
-
-func _init(cell_size: float = 64.0) -> void:
-    assert(cell_size > 0.0, "Cell size must be strictly positive.")
-    _cell_size = cell_size
-    _inv_cell_size = 1.0 / cell_size
-
-## Clears and rebuilds the grid allocations in a single frame pass
-func clear() -> void:
-    _grid.clear()
-
-## Maps a continuous spatial coordinate to an integer cell coordinate
-func world_to_grid(world_pos: Vector2) -> Vector2i:
-    return Vector2i(
-        int(floor(world_pos.x * _inv_cell_size)),
-        int(floor(world_pos.y * _inv_cell_size))
-    )
-
-## Inserts an entity into its corresponding grid cell
-func insert(entity: Node2D) -> void:
-    var cell: Vector2i = world_to_grid(entity.global_position)
-    if not _grid.has(cell):
-        var bucket: Array[Node2D] = []
-        _grid[cell] = bucket
-    _grid[cell].append(entity)
-
-## Queries entities residing within the cell and its 8 adjacent neighbours
-func query_radius(world_pos: Vector2, radius: float) -> Array[Node2D]:
-    var results: Array[Node2D] = []
-    var radius_sq: float = radius * radius
-    
-    var min_cell: Vector2i = world_to_grid(world_pos - Vector2(radius, radius))
-    var max_cell: Vector2i = world_to_grid(world_pos + Vector2(radius, radius))
-    
-    for cx in range(min_cell.x, max_cell.x + 1):
-        for cy in range(min_cell.y, max_cell.y + 1):
-            var cell_coord: Vector2i = Vector2i(cx, cy)
-            if not _grid.has(cell_coord):
-                continue
-                
-            var bucket: Array[Node2D] = _grid[cell_coord]
-            for entity in bucket:
-                if world_pos.distance_squared_to(entity.global_position) <= radius_sq:
-                    results.append(entity)
-                    
-    return results
-```
-
----
-
-## 7.3 Memory Lifecycles, Orphan Leak Detection & Weak References
-
-Memory leaks in garbage-collected environments differ from manual languages like C. In GDScript, leaks rarely manifest as crashes; instead, they appear as **retained references that prevent objects from being freed**, steadily increasing RAM usage until the operating system terminates the process.
-
-```
-                      GODOT MEMORY DUAL-TRACK ARCHITECTURE
-=================================================================================
- TRACK 1: RefCounted Subsystem                TRACK 2: Node / Object Subsystem
- (Resources, RefCounted instances)            (Spatial nodes, UI Control nodes)
- ─────────────────────────────────            ─────────────────────────────────
-  Memory managed via reference counts:        Manual lifetime management:
-  - ref_count increments on assignment        - Instantiated via .new()
-  - ref_count decrements when out of scope    - add_child() binds to Tree
-  - Free occurs when ref_count == 0           - queue_free() safely deallocates
-  ⚠️ LEAK RISK: Cyclic dependencies           ⚠️ LEAK RISK: Orphan nodes lingering
-```
-
-### 1. The Orphan Node Detector
-
-An orphan node occurs when code calls `parent.remove_child(child)` or instantiates a node without mounting it to the tree via `add_child()`, and subsequently abandons the variable without calling `queue_free()`. The node remains in RAM indefinitely:
-
-```gdscript
-# ==============================================================================
-# ORPHAN NODE AUDITOR & LEAK TELEMETRY
-# ==============================================================================
-class_name MemoryDiagnostics
-extends RefCounted
-
-## Prints a warning if orphan nodes are detected in the active engine instance
-static func audit_orphan_nodes() -> void:
-    # Query performance monitor for total unparented node count
-    var orphan_count: int = Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT) as int
-    
-    if orphan_count > 0:
-        push_warning("MemoryDiagnostics: [ORPHAN LEAK] %d unparented nodes lingering in RAM!" % orphan_count)
-        # Optional: Print total Object allocations currently residing in host memory
-        var total_objects: int = Performance.get_monitor(Performance.OBJECT_COUNT) as int
-        var total_resources: int = Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT) as int
-        print("Telemetry Summary -> Total Objects: %d | Total Resources: %d" % [total_objects, total_resources])
-    else:
-        print("MemoryDiagnostics: Memory audit clean. Zero orphan nodes detected.")
-```
-
-### 2. Breaking Cyclic Dependencies via WeakRef
-
-If two `RefCounted` or `Resource` instances point to each other directly, their reference counts can never hit zero:
-
-```
-               CYCLIC DEPENDENCY: PERMANENT REFERENCE LOCK
-=================================================================================
- [ CharacterStats (RefCounted) ] ──(var equipment)──► [ InventoryItem (RefCounted) ]
-                                 ◄──(var owner_stats)─┘
- Both reference counts remain >= 1 forever. Memory leaks permanently upon scope exit!
-```
-
-To break the cycle, replace one strong reference with a **`WeakRef`**, which points to an object without incrementing its internal reference counter:
-
-```gdscript
-# ==============================================================================
-# WEAK REFERENCE CIRCULAR RESOLUTION
-# ==============================================================================
-class_name InventoryItem
-extends RefCounted
-
-var item_name: String = "Mythic Blade"
-## WEAK REFERENCE: Does NOT increment reference counter of CharacterStats
-var _owner_stats_weak: WeakRef
-
-func bind_owner(stats: RefCounted) -> void:
-    _owner_stats_weak = weakref(stats)
-
-func get_owner_stats() -> RefCounted:
-    if _owner_stats_weak == null:
-        return null
-        
-    var resolved: Object = _owner_stats_weak.get_ref()
-    if resolved != null and is_instance_valid(resolved):
-        return resolved as RefCounted
-        
-    return null # Target object was deallocated cleanly
-```
-
----
-
-## 7.4 Floating-Point Precision Drift (IEEE 754) & Physics Deferral
-
-Writing game logic that assumes exact decimal equality inevitably produces elusive, hard-to-reproduce bugs:
-
-```gdscript
-# THE EQUALITY FAILURE FALLACY
-var sum: float = 0.1 + 0.2
-if sum == 0.3:
-    print("Exact match!") # NEVER EXECUTES!
-```
-
-### The Mechanics of IEEE 754 Representation
-
-CPUs represent standard 32-bit floats using binary scientific notation:
-
-$$\text{Value} = (-1)^{\text{sign}} \times 2^{\text{exponent} - 127} \times \left(1 + \sum_{i=1}^{23} b_{23-i} 2^{-i}\right)$$
-
-Because powers of $2$ cannot cleanly express fractions like $\frac{1}{10}$ or $\frac{2}{10}$, values like $0.1$ and $0.2$ are approximate recurring binary fractions. The sum evaluates to `0.3000000000000000444...`, meaning direct `==` comparisons fail:
-
-```gdscript
-# PRODUCTION DISCIPLINE: Approximate Equality Assertions
-# Scalar equality:
-if is_equal_approx(sum, 0.3):
-    print("Resolved safely via epsilon threshold!")
-
-# Zero comparison:
-if is_zero_approx(velocity.length()):
-    stop_locomotion()
-
-# Vector equality:
-if current_pos.is_equal_approx(target_pos):
-    snap_to_waypoint()
-```
-
-### Physics Query Flushes & `set_deferred`
-
-```
-                      THE MID-TICK DEFERRAL CONFLICT
-=================================================================================
- [ Physics Server Processing Iteration ] ──► Detects collision between Body & Area
-          │
-          ▼
- Emits signal: "_on_area_entered"
-          │
-          ▼
- User script calls: "collision_shape.disabled = true" 🚨 ENGINE ERROR!
- (Physics Server is currently mid-step; mutating collision states here causes memory corruption!)
-```
-
-To resolve this, defer physics-state changes to the end of the physics frame using **`set_deferred()`**:
-
-```gdscript
-func _on_hitbox_entered(body: Node2D) -> void:
-    # ❌ WRONG: Triggers "Can't change this state while flushing queries" error
-    # $CollisionShape2D.disabled = true
-    
-    # ✅ CORRECT: Defers assignment to the end of the current physics step
-    $CollisionShape2D.set_deferred("disabled", true)
-    
-    # Deferred method invocation if complex scene tree modification is required:
-    call_deferred(&"_safe_detach_sensor")
-
-func _safe_detach_sensor() -> void:
-    if is_instance_valid($Sensor):
-        $Sensor.queue_free()
-```
-
----
-
-## 7.5 Concurrency: Safe Multithreading via `WorkerThreadPool`
-
-Modern desktop and mobile CPUs use parallel multi-core architectures ($8\text{--}16$ hardware threads). Running heavy calculations (such as procedural map generation, path recalculations, or file decompression) entirely on the main thread causes hitching and stutter.
-
-However, multithreading introduces severe race conditions if background threads interact with the **SceneTree**:
-
-```
-                       MULTITHREADING INTEGRITY RULES
-=================================================================================
- [ WORKER THREAD ]                                  [ MAIN ENGINE THREAD ]
-  - Pure mathematical computation                    - SceneTree structure modification
-  - Noise generation / Pathfinding graphs             - Rendering and direct UI updates
-  - File reading / Parsing binary streams            - Node creation & add_child() calls
-                │                                                    ▲
-                └─────── Communicates via Thread-Safe Queue ─────────┘
-```
-
-> [!warning] ⚠️ Core Architectural Invariant: The Main Thread Barrier
-> Background worker threads must **never** call `add_child()`, `remove_child()`, modify UI elements, or interact directly with nodes mounted to the active SceneTree. Threads process raw data in isolation; they hand results back to the main thread for integration via thread-safe queues or deferred calls.
-
-### Concrete Production Implementation: Background Noise Chunk Generator
-
-```gdscript
-# ==============================================================================
-# ASYNCHRONOUS THREAD-POOL TASK DISPATCHER
-# ==============================================================================
-class_name AsyncChunkProcessor
-extends Node
-
-signal chunk_generation_completed(chunk_id: Vector2i, height_data: PackedFloat32Array)
-
-@export var chunk_dimension: int = 64
-@export var noise_profile: FastNoiseLite
-
-## Thread-safe task payload container
-class ChunkTask:
-    var target_coord: Vector2i
-    var dimension: int
-    var noise: FastNoiseLite
-    var output_buffer: PackedFloat32Array
-    
-    func _init(coord: Vector2i, dim: int, n: FastNoiseLite) -> void:
-        target_coord = coord
-        dimension = dim
-        noise = n
-        output_buffer = PackedFloat32Array()
-        output_buffer.resize(dim * dim)
-
-## Requests generation of terrain elevation data on a background worker thread
-func request_chunk_async(chunk_coord: Vector2i) -> void:
-    var task: ChunkTask = ChunkTask.new(chunk_coord, chunk_dimension, noise_profile)
-    
-    # Dispatch task to Godot's C++ WorkerThreadPool
-    var task_id: int = WorkerThreadPool.add_task(
-        _execute_background_task.bind(task),
-        true, # High priority
-        "GenerateChunk_" + str(chunk_coord)
-    )
-
-## EXECUTED EXCLUSIVELY ON WORKER THREAD (No SceneTree access permitted!)
-func _execute_background_task(task: ChunkTask) -> void:
-    var dim: int = task.dimension
-    var offset_x: float = float(task.target_coord.x * dim)
-    var offset_y: float = float(task.target_coord.y * dim)
-    var buffer: PackedFloat32Array = task.output_buffer
-    
-    var index: int = 0
-    for y in range(dim):
-        var world_y: float = offset_y + float(y)
-        for x in range(dim):
-            var world_x: float = offset_x + float(x)
-            # Intensive procedural Simplex noise sampling
-            var elevation: float = task.noise.get_noise_2d(world_x, world_y)
-            buffer[index] = elevation
-            index += 1
-            
-    # Safely dispatch completion signal back to the main thread
-    call_deferred(&"_notify_task_complete", task.target_coord, task.output_buffer)
-
-## EXECUTED BACK ON MAIN THREAD
-func _notify_task_complete(coord: Vector2i, heightmap: PackedFloat32Array) -> void:
-    chunk_generation_completed.emit(coord, heightmap)
-```
-
----
-
-## 7.6 Diagnostics and Profiling Metrics Matrix
-
-| Diagnostic Metric | Engine Monitor Identifier | Normal Threshold | Red-Flag Threshold | Remedial Action |
-| :--- | :--- | :--- | :--- | :--- |
-| **Physics Frame Time** | `TIME_PHYSICS_PROCESS` | $< 3.5\text{ ms}$ | $> 8.0\text{ ms}$ | Reduce `physics_ticks_per_second`, simplify collision shapes, check for broadphase overhead |
-| **Orphan Node Count** | `OBJECT_ORPHAN_NODE_COUNT` | Strict $0$ | $\ge 1$ | Trace unparented `Node.new()` calls or missing `queue_free()` calls on detached nodes |
-| **Active 3D Objects** | `PHYSICS_3D_ACTIVE_OBJECTS` | Contextual | Sharp spikes | Put stationary rigid bodies to sleep (`sleeping = true`) or convert to kinematic bodies |
-| **Draw Calls** | `RENDER_TOTAL_DRAW_CALLS_IN_FRAME` | $< 500$ (Mobile)<br>$< 2,500$ (PC) | $> 4,000$ | Combine meshes, merge materials, or convert instances to `MultiMeshInstance3D` |
-| **Video VRAM Usage** | `RENDER_VIDEO_MEM_USED` | Within GPU limits | Sustained growth | Compress textures (VRAM Compressed / Basis Universal), downscale uncompressed lightmaps |
-
----
-
-## 7.7 Concrete Applied System: Frame-Pacing Telemetry & Performance Monitor
+## 12.7 Concrete Applied System: Frame-Pacing Telemetry & Performance Monitor
 
 To synthesize **profiling diagnostics, floating-point analysis, orphan tracking, and telemetry display**, consider this production-grade, in-game performance monitor:
 
@@ -13912,7 +12083,7 @@ Before generating your final retail distribution binaries, execute this operatio
 
 ---
 
-# 📚 Module XIII: Curated Master Resource Library & Architectural Reference Compendium
+# 📚 Module VIII: Curated Master Resource Library & Architectural Reference Compendium
 
 > [!info] 📖 Lexicon & First Principles: Epistemic Reference & Self-Sustaining Mastery
 > Concluding our architectural curriculum requires defining the operational frameworks used to verify, test, and maintain game codebases over multi-year production cycles:
@@ -13923,7 +12094,7 @@ Before generating your final retail distribution binaries, execute this operatio
 
 ---
 
-## 8.1 The Systems Architect’s Master Bibliography
+## 14.1 The Systems Architect’s Master Bibliography
 
 Amateur programmers rely on ad-hoc search engine queries and isolated forum snippets. Systems architects build their mental models on authoritative literature:
 
@@ -13981,7 +12152,7 @@ Amateur programmers rely on ad-hoc search engine queries and isolated forum snip
 
 ---
 
-## 8.2 Comprehensive Systems Synthesis: Master Architectural Matrix
+## 14.2 Comprehensive Systems Synthesis: Master Architectural Matrix
 
 This matrix synthesises the architectural trade-offs across all systems explored in Modules I through VII:
 
@@ -14033,7 +12204,7 @@ This matrix synthesises the architectural trade-offs across all systems explored
 
 ---
 
-## 8.3 The Production Pre-Flight Checklist
+## 14.3 The Production Pre-Flight Checklist
 
 Before tagging a production build or promoting an experimental branch to trunk, evaluate your codebase against these four architectural verification tiers:
 
@@ -14066,7 +12237,7 @@ Before tagging a production build or promoting an experimental branch to trunk, 
 
 ---
 
-## 8.4 Production-Grade Architectural Audit Subsystem
+## 14.4 Production-Grade Architectural Audit Subsystem
 
 To automate **Tier 2 and Tier 3 checks**, integrate this diagnostic **Architectural Quality Auditor**. It continuously tracks performance metrics, scans for memory leaks, detects frame-budget overruns, and writes diagnostic reports to disk:
 
@@ -14173,7 +12344,7 @@ func _log_telemetry(severity: String, channel: String, message: String) -> void:
 
 ---
 
-## 8.5 Closing Reflections: From Scripter to Architect
+## 14.5 Closing Reflections: From Scripter to Architect
 
 True software mastery in game engineering is not measured by the number of syntax tricks or engine features you memorize. It is measured by your ability to **manage complexity, isolate responsibilities, and maintain system predictability under resource constraints**.
 
@@ -14196,5 +12367,4 @@ True software mastery in game engineering is not measured by the number of synta
 You now possess a complete, rigorous, and production-tested framework for building games in Godot 4. Write clean code, keep your systems decoupled, measure your performance with data, and build something exceptional.
 
 ---
-
 

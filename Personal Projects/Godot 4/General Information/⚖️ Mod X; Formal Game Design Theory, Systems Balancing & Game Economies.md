@@ -1,110 +1,306 @@
 # ⚖️ Module X: Formal Game Design Theory, Systems Balancing & Game Economies
 
 > [!info] 📖 Lexicon & First Principles: Ludological & Systems Engineering
-> Software architecture provides the functional skeleton; **Game Design** is the mathematical and psychological engineering of player agency, cognitive load, systemic feedback, and economic equilibrium:
-> - ⤷ **Ludology**: The formal academic study of games, rule systems, and play activities, distinct from narrative or visual media analysis.
-> - ⤷ **MDA Framework (Mechanics, Dynamics, Aesthetics)**: A formal post-mortem and design framework establishing that rules (**Mechanics**) produce runtime systemic interactions (**Dynamics**), which evoke subjective emotional responses (**Aesthetics**) in the human player.
-> - ⤷ **Intransitive Dynamic (Cyclical Dominance)**: A relational loop where no single element is universally superior ($A > B > C > A$, typified by Rock-Paper-Scissors), precluding degenerative dominant tactics.
-> - ⤷ **Mudflation**: The runaway economic devaluation of currency, equipment, or statistical power caused by continuous, unthrottled generation without commensurate, permanent sinks.
-> - ⤷ **Pseudo-Random Distribution (PRD)**: A statistical algorithm that alters event probabilities dynamically on consecutive successes or failures to minimize variance, aligning true mathematical odds with human cognitive perception.
-> - ⤷ **Hitstop (Freeze-Frame)**: The deliberate temporal freezing of character kinematics and animation updates for several frames ($50\text{--}100\text{ ms}$) upon verified weapon impact, imparting psychological weight and kinetic tactile feedback ("juice").
+> Software architecture provides the functional skeleton of an application; **Game Design** is the mathematical, cybernetic, and psychological engineering of human agency, cognitive load, systemic feedback, and economic equilibrium:
+> - ⤷ **Ludology**: The formal scientific study of games, rule systems, and play mechanics, distinct from cinematography or narrative prose.
+> - ⤷ **MDA Framework (Mechanics $\rightarrow$ Dynamics $\rightarrow$ Aesthetics)**: The foundational architectural model of game design (Hunicke, LeBlanc, Zubek). **Mechanics** are the concrete code rules and data structures; **Dynamics** are the emergent runtime behaviors produced when mechanics interact; **Aesthetics** are the emotional and cognitive states evoked inside the player.
+> - ⤷ **Intransitive Relationship (Cyclical Dominance)**: A non-linear mathematical graph where no single strategy dominates all others ($A \succ B \succ C \succ A$, typified by Rock-Paper-Scissors or Spear-Cavalry-Archers). It prevents degenerate **Dominant Strategies** that render player choice obsolete.
+> - ⤷ **Cybernetic Feedback Loop**: A closed-loop control system where the output of an action is routed back as an input to modify subsequent states. **Positive Feedback** amplifies divergence (snowballing); **Negative Feedback** enforces homeostasis (rubber-banding).
+> - ⤷ **Effective Health Pool ($EHP$)**: The true amount of raw, unmitigated damage an entity can absorb before dying after factoring in armor, shields, and evasion probabilities.
+> - ⤷ **Mudflation**: The runaway macroeconomic devaluation of currency and mid-tier items caused by unthrottled currency generation (**Faucets**) outpacing permanent destruction (**Sinks**).
+> - ⤷ **Pseudo-Random Distribution (PRD)**: A stateful probability algorithm that dynamically scales proc chances based on consecutive failure streaks, eliminating extreme variance so mathematical randomness matches human psychological intuition.
+> - ⤷ **Kinesthetic "Juice" (Game Feel)**: Non-functional, multi-sensory micro-feedback (hitstop frame-freezes, screen trauma, shader flashes, pitch modulation) triggered within $< 16.67\text{ ms}$ of player input to convey physical weight and impact.
 
 ---
 
-## 10.1 The MDA Framework & Pacing Architecture
+## 10.1 The MDA Framework & The Designer's Paradox
 
-A common failure mode in game development is designing backwards—beginning with a disconnected visual theme or narrative premise and grafting mechanical rules onto it. The **MDA Framework** formalizes the architectural divide between developer intent and player perception:
+Amateurs routinely design games backwards: they start with a superficial theme (*"A cyberpunk game with katanas"*) or copy mechanics blindly from other titles without understanding what emotional state those mechanics actually generate.
+
+The **MDA Framework** exposes the fundamental cognitive divide between the engineer who builds the system and the player who consumes it:
 
 ```
                          THE MDA PERSPECTIVE PARADOX
 =================================================================================
- DESIGNER PERSPECTIVE (Creation Pipeline):
- [ MECHANICS ] ──────────► [ DYNAMICS ] ──────────► [ AESTHETICS ]
- Concrete Rules            Runtime System           Emotional & Cognitive
- & GDScript Code           Interactions             Player Experience
-       ▲                                                    │
-       │                                                    ▼
+ ENGINEER / DESIGNER PERSPECTIVE (Causal Construction):
+ [ 1. MECHANICS ] ────────► [ 2. DYNAMICS ] ────────► [ 3. AESTHETICS ]
+ "Ammo is scarce (Max 12);   "Players avoid open       "Player feels vulnerable,
+  Reload takes 3.5 seconds;   gunfights, count shots,   anxious, and experiences
+  Headshots deal 4.0x dmg."   and panic when cornered." Survival Horror Tension."
+        ▲                                                        │
+        │                                                        ▼
  PLAYER PERSPECTIVE (Experiential Consumption):
- (Players consume Aesthetics FIRST, deduce Dynamics, and rarely see Mechanics directly!)
+ (The player feels the TENSION first, discovers the DYNAMICS of ammo conservation,
+  and never sees the raw GDScript MECHANICS underneath!)
 ```
 
-### The Taxonomy of Formal Aesthetics (Hunicke, LeBlanc, Zubek)
+### Why Mechanics Must Be Engineered Backwards from Aesthetics
 
-When architecting a game, define its target aesthetic profile from the eight foundational ludic emotional drivers:
+If your target **Aesthetic** is *Heroic Power Fantasy* (e.g., *DOOM Eternal*), making ammo scarce and reloads slow creates a contradictory **Dynamic** (hiding behind cover and waiting), which destroys the intended feeling. 
+- **To engineer Power Fantasy**: You must design **Mechanics** where aggressive forward movement is the primary **Faucet** for health and ammunition (e.g., melee glory kills drop health), forcing the **Dynamic** of relentless aggression.
 
-1. **Sensation**: Play as sensory pleasure (tactile kinematics, punchy soundscapes, screen trauma).
-2. **Fantasy**: Play as make-believe (world immersion, atmospheric coherence).
-3. **Narrative**: Play as drama (dynamic quest state machines, dramatic pacing curves).
-4. **Challenge**: Play as obstacle mastery (high skill ceiling, tight hitboxes, rigorous combat mechanics).
-5. **Fellowship**: Play as social framework (multiplayer coordination, squad roles, cooperative dependency).
-6. **Discovery**: Play as uncharted territory (procedural generation, branching world streaming, hidden mechanics).
-7. **Expression**: Play as self-discovery (custom loadouts, sandbox crafting, aesthetic customization).
-8. **Submission**: Play as pastime (compulsion loops, idle accumulation, ritualistic progression).
+### The Eight Formal Ludic Aesthetics & Their Mechanical Drivers
+
+| Formal Aesthetic | Psychological Definition | Required Runtime Dynamics | Concrete GDScript Mechanics to Implement |
+| :--- | :--- | :--- | :--- |
+| **1. Sensation** | Play as visceral sensory pleasure | High-impact kinetic feedback, rhythmic motion | Hitstop frame freezes, 6DOF Perlin camera trauma, shader emission flashes, transient sub-bass audio |
+| **2. Fantasy** | Play as immersion in an alternate reality | Diegetic world consistency, believable AI | Multi-modal AI perception (sight/sound), diegetic UI (ammo counters on gun meshes), environmental physics |
+| **3. Narrative** | Play as unfolding dramatic tension | Consequential choices, environmental storytelling | Directed Acyclic Graph (DAG) dialogue state machines, persistent world-state bitmasks |
+| **4. Challenge** | Play as obstacle mastery & skill testing | Tight execution windows, punishable mistakes | Deterministic boss state machines, animation commitment (no cancelling mid-swing), stamina management |
+| **5. Fellowship** | Play as social cooperation & synergy | Role interdependence, shared triumphs | Cross-class combo primers/detonators, revive mechanics, shared squad buff auras |
+| **6. Discovery** | Play as charting the unknown | Rewarding curiosity, hidden systemic depth | Procedural Wave Function Collapse (WFC) biomes, off-path secret areas, emergent physics chemistry |
+| **7. Expression** | Play as creative self-identity | Viable build variety, sandbox problem-solving | Modular component equipment, deep stat modifier pipelines, dye/transmog shaders |
+| **8. Submission** | Play as effortless relaxation ("abnegation") | Low cognitive friction, steady incremental rewards | Predictable farm loops, generous coyote/jump buffers, automated resource collection |
 
 ---
 
-## 10.2 Compulsion Loops & Flow Channel Calibration
+## 10.2 Nested Compulsion Loops, Pacing & Dynamic Difficulty Adjustment (DDA)
 
-A game's systemic retention relies on **Nested Compulsion Loops** operating across different temporal scales:
+A game that only has moment-to-moment combat grows repetitive after 15 minutes; a game that only has long-term strategy feels sluggish from second to second. Retention requires weaving three **Nested Compulsion Loops** together, where completing the smaller loop fuels the next larger loop:
 
 ```
                          NESTED COMPULSION ARCHITECTURE
 =================================================================================
- [ 1. MICRO LOOP (200ms - 5s) ]
- Tactical Kinematics: Aim ──► Discharge Weapon ──► Hitstop / Recoil ──► Dash
-               │
-               ▼
- [ 2. MESO LOOP (3m - 20m) ]
- Encounter Strategy: Clear Room ──► Collect Loot ──► Resolve Objectives ──► Re-equip
-               │
-               ▼
- [ 3. MACRO LOOP (2h - 50h+) ]
- Long-Term Mastery: Unlock Skill DAG ──► Optimize Meta-Build ──► Defeat Boss ──► NG+
+ [ 1. MICRO LOOP (Every 0.5s - 5s: Kinesthetic Execution) ]
+ Input: Spot Threat ──► Action: Dodge & Strike ──► Feedback: Hitstop, SFX, Blood VFX
+                                  │
+                                  ▼ (Feeds Meso Loop)
+ [ 2. MESO LOOP (Every 3m - 15m: Tactical Encounter & Reward) ]
+ Input: Enter Dungeon Room ──► Action: Clear Wave ──► Feedback: Chest Unlocks, Gold/XP
+                                  │
+                                  ▼ (Feeds Macro Loop)
+ [ 3. MACRO LOOP (Every 1h - 40h: Strategic Meta-Progression) ]
+ Input: Return to Hub ──► Action: Spend Gold on Skill DAG ──► Feedback: New Playstyle Unlocked!
 ```
 
-### Csikszentmihalyi’s Flow Channel & Dynamic Tension
+### Csikszentmihalyi’s Flow Channel & The Sawtooth Tension Wave
 
-To keep a player engaged, the difficulty of the game must scale in lockstep with their developing mental model and mechanical dexterity. Deviations from this corridor result in psychological failure states:
+Psychologist Mihaly Csikszentmihalyi demonstrated that human beings achieve peak cognitive immersion (**"Flow"**) only when the perceived **Challenge** of a task matches their current **Skill Level**.
 
 ```
                       THE MENTAL FLOW EQUILIBRIUM
 =================================================================================
  Challenge (Difficulty)
-    ▲                                    / ANXIETY & FRUSTRATION ZONE
-    │                                  /  (Task exceeds player capacity)
+    ▲                                    / ANXIETY & RAGE-QUIT ZONE
+    │                                  /  (Challenge >> Skill: Player feels helpless)
     │                                / 
     │                     ╭─────────╯
-    │                   ╭─╯  THE FLOW CHANNEL
-    │                 ╭─╯    (Optimal Engagement Corridor)
+    │                   ╭─╯  THE FLOW CHANNEL (Target Equilibrium)
+    │                 ╭─╯    Challenge ≈ Skill * 1.05
     │               ╭─╯ 
     │             ╭─╯   
     │           ╭─╯    BOREDOM & APATHY ZONE
-    │         ╭─╯      (Player mastery renders task trivial)
+    │         ╭─╯      (Skill >> Challenge: Brain disengages)
     └─────────┴──────────────────────────────────────────────────────►
    Low                                                             High
                              Player Skill / Competence
 ```
 
-#### The Sawtooth Pacing Curve
+#### The Sawtooth Pacing Law
+Even inside the Flow Channel, if you hold tension at $100\%$ continuously, the player's sympathetic nervous system suffers **adrenaline exhaustion**—intense combat stops feeling exciting and starts feeling like exhausting chores.
+- **The Architectural Rule**: Modulate encounter intensity using a **Sawtooth Wave**. Follow every high-intensity peak (Boss Fight / Ambush) with an immediate **Cathartic Valley** (a quiet safe room, a scenic vista, a merchant campfire, or low-stakes loot sorting) so the player's heart rate recovers before the next climb.
 
-Never subject a player to uninterrupted, escalating difficulty. The human sympathetic nervous system experiences fatigue under sustained cognitive stress. Professional pacing introduces an oscillatory **Sawtooth Wave**:
+---
 
+### Step-by-Step Architectural Construction: Dynamic Difficulty & Pacing Director
+
+How do we implement Csikszentmihalyi's Flow Channel and Sawtooth Pacing in actual code? Inspired by *Left 4 Dead*'s AI Director and *Resident Evil 4*'s adaptive difficulty, we build an autonomous **Pacing & Dynamic Difficulty Adjustment (DDA) Director**.
+
+It monitors the player's real-time stress (health ratio, recent damage taken, accuracy, deaths) and dynamically adjusts enemy spawn budgets, aggression tokens, and loot drop rates behind the scenes.
+
+#### Chunk 1.1: Pacing Phases & Stress Telemetry Variables
+
+```gdscript
+class_name PacingDirector
+extends Node
+
+signal pacing_phase_changed(new_phase: PacingPhase)
+signal difficulty_rank_updated(effective_multiplier: float)
+
+enum PacingPhase { BUILD_UP, PEAK_INTENSITY, PEAK_FADE, RELAX_VALLEY }
+
+@export_group("Flow Channel Calibration")
+@export var base_difficulty_rank: float = 5.0 # Scale of 1.0 (Easy) to 10.0 (Brutal)
+@export var min_difficulty_bound: float = 2.0
+@export var max_difficulty_bound: float = 9.5
+
+@export_group("Sawtooth Pacing Timings")
+@export var peak_stress_threshold: float = 0.85
+@export var relax_valley_duration: float = 25.0
+
+var current_phase: PacingPhase = PacingPhase.BUILD_UP
+var dynamic_difficulty_rank: float = 5.0
+var player_stress_score: float = 0.0 # Normalized [0.0, 1.0]
+var _phase_timer: float = 0.0
 ```
- Tension / Cognitive Load
-    ▲             Peak Encounter (Boss)
-    │                 ▲
-    │        ▲       / │
-    │       / \     /  │ (Cathartic Valley: Safe Room / Merchant / Dialogue)
-    │  ▲   /   \   /   └───┐
-    │ / \ /     \ /        │
-    └─┴───┴───────┴────────┴─────────────────────────────────────────► Time (t)
+
+- **`enum PacingPhase`**: Explicitly models the four stages of the Sawtooth Pacing Wave:
+  1. `BUILD_UP`: Spawns normal patrols; stress climbs steadily.
+  2. `PEAK_INTENSITY`: Stress hits `0.85`; triggers climax horde/elite wave.
+  3. `PEAK_FADE`: Climax wave defeated; stops new spawns until remaining enemies are cleared.
+  4. `RELAX_VALLEY`: Enforces $25.0\text{ seconds}$ of calm exploration so the player can heal and reload.
+- **`dynamic_difficulty_rank`**: A continuous floating-point rank $\in [2.0, 9.5]$ that shifts subtly inside the Flow Channel based on player performance.
+
+#### Chunk 1.2: Quantifying Player Stress & Adjusting Difficulty Rank
+
+```gdscript
+func record_combat_telemetry(
+	player_hp_ratio: float,
+	damage_taken_last_10s: float,
+	recent_hit_accuracy: float
+) -> void:
+	# 1. Calculate instantaneous stress [0.0 to 1.0]
+	var health_vulnerability: float = 1.0 - clampf(player_hp_ratio, 0.0, 1.0)
+	var damage_pressure: float = clampf(damage_taken_last_10s / 60.0, 0.0, 1.0)
+	
+	var target_stress: float = (health_vulnerability * 0.55) + (damage_pressure * 0.45)
+	player_stress_score = lerpf(player_stress_score, target_stress, 0.3)
+	
+	# 2. Adjust Dynamic Difficulty Rank (Flow Channel Homeostasis)
+	if player_hp_ratio > 0.80 and recent_hit_accuracy > 0.65 and damage_taken_last_10s < 5.0:
+		# Player is dominating effortlessly (Boredom Risk) -> Nudge rank UP
+		dynamic_difficulty_rank = minf(max_difficulty_bound, dynamic_difficulty_rank + 0.15)
+	elif player_hp_ratio < 0.25 and damage_taken_last_10s > 45.0:
+		# Player is overwhelmed and near death (Anxiety Risk) -> Nudge rank DOWN
+		dynamic_difficulty_rank = maxf(min_difficulty_bound, dynamic_difficulty_rank - 0.30)
+		
+	difficulty_rank_updated.emit(get_damage_taken_multiplier())
+```
+
+- **`health_vulnerability * 0.55 + damage_pressure * 0.45`**: Combines low remaining health with rapid recent damage to measure how close the player is to panicking.
+- **Asymmetric DDA Nudging (`+0.15` vs `-0.30`)**: Notice that difficulty climbs *slowly* (`+0.15`) when the player plays well, but drops *twice as fast* (`-0.30`) when the player is getting crushed. This prevents a single lucky room from spiking difficulty into an unplayable wall, while quickly rescuing a struggling player before they rage-quit.
+
+#### Chunk 1.3: Sawtooth State Transitions & Output Multipliers
+
+```gdscript
+func update_pacing_cycle(delta: float, active_enemy_count: int) -> void:
+	_phase_timer += delta
+	
+	match current_phase:
+		PacingPhase.BUILD_UP:
+			if player_stress_score >= peak_stress_threshold:
+				_transition_to(PacingPhase.PEAK_INTENSITY)
+		PacingPhase.PEAK_INTENSITY:
+			if _phase_timer >= 8.0:
+				_transition_to(PacingPhase.PEAK_FADE)
+		PacingPhase.PEAK_FADE:
+			if active_enemy_count == 0:
+				_transition_to(PacingPhase.RELAX_VALLEY)
+		PacingPhase.RELAX_VALLEY:
+			if _phase_timer >= relax_valley_duration:
+				_transition_to(PacingPhase.BUILD_UP)
+
+func _transition_to(next_phase: PacingPhase) -> void:
+	current_phase = next_phase
+	_phase_timer = 0.0
+	pacing_phase_changed.emit(current_phase)
+
+func get_damage_taken_multiplier() -> float:
+	# Maps rank [2.0, 9.5] around baseline 5.0 -> Multiplier [0.65x to 1.45x]
+	return 1.0 + ((dynamic_difficulty_rank - base_difficulty_rank) * 0.10)
+```
+
+- **`PacingPhase.PEAK_FADE` $\rightarrow$ `active_enemy_count == 0`**: Crucial design detail. Never start the relaxation timer while enemies are still biting the player! The valley timer only begins *after* the last enemy in the peak wave is dead.
+
+---
+
+#### The Fully Assembled `PacingDirector.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: PacingDirector.gd
+# Architecture: Sawtooth Pacing State Machine & Flow-Channel DDA Controller
+# ==============================================================================
+class_name PacingDirector
+extends Node
+
+signal pacing_phase_changed(new_phase: PacingPhase)
+signal difficulty_rank_updated(effective_multiplier: float)
+
+enum PacingPhase { BUILD_UP, PEAK_INTENSITY, PEAK_FADE, RELAX_VALLEY }
+
+@export_group("Flow Channel Calibration")
+## Baseline design difficulty (Scale 1.0 to 10.0)
+@export var base_difficulty_rank: float = 5.0
+## Floor clamp so the game never becomes trivially broken
+@export var min_difficulty_bound: float = 2.0
+## Ceiling clamp so the game never becomes mathematically impossible
+@export var max_difficulty_bound: float = 9.5
+
+@export_group("Sawtooth Pacing Timings")
+## Normalized stress score [0.0, 1.0] that triggers climax peak transition
+@export var peak_stress_threshold: float = 0.85
+## Mandatory calm recovery duration after clearing a peak wave (seconds)
+@export var relax_valley_duration: float = 25.0
+
+var current_phase: PacingPhase = PacingPhase.BUILD_UP
+var dynamic_difficulty_rank: float = 5.0
+var player_stress_score: float = 0.0
+var _phase_timer: float = 0.0
+
+func _ready() -> void:
+	dynamic_difficulty_rank = base_difficulty_rank
+
+## Ingests periodic combat metrics to quantify player stress and tune DDA rank
+func record_combat_telemetry(
+	player_hp_ratio: float,
+	damage_taken_last_10s: float,
+	recent_hit_accuracy: float
+) -> void:
+	# 1. Quantify physiological stress [0.0 to 1.0]
+	var health_vulnerability: float = 1.0 - clampf(player_hp_ratio, 0.0, 1.0)
+	var damage_pressure: float = clampf(damage_taken_last_10s / 60.0, 0.0, 1.0)
+	
+	var target_stress: float = (health_vulnerability * 0.55) + (damage_pressure * 0.45)
+	player_stress_score = lerpf(player_stress_score, target_stress, 0.3)
+	
+	# 2. Homeostatic Flow Channel Calibration
+	if player_hp_ratio > 0.80 and recent_hit_accuracy > 0.65 and damage_taken_last_10s < 5.0:
+		dynamic_difficulty_rank = minf(max_difficulty_bound, dynamic_difficulty_rank + 0.15)
+	elif player_hp_ratio < 0.25 and damage_taken_last_10s > 45.0:
+		dynamic_difficulty_rank = maxf(min_difficulty_bound, dynamic_difficulty_rank - 0.30)
+		
+	difficulty_rank_updated.emit(get_damage_taken_multiplier())
+
+## Ticks the Sawtooth Pacing state machine
+func update_pacing_cycle(delta: float, active_enemy_count: int) -> void:
+	_phase_timer += delta
+	
+	match current_phase:
+		PacingPhase.BUILD_UP:
+			if player_stress_score >= peak_stress_threshold:
+				_transition_to(PacingPhase.PEAK_INTENSITY)
+		PacingPhase.PEAK_INTENSITY:
+			if _phase_timer >= 8.0:
+				_transition_to(PacingPhase.PEAK_FADE)
+		PacingPhase.PEAK_FADE:
+			if active_enemy_count == 0:
+				_transition_to(PacingPhase.RELAX_VALLEY)
+		PacingPhase.RELAX_VALLEY:
+			if _phase_timer >= relax_valley_duration:
+				_transition_to(PacingPhase.BUILD_UP)
+
+func _transition_to(next_phase: PacingPhase) -> void:
+	current_phase = next_phase
+	_phase_timer = 0.0
+	pacing_phase_changed.emit(current_phase)
+
+## Returns false during Peak Fade and Relax Valley to halt enemy spawners
+func is_spawning_permitted() -> bool:
+	return current_phase == PacingPhase.BUILD_UP or current_phase == PacingPhase.PEAK_INTENSITY
+
+## Returns enemy damage multiplier scaled by current DDA rank
+func get_damage_taken_multiplier() -> float:
+	return 1.0 + ((dynamic_difficulty_rank - base_difficulty_rank) * 0.10)
 ```
 
 ---
 
-## 10.3 Cybernetic Feedback Loops: Amplification vs. Homeostasis
+## 10.3 Cybernetic Feedback Loops & Intransitive Counter-Play
 
-Game systems are cybernetic machines governed by closed-loop information circuits:
+### 1. Positive vs. Negative Cybernetic Feedback Loops
+
+Game systems are cybernetic circuits. Every resource reward or penalty creates either a **Positive (Amplifying)** or **Negative (Stabilising)** loop:
 
 ```
                      CYBERNETIC FEEDBACK SYSTEM TOPOLOGY
@@ -122,21 +318,37 @@ Game systems are cybernetic machines governed by closed-loop information circuit
  (Dampens divergence; preserves tension; risks frustrating high-skill players)
 ```
 
-### 1. Positive Feedback (Reinforcing / Snowballing)
-- ⤷ **Mathematical Behavior**: Divergent ($\frac{dy}{dt} = +k \cdot y$).
-- ↳ **Function**: Rewards skillful execution with compounding advantages, accelerating resolution.
-- ↳ **Pathology**: The **"Rich Get Richer"** trap. If an RTS player loses their first squad and falls behind economically, the winner's output grows exponentially, making the remainder of the match a drawn-out formality.
+#### Engineering Guidelines for Feedback Loops:
+1. **Never leave a Positive Feedback Loop unbounded**: If killing enemies grants stronger weapons, and stronger weapons kill enemies faster, the game becomes trivially easy by the midpoint. Pair every positive loop with an escalating **Negative Feedback constraint**—such as **Progressive Upkeep Taxes**, **Equipment Degradation**, or **Heat/Bounty Systems** where higher power attracts deadlier elite hunters.
+2. **Make Negative Feedback skill-based rather than automatic**: Players despise automatic rubber-banding (e.g., AI cars magically driving $30\%$ faster when behind). Instead, implement **Skill-Contingent Catch-Up Mechanics**—such as granting a trailing player a high-bounty objective when they successfully take down the match leader.
 
-### 2. Negative Feedback (Self-Correcting / Homeostatic)
-- ⤷ **Mathematical Behavior**: Convergent ($\frac{dy}{dt} = -k \cdot (y - y_{\text{target}})$).
-- ↳ **Function**: Preserves contest parity by penalizing leaders (e.g., death-bounties in MOBAs, dynamic rubber-banding in arcade racing).
-- ↳ **Pathology**: If over-tuned, skilled players feel their effort is invalidated because early leads are artificially erased.
+### 2. Intransitive Mechanics (Preventing Dominant Strategies)
+
+If Sword $A$ has higher DPS, longer reach, and faster swing speed than Sword $B$, Sword $A$ **strictly dominates** Sword $B$. Players will calculate the optimal choice once and never use Sword $B$ again.
+
+To make all weapons, units, or abilities viable simultaneously, structure them inside an **Intransitive Counter-Play Matrix**:
+
+```
+                    INTRANSITIVE COUNTER-PLAY TRIANGLE
+=================================================================================
+                          [ Heavy Armor / Shield ]
+                         ╱                        ╲
+        Blocks / Shrugs Off                      Crushed By (Armor Piercing)
+                       ╱                            ╲
+                      ▼                              │
+          [ Fast Light Blades ] ───────────────► [ Slow Heavy Great-Axes ]
+                               Interrupts Wind-Up
+```
+
+$$\mathbf{M}_{\text{payoff}} = \begin{bmatrix} 1.0 & 1.5 & 0.6 \\ 0.6 & 1.0 & 1.5 \\ 1.5 & 0.6 & 1.0 \end{bmatrix}$$
+
+In this payoff matrix, row $i$ attacking column $j$ always has a $1.5\times$ advantage against one archetype and a $0.6\times$ disadvantage against another. Because the determinant cycles, **no single archetype can dominate the meta**.
 
 ---
 
-## 10.4 Combat Mathematics: EHP, DPS, TTK & Diminishing Returns
+## 10.4 Combat Mathematics: EHP, DPS, TTK & Lanchester's Laws
 
-Amateur combat design frequently balances characters by tweaking arbitrary numbers until "it feels okay." Systems architects balance combat through **Kinematic and Statistical Invariants**.
+Amateur combat design balances fights by guessing numbers until "it feels okay." Systems architects balance combat through **Analytical Invariants**.
 
 ```
                    THE TIME-TO-KILL (TTK) RELATIONSHIP
@@ -146,219 +358,495 @@ Amateur combat design frequently balances characters by tweaking arbitrary numbe
                    Attacker Sustained Damage (DPS)
 ```
 
-### 1. Effective Health Pool ($EHP$) & Non-Linear Armor Scaling
+### 1. Why Linear Armor Fails & Why Hyperbolic Armor Works
 
-When calculating damage reduction from armor ($A$), a linear formula ($\text{Damage} = \text{Raw} - A$) is fundamentally flawed: high-rate-of-fire weapons become useless against moderate armor, while heavy-hitting sniper weapons ignore it entirely.
+Suppose you implement **Linear Subtractive Armor**:
+$$\text{Damage Taken} = \max(1, \, \text{Raw Damage} - \text{Armor})$$
+- **The Failure Mode**: Against an enemy with $20\text{ Armor}$, a fast submachine gun dealing $22\text{ damage}$ at $10\text{ shots/sec}$ drops from $220\text{ DPS}$ down to **$20\text{ DPS}$** (a $91\%$ nerf!), whereas a slow sniper rifle dealing $200\text{ damage}$ drops to $180\text{ damage}$ (only a $10\%$ nerf). Linear subtraction makes fast weapons completely useless against armor.
 
-Instead, implement the classic **Diminishing Returns Hyperbolic Curve**:
+Suppose instead you implement **Percentage Armor**:
+$$\text{Damage Taken} = \text{Raw Damage} \times (1.0 - \text{Armor}\%)$$
+- **The Failure Mode**: Each point of armor becomes *exponentially more valuable* the closer you get to $100\%$. Going from $0\% \to 10\%$ armor reduces damage by $10\%$. Going from $98\% \to 99\%$ armor **cuts all remaining incoming damage in half** (doubling the player's survivability with just $1\%$ more armor!), allowing players to become unkillable gods by stacking armor items.
+
+#### The Solution: The Hyperbolic Diminishing Returns Curve
+Used in *League of Legends*, *Dota 2*, and *Diablo*, hyperbolic mitigation scales damage via a constant $K$ (typically $K = 100$):
 
 $$\text{Damage Multiplier} = \frac{K}{K + A} \quad \implies \quad \text{Damage Taken} = \text{Raw Damage} \times \left(\frac{K}{K + A}\right)$$
 
-where $K$ is the design constant (typically $K = 100$). Under this formulation, **every point of armor provides a constant, linear increase to Effective Health Pool ($EHP$)**:
+Let us prove why this formula is mathematically ideal by solving for **Effective Health Pool ($EHP$)**:
 
-$$EHP = \frac{\text{Base HP}}{\text{Damage Multiplier}} = \text{Base HP} \times \left(1.0 + \frac{A}{K}\right)$$
+$$EHP = \frac{\text{Base HP}}{\text{Damage Multiplier}} = \frac{\text{Base HP}}{\frac{K}{K + A}} = \text{Base HP} \times \left(1.0 + \frac{A}{K}\right)$$
 
+Look at the right side of that equation: **$EHP$ is strictly linear with respect to Armor $A$!**
+- If $K = 100$, every $100$ points of Armor adds **exactly $+100\%$ of Base HP** to the character's Effective Health Pool, whether they currently have $0$ armor or $1,000$ armor.
+- It never reaches $100\%$ immunity ($\lim_{A \to \infty} \frac{K}{K+A} = 0$), and it treats fast-firing and slow-firing weapons identically!
+
+### 2. Lanchester’s Square Law (Balancing Group Encounters)
+
+Why do $4$ weak goblins feel more than $4\times$ deadlier than $1$ goblin? Because of **Lanchester’s Square Law** of ranged/focused combat:
+- While the player can only focus-fire $1$ goblin at a time, all $4$ goblins deal damage to the player simultaneously.
+- As the player kills them one by one, the total number of enemy attacks endured by the player over the encounter is proportional to the **triangular number** $\frac{N(N+1)}{2} \approx \frac{N^2}{2}$:
+
+$$\text{Total Group Threat} \propto N^2 \times \text{Unit DPS} \times \text{Unit EHP}$$
+
+- **The Design Rule**: Two enemies are not $2\times$ as hard as one enemy; they are **$3\times$ to $4\times$ as hard** (unless the player uses Area-of-Effect [AoE] weapons or the AI is throttled via the **Attack Token System** from Module VII).
+
+---
+
+### Step-by-Step Architectural Construction: Combat Analytics & TTK Solver
+
+Let us construct our static combat math library chunk by chunk, including hyperbolic $EHP$, sustained $DPS$, $TTK$, and Lanchester group threat evaluation.
+
+#### Chunk 2.1: Hyperbolic Mitigation & Effective Health Pool ($EHP$)
+
+```gdscript
+class_name CombatAnalytics
+extends RefCounted
+
+static func compute_damage_multiplier(armor: float, k_constant: float = 100.0) -> float:
+	if armor >= 0.0:
+		return k_constant / (k_constant + armor)
+	else:
+		# Negative armor (armor shred debuffs) amplifies damage smoothly without dividing by zero
+		return 2.0 - (k_constant / (k_constant - armor))
+
+static func compute_ehp(base_hp: float, armor: float, k_constant: float = 100.0) -> float:
+	var mult: float = compute_damage_multiplier(armor, k_constant)
+	return base_hp / maxf(0.0001, mult)
 ```
-                         ARMOR MITIGATION BEHAVIOR (K = 100)
-┌───────────────┬──────────────────────┬──────────────────────┬───────────────────┐
-│ Armor Value A │ Damage Taken Multi   │ Damage Reduction %   │ Relative EHP      │
-├───────────────┼──────────────────────┼──────────────────────┼───────────────────┤
-│ 0             │ 100 / (100 + 0) = 1.0│ 0.0%                 │ 1.00x Base HP     │
-│ 50            │ 100 / 150 = 0.6667   │ 33.3%                │ 1.50x Base HP     │
-│ 100           │ 100 / 200 = 0.5000   │ 50.0%                │ 2.00x Base HP     │
-│ 200           │ 100 / 300 = 0.3333   │ 66.7%                │ 3.00x Base HP     │
-│ 300           │ 100 / 400 = 0.2500   │ 75.0%                │ 4.00x Base HP     │
-└───────────────┴──────────────────────┴──────────────────────┴───────────────────┘
-Notice the elegance: Each 100 points of Armor adds EXACTLY +100% of Base HP to EHP!
+
+- **`if armor >= 0.0:`**: Standard hyperbolic reduction ($\frac{K}{K+A}$).
+- **`else: return 2.0 - (k_constant / (k_constant - armor))`**: **The Negative Armor Edge Case**. What happens if a boss casts an "Armor Shred" curse that reduces the player's armor to $-100$? In the standard formula $\frac{100}{100 + (-100)} = \frac{100}{0}$, **the game crashes with a Division by Zero error**! Mirroring the hyperbolic curve for negative values safely caps maximum damage amplification at $2.0\times$ without ever dividing by zero.
+
+#### Chunk 2.2: Sustained DPS & Exact Time-to-Kill ($TTK$)
+
+```gdscript
+static func compute_sustained_dps(
+	damage_per_hit: float,
+	magazine_size: int,
+	fire_rate_hz: float,
+	reload_duration: float,
+	crit_chance: float = 0.0,
+	crit_multiplier: float = 2.0
+) -> float:
+	assert(magazine_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
+	
+	# Time spent discharging the full magazine
+	var firing_window: float = float(magazine_size) / fire_rate_hz
+	var total_cycle_duration: float = firing_window + reload_duration
+	
+	# Expected value of critical strike multiplier: E[M] = 1 + p * (M - 1)
+	var p_crit: float = clampf(crit_chance, 0.0, 1.0)
+	var expected_crit_boost: float = 1.0 + (p_crit * (crit_multiplier - 1.0))
+	
+	var total_cycle_damage: float = float(magazine_size) * damage_per_hit * expected_crit_boost
+	return total_cycle_damage / total_cycle_duration
+
+static func compute_ttk(
+	target_hp: float,
+	target_armor: float,
+	attacker_dps: float,
+	k_constant: float = 100.0
+) -> float:
+	var target_ehp: float = compute_ehp(target_hp, target_armor, k_constant)
+	return target_ehp / maxf(0.0001, attacker_dps)
 ```
 
-### 2. Sustained vs. Burst Damage per Second ($DPS$)
+- **`1.0 + (p_crit * (crit_multiplier - 1.0))`**: Computes the mathematical expected value of critical strikes. Note that we subtract $1.0$ from `crit_multiplier` because the base $1.0\times$ damage is already accounted for on every hit.
+- **`firing_window + reload_duration`**: Accounts for reload downtime. A shotgun with massive burst damage but a $4.0\text{ second}$ reload has a vastly lower sustained DPS over a long boss fight than its raw fire rate suggests.
 
-Sustained damage accounts for magazine capacity, fire rate, reload durations, and critical strike profiles:
+---
 
-$$\text{DPS}_{\text{sustained}} = \frac{D_{\text{bullet}} \times N_{\text{mag}} \times \left(1.0 + P_{\text{crit}} \cdot (M_{\text{crit}} - 1.0)\right)}{\left(\frac{N_{\text{mag}}}{R_{\text{fire}}}\right) + T_{\text{reload}}}$$
-
-where:
-- $D_{\text{bullet}}$: Base damage per projectile.
-- $N_{\text{mag}}$: Magazine round capacity.
-- $R_{\text{fire}}$: Fire rate in rounds per second ($\text{Hz}$).
-- $T_{\text{reload}}$: Duration of reload sequence in seconds.
-- $P_{\text{crit}}$: Critical hit probability $\in [0.0, 1.0]$.
-- $M_{\text{crit}}$: Critical hit damage multiplier (e.g., $2.0\times$).
+#### The Fully Assembled `CombatAnalytics.gd`
 
 ```gdscript
 # ==============================================================================
-# COMBAT METRIC SOLVER & TIME-TO-KILL (TTK) ANALYSER
+# SCRIPT: CombatAnalytics.gd
+# Architecture: Hyperbolic Armor Mitigation, Sustained DPS & TTK Solver
 # ==============================================================================
 class_name CombatAnalytics
 extends RefCounted
 
-## Calculates the exact Effective Health Pool (EHP) given Base HP and Armor
+## Computes hyperbolic damage multiplier; safely handles negative armor shred without zero-division
+static func compute_damage_multiplier(armor: float, k_constant: float = 100.0) -> float:
+	if armor >= 0.0:
+		return k_constant / (k_constant + armor)
+	else:
+		return 2.0 - (k_constant / (k_constant - armor))
+
+## Computes Effective Health Pool (EHP) given base health and armor rating
 static func compute_ehp(base_hp: float, armor: float, k_constant: float = 100.0) -> float:
-    assert(armor >= 0.0, "Armor rating cannot be negative.")
-    return base_hp * (1.0 + (armor / k_constant))
+	var mult: float = compute_damage_multiplier(armor, k_constant)
+	return base_hp / maxf(0.0001, mult)
 
-## Calculates sustained DPS factoring in reload cycles and critical hit expectations
+## Computes sustained DPS factoring in magazine depletion, reload downtime, and crit expectancy
 static func compute_sustained_dps(
-    bullet_dmg: float,
-    mag_size: int,
-    fire_rate_hz: float,
-    reload_time: float,
-    crit_chance: float,
-    crit_mult: float
+	damage_per_hit: float,
+	magazine_size: int,
+	fire_rate_hz: float,
+	reload_duration: float,
+	crit_chance: float = 0.0,
+	crit_multiplier: float = 2.0
 ) -> float:
-    assert(mag_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
-    var cycle_firing_time: float = float(mag_size) / fire_rate_hz
-    var total_cycle_time: float = cycle_firing_time + reload_time
-    
-    var expected_crit_factor: float = 1.0 + (clampf(crit_chance, 0.0, 1.0) * (crit_mult - 1.0))
-    var total_damage_per_mag: float = float(mag_size) * bullet_dmg * expected_crit_factor
-    
-    return total_damage_per_mag / total_cycle_time
+	assert(magazine_size > 0 and fire_rate_hz > 0.0, "Invalid weapon parameters.")
+	
+	var firing_window: float = float(magazine_size) / fire_rate_hz
+	var total_cycle_duration: float = firing_window + reload_duration
+	
+	var p_crit: float = clampf(crit_chance, 0.0, 1.0)
+	var expected_crit_boost: float = 1.0 + (p_crit * (crit_multiplier - 1.0))
+	
+	var total_cycle_damage: float = float(magazine_size) * damage_per_hit * expected_crit_boost
+	return total_cycle_damage / total_cycle_duration
 
-## Computes precise TTK in seconds between an attacker profile and target profile
+## Computes exact Time-To-Kill (TTK) in seconds
 static func compute_ttk(
-    target_hp: float,
-    target_armor: float,
-    bullet_dmg: float,
-    mag_size: int,
-    fire_rate_hz: float,
-    reload_time: float,
-    crit_chance: float = 0.0,
-    crit_mult: float = 1.0
+	target_hp: float,
+	target_armor: float,
+	attacker_dps: float,
+	k_constant: float = 100.0
 ) -> float:
-    var ehp: float = compute_ehp(target_hp, target_armor)
-    var dps: float = compute_sustained_dps(bullet_dmg, mag_size, fire_rate_hz, reload_time, crit_chance, crit_mult)
-    return ehp / maxf(0.0001, dps)
+	var target_ehp: float = compute_ehp(target_hp, target_armor, k_constant)
+	return target_ehp / maxf(0.0001, attacker_dps)
+
+## Evaluates total encounter damage taken by a solo player fighting N focused enemies (Lanchester's Law)
+static func estimate_group_damage_taken(
+	enemy_count: int,
+	single_enemy_ehp: float,
+	single_enemy_dps: float,
+	player_single_target_dps: float
+) -> float:
+	var ttk_one_enemy: float = single_enemy_ehp / maxf(0.0001, player_single_target_dps)
+	# Triangular number sum: N + (N-1) + ... + 1 = N * (N + 1) / 2
+	var cumulative_enemy_lifetimes: float = float(enemy_count * (enemy_count + 1)) * 0.5 * ttk_one_enemy
+	return cumulative_enemy_lifetimes * single_enemy_dps
 ```
 
 ---
 
-## 10.5 Economic Engineering: Sources, Sinks, Faucets & Mudflation
+## 10.5 Economic Engineering: Faucets, Sinks & Mudflation Control
 
-Virtual economies in RPGs, MMOs, and survival games fail when treated like real-world national economies. In the real world, goods deteriorate and money circulates; in video games, **players extract currency from infinite voids and hoard it permanently**.
+In a real-world economy, central banks control the money supply. In a video game, **every monster killed is a miniature mint printing brand-new currency out of thin air**.
 
 ```
                        THE ECONOMIC EQUILIBRIUM TANK
 =================================================================================
- FAUCETS / SOURCES (Infinite Spigots)
- [ Quest Rewards ]  [ Mob Loot Drops ]  [ Salvage Returns ]  [ Mining Nodes ]
+ FAUCETS / SOURCES (Currency Inflow)
+ [ Quest Rewards ]  [ Mob Loot Drops ]  [ Salvage Returns ]  [ Chest Spawns ]
         │                   │                   │                   │
         ▼                   ▼                   ▼                   ▼
  ═════════════════════════════════════════════════════════════════════════════
-                       CIRCULATING PLAYER CURRENCY TANK
+                 ACTIVE MONEY SUPPLY (Total Gold in Circulation)
  ═════════════════════════════════════════════════════════════════════════════
         │                   │                   │                   │
         ▼                   ▼                   ▼                   ▼
- [ Repair Costs ]   [ Tax / Auction ]   [ Crafting Fees ]   [ Consumables ]
- SINKS / DRAINS (Permanent Destruction of Value)
+ [ Gear Repairs ]   [ Reroll / Enchant ] [ Fast Travel ]     [ Consumables ]
+ SINKS / DRAINS (Permanent Destruction of Currency)
 ```
 
-### The Law of Economic Stability
+### The Macroeconomic Differential Equation
 
-Let $F(t)$ denote the total currency created across all faucets at time $t$, and $S(t)$ denote the currency permanently removed via sinks:
+Let $M(t)$ be the total currency held by the player (or server population) at playtime $t$:
 
-$$\Delta M = \int_{0}^{T} \left( \sum F_i(t) - \sum S_j(t) \right) dt$$
+$$\frac{dM}{dt} = \sum_{i} F_i(t) - \sum_{j} S_j(t)$$
 
-1. **If $\sum F > \sum S$ (Mudflation)**: The circulating supply of gold balloons. Common vendor items lose all psychological value. High-end player-to-player auction prices escalate to arbitrary caps, creating an insurmountable wealth barrier for novice players.
-2. **If $\sum S > \sum F$ (Deflationary Starvation)**: Players cannot afford baseline repairs or core consumables, causing them to disengage from risk-bearing activities.
-3. **The Target Invariant**: Design **Percentage-Based Dynamic Sinks** rather than flat numerical sinks:
-   - Tax player-to-player trade via a flat percentage fee ($\text{Tax} = \text{Price} \times 0.08$).
-   - Scale repair costs relative to character wealth or item rarity tiers ($C_{\text{repair}} \propto \text{Tier}^2$).
+1. **Why Flat Sinks Fail**: If a health potion costs a flat $50\text{ Gold}$ all game, it is a meaningful sink at Level 1 (when enemies drop $10\text{ Gold}$), but becomes completely negligible at Level 50 (when enemies drop $5,000\text{ Gold}$). The player accumulates millions of unspendable gold (**Mudflation**).
+2. **How to Engineer Effective Sinks**:
+   - **Proportional Wealth/Tier Sinks**: Scale equipment repair and upgrade costs quadratically with item power tier ($C_{\text{upgrade}} = B \cdot \text{Tier}^{2.2}$).
+   - **Voluntary Aspirational Sinks (Gambling / Affix Rerolling)**: Players hate mandatory taxes (like hunger meters or harsh durability decay), which feel like punishment. Conversely, players *eagerly* dump 90% of their fortune into **Optional Aspirational Sinks**—such as paying an enchanter escalating sums of gold to reroll a weapon affix in pursuit of a perfect "God Roll", or purchasing cosmetic stronghold upgrades.
 
 ---
 
-## 10.6 Probability Engineering: The Pseudo-Random Distribution (PRD)
+### Step-by-Step Architectural Construction: Dynamic Economy & Sink Controller
 
-Humans are notoriously poor at evaluating true mathematical independence. Under pure Independent Random Distribution (IRD) with $P = 20\%$:
-- The chance of failing $6$ times in a row is $(0.8)^6 \approx 26.2\%$.
-- The chance of failing $12$ times in a row is $(0.8)^{12} \approx 6.87\%$.
+Let us build an economic controller that tracks currency faucets and sinks, monitors the inflation ratio, and calculates exponential upgrade and reroll sinks.
 
-When a player misses a $20\%$ critical strike or dodge $12$ times in a row, they do not think *"Ah, a standard Poisson distribution variance!"* They perceive the game as broken or maliciously rigged.
+#### Chunk 3.1: Faucet/Sink Ledger & Inflation Index
+
+```gdscript
+class_name EconomyController
+extends RefCounted
+
+var total_faucet_inflow: int = 0
+var total_sink_outflow: int = 0
+var current_balance: int = 0
+
+func record_faucet(amount: int) -> void:
+	assert(amount >= 0, "Faucet amount must be non-negative.")
+	current_balance += amount
+	total_faucet_inflow += amount
+
+func execute_sink(cost: int) -> bool:
+	if cost < 0 or current_balance < cost:
+		return false
+	current_balance -= cost
+	total_sink_outflow += cost
+	return true
+
+func get_sink_to_faucet_ratio() -> float:
+	if total_faucet_inflow == 0:
+		return 1.0
+	return float(total_sink_outflow) / float(total_faucet_inflow)
+```
+
+- **`get_sink_to_faucet_ratio()`**: **The Economic Telemetry Metric**. In a healthy RPG economy, your target Sink-to-Faucet ratio should sit between **$0.75$ and $0.90$** (meaning $75\%\text{--}90\%$ of all currency earned by the player is eventually drained back out by repairs, upgrades, and consumables). If this ratio drops below $0.40$, your economy is suffering from severe mudflation.
+
+#### Chunk 3.2: Escalating Affix Reroll & Upgrade Sinks
+
+```gdscript
+static func compute_upgrade_cost(base_cost: int, item_level: int, growth_exponent: float = 2.15) -> int:
+	return int(round(float(base_cost) * pow(float(item_level), growth_exponent)))
+
+static func compute_reroll_sink_cost(base_reroll_cost: int, previous_reroll_count: int) -> int:
+	# Soft-exponential cost escalation: Cost = Base * (1.35 ^ count)
+	var multiplier: float = pow(1.35, float(previous_reroll_count))
+	return int(round(float(base_reroll_cost) * multiplier))
+```
+
+- **`pow(1.35, previous_reroll_count)`**: Implements the classic ARPG (*Diablo* / *Path of Exile*) voluntary gold sink. The first reroll on a sword is cheap, enticing the player to engage. Each subsequent reroll on that same item multiplies the cost by $1.35\times$, naturally draining late-game hoards from wealthy min-maxers without punishing casual players.
+
+---
+
+#### The Fully Assembled `EconomyController.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: EconomyController.gd
+# Architecture: Macroeconomic Faucet/Sink Ledger & Escalating Cost Calculator
+# ==============================================================================
+class_name EconomyController
+extends RefCounted
+
+var total_faucet_inflow: int = 0
+var total_sink_outflow: int = 0
+var current_balance: int = 0
+
+## Injects newly generated currency into the economy (Faucet)
+func record_faucet(amount: int) -> void:
+	assert(amount >= 0, "Faucet amount must be non-negative.")
+	current_balance += amount
+	total_faucet_inflow += amount
+
+## Attempts to permanently destroy currency for a service/item (Sink)
+func execute_sink(cost: int) -> bool:
+	if cost < 0 or current_balance < cost:
+		return false
+	current_balance -= cost
+	total_sink_outflow += cost
+	return true
+
+## Returns the macroeconomic drain ratio (Healthy target: 0.75 to 0.90)
+func get_sink_to_faucet_ratio() -> float:
+	if total_faucet_inflow == 0:
+		return 1.0
+	return float(total_sink_outflow) / float(total_faucet_inflow)
+
+## Polynomial gear upgrade sink scaling with item level
+static func compute_upgrade_cost(base_cost: int, item_level: int, growth_exponent: float = 2.15) -> int:
+	return int(round(float(base_cost) * pow(float(maxi(1, item_level)), growth_exponent)))
+
+## Exponentially escalating voluntary sink for item enchantment/affix rerolling
+static func compute_reroll_sink_cost(base_reroll_cost: int, previous_reroll_count: int) -> int:
+	var multiplier: float = pow(1.35, float(maxi(0, previous_reroll_count)))
+	return int(round(float(base_reroll_cost) * multiplier))
+```
+
+---
+
+## 10.6 Probability Engineering: Pseudo-Random Distribution (PRD)
+
+Why do players complain that a $90\%$ hit chance in *XCOM* or a $25\%$ critical strike chance in an RPG is "broken"? Because the human brain suffers from the **Gambler's Fallacy**: humans intuitively expect a $25\%$ chance to succeed roughly once every $4$ swings.
+
+Under pure **Independent Random Distribution (IRD)** (`randf() < 0.25`):
+- The probability of getting **two crits back-to-back** on swings 1 and 2 is $0.25^2 = 6.25\%$ (which feels like an unfair burst spike in PvP).
+- The probability of **failing 10 times in a row** is $(1 - 0.25)^{10} = 0.75^{10} \approx 5.63\%$ (which happens multiple times per match and infuriates the player).
 
 ```
                    PURE RANDOM (IRD) VS. PSEUDO-RANDOM (PRD)
 =================================================================================
  Pure Random (Flat 20%):   [ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ O ][ X ] 
- (Extremely prone to dry spells and jarring multi-crit streaks!)
+ (Prone to frustrating 10-swing dry spells and lucky back-to-back double crits!)
 
- Pseudo-Random (C = 0.055):[ 5.5% ][ 11% ][ 16.5% ][ 22% ][ 27.5% -> PROC! ]
- (Probability climbs with every failure; resets immediately after success!)
+ Pseudo-Random (C = 0.055):[ 5.5% ][ 11.1% ][ 16.7% ][ 22.2% ][ 27.8% -> PROC! ]
+ (Starts below 20%, climbs linearly on every miss, and guarantees a proc by swing 18!)
 ```
 
-### The PRD Mathematical Formulation (Warcraft III / Dota 2 Standard)
+### The Mathematical Mechanics of PRD
 
-Rather than checking against a flat probability $P$, PRD computes an escalating probability $P(N)$ where $N$ is the number of swings since the last successful event:
+In a **Pseudo-Random Distribution**, the probability on the $N$-th consecutive attempt is:
 
-$$P(N) = N \times C$$
+$$P(N) = \min(1.0, \, N \times C)$$
 
-If the roll fails, $N$ increments by $1$, increasing the probability for the next attempt. When the roll succeeds, $N$ resets to $1$. 
+where $C$ is a pre-computed base constant smaller than the nominal probability $P_{\text{nominal}}$.
+- **On Attempt $N = 1$**: The chance is only $1 \cdot C$ (for a $20\%$ nominal crit chance, $C \approx 5.57\%$). This makes lucky back-to-back double crits nearly four times rarer!
+- **On Every Miss**: $N$ increments by $1$, raising the chance to $2C, 3C, 4C \dots$
+- **Maximum Dry Spell Bound**: By attempt $N_{\max} = \lceil \frac{1.0}{C} \rceil$, the probability reaches $100\%$, making long unlucky streaks **mathematically impossible**.
+- **Exact Convergence**: Despite changing every swing, the average proc rate over time equals the exact nominal probability $P_{\text{nominal}}$!
 
-The design constant $C$ is solved mathematically such that the **aggregate observed rate across infinite samples equals the nominal probability $P$**:
+---
 
-$$P_{\text{nominal}} \approx \sum_{N=1}^{N_{\text{max}}} P(\text{precisely on } N\text{th attempt}) = \sum_{N=1}^{N_{\text{max}}} N \cdot C \cdot \prod_{j=1}^{N-1} (1 - j \cdot C)$$
+### Step-by-Step Architectural Construction: Exact PRD Solver & Roller
+
+Instead of relying on an incomplete lookup table, let us write a self-contained PRD engine that **computes the exact constant $C$ for any arbitrary probability $P \in (0, 1)$ using Binary Search over Markov Chain expectations**.
+
+#### Chunk 4.1: Exact Constant $C$ Derivation via Binary Search
+
+Given any test constant $C$, the expected number of trials $E[N]$ required to achieve one success is:
+
+$$E[N] = \sum_{N=1}^{N_{\max}} N \cdot \left( \min(1.0, N \cdot C) \cdot \prod_{j=1}^{N-1} (1.0 - j \cdot C) \right)$$
+
+And the resulting true overall probability for that $C$ is simply $P_{\text{true}}(C) = \frac{1.0}{E[N]}$. Because $P_{\text{true}}(C)$ is strictly monotonic, we can solve for $C$ to 6 decimal places in $\approx 20$ iterations of binary search!
+
+```gdscript
+class_name PseudoRandomDistribution
+extends RefCounted
+
+var _nominal_probability: float
+var _c_constant: float
+var _attempt_counter: int = 1
+
+func _init(nominal_prob: float = 0.20) -> void:
+	set_probability(nominal_prob)
+
+func set_probability(prob: float) -> void:
+	_nominal_probability = clampf(prob, 0.001, 1.0)
+	_c_constant = solve_c_from_probability(_nominal_probability)
+	_attempt_counter = 1
+```
+
+- **`_attempt_counter: int = 1`**: Tracks how many swings have occurred since the last successful proc. Initialized to `1` so the first swing rolls against $1 \times C$.
+
+#### Chunk 4.2: The Binary Search Solver & Stateful Roll Execution
+
+```gdscript
+static func solve_c_from_probability(target_p: float) -> float:
+	if target_p >= 1.0:
+		return 1.0
+		
+	var low: float = 0.0
+	var high: float = target_p
+	var mid: float = target_p
+	
+	# 24 iterations of binary search achieves sub-10^-7 precision
+	for _i in range(24):
+		mid = (low + high) * 0.5
+		var tested_p: float = _probability_from_c(mid)
+		if absf(tested_p - target_p) <= 0.000001:
+			break
+		if tested_p > target_p:
+			high = mid
+		else:
+			low = mid
+			
+	return mid
+
+static func _probability_from_c(c: float) -> float:
+	var p_proc_on_n: float = 0.0
+	var p_fail_all_previous: float = 1.0
+	var expected_attempts: float = 0.0
+	var max_attempts: int = int(ceil(1.0 / c))
+	
+	for n in range(1, max_attempts + 1):
+		p_proc_on_n = minf(1.0, float(n) * c) * p_fail_all_previous
+		expected_attempts += float(n) * p_proc_on_n
+		p_fail_all_previous *= (1.0 - minf(1.0, float(n) * c))
+		
+	return 1.0 / expected_attempts
+
+func roll() -> bool:
+	var current_threshold: float = minf(1.0, float(_attempt_counter) * _c_constant)
+	if randf() <= current_threshold:
+		_attempt_counter = 1
+		return true
+	else:
+		_attempt_counter += 1
+		return false
+```
+
+- **`solve_c_from_probability(...)`**: Runs only once when the skill or weapon is initialized. It computes the exact mathematical $C$ constant for any percentage (e.g., $17.5\%$ or $33\%$) without needing hardcoded lookup tables.
+- **`roll()`**: Runs in $\mathcal{O}(1)$ constant time. Multiplies `_attempt_counter * _c_constant` and compares against `randf()`.
+
+---
+
+#### The Fully Assembled `PseudoRandomDistribution.gd`
 
 ```gdscript
 # ==============================================================================
-# PSEUDO-RANDOM DISTRIBUTION (PRD) ENGINE
+# SCRIPT: PseudoRandomDistribution.gd
+# Architecture: Exact Markov-Solved Pseudo-Random Distribution (PRD) Engine
 # ==============================================================================
 class_name PseudoRandomDistribution
 extends RefCounted
 
-## Lookup table: Nominal Probability -> Optimal C Base Constant
-## Derived from Monte Carlo simulation / Markov chain convergence
-const C_LOOKUP: Dictionary = {
-    0.05: 0.00380,
-    0.10: 0.01475,
-    0.15: 0.03222,
-    0.20: 0.05564,
-    0.25: 0.08474,
-    0.30: 0.11939,
-    0.35: 0.15962,
-    0.40: 0.20541,
-    0.45: 0.25686,
-    0.50: 0.31382
-}
-
 var _nominal_probability: float
 var _c_constant: float
-var _fail_count: int = 1
+var _attempt_counter: int = 1
 
 func _init(nominal_prob: float = 0.20) -> void:
-    set_probability(nominal_prob)
+	set_probability(nominal_prob)
 
+## Configures the nominal probability and solves the exact C constant
 func set_probability(prob: float) -> void:
-    _nominal_probability = clampf(prob, 0.01, 0.99)
-    _c_constant = _approximate_c(_nominal_probability)
-    _fail_count = 1
+	_nominal_probability = clampf(prob, 0.001, 1.0)
+	_c_constant = solve_c_from_probability(_nominal_probability)
+	_attempt_counter = 1
 
-## Rolls for success using escalating PRD logic
+## Executes a stateful PRD roll in O(1) time
 func roll() -> bool:
-    var current_chance: float = float(_fail_count) * _c_constant
-    var sample: float = randf()
-    
-    if sample <= current_chance:
-        _fail_count = 1 # Reset fail counter upon verified success
-        return true
-    else:
-        _fail_count += 1 # Increment failure counter to escalate subsequent odds
-        return false
+	var current_threshold: float = minf(1.0, float(_attempt_counter) * _c_constant)
+	if randf() <= current_threshold:
+		_attempt_counter = 1
+		return true
+	else:
+		_attempt_counter += 1
+		return false
 
-func _approximate_c(p: float) -> float:
-    # Snap to nearest discrete key in pre-computed table if available
-    var rounded_key: float = snappedf(p, 0.05)
-    if C_LOOKUP.has(rounded_key):
-        return C_LOOKUP[rounded_key]
-        
-    # Heuristic approximation polynomial for arbitrary values: C ≈ 0.31 * P^1.8
-    return 0.315 * pow(p, 1.82)
+## Returns the exact probability of the next roll succeeding (useful for UI tooltips)
+func peek_next_roll_chance() -> float:
+	return minf(1.0, float(_attempt_counter) * _c_constant)
+
+## Solves the PRD constant C for any nominal probability P using binary search
+static func solve_c_from_probability(target_p: float) -> float:
+	if target_p >= 1.0:
+		return 1.0
+		
+	var low: float = 0.0
+	var high: float = target_p
+	var mid: float = target_p
+	
+	for _i in range(24):
+		mid = (low + high) * 0.5
+		var tested_p: float = _probability_from_c(mid)
+		if absf(tested_p - target_p) <= 0.000001:
+			break
+		if tested_p > target_p:
+			high = mid
+		else:
+			low = mid
+			
+	return mid
+
+static func _probability_from_c(c: float) -> float:
+	var p_proc_on_n: float = 0.0
+	var p_fail_all_previous: float = 1.0
+	var expected_attempts: float = 0.0
+	var max_attempts: int = int(ceil(1.0 / c))
+	
+	for n in range(1, max_attempts + 1):
+		p_proc_on_n = minf(1.0, float(n) * c) * p_fail_all_previous
+		expected_attempts += float(n) * p_proc_on_n
+		p_fail_all_previous *= (1.0 - minf(1.0, float(n) * c))
+		
+	return 1.0 / expected_attempts
 ```
 
 ---
 
-## 10.7 Weighted Loot Tables with Pity Bounds
+## 10.7 Weighted Loot Tables with $\mathcal{O}(\log n)$ Binary Search & Pity Bounds
 
-Dropping randomized items requires balancing weighted item generation with deterministic bounds ("pity counters") to cap negative player streaks on legendary tier drops.
+Why use **Weights** instead of **Percentages** for loot tables?
+- **The Percentage Trap**: If you assign percentages (`Common = 70%`, `Rare = 25%`, `Epic = 5%`), the total must always equal $100\%$. If a designer wants to add a new item with a $10\%$ drop chance, they have to manually recalculate and edit the percentages of every other item in the table so the sum stays $100\%$.
+- **The Weight Solution**: You assign arbitrary relative weights (`Common = 70`, `Rare = 25`, `Epic = 5`). If you add a new item with weight `10`, the total weight automatically becomes $110$, and every item's probability scales proportionally ($\frac{w_i}{\sum w}$) with zero manual editing!
 
 ```
                       PREFIX-SUM ARRAY BINARY SEARCH
@@ -369,177 +857,363 @@ Dropping randomized items requires balancing weighted item generation with deter
  Result: UNCOMMON TIER! (Resolved in O(log N) via Binary Search!)
 ```
 
+### Step-by-Step Architectural Construction: Weighted Loot Table & Pity System
+
+#### Chunk 5.1: Prefix-Sum Compilation & Soft/Hard Pity State
+
 ```gdscript
-# ==============================================================================
-# WEIGHTED DROP TABLE SYSTEM WITH HARD PITY ENGINE
-# ==============================================================================
 class_name LootTableSystem
 extends RefCounted
 
 class DropEntry:
-    var item_resource: Resource
-    var weight: float
-    var is_legendary: bool
-    
-    func _init(res: Resource, w: float, legendary: bool = false) -> void:
-        item_resource = res
-        weight = w
-        is_legendary = legendary
+	var item_id: StringName
+	var weight: float
+	var is_rare_pity_target: bool
+	
+	func _init(p_id: StringName, p_weight: float, p_rare: bool = false) -> void:
+		item_id = p_id
+		weight = p_weight
+		is_rare_pity_target = p_rare
 
 var _entries: Array[DropEntry] = []
 var _prefix_sums: PackedFloat32Array = PackedFloat32Array()
 var _total_weight: float = 0.0
 
-# Pity Subsystem tracking
-var rolls_since_last_legendary: int = 0
-const HARD_PITY_THRESHOLD: int = 50
+var rolls_since_last_rare: int = 0
+var hard_pity_limit: int = 50
+```
 
-func add_entry(item: Resource, weight: float, is_legendary: bool = false) -> void:
-    assert(weight > 0.0, "Drop weight must be positive.")
-    var entry: DropEntry = DropEntry.new(item, weight, is_legendary)
-    _entries.append(entry)
-    _recalculate_prefix_sums()
+- **`_prefix_sums: PackedFloat32Array`**: Stores the cumulative running total of weights (`[60.0, 85.0, 97.0, 100.0]`). Because weights are strictly positive, the prefix-sum array is **guaranteed to be sorted in ascending order**, allowing us to search it in $\mathcal{O}(\log n)$ time via binary search rather than looping over every item in $\mathcal{O}(n)$ time.
 
-func _recalculate_prefix_sums() -> void:
-    _prefix_sums.clear()
-    _total_weight = 0.0
-    for entry in _entries:
-        _total_weight += entry.weight
-        _prefix_sums.append(_total_weight)
+#### Chunk 5.2: Binary Search Lookup & Hard Pity Enforcement
 
-## Evaluates a weighted drop with O(log N) complexity and hard pity enforcement
-func evaluate_drop() -> Resource:
-    if _entries.is_empty():
-        return null
-        
-    rolls_since_last_legendary += 1
+```gdscript
+func add_entry(item_id: StringName, weight: float, is_rare_target: bool = false) -> void:
+	assert(weight > 0.0, "Drop weight must be strictly positive.")
+	_entries.append(DropEntry.new(item_id, weight, is_rare_target))
+	_total_weight += weight
+	_prefix_sums.append(_total_weight)
 
-    # 1. HARD PITY OVERRIDE: Force legendary drop if streak threshold is exceeded
-    if rolls_since_last_legendary >= HARD_PITY_THRESHOLD:
-        for entry in _entries:
-            if entry.is_legendary:
-                rolls_since_last_legendary = 0
-                return entry.item_resource
+func roll_drop() -> StringName:
+	if _entries.is_empty():
+		return &""
+		
+	rolls_since_last_rare += 1
 
-    # 2. STANDARD WEIGHTED RANDOM DRAW
-    var roll: float = randf_range(0.0, _total_weight)
-    
-    # Binary Search over Prefix-Sum array: O(log N)
-    var low: int = 0
-    var high: int = _prefix_sums.size() - 1
-    var selected_idx: int = high
-    
-    while low <= high:
-        var mid: int = (low + high) / 2
-        if _prefix_sums[mid] >= roll:
-            selected_idx = mid
-            high = mid - 1 # Search left for lower boundary
-        else:
-            low = mid + 1
+	# 1. Hard Pity Override: Guarantee rare item if dry spell hits limit
+	if rolls_since_last_rare >= hard_pity_limit:
+		for entry in _entries:
+			if entry.is_rare_pity_target:
+				rolls_since_last_rare = 0
+				return entry.item_id
 
-    var picked: DropEntry = _entries[selected_idx]
-    if picked.is_legendary:
-        rolls_since_last_legendary = 0
-        
-    return picked.item_resource
+	# 2. O(log N) Binary Search over Prefix Sums
+	var random_ticket: float = randf_range(0.0, _total_weight)
+	var selected_index: int = _prefix_sums.bsearch(random_ticket, true)
+	selected_index = clampi(selected_index, 0, _entries.size() - 1)
+	
+	var picked: DropEntry = _entries[selected_index]
+	if picked.is_rare_pity_target:
+		rolls_since_last_rare = 0
+		
+	return picked.item_id
+```
+
+- **`_prefix_sums.bsearch(random_ticket, true)`**: Uses Godot's native C++ binary search on the contiguous `PackedFloat32Array`. Even if a loot table contains $10,000$ items, `bsearch` finds the exact winning bucket in at most $14$ comparisons!
+
+---
+
+#### The Fully Assembled `LootTableSystem.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: LootTableSystem.gd
+# Architecture: Prefix-Sum O(log N) Weighted Loot Table with Hard Pity Bounds
+# ==============================================================================
+class_name LootTableSystem
+extends RefCounted
+
+class DropEntry:
+	var item_id: StringName
+	var weight: float
+	var is_rare_pity_target: bool
+	
+	func _init(p_id: StringName, p_weight: float, p_rare: bool = false) -> void:
+		item_id = p_id
+		weight = p_weight
+		is_rare_pity_target = p_rare
+
+var _entries: Array[DropEntry] = []
+var _prefix_sums: PackedFloat32Array = PackedFloat32Array()
+var _total_weight: float = 0.0
+
+var rolls_since_last_rare: int = 0
+var hard_pity_limit: int = 50
+
+## Appends a weighted item entry and updates the cumulative prefix-sum buffer in O(1)
+func add_entry(item_id: StringName, weight: float, is_rare_target: bool = false) -> void:
+	assert(weight > 0.0, "Drop weight must be strictly positive.")
+	_entries.append(DropEntry.new(item_id, weight, is_rare_target))
+	_total_weight += weight
+	_prefix_sums.append(_total_weight)
+
+## Evaluates a weighted drop in O(log N) time with deterministic hard-pity protection
+func roll_drop() -> StringName:
+	if _entries.is_empty():
+		return &""
+		
+	rolls_since_last_rare += 1
+
+	# 1. Hard Pity Override
+	if rolls_since_last_rare >= hard_pity_limit:
+		for entry in _entries:
+			if entry.is_rare_pity_target:
+				rolls_since_last_rare = 0
+				return entry.item_id
+
+	# 2. Native C++ Binary Search over Prefix Sums
+	var random_ticket: float = randf_range(0.0, _total_weight)
+	var selected_index: int = _prefix_sums.bsearch(random_ticket, true)
+	selected_index = clampi(selected_index, 0, _entries.size() - 1)
+	
+	var picked: DropEntry = _entries[selected_index]
+	if picked.is_rare_pity_target:
+		rolls_since_last_rare = 0
+		
+	return picked.item_id
 ```
 
 ---
 
-## 10.8 Tactile "Juice" & Kinesthetic Feedback
+## 10.8 Kinesthetic "Juice" & The Psychology of Impact
 
-A mechanic can be mathematically balanced yet feel terrible to play. **"Juice"** (or Game Feel) is the non-functional audiovisual feedback that accentuates player actions.
+Why does swinging a greatsword in *Monster Hunter* or *God of War* feel like cleaving solid granite, while swinging a sword in an amateur project feels like waving a cardboard tube through air?
+
+Because in the real world, **a blade striking bone experiences physical resistance (deceleration)**. In a video game, polygons pass effortlessly through other polygons with zero physical resistance unless you engineer **Kinesthetic Feedback ("Juice")**.
 
 ```
                           THE KINESTHETIC HIT PIPELINE
 =================================================================================
- Melee Sword Impacts Hurtbox!
+ Melee Sword Impacts Hurtbox! (Frame 0)
            │
-           ├── 1. HITSTOP FREEZE ──► Freeze actor frames for 60ms (Zero displacement)
-           ├── 2. MESH JITTER   ──► Apply high-frequency noise offset to Victim
-           ├── 3. AUDIO SYSTEM  ──► Play pitched impact SFX + Transient Sub-bass
-           ├── 4. GPU SHADER    ──► Trigger 1-frame pure white Hit-Flash (EMISSION)
-           └── 5. CAMERA RIG    ──► Inject +0.3 Trauma onto Camera (Rotational shake)
+           ├── 1. HITSTOP FREEZE ──► Freeze attacker & victim animations for 60ms
+           │                         (Simulates physical blade resistance on bone!)
+           ├── 2. MESH JITTER    ──► Oscillate victim mesh horizontally (+/- 8cm)
+           │                         while frozen (conveys stored kinetic energy!)
+           ├── 3. GPU SHADER     ──► Set Emission Whiteout = 1.0 for 1 frame
+           │                         (Draws human eye peripheral attention instantly)
+           ├── 4. AUDIO TRANSIENT──► Layer pitched meat-thud + sub-bass sine drop
+           └── 5. CAMERA RIG     ──► Inject +0.35 Trauma (Triggers on Frame 60ms!)
 ```
+
+### The Three Temporal Laws of Game Feel
+
+1. **Zero-Frame Input Confirmation**: The visual and auditory wind-up of an action must begin on the **exact frame** the button is pressed ($0\text{ ms}$ delay).
+2. **Local Hitstop vs. Global Time Scale**:
+   > [!warning] ⚠️ Production Trap: `Engine.time_scale = 0.0` in Multiplayer or Bullet-Hell Games
+   > Many tutorials implement hitstop by setting `Engine.time_scale = 0.05`. While acceptable for a solo single-player cinematic hit, **modifying global `Engine.time_scale` freezes background projectiles, messes up audio sync, and is completely impossible in multiplayer**!
+   > **The Architectural Solution**: Implement **Entity-Local Hitstop** by temporarily pausing the `AnimationTree` (`parameters/TimeScale/scale = 0.0`) and zeroing the velocity integration of *only* the attacker and the victim, while the rest of the world continues running at $60\text{ Hz}$!
+3. **Vibrational Shake During Hitstop**: While the victim is frozen in hitstop for $60\text{ ms}$, rapidly offset their visual `MeshInstance3D` left and right by $\pm 5\text{ cm}$ every frame, then release them into their knockback velocity the moment hitstop ends. This creates the iconic *Street Fighter* / *Hollow Knight* kinetic release!
+
+---
+
+### Step-by-Step Architectural Construction: Entity-Local Hitstop & Juice Orchestrator
+
+Let us deconstruct our multi-sensory impact orchestrator chunk by chunk.
+
+#### Chunk 6.1: Hit-Flash Shader & Camera Trauma Trigger
+
+```gdscript
+class_name KinestheticFeedback
+extends RefCounted
+
+static func trigger_impact(
+	attacker: Node3D,
+	victim: Node3D,
+	victim_visual_mesh: GeometryInstance3D,
+	camera_rig: CinematicCameraRig,
+	hitstop_duration: float = 0.07,
+	trauma_amount: float = 0.35
+) -> void:
+	if camera_rig != null:
+		camera_rig.add_trauma(trauma_amount)
+
+	if victim_visual_mesh != null:
+		_trigger_shader_flash(victim_visual_mesh)
+
+	_execute_local_hitstop_and_jitter(attacker, victim, victim_visual_mesh, hitstop_duration)
+```
+
+- **Decoupled Visual Mesh (`victim_visual_mesh`)**: Notice we pass the visual `MeshInstance3D` separately from the physics root `victim`. Why? Because we want to jitter the *visual mesh* back and forth during hitstop without jittering the physics `CollisionShape3D` (which would cause physics engine collision glitches!).
+
+#### Chunk 6.2: Instance-Uniform Shader Flash (Zero Material Duplication)
+
+```gdscript
+static func _trigger_shader_flash(mesh: GeometryInstance3D) -> void:
+	# Uses per-instance shader uniforms so shared materials do not flash all enemies at once!
+	mesh.set_instance_shader_parameter(&"flash_intensity", 1.0)
+	
+	var tween: Tween = mesh.create_tween()
+	tween.tween_Method(
+		func(val: float) -> void:
+			if is_instance_valid(mesh):
+				mesh.set_instance_shader_parameter(&"flash_intensity", val),
+		1.0,
+		0.0,
+		0.12
+	)
+```
+
+- **`mesh.set_instance_shader_parameter(&"flash_intensity", 1.0)`**: **Critical Memory Optimization**. If $20$ goblins share the same material and you modify `material.set_shader_parameter()`, **all 20 goblins flash white when you hit one**! In Godot 4, declaring `instance uniform float flash_intensity` in your shader and calling `set_instance_shader_parameter()` modifies the value *exclusively* for that single mesh instance in VRAM without duplicating the material!
+
+#### Chunk 6.3: Entity-Local Hitstop & High-Frequency Mesh Jitter
+
+```gdscript
+static func _execute_local_hitstop_and_jitter(
+	attacker: Node3D,
+	victim: Node3D,
+	victim_mesh: GeometryInstance3D,
+	duration: float
+) -> void:
+	if duration <= 0.0:
+		return
+
+	var tree: SceneTree = attacker.get_tree()
+	var original_mesh_pos: Vector3 = victim_mesh.position if victim_mesh != null else Vector3.ZERO
+
+	# Freeze physics processing locally on attacker and victim only
+	attacker.set_physics_process(false)
+	victim.set_physics_process(false)
+
+	var elapsed: float = 0.0
+	var jitter_sign: float = 1.0
+
+	while elapsed < duration:
+		await tree.process_frame
+		var delta: float = tree.root.get_process_delta_time()
+		elapsed += delta
+		
+		# Oscillate victim visual mesh horizontally during the freeze window
+		if is_instance_valid(victim_mesh):
+			jitter_sign = -jitter_sign
+			victim_mesh.position = original_mesh_pos + Vector3(0.06 * jitter_sign, 0.0, 0.0)
+
+	# Restore exact local mesh origin and resume kinematic physics
+	if is_instance_valid(victim_mesh):
+		victim_mesh.position = original_mesh_pos
+	if is_instance_valid(attacker):
+		attacker.set_physics_process(true)
+	if is_instance_valid(victim):
+		victim.set_physics_process(true)
+```
+
+- **`while elapsed < duration: await tree.process_frame`**: Frame-by-frame coroutine loop during the freeze window. On every rendered frame while the physics body is frozen in place, `jitter_sign` flips between $+1.0$ and $-1.0$, vibrating the visual mesh horizontally by $\pm 6\text{ cm}$ before snapping it cleanly back to `original_mesh_pos` when the freeze releases.
+
+---
+
+#### The Fully Assembled `KinestheticFeedback.gd`
 
 ```gdscript
 # ==============================================================================
-# TACTILE GAME FEEL & HITSTOP ORCHESTRATOR
+# SCRIPT: KinestheticFeedback.gd
+# Architecture: Entity-Local Hitstop, Mesh Jitter & Per-Instance Shader Flash
 # ==============================================================================
 class_name KinestheticFeedback
-extends Node
+extends RefCounted
 
-## Executes multi-layered impact feedback across time-scale, mesh, and camera
+## Executes multi-layered kinesthetic impact feedback without halting global time
 static func trigger_impact(
-    attacker: Node, 
-    victim: Node, 
-    camera_rig: CinematicCameraRig,
-    hitstop_duration_sec: float = 0.06
+	attacker: Node3D,
+	victim: Node3D,
+	victim_visual_mesh: GeometryInstance3D,
+	camera_rig: CinematicCameraRig,
+	hitstop_duration: float = 0.07,
+	trauma_amount: float = 0.35
 ) -> void:
-    
-    # 1. CAMERA TRAUMA INJECTION
-    if camera_rig != null:
-        camera_rig.add_trauma(0.35)
+	if camera_rig != null:
+		camera_rig.add_trauma(trauma_amount)
 
-    # 2. TRANSIENT HIT-FLASH SHADER TRIGGER
-    _apply_hit_flash(victim)
+	if victim_visual_mesh != null:
+		_trigger_shader_flash(victim_visual_mesh)
 
-    # 3. KINEMATIC HITSTOP (Temporarily freezes processing without engine pausing)
-    _execute_hitstop(attacker, victim, hitstop_duration_sec)
+	_execute_local_hitstop_and_jitter(attacker, victim, victim_visual_mesh, hitstop_duration)
 
-static func _apply_hit_flash(target: Node) -> void:
-    var mesh: GeometryInstance3D = target.find_child("MeshInstance3D", true, false) as GeometryInstance3D
-    if mesh != null and mesh.material_override != null:
-        var mat: Material = mesh.material_override
-        # Trigger hit-flash uniform parameter on shader
-        mat.set("shader_parameter/flash_intensity", 1.0)
-        
-        # Smooth decay via SceneTree Tween
-        var tween: Tween = target.get_tree().create_tween()
-        tween.tween_property(mat, "shader_parameter/flash_intensity", 0.0, 0.15)
+## Triggers a 1-frame whiteout flash using per-instance shader uniforms
+static func _trigger_shader_flash(mesh: GeometryInstance3D) -> void:
+	mesh.set_instance_shader_parameter(&"flash_intensity", 1.0)
+	
+	var tween: Tween = mesh.create_tween()
+	tween.tween_method(
+		func(val: float) -> void:
+			if is_instance_valid(mesh):
+				mesh.set_instance_shader_parameter(&"flash_intensity", val),
+		1.0,
+		0.0,
+		0.12
+	)
 
-static func _execute_hitstop(attacker: Node, victim: Node, duration: float) -> void:
-    # Disable process updates locally to preserve physical position without pausing the world
-    attacker.set_physics_process(false)
-    victim.set_physics_process(false)
-    
-    # Resume after asynchronous duration
-    await attacker.get_tree().create_timer(duration, true, false, true).timeout
-    
-    if is_instance_valid(attacker):
-        attacker.set_physics_process(true)
-    if is_instance_valid(victim):
-        victim.set_physics_process(true)
+## Freezes attacker and victim kinematics locally while vibrating the victim's visual mesh
+static func _execute_local_hitstop_and_jitter(
+	attacker: Node3D,
+	victim: Node3D,
+	victim_mesh: GeometryInstance3D,
+	duration: float
+) -> void:
+	if duration <= 0.0 or attacker == null or victim == null:
+		return
+
+	var tree: SceneTree = attacker.get_tree()
+	var original_mesh_pos: Vector3 = victim_mesh.position if victim_mesh != null else Vector3.ZERO
+
+	attacker.set_physics_process(false)
+	victim.set_physics_process(false)
+
+	var elapsed: float = 0.0
+	var jitter_sign: float = 1.0
+
+	while elapsed < duration:
+		await tree.process_frame
+		if not is_instance_valid(attacker) or not is_instance_valid(victim):
+			break
+		var delta: float = attacker.get_process_delta_time()
+		elapsed += delta
+		
+		if is_instance_valid(victim_mesh):
+			jitter_sign = -jitter_sign
+			victim_mesh.position = original_mesh_pos + Vector3(0.06 * jitter_sign, 0.0, 0.0)
+
+	if is_instance_valid(victim_mesh):
+		victim_mesh.position = original_mesh_pos
+	if is_instance_valid(attacker):
+		attacker.set_physics_process(true)
+	if is_instance_valid(victim):
+		victim.set_physics_process(true)
 ```
 
 ---
 
-## 10.9 Applied Synthesis: The Complete Attribute Modifier & Combat Equation
+## 10.9 Applied Synthesis: Complete Combat Resolution & Juice Pipeline
 
-To integrate combat invariants, hyperbolic mitigation, and deterministic modifiers, review the unified **Combat Resolution Pipeline**:
+To see how **Attack Profiles (Module II)**, **Stat Modifier Pipelines (Module V)**, **PRD Critical Rolls**, **Hyperbolic Armor Mitigation**, **DDA Multipliers**, and **Kinesthetic Hitstop** unite into a single cohesive transaction, examine this complete **Combat Resolver**:
 
 ```
                        UNIFIED DAMAGE RESOLUTION PIPELINE
 =================================================================================
- [ ATTACKER ]                                        [ VICTIM ]
- Base Weapon Damage: 40.0                            Base Armor Rating: 75.0
- Buff Pipeline (Additive + Mult)                     Equipment Armor Modifiers: +25.0
- ────────────────────────────────                    ────────────────────────────────
- Final Raw Damage: 58.0                              Total Armor: 100.0 (K = 100)
-        │                                                   │
-        ▼                                                   ▼
- Critical Hit Check (PRD)                            Hyperbolic Mitigation Factor
- (20% Nominal -> 5.5% Base C)                        Mitigation = 100 / (100 + 100) = 0.50
+ [ 1. ATTACKER STAT PIPELINE ]                      [ 2. VICTIM MITIGATION ]
+ AttackProfile Base Damage: 40.0                    Victim Armor Stat: 100.0 (K=100)
+ Attacker Damage StatMult:  x1.25                   Hyperbolic Mult: 100/(100+100) = 0.50
+ PRD Critical Strike Roll:  20% Nominal -> PROC!    DDA Pacing Multiplier: x1.00
+ Crit Multiplier (x2.0):    50.0 * 2.0 = 100.0 Raw
         │                                                   │
         └─────────────────────────┬─────────────────────────┘
+                                  ▼
+                     [ 3. RESOLVED EFFECTIVE DAMAGE ]
+                     Final Damage = 100.0 * 0.50 = 50.0 HP
                                   │
                                   ▼
-                     [ RESOLVED EFFECTIVE DAMAGE ]
-                     Damage = 58.0 * 0.50 = 29.0 HP
-                                  │
-                                  ▼
-                     [ KINESTHETIC JUICE FLUSH ]
-                     Hitstop (60ms) + Flash + Trauma (0.35)
+                     [ 4. KINESTHETIC JUICE FLUSH ]
+                     Hitstop (70ms, 1.5x on Crit!) + Jitter + Per-Instance Flash
 ```
 
 ---
+

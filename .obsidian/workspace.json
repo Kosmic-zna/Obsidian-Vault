@@ -31,6 +31,20 @@
               "type": "markdown",
               "state": {
                 "file": "Personal Projects/Godot 4/General Information/Masterlist.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Masterlist"
+            }
+          },
+          {
+            "id": "fee2a2db3f27cfb2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Personal Projects/Godot 4/General Information/Masterlist.md",
                 "mode": "preview",
                 "source": false
               },
@@ -39,7 +53,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -189,7 +203,6 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/Masterlist.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -209,7 +222,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -235,38 +248,31 @@
       "obsidian-kanban:Create new board": false,
       "obsidian-advanced-slides:Show Slide Preview": true,
       "obsidian-spaced-repetition:Review flashcards": true,
-      "project-manager:Project manager": false,
-      "operon:Create New Operon Task": false,
-      "operon:Operon Filter View": false,
-      "operon:Task Finder": false,
-      "operon:Operon Calendar": false,
-      "operon:Operon Kanban": false,
-      "operon:Operon Table": false,
-      "operon:Open Pinned Tasks": false
+      "project-manager:Project manager": false
     }
   },
-  "active": "7d222c4d13ffd294",
+  "active": "ae9cee6e079dc279",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
     "Personal Projects/Godot 4/General Information/Masterlist.md",
-    "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
-    "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
-    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
-    "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
-    "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
-    "Unsorted/2026-10-30.md",
-    "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
-    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
-    "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
-    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
-    "Personal Projects/Godot 4/General Information/Table of Contents.md",
-    "Personal Projects/Godot 4/General Information",
-    "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
+    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
+    "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
+    "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
     "Personal Projects/Godot 4/General Information/🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
     "Personal Projects/Godot 4/General Information/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
-    "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
-    "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
-    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
+    "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
+    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
+    "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
+    "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
+    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
+    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
+    "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+    "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
+    "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
+    "Personal Projects/Godot 4/General Information/Table of Contents.md",
+    "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
+    "Unsorted/2026-10-30.md",
+    "Personal Projects/Godot 4/General Information",
+    "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
     "Unsorted/Operon 1/Tasks",
     "Unsorted/Operon 1",
     "Personal Projects/Godot 4/Master Curriculum & Reference Compendium.md",
@@ -276,7 +282,6 @@
     "Projects/School Dashboard/_tasks/review-the-service-proposal-.md",
     "Projects Plus - Демо 2/Финансы/Трата Образование 02.md",
     "Projects Plus - Демо 2/Финансы/Трата Образование 01.md",
-    "Projects Plus - Демо 2/Финансы/Трата Подарки 03.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",

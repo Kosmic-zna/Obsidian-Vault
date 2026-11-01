@@ -5,6 +5,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Operon",
         "Projects",
         "Year 1",
         "Personal Projects",
@@ -873,7 +874,9 @@
     "Personal Projects/Godot 4/General Information": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
+        "godot_4_systems_architecture_module_xv_the_third_party_ecosystem_essential_libraries_gdextension.md",
         "Table of Contents.md",
         "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
         "🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
@@ -891,7 +894,6 @@
         "📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
         "Masterlist.md"
       ],
-      "sortOrder": "custom",
       "ctime": 1793500593359,
       "mtime": 1793500593359
     },
@@ -906,18 +908,6 @@
       "isHidden": false,
       "ctime": 1793498497172,
       "mtime": 1793499787133
-    },
-    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793499708183,
-      "mtime": 1793499760550
-    },
-    "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793499708194,
-      "mtime": 1793499746250
     },
     "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md": {
       "isPinned": false,
@@ -943,12 +933,6 @@
       "ctime": 1793465887494,
       "mtime": 1793465913386
     },
-    "Personal Projects/Godot 4/General Information/Masterlist.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793499999596,
-      "mtime": 1793508501661
-    },
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md": {
       "isPinned": false,
       "isHidden": false,
@@ -970,18 +954,18 @@
     "Unsorted/Operon 1": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Tasks"
       ],
-      "sortOrder": "custom",
       "ctime": 1793496694970,
       "mtime": 1793496694970
     },
     "Unsorted/Operon 1/Tasks": {
       "isPinned": false,
       "isHidden": false,
-      "customOrder": [],
       "sortOrder": "custom",
+      "customOrder": [],
       "ctime": 1793496694978,
       "mtime": 1793496694978
     },
@@ -1007,7 +991,49 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793508953986,
-      "mtime": 1793508953986
+      "mtime": 1793509177476
+    },
+    "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793532193948,
+      "mtime": 1793532228745
+    },
+    "Personal Projects/Godot 4/General Information/Masterlist.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793532347694,
+      "mtime": 1793533094716
+    },
+    "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793532997876,
+      "mtime": 1793533050659
+    },
+    "Personal Projects/Godot 4/General Information/godot_4_systems_architecture_module_xv_the_third_party_ecosystem_essential_libraries_gdextension.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793541492780,
+      "mtime": 1793541493286
+    },
+    "Operon": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Tasks"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793541543020,
+      "mtime": 1793541543020
+    },
+    "Operon/Tasks": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [],
+      "sortOrder": "custom",
+      "ctime": 1793541543397,
+      "mtime": 1793541543397
     }
   },
   "showHidden": false,
