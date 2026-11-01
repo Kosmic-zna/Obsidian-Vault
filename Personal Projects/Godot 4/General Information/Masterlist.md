@@ -3370,18 +3370,20 @@ static func solve_launch_angle(
 # 🎮 Module V: Universal Gameplay Systems Engineering
 
 > [!info] 📖 Lexicon & First Principles: Gameplay Systems Engineering
-> Transitioning from abstract mathematics to concrete gameplay architecture requires rigorous formal definitions of the runtime systems that govern player experience:
+> Transitioning from abstract spatial mathematics to concrete gameplay architecture requires formalizing the low-level systems that govern player experience:
 > - ⤷ **Kinematics**: The branch of classical mechanics describing the motion of points, bodies, and systems without consideration of the physical forces (mass, inertia) that cause them. Kinematic character bodies move by direct displacement vectors ($\Delta \vec{p} = \vec{v} \cdot \Delta t$).
-> - ⤷ **Euler Integration**: A first-order numerical procedure for solving ordinary differential equations with a given initial value. Discrete physics steps approximate velocity and position over finite intervals ($\Delta t$).
-> - ⤷ **Model-View-Controller (MVC)**: An architectural pattern separating internal data representations and business logic (Model) from graphical visualisations (View) and user input pipelines (Controller).
-> - ⤷ **Autonomous Agent**: An entity that perceives its environment through sensors, processes decisions via internal logic, and acts upon that environment using steering forces or kinematic velocity updates without explicit player intervention.
-> - ⤷ **Screen Trauma**: A non-linear scalar variable representing internal camera stress ($\tau \in [0, 1]$), whose mathematical shaping generates organic screen shake and translation offsets.
+> - ⤷ **Discrete Euler Integration**: A first-order numerical procedure for solving ordinary differential equations over finite time intervals ($\Delta t$). Step 1 accumulates velocity from acceleration; Step 2 accumulates position from velocity.
+> - ⤷ **Model-View-Controller (MVC)**: An architectural separation of concerns where raw data and mutation rules (Model) exist independently from graphical control nodes (View) and input polling loops (Controller).
+> - ⤷ **Screen Trauma**: A non-linear scalar variable ($\tau \in [0, 1]$) representing camera stress, whose mathematical power curves generate organic screen shake without high-frequency stutter.
+> - ⤷ **Autonomous Steering**: A decentralized movement paradigm where an agent calculates localized steering force vectors based on environmental targets, neighbors, and obstacles rather than hardcoded spline paths.
 
 ---
 
 ## 5.1 Kinematics, Physics & Responsive Character Controllers
 
-Amateur platformer and movement controllers feel floaty, imprecise, or unresponsive because developers couple motion directly to engine defaults rather than calibrating kinematic equations to human psychological reaction times.
+Platformer and character controllers frequently suffer from "floatiness" or input unresponsiveness when developers rely on arbitrary constants (`gravity = 9.8`, `jump_speed = -400`) and bare input polling. 
+
+A production character controller derives its physical constants through **kinematic calculus** and decouples human perceptual reaction times from physical ticks using **temporal leeway buffers**.
 
 ```
                   CONTINUOUS VS. DISCRETE EULER INTEGRATION
@@ -3391,7 +3393,9 @@ Discrete:     v_{n+1} = v_n + a * Δt            (Step 1: Velocity accumulation)
               p_{n+1} = p_n + v_{n+1} * Δt      (Step 2: Positional translation)
 ```
 
-### The Physics Body Taxonomy in Godot 4
+---
+
+### 1. The Physics Body Taxonomy in Godot 4
 
 | Body Type | Scripting Class | Transform Control | Collision Resolution | Target Use Case |
 | :--- | :--- | :--- | :--- | :--- |
@@ -3400,7 +3404,9 @@ Discrete:     v_{n+1} = v_n + a * Δt            (Step 1: Velocity accumulation)
 | **Character Body** | `CharacterBody2D` / `3D` | Pure Code (`move_and_slide()`) | Kinematic slide & snap | Players, humanoid NPCs, precise robotic agents |
 | **Sensor Area** | `Area2D` / `3D` | Transform-bound | Ghost volume (overlap queries) | Triggers, hitboxes, water zones, audio portals |
 
-### The Kinematic Jump Calculus: Eliminating Arbitrary Guesswork
+---
+
+### 2. The Kinematic Jump Calculus: Eliminating Arbitrary Guesswork
 
 Never configure a character's jump by guessing gravitational values and jump impulses in the Inspector. A professional engineer derives gravity ($g$) and jump impulse velocity ($v_0$) directly from design parameters: **Peak Jump Height** ($h$) and **Time-to-Peak** ($t_{\text{peak}}$).
 
@@ -3431,16 +3437,131 @@ Height (y)
                        t_peak        t_fall
 ```
 
-### Tactical Forgiveness Mechanics: Coyote Time & Jump Buffering
+---
 
-Human motor responses cannot reliably coordinate single-frame inputs on $60\text{ Hz}$ or $144\text{ Hz}$ displays. Responsive character controllers incorporate temporal leeway buffers:
+### Step-by-Step Architectural Construction: Kinematic Platformer Controller
 
-1. **Coyote Time**: Allows an entity to trigger a full-height jump for a short temporal window ($\Delta t \approx 100\text{--}150\text{ ms}$) *after* their collision shape has walked off a ledge.
-2. **Jump Buffering**: Caches a jump command issued within $100\text{--}120\text{ ms}$ *prior* to contacting the floor, discharging the jump on the exact frame floor collision is registered.
+Let us construct a production 2D kinematic controller chunk by chunk, examining the low-level mechanics of time accumulation, asymmetric gravity, and forgiveness timers.
+
+#### Chunk 1.1: Jump Calculus & State Declarations
+
+```gdscript
+class_name KinematicPlatformerController
+extends CharacterBody2D
+
+@export_group("Jump Calculus Parameters")
+@export var jump_height: float = 120.0
+@export var time_to_apex: float = 0.35
+@export var time_to_descent: float = 0.28
+
+@export_group("Forgiveness Windows")
+@export var coyote_duration: float = 0.12
+@export var jump_buffer_duration: float = 0.10
+
+@export_group("Planar Locomotion")
+@export var max_run_speed: float = 320.0
+@export var ground_acceleration: float = 1800.0
+@export var ground_friction: float = 2400.0
+@export var air_acceleration: float = 900.0
+
+var _gravity_rise: float
+var _gravity_fall: float
+var _jump_impulse: float
+
+var _coyote_timer: float = 0.0
+var _buffer_timer: float = 0.0
+```
+
+- **`@export var jump_height / time_to_apex / time_to_descent`**: Designers adjust these three metrics exclusively. Instead of tweaking uncalibrated engine numbers, they define exact pixel height and temporal duration.
+- **`time_to_descent < time_to_apex`**: Notice the difference in duration ($0.35\text{ s}$ rise vs. $0.28\text{ s}$ fall). This implements **Asymmetric Gravity**—the character rises gracefully, but drops swiftly back to earth, eliminating floatiness.
+- **`_coyote_timer` & `_buffer_timer`**: Dedicated floating-point accumulators. Rather than instantiating node-based `Timer` objects (which incur tree overhead, signal dispatching, and dynamic memory allocations), raw float timers run directly in CPU registers.
+
+#### Chunk 1.2: Kinematic Derivation & Temporal Updates
+
+```gdscript
+func _ready() -> void:
+	_recalculate_kinematics()
+
+func _recalculate_kinematics() -> void:
+	_gravity_rise = (2.0 * jump_height) / (time_to_apex * time_to_apex)
+	_gravity_fall = (2.0 * jump_height) / (time_to_descent * time_to_descent)
+	_jump_impulse = -((2.0 * jump_height) / time_to_apex)
+
+func _update_timers(delta: float) -> void:
+	_coyote_timer = maxf(0.0, _coyote_timer - delta)
+	_buffer_timer = maxf(0.0, _buffer_timer - delta)
+```
+
+- **`_recalculate_kinematics()`**: Derives $g_{\text{rise}}$, $g_{\text{fall}}$, and $v_0$ via our kinematic formulas. Note that `_jump_impulse` is explicitly negative because Godot 2D operates in a screen-space coordinate system where $-Y$ points upwards.
+- **`maxf(0.0, _timer - delta)`**: Decrements timers every physics tick without allowing underflow. This simple floating-point subtraction costs a fraction of a nanosecond and leaves zero memory footprint.
+
+#### Chunk 1.3: Jump Logic with Forgiveness Windows
+
+```gdscript
+func _handle_jump_input() -> void:
+	if Input.is_action_just_pressed(&"jump"):
+		_buffer_timer = jump_buffer_duration
+
+	if _buffer_timer > 0.0 and _coyote_timer > 0.0:
+		velocity.y = _jump_impulse
+		_buffer_timer = 0.0
+		_coyote_timer = 0.0
+		
+	if Input.is_action_just_released(&"jump") and velocity.y < 0.0:
+		velocity.y *= 0.5
+```
+
+- **`if Input.is_action_just_pressed(&"jump"): _buffer_timer = ...`**: Jump Buffering. If the player presses Jump within $100\text{ ms}$ before landing, the intent is stored.
+- **`if _buffer_timer > 0.0 and _coyote_timer > 0.0:`**: The jump triggers if *both* conditions are met: the player recently intended to jump (`_buffer_timer > 0.0`), and they were grounded recently enough to jump (`_coyote_timer > 0.0`). Once executed, both timers are cleared to prevent double-activation.
+- **`velocity.y *= 0.5`**: **Variable Jump Height**. If the player releases the jump button while rising ($v_y < 0$), cutting upward velocity in half drops the character early, offering precise tactile control over jump arcs.
+
+#### Chunk 1.4: Directional Movement & Integration
+
+```gdscript
+func _apply_vertical_kinematics(delta: float) -> void:
+	if not is_on_floor():
+		var active_gravity: float = _gravity_rise if velocity.y < 0.0 else _gravity_fall
+		velocity.y += active_gravity * delta
+	elif velocity.y > 0.0:
+		velocity.y = 0.0
+
+func _apply_horizontal_kinematics(delta: float) -> void:
+	var input_x: float = Input.get_axis(&"move_left", &"move_right")
+	var target_speed: float = input_x * max_run_speed
+	
+	if is_on_floor():
+		if not is_zero_approx(input_x):
+			velocity.x = move_toward(velocity.x, target_speed, ground_acceleration * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, ground_friction * delta)
+	else:
+		if not is_zero_approx(input_x):
+			velocity.x = move_toward(velocity.x, target_speed, air_acceleration * delta)
+
+func _physics_process(delta: float) -> void:
+	_update_timers(delta)
+	_handle_jump_input()
+	_apply_vertical_kinematics(delta)
+	_apply_horizontal_kinematics(delta)
+	
+	move_and_slide()
+	
+	if is_on_floor():
+		_coyote_timer = coyote_duration
+```
+
+- **`active_gravity = _gravity_rise if velocity.y < 0.0 else _gravity_fall`**: Dynamically switches gravitational constants based on the sign of $v_y$. The moment the jump apex is reached ($v_y \ge 0$), the heavier falling gravity takes over.
+- **`move_toward(velocity.x, target_speed, ground_acceleration * delta)`**: A native C++ helper that accelerates velocity toward the target without overshoot.
+- **`if is_on_floor(): _coyote_timer = coyote_duration`**: Resets Coyote Time while standing on the floor. When the player walks off a ledge into open air, `_coyote_timer` begins ticking down, preserving their jump window for $120\text{ ms}$.
+
+---
+
+#### The Fully Assembled `KinematicPlatformerController.gd`
 
 ```gdscript
 # ==============================================================================
-# PRODUCTION KINEMATIC CONTROLLER (Asymmetric Gravity & Forgiveness Buffers)
+# SCRIPT: KinematicPlatformerController.gd
+# Architecture: Calculus-Driven Movement & Tactical Forgiveness
 # ==============================================================================
 class_name KinematicPlatformerController
 extends CharacterBody2D
@@ -3454,93 +3575,99 @@ extends CharacterBody2D
 @export var time_to_descent: float = 0.28
 
 @export_group("Forgiveness Windows")
+## Permissible airborne jump window after walking off a ledge (seconds)
 @export var coyote_duration: float = 0.12
+## Permissible pre-landing input buffering window (seconds)
 @export var jump_buffer_duration: float = 0.10
 
 @export_group("Planar Locomotion")
+## Maximum horizontal running velocity (pixels/second)
 @export var max_run_speed: float = 320.0
+## Acceleration applied when initiating horizontal movement on ground
 @export var ground_acceleration: float = 1800.0
+## Deceleration applied when stopping on ground
 @export var ground_friction: float = 2400.0
+## Acceleration applied when steering mid-air
 @export var air_acceleration: float = 900.0
 
-# Derived mathematical constants
+# Derived kinematic parameters
 var _gravity_rise: float
 var _gravity_fall: float
 var _jump_impulse: float
 
-# Temporal tracking timers
+# Register-level timer accumulators
 var _coyote_timer: float = 0.0
 var _buffer_timer: float = 0.0
 
 func _ready() -> void:
-    _recalculate_kinematics()
+	_recalculate_kinematics()
 
+## Computes exact gravitational constants and jump velocity from design variables
 func _recalculate_kinematics() -> void:
-    # g = 2h / t^2
-    _gravity_rise = (2.0 * jump_height) / (time_to_apex * time_to_apex)
-    _gravity_fall = (2.0 * jump_height) / (time_to_descent * time_to_descent)
-    # v0 = 2h / t
-    _jump_impulse = -((2.0 * jump_height) / time_to_apex)
+	# g = 2h / t^2
+	_gravity_rise = (2.0 * jump_height) / (time_to_apex * time_to_apex)
+	_gravity_fall = (2.0 * jump_height) / (time_to_descent * time_to_descent)
+	# v0 = 2h / t (Negative in Godot 2D coordinate space)
+	_jump_impulse = -((2.0 * jump_height) / time_to_apex)
 
 func _physics_process(delta: float) -> void:
-    _update_timers(delta)
-    _handle_jump_input()
-    _apply_vertical_kinematics(delta)
-    _apply_horizontal_kinematics(delta)
-    
-    move_and_slide()
-    
-    # Ground state reconciliation
-    if is_on_floor():
-        _coyote_timer = coyote_duration
+	_update_timers(delta)
+	_handle_jump_input()
+	_apply_vertical_kinematics(delta)
+	_apply_horizontal_kinematics(delta)
+	
+	move_and_slide()
+	
+	# Reset coyote window if grounded on current frame
+	if is_on_floor():
+		_coyote_timer = coyote_duration
 
 func _update_timers(delta: float) -> void:
-    _coyote_timer = maxf(0.0, _coyote_timer - delta)
-    _buffer_timer = maxf(0.0, _buffer_timer - delta)
+	_coyote_timer = maxf(0.0, _coyote_timer - delta)
+	_buffer_timer = maxf(0.0, _buffer_timer - delta)
 
 func _handle_jump_input() -> void:
-    if Input.is_action_just_pressed(&"jump"):
-        _buffer_timer = jump_buffer_duration
+	# Buffer jump input upon press
+	if Input.is_action_just_pressed(&"jump"):
+		_buffer_timer = jump_buffer_duration
 
-    # Execute jump if both buffer and coyote conditions are satisfied
-    if _buffer_timer > 0.0 and _coyote_timer > 0.0:
-        velocity.y = _jump_impulse
-        _buffer_timer = 0.0
-        _coyote_timer = 0.0
-        
-    # Variable jump height: release early to truncate jump arc
-    if Input.is_action_just_released(&"jump") and velocity.y < 0.0:
-        velocity.y *= 0.5
+	# Discharge jump if both buffer and ground/coyote checks are satisfied
+	if _buffer_timer > 0.0 and _coyote_timer > 0.0:
+		velocity.y = _jump_impulse
+		_buffer_timer = 0.0
+		_coyote_timer = 0.0
+		
+	# Variable jump height: truncate ascent if button is released early
+	if Input.is_action_just_released(&"jump") and velocity.y < 0.0:
+		velocity.y *= 0.5
 
 func _apply_vertical_kinematics(delta: float) -> void:
-    if not is_on_floor():
-        # Select asymmetric gravity: use heavier pull when falling or descending
-        var active_gravity: float = _gravity_rise if velocity.y < 0.0 else _gravity_fall
-        velocity.y += active_gravity * delta
-    elif velocity.y > 0.0:
-        # Ground clamping to maintain floor stickiness
-        velocity.y = 0.0
+	if not is_on_floor():
+		# Asymmetric gravity: rising gravity vs. falling gravity
+		var active_gravity: float = _gravity_rise if velocity.y < 0.0 else _gravity_fall
+		velocity.y += active_gravity * delta
+	elif velocity.y > 0.0:
+		velocity.y = 0.0
 
 func _apply_horizontal_kinematics(delta: float) -> void:
-    var input_x: float = Input.get_axis(&"move_left", &"move_right")
-    var target_speed: float = input_x * max_run_speed
-    
-    if is_on_floor():
-        if not is_zero_approx(input_x):
-            velocity.x = move_toward(velocity.x, target_speed, ground_acceleration * delta)
-        else:
-            velocity.x = move_toward(velocity.x, 0.0, ground_friction * delta)
-    else:
-        # Air control integration
-        if not is_zero_approx(input_x):
-            velocity.x = move_toward(velocity.x, target_speed, air_acceleration * delta)
+	var input_x: float = Input.get_axis(&"move_left", &"move_right")
+	var target_speed: float = input_x * max_run_speed
+	
+	if is_on_floor():
+		if not is_zero_approx(input_x):
+			velocity.x = move_toward(velocity.x, target_speed, ground_acceleration * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, ground_friction * delta)
+	else:
+		if not is_zero_approx(input_x):
+			velocity.x = move_toward(velocity.x, target_speed, air_acceleration * delta)
 ```
 
 ---
 
 ## 5.2 Dynamic Cinematic Camera Systems
 
-A naive camera pinned directly as a child of a player mesh produces jarring, mechanical movement that induces visual fatigue. A robust camera acts as an analytical tracking agent with spatial filtering, non-linear trauma damping, and physical occlusion resolution.
+Attaching a `Camera3D` directly as a static child of a player mesh produces harsh, mechanical movement that can trigger motion sickness. A production camera rig acts as a dynamic tracker with spatial filtering, non-linear trauma damping, and physical occlusion handling.
 
 ```
                            THE DYNAMIC CAMERA PIPELINE
@@ -3551,20 +3678,15 @@ A naive camera pinned directly as a child of a player mesh produces jarring, mec
  [ Output Position ] ◄── [ Raycast Occlusion ] ◄── [ 6DOF Trauma Noise ]
 ```
 
-### 1. The Screen Trauma Paradigm
-Random translational jitter (`randf() * intensity`) creates high-frequency strobe shake. High-quality camera shake relies on a non-linear **Trauma Model**:
-- Maintain a scalar variable $\text{Trauma} \in [0.0, 1.0]$.
-- When explosions or weapon discharges occur, add trauma: $\text{Trauma} = \min(1.0, \text{Trauma} + \Delta \tau)$.
-- Square or cube the trauma value to calculate effective power: $\text{Power} = \text{Trauma}^p$ where $p \in [2, 3]$.
-- Modulate smooth, continuous **Gradient Simplex Noise** across time, multiplying by $\text{Power}$ to displace rotation and offset.
+---
 
-### 2. Physical Occlusion and `SpringArm3D`
-In 3D third-person systems, exterior architecture between the camera focal point and the lens must not clip into the view frustum. `SpringArm3D` executes an automated raycast or sphere-cast backwards from its origin, snapping the camera forward along the spring vector if an obstruction is detected:
+### Step-by-Step Architectural Construction: Cinematic Camera Rig
+
+Let us build a full third-person camera rig featuring velocity look-ahead, exponential tracking, and Simplex-driven trauma shake across 6 Degrees of Freedom (6DOF).
+
+#### Chunk 2.1: Rig Hierarchy & Trauma Model Setup
 
 ```gdscript
-# ==============================================================================
-# PRODUCTION 3D CAMERA RIG (Occlusion, Damped Tracking & Trauma Shake)
-# ==============================================================================
 class_name CinematicCameraRig
 extends Node3D
 
@@ -3576,7 +3698,94 @@ extends Node3D
 @export_group("Trauma Parameters")
 @export var trauma_decay_rate: float = 1.2
 @export var max_shake_offset: Vector3 = Vector3(0.5, 0.5, 0.0)
-@export var max_shake_roll: float = 0.1 # Radians
+@export var max_shake_roll: float = 0.1
+
+@onready var spring_arm: SpringArm3D = $SpringArm3D
+@onready var camera: Camera3D = $SpringArm3D/Camera3D
+
+var _trauma: float = 0.0
+var _noise: FastNoiseLite = FastNoiseLite.new()
+var _noise_time: float = 0.0
+```
+
+- **`tracking_decay` & `look_ahead_factor`**: Control positional tracking and how far the camera leads in the direction of the target's current velocity vector.
+- **`_trauma: float = 0.0`**: Internal stress scalar ($\tau \in [0, 1]$). When an impact occurs, we add to trauma; every frame, trauma decays linearly back to zero.
+- **`FastNoiseLite`**: High-performance coherent gradient noise. Unlike white noise (`randf()`), coherent noise guarantees continuous, organic motion between adjacent frames.
+
+#### Chunk 2.2: Velocity-Projected Exponential Tracking
+
+```gdscript
+func _process_tracking(delta: float) -> void:
+	var target_velocity: Vector3 = Vector3.ZERO
+	if target_node is CharacterBody3D:
+		target_velocity = (target_node as CharacterBody3D).velocity
+	elif target_node is RigidBody3D:
+		target_velocity = (target_node as RigidBody3D).linear_velocity
+		
+	var projected_target: Vector3 = target_node.global_position + (target_velocity * look_ahead_factor)
+	
+	var decay_weight: float = 1.0 - exp(-tracking_decay * delta)
+	global_position = global_position.lerp(projected_target, decay_weight)
+```
+
+- **`target_node.global_position + (target_velocity * look_ahead_factor)`**: Velocity Look-Ahead. Leads the camera slightly ahead of the character's movement direction so incoming hazards remain visible in the forward view.
+- **`1.0 - exp(-tracking_decay * delta)`**: Frame-rate independent exponential decay (derived in Module IV). The camera glides toward the target at an identical rate whether rendered at $30\text{ FPS}$ or $144\text{ FPS}$.
+
+#### Chunk 2.3: Non-Linear Trauma Shake
+
+```gdscript
+func add_trauma(amount: float) -> void:
+	_trauma = clampf(_trauma + amount, 0.0, 1.0)
+
+func _process_trauma(delta: float) -> void:
+	if is_zero_approx(_trauma):
+		camera.transform.origin = Vector3.ZERO
+		camera.rotation.z = 0.0
+		return
+		
+	_trauma = maxf(0.0, _trauma - (trauma_decay_rate * delta))
+	var shake_power: float = _trauma * _trauma
+	
+	_noise_time += delta * 60.0
+	
+	var shake_x: float = _noise.get_noise_2d(_noise_time, 0.0) * max_shake_offset.x * shake_power
+	var shake_y: float = _noise.get_noise_2d(0.0, _noise_time) * max_shake_offset.y * shake_power
+	var shake_roll: float = _noise.get_noise_2d(_noise_time, _noise_time) * max_shake_roll * shake_power
+	
+	camera.transform.origin = Vector3(shake_x, shake_y, 0.0)
+	camera.rotation.z = shake_roll
+```
+
+- **`var shake_power = _trauma * _trauma`**: **The Non-Linear Power Curve**. Human perception of impact is logarithmic. Squaring or cubing trauma ensures light damage creates subtle vibration, while heavy hits deliver visceral impact.
+- **`_noise.get_noise_2d(...)`**: Samples orthogonal 2D noise coordinates across time, generating continuous shake offsets across translational ($X, Y$) and rotational Roll ($Z$) axes.
+
+---
+
+#### The Fully Assembled `CinematicCameraRig.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: CinematicCameraRig.gd
+# Architecture: Occlusion-Safe Tracking & Non-Linear Trauma Shaker
+# ==============================================================================
+class_name CinematicCameraRig
+extends Node3D
+
+@export_group("Tracking Dynamics")
+## Target entity tracked by the camera rig
+@export var target_node: Node3D
+## Frame-rate independent exponential tracking speed
+@export var tracking_decay: float = 8.0
+## Multiplier projecting camera target ahead of current entity velocity
+@export var look_ahead_factor: float = 0.25
+
+@export_group("Trauma Parameters")
+## Linear reduction rate of trauma per second
+@export var trauma_decay_rate: float = 1.2
+## Maximum translational displacement applied during maximum trauma (metres)
+@export var max_shake_offset: Vector3 = Vector3(0.5, 0.5, 0.0)
+## Maximum rotational roll applied during maximum trauma (radians)
+@export var max_shake_roll: float = 0.1
 
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
@@ -3586,60 +3795,63 @@ var _noise: FastNoiseLite = FastNoiseLite.new()
 var _noise_time: float = 0.0
 
 func _ready() -> void:
-    _noise.seed = 1337
-    _noise.frequency = 4.0
-    _noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	_noise.seed = 1337
+	_noise.frequency = 4.0
+	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 
+## Public API: Injects non-linear stress trauma [0.0, 1.0] onto the camera
 func add_trauma(amount: float) -> void:
-    _trauma = clampf(_trauma + amount, 0.0, 1.0)
+	_trauma = clampf(_trauma + amount, 0.0, 1.0)
 
 func _process(delta: float) -> void:
-    if target_node == null:
-        return
-        
-    _process_tracking(delta)
-    _process_trauma(delta)
+	if target_node == null:
+		return
+		
+	_process_tracking(delta)
+	_process_trauma(delta)
 
 func _process_tracking(delta: float) -> void:
-    # 1. Compute velocity projection
-    var target_velocity: Vector3 = Vector3.ZERO
-    if target_node is CharacterBody3D:
-        target_velocity = (target_node as CharacterBody3D).velocity
-    elif target_node is RigidBody3D:
-        target_velocity = (target_node as RigidBody3D).linear_velocity
-        
-    var projected_target: Vector3 = target_node.global_position + (target_velocity * look_ahead_factor)
-    
-    # 2. Frame-rate independent exponential smoothing (Module IV formulation)
-    var decay_weight: float = 1.0 - exp(-tracking_decay * delta)
-    global_position = global_position.lerp(projected_target, decay_weight)
+	var target_velocity: Vector3 = Vector3.ZERO
+	if target_node is CharacterBody3D:
+		target_velocity = (target_node as CharacterBody3D).velocity
+	elif target_node is RigidBody3D:
+		target_velocity = (target_node as RigidBody3D).linear_velocity
+		
+	var projected_target: Vector3 = target_node.global_position + (target_velocity * look_ahead_factor)
+	
+	# Frame-rate independent exponential smoothing
+	var decay_weight: float = 1.0 - exp(-tracking_decay * delta)
+	global_position = global_position.lerp(projected_target, decay_weight)
 
 func _process_trauma(delta: float) -> void:
-    if is_zero_approx(_trauma):
-        camera.transform.origin = Vector3.ZERO
-        camera.rotation.z = 0.0
-        return
-        
-    # Linear decay of trauma scalar
-    _trauma = maxf(0.0, _trauma - (trauma_decay_rate * delta))
-    var shake_power: float = _trauma * _trauma # Quadratic curve
-    
-    _noise_time += delta * 60.0
-    
-    # Sample independent noise coordinates
-    var shake_x: float = _noise.get_noise_2d(_noise_time, 0.0) * max_shake_offset.x * shake_power
-    var shake_y: float = _noise.get_noise_2d(0.0, _noise_time) * max_shake_offset.y * shake_power
-    var shake_roll: float = _noise.get_noise_2d(_noise_time, _noise_time) * max_shake_roll * shake_power
-    
-    camera.transform.origin = Vector3(shake_x, shake_y, 0.0)
-    camera.rotation.z = shake_roll
+	if is_zero_approx(_trauma):
+		camera.transform.origin = Vector3.ZERO
+		camera.rotation.z = 0.0
+		return
+		
+	# Linear decay of trauma scalar
+	_trauma = maxf(0.0, _trauma - (trauma_decay_rate * delta))
+	# Quadratic power shaping
+	var shake_power: float = _trauma * _trauma
+	
+	_noise_time += delta * 60.0
+	
+	# Sample continuous Simplex gradients
+	var shake_x: float = _noise.get_noise_2d(_noise_time, 0.0) * max_shake_offset.x * shake_power
+	var shake_y: float = _noise.get_noise_2d(0.0, _noise_time) * max_shake_offset.y * shake_power
+	var shake_roll: float = _noise.get_noise_2d(_noise_time, _noise_time) * max_shake_roll * shake_power
+	
+	camera.transform.origin = Vector3(shake_x, shake_y, 0.0)
+	camera.rotation.z = shake_roll
 ```
 
 ---
 
 ## 5.3 Data-Driven Inventory, Equipment & Modifier Pipelines
 
-The fatal mistake in inventory design is attaching data directly to visual UI controls or physical actor scripts. Inventory architecture requires a strict **Model-View-Controller (MVC)** separation:
+Managing item counts inside UI labels (`$Label.text = "x5"`) or calculating stats through ad-hoc mutation (`strength += 10; strength *= 1.2`) inevitably leads to rounding errors, calculation drift, and broken inventory state.
+
+A scalable system separates concerns using **Model-View-Controller (MVC)** patterns and calculates character attributes using an **additive/multiplicative modifier pipeline**.
 
 ```
                             INVENTORY MVC ARCHITECTURE
@@ -3657,27 +3869,155 @@ The fatal mistake in inventory design is attaching data directly to visual UI co
                                  - Mutates Model allocations
 ```
 
-### The Additive & Multiplicative Stat Modifier Pipeline
+---
 
-Equipment, curses, and status buffs must alter entity statistics deterministically. Calculating stat updates through ad-hoc arithmetic (`base += 10; base *= 1.2`) causes rounding drift, order-of-operation bugs, and unmaintainable debuff logic.
+### Step-by-Step Architectural Construction: Data-Driven Inventory & Stat Pipelines
 
-Implement a formal calculation pipeline using the standard RPG stat resolution formula:
-$$\text{Final Stat} = \left( \text{Base} + \sum_{i} \text{Flat}_i \right) \times \left(1.0 + \sum_{j} \text{PercentAdd}_j \right) \times \prod_{k} (1.0 + \text{PercentMult}_k)$$
+Let us construct our inventory models, stack aggregation routines, and deterministic stat calculation pipelines.
 
+#### Chunk 3.1: Item & Slot Resource Models
+
+```gdscript
+class_name ItemData
+extends Resource
+
+@export var identifier: StringName
+@export var display_name: String
+@export var max_stack_size: int = 99
+@export var icon: Texture2D
+
+class_name SlotData
+extends Resource
+
+@export var item_data: ItemData
+@export var quantity: int = 1:
+	set(value):
+		quantity = value
+		if quantity <= 0:
+			item_data = null
+			quantity = 0
 ```
-STAT CALCULATION STAGES:
-1. Base Value:        100.0 HP
-2. Flat Bonuses:      +20.0 (Ring) + 30.0 (Belt) = +50.0  ---> Subtotal: 150.0
-3. Additive Percents: +10% (Buff) + 15% (Talent) = +25%   ---> Subtotal: 150 * 1.25 = 187.5
-4. Multipliers:       x 1.50 (Berserk Aura)               ---> Final:    187.5 * 1.5 = 281.25
+
+- **`extends Resource`**: Items are data models, not nodes. Saving them as custom `.tres` resources allows items to be authored in the editor, referenced across multiple slots, and saved to disk with zero node overhead.
+- **`set(value): if quantity <= 0: item_data = null`**: Model-level state cleanup. If a stack drops to zero, the slot automatically clears its item reference, preventing empty slots from holding phantom references.
+
+#### Chunk 3.2: Multi-Pass Stack Aggregation
+
+```gdscript
+class_name InventoryData
+extends Resource
+
+signal inventory_modified(slot_index: int)
+
+@export var slots: Array[SlotData] = []
+
+func add_item(new_item: ItemData, amount: int = 1) -> int:
+	var remaining: int = amount
+	
+	# Pass 1: Aggregate into existing incomplete stacks
+	for i in range(slots.size()):
+		var slot: SlotData = slots[i]
+		if slot.item_data != null and slot.item_data.identifier == new_item.identifier:
+			var space_available: int = slot.item_data.max_stack_size - slot.quantity
+			if space_available > 0:
+				var insertion: int = mini(space_available, remaining)
+				slot.quantity += insertion
+				remaining -= insertion
+				inventory_modified.emit(i)
+				if remaining == 0:
+					return 0
+					
+	# Pass 2: Occupy empty slots
+	for i in range(slots.size()):
+		var slot: SlotData = slots[i]
+		if slot.item_data == null:
+			var insertion: int = mini(new_item.max_stack_size, remaining)
+			slot.item_data = new_item
+			slot.quantity = insertion
+			remaining -= insertion
+			inventory_modified.emit(i)
+			if remaining == 0:
+				return 0
+				
+	return remaining
 ```
+
+- **Two-Pass Placement**:
+  - **Pass 1** fills existing stacks up to `max_stack_size`.
+  - **Pass 2** claims empty slots for any leftover items.
+- **`inventory_modified.emit(i)`**: Emits the specific slot index that changed. The UI view listens to this signal and redraws *only* that slot, avoiding expensive full-inventory re-renders.
+- **`return remaining`**: Clean transaction interface. Returns `0` if all items were stored, or returns the leftover quantity if the inventory is full so the caller can drop the excess into the world.
+
+#### Chunk 3.3: Deterministic Stat Modifier Pipeline
+
+To calculate dynamic stats (buffs, gear, status effects), we use a structured calculation pipeline:
+$$\text{Final Stat} = \left( \text{Base} + \sum \text{Flat} \right) \times \left(1.0 + \sum \text{PercentAdd} \right) \times \prod (1.0 + \text{PercentMult})$$
+
+```gdscript
+class_name ModifiableAttribute
+extends RefCounted
+
+signal value_recalculated(final_value: float)
+
+enum ModifierType { FLAT, PERCENT_ADD, PERCENT_MULT }
+
+class StatModifier:
+	var source_id: StringName
+	var type: ModifierType
+	var magnitude: float
+	
+	func _init(p_source: StringName, p_type: ModifierType, p_magnitude: float) -> void:
+		source_id = p_source
+		type = p_type
+		magnitude = p_magnitude
+
+var base_value: float = 0.0:
+	set(v):
+		base_value = v
+		recalculate()
+
+var cached_final_value: float = 0.0
+var _modifiers: Array[StatModifier] = []
+
+func recalculate() -> void:
+	var flat_sum: float = 0.0
+	var percent_add_sum: float = 0.0
+	var percent_mult_product: float = 1.0
+	
+	for mod in _modifiers:
+		match mod.type:
+			ModifierType.FLAT:
+				flat_sum += mod.magnitude
+			ModifierType.PERCENT_ADD:
+				percent_add_sum += mod.magnitude
+			ModifierType.PERCENT_MULT:
+				percent_mult_product *= (1.0 + mod.magnitude)
+				
+	var step_one: float = base_value + flat_sum
+	var step_two: float = step_one * (1.0 + percent_add_sum)
+	cached_final_value = step_two * percent_mult_product
+	
+	value_recalculated.emit(cached_final_value)
+```
+
+- **`enum ModifierType`**: Separates modifiers into three distinct evaluation stages:
+  - `FLAT`: Adds flat values ($+20\text{ HP}$).
+  - `PERCENT_ADD`: Additive percentage bonuses ($+10\% + 15\% = +25\%$).
+  - `PERCENT_MULT`: Multiplicative bonuses ($\times 1.50$ Berserk buff).
+- **`cached_final_value`**: Caches the resolved stat. Systems can read the value instantly without recalculating across modifiers on every query.
+- **`recalculate()`**: Rebuilds the final stat deterministically whenever modifiers are added or removed, preventing numerical drift.
+
+---
+
+#### The Fully Assembled `InventoryAndStats.gd`
 
 ```gdscript
 # ==============================================================================
-# DATA-DRIVEN INVENTORY & STAT MUTATION FRAMEWORK
+# SCRIPT: InventoryAndStats.gd
+# Architecture: MVC Inventory Models & Deterministic Stat Pipelines
 # ==============================================================================
 
-# --- ITEM DEFINITION MODEL (Pure Resource) ---
+# --- ITEM DATA MODEL ---
 class_name ItemData
 extends Resource
 
@@ -3692,13 +4032,13 @@ extends Resource
 
 @export var item_data: ItemData
 @export var quantity: int = 1:
-    set(value):
-        quantity = value
-        if quantity <= 0:
-            item_data = null
-            quantity = 0
+	set(value):
+		quantity = value
+		if quantity <= 0:
+			item_data = null
+			quantity = 0
 
-# --- THE AGNOSTIC INVENTORY DATA MODEL ---
+# --- INVENTORY CONTAINER DATA MODEL ---
 class_name InventoryData
 extends Resource
 
@@ -3706,42 +4046,44 @@ signal inventory_modified(slot_index: int)
 
 @export var slots: Array[SlotData] = []
 
+## Initializes empty inventory slots up to capacity
 func initialize_empty(capacity: int) -> void:
-    slots.clear()
-    for i in range(capacity):
-        slots.append(SlotData.new())
+	slots.clear()
+	for i in range(capacity):
+		slots.append(SlotData.new())
 
+## Places items across inventory slots; returns unplaced residue
 func add_item(new_item: ItemData, amount: int = 1) -> int:
-    var remaining: int = amount
-    
-    # Pass 1: Aggregate into existing incomplete stacks
-    for i in range(slots.size()):
-        var slot: SlotData = slots[i]
-        if slot.item_data != null and slot.item_data.identifier == new_item.identifier:
-            var space_available: int = slot.item_data.max_stack_size - slot.quantity
-            if space_available > 0:
-                var insertion: int = mini(space_available, remaining)
-                slot.quantity += insertion
-                remaining -= insertion
-                inventory_modified.emit(i)
-                if remaining == 0:
-                    return 0
-                    
-    # Pass 2: Occupy empty slots
-    for i in range(slots.size()):
-        var slot: SlotData = slots[i]
-        if slot.item_data == null:
-            var insertion: int = mini(new_item.max_stack_size, remaining)
-            slot.item_data = new_item
-            slot.quantity = insertion
-            remaining -= insertion
-            inventory_modified.emit(i)
-            if remaining == 0:
-                return 0
-                
-    return remaining # Returns unplaced residue if inventory is completely full
+	var remaining: int = amount
+	
+	# Pass 1: Aggregate into existing incomplete stacks
+	for i in range(slots.size()):
+		var slot: SlotData = slots[i]
+		if slot.item_data != null and slot.item_data.identifier == new_item.identifier:
+			var space_available: int = slot.item_data.max_stack_size - slot.quantity
+			if space_available > 0:
+				var insertion: int = mini(space_available, remaining)
+				slot.quantity += insertion
+				remaining -= insertion
+				inventory_modified.emit(i)
+				if remaining == 0:
+					return 0
+					
+	# Pass 2: Claim empty slots
+	for i in range(slots.size()):
+		var slot: SlotData = slots[i]
+		if slot.item_data == null:
+			var insertion: int = mini(new_item.max_stack_size, remaining)
+			slot.item_data = new_item
+			slot.quantity = insertion
+			remaining -= insertion
+			inventory_modified.emit(i)
+			if remaining == 0:
+				return 0
+				
+	return remaining
 
-# --- DETERMINISTIC STAT ATTRIBUTE CONTROLLER ---
+# --- DETERMINISTIC STAT ATTRIBUTE MODIFIER ---
 class_name ModifiableAttribute
 extends RefCounted
 
@@ -3750,59 +4092,61 @@ signal value_recalculated(final_value: float)
 enum ModifierType { FLAT, PERCENT_ADD, PERCENT_MULT }
 
 class StatModifier:
-    var source_id: StringName
-    var type: ModifierType
-    var magnitude: float
-    
-    func _init(p_source: StringName, p_type: ModifierType, p_magnitude: float) -> void:
-        source_id = p_source
-        type = p_type
-        magnitude = p_magnitude
+	var source_id: StringName
+	var type: ModifierType
+	var magnitude: float
+	
+	func _init(p_source: StringName, p_type: ModifierType, p_magnitude: float) -> void:
+		source_id = p_source
+		type = p_type
+		magnitude = p_magnitude
 
 var base_value: float = 0.0:
-    set(v):
-        base_value = v
-        recalculate()
+	set(v):
+		base_value = v
+		recalculate()
 
 var cached_final_value: float = 0.0
 var _modifiers: Array[StatModifier] = []
 
+## Injects a new modifier and updates the cached stat
 func add_modifier(source: StringName, type: ModifierType, magnitude: float) -> void:
-    _modifiers.append(StatModifier.new(source, type, magnitude))
-    recalculate()
+	_modifiers.append(StatModifier.new(source, type, magnitude))
+	recalculate()
 
+## Removes all modifiers associated with a source identifier (e.g., unequipping an item)
 func remove_modifiers_from_source(source: StringName) -> void:
-    _modifiers = _modifiers.filter(func(mod: StatModifier) -> bool: return mod.source_id != source)
-    recalculate()
+	_modifiers = _modifiers.filter(func(mod: StatModifier) -> bool: return mod.source_id != source)
+	recalculate()
 
+## Resolves the final value using the deterministic pipeline
 func recalculate() -> void:
-    var flat_sum: float = 0.0
-    var percent_add_sum: float = 0.0
-    var percent_mult_product: float = 1.0
-    
-    for mod in _modifiers:
-        match mod.type:
-            ModifierType.FLAT:
-                flat_sum += mod.magnitude
-            ModifierType.PERCENT_ADD:
-                percent_add_sum += mod.magnitude
-            ModifierType.PERCENT_MULT:
-                percent_mult_product *= (1.0 + mod.magnitude)
-                
-    # Deterministic Formula Evaluation:
-    # Final = (Base + Sum(Flat)) * (1 + Sum(PercentAdd)) * Prod(1 + PercentMult)
-    var step_one: float = base_value + flat_sum
-    var step_two: float = step_one * (1.0 + percent_add_sum)
-    cached_final_value = step_two * percent_mult_product
-    
-    value_recalculated.emit(cached_final_value)
+	var flat_sum: float = 0.0
+	var percent_add_sum: float = 0.0
+	var percent_mult_product: float = 1.0
+	
+	for mod in _modifiers:
+		match mod.type:
+			ModifierType.FLAT:
+				flat_sum += mod.magnitude
+			ModifierType.PERCENT_ADD:
+				percent_add_sum += mod.magnitude
+			ModifierType.PERCENT_MULT:
+				percent_mult_product *= (1.0 + mod.magnitude)
+				
+	# Final = (Base + Sum(Flat)) * (1 + Sum(PercentAdd)) * Prod(1 + PercentMult)
+	var step_one: float = base_value + flat_sum
+	var step_two: float = step_one * (1.0 + percent_add_sum)
+	cached_final_value = step_two * percent_mult_product
+	
+	value_recalculated.emit(cached_final_value)
 ```
 
 ---
 
 ## 5.4 Universal Interaction & Quest Automation Engines
 
-Gameplay worlds require entities to evaluate what the player is focusing on without scattering duplicate trigger scripts across hundreds of interactive scenes.
+Rather than scattering duplicate trigger code across every chest, door, and NPC, we implement an **Interactable Component** paired with an analytical **Gaze-Angle Scorer**.
 
 ```
                   THE OPTIMAL INTERACTION DISCOVERY CONE
@@ -3817,18 +4161,87 @@ Gameplay worlds require entities to evaluate what the player is focusing on with
       Player Origin
 ```
 
-To determine which object the player intends to interact with, evaluate potential targets using a weighted scoring function that balances **Euclidean Distance** ($d$) and **Gaze Alignment** ($\hat{f} \cdot \hat{d}$):
-
+To find which object the player intends to interact with, candidate targets are evaluated using a weighted scoring formula balancing **Distance** ($d$) and **Gaze Alignment** ($\hat{f} \cdot \hat{d}$):
 $$S = \alpha \cdot (\hat{f} \cdot \hat{d}) + (1.0 - \alpha) \cdot \left(1.0 - \frac{d}{d_{\text{max}}}\right)$$
 
-where $\alpha \in [0, 1]$ represents the directional alignment weight (typically $0.65\text{--}0.75$).
+---
+
+### Step-by-Step Architectural Construction: Interaction Detector
+
+Let us break down the candidate selection and weighted evaluation logic.
+
+#### Chunk 4.1: Candidate Registration & Spatial Cull
+
+```gdscript
+class_name InteractionDetector
+extends Node3D
+
+@export var observer_camera: Camera3D
+@export var detection_radius: float = 4.0
+@export_range(0.0, 1.0) var angle_weight: float = 0.7
+
+var _active_candidates: Array[InteractableComponent] = []
+var current_best_target: InteractableComponent = null
+
+func _evaluate_best_candidate() -> void:
+	if _active_candidates.is_empty() or observer_camera == null:
+		current_best_target = null
+		return
+		
+	var forward: Vector3 = -observer_camera.global_transform.basis.z.normalized()
+	var camera_pos: Vector3 = observer_camera.global_position
+	
+	var highest_score: float = -INF
+	var chosen_node: InteractableComponent = null
+```
+
+- **`angle_weight: float = 0.7`**: Weights gaze alignment ($70\%$) higher than physical distance ($30\%$). If a player stands next to an item on their left but looks directly at a door ahead, the system selects the door.
+- **`-observer_camera.global_transform.basis.z.normalized()`**: Extracts the camera's true forward vector in world space.
+
+#### Chunk 4.2: Directional Dot Product & Composite Scoring
+
+```gdscript
+	for candidate in _active_candidates:
+		if not candidate.is_active:
+			continue
+			
+		var to_target: Vector3 = candidate.global_position - camera_pos
+		var dist: float = to_target.length()
+		
+		if dist > detection_radius:
+			continue
+			
+		var dir: Vector3 = to_target / dist
+		var dot: float = forward.dot(dir)
+		
+		# Discard candidates behind the camera plane
+		if dot <= 0.2:
+			continue
+			
+		var distance_factor: float = 1.0 - (dist / detection_radius)
+		var total_score: float = (angle_weight * dot) + ((1.0 - angle_weight) * distance_factor)
+		
+		if total_score > highest_score:
+			highest_score = total_score
+			chosen_node = candidate
+			
+	current_best_target = chosen_node
+```
+
+- **`if dot <= 0.2: continue`**: Immediate cull. Discards any object outside a generous forward field of view (including anything behind the camera).
+- **`total_score = (angle_weight * dot) + (...)`**: Evaluates the normalized composite score. The candidate with the highest combined alignment and proximity is selected as the active target.
+
+---
+
+#### The Fully Assembled `InteractionFramework.gd`
 
 ```gdscript
 # ==============================================================================
-# UNIVERSAL INTERACTION HARNESS
+# SCRIPT: InteractionFramework.gd
+# Architecture: Component-Based World Interaction & Gaze-Angle Scoring
 # ==============================================================================
 
-# --- INTERFACE COMPONENT: Attach to any interactive world entity ---
+# --- COMPONENT: Attach to any interactive entity ---
 class_name InteractableComponent
 extends Area3D
 
@@ -3837,11 +4250,12 @@ signal interacted_by(initiator: Node)
 @export var prompt_message: String = "Interact"
 @export var is_active: bool = true
 
+## Executes the interaction payload
 func execute_interaction(initiator: Node) -> void:
-    if is_active:
-        interacted_by.emit(initiator)
+	if is_active:
+		interacted_by.emit(initiator)
 
-# --- DETECTOR CONTROLLER: Attach to the Player Rig ---
+# --- DETECTOR: Attach to the Player Rig ---
 class_name InteractionDetector
 extends Node3D
 
@@ -3853,58 +4267,59 @@ var _active_candidates: Array[InteractableComponent] = []
 var current_best_target: InteractableComponent = null
 
 func register_candidate(interactable: InteractableComponent) -> void:
-    if not _active_candidates.has(interactable):
-        _active_candidates.append(interactable)
+	if not _active_candidates.has(interactable):
+		_active_candidates.append(interactable)
 
 func unregister_candidate(interactable: InteractableComponent) -> void:
-    _active_candidates.erase(interactable)
-    if current_best_target == interactable:
-        current_best_target = null
+	_active_candidates.erase(interactable)
+	if current_best_target == interactable:
+		current_best_target = null
 
 func _process(_delta: float) -> void:
-    _evaluate_best_candidate()
+	_evaluate_best_candidate()
 
+## Finds the best interaction candidate using distance and view-angle dot products
 func _evaluate_best_candidate() -> void:
-    if _active_candidates.is_empty() or observer_camera == null:
-        current_best_target = null
-        return
-        
-    var forward: Vector3 = -observer_camera.global_transform.basis.z.normalized()
-    var camera_pos: Vector3 = observer_camera.global_position
-    
-    var highest_score: float = -INF
-    var chosen_node: InteractableComponent = null
-    
-    for candidate in _active_candidates:
-        if not candidate.is_active:
-            continue
-            
-        var to_target: Vector3 = candidate.global_position - camera_pos
-        var dist: float = to_target.length()
-        
-        if dist > detection_radius:
-            continue
-            
-        var dir: Vector3 = to_target / dist
-        var dot: float = forward.dot(dir)
-        
-        # Immediate cull of objects situated behind the view plane
-        if dot <= 0.2:
-            continue
-            
-        # Normalised score calculation
-        var distance_factor: float = 1.0 - (dist / detection_radius)
-        var total_score: float = (angle_weight * dot) + ((1.0 - angle_weight) * distance_factor)
-        
-        if total_score > highest_score:
-            highest_score = total_score
-            chosen_node = candidate
-            
-    current_best_target = chosen_node
+	if _active_candidates.is_empty() or observer_camera == null:
+		current_best_target = null
+		return
+		
+	var forward: Vector3 = -observer_camera.global_transform.basis.z.normalized()
+	var camera_pos: Vector3 = observer_camera.global_position
+	
+	var highest_score: float = -INF
+	var chosen_node: InteractableComponent = null
+	
+	for candidate in _active_candidates:
+		if not candidate.is_active:
+			continue
+			
+		var to_target: Vector3 = candidate.global_position - camera_pos
+		var dist: float = to_target.length()
+		
+		if dist > detection_radius:
+			continue
+			
+		var dir: Vector3 = to_target / dist
+		var dot: float = forward.dot(dir)
+		
+		# Discard objects situated behind the view plane
+		if dot <= 0.2:
+			continue
+			
+		var distance_factor: float = 1.0 - (dist / detection_radius)
+		var total_score: float = (angle_weight * dot) + ((1.0 - angle_weight) * distance_factor)
+		
+		if total_score > highest_score:
+			highest_score = total_score
+			chosen_node = candidate
+			
+	current_best_target = chosen_node
 
+## Executes interaction on the current best candidate
 func execute_active_interaction() -> void:
-    if current_best_target != null:
-        current_best_target.execute_interaction(owner)
+	if current_best_target != null:
+		current_best_target.execute_interaction(owner)
 ```
 
 ---
@@ -3935,39 +4350,45 @@ ARRIVE: Linearly or quadratically dampens desired velocity inside slowing radius
             desired_velocity = (diff / distance) * max_speed * (distance / R)
 ```
 
-### 2. Utility AI: Mathematical Response Curves
-Rather than hardcoding priority checks, **Utility AI** scores every potential action $\in [0.0, 1.0]$ using mathematical response curves based on dynamic world parameters:
+---
+
+### Step-by-Step Architectural Construction: Utility Response Curves
+
+Rather than hardcoding priority checks, **Utility AI** scores every potential action $\in [0.0, 1.0]$ using mathematical response curves based on dynamic world parameters.
+
+#### Chunk 5.1: Mathematical Response Functions
 
 ```gdscript
-# ==============================================================================
-# UTILITY RESPONSE ENGINE & CURVE MODELING
-# ==============================================================================
 class_name UtilityAIController
 extends RefCounted
 
-## Computes a logistic curve utility response (Soft threshold activation)
-## Generates smooth S-curve behavior: low response until threshold midpoint, then rapid rise
 static func response_logistic(x: float, midpoint: float, steepness: float) -> float:
-    return 1.0 / (1.0 + exp(-steepness * (x - midpoint)))
+	return 1.0 / (1.0 + exp(-steepness * (x - midpoint)))
 
-## Computes an exponential decay response
-## As danger x increases, utility of reckless actions drops off sharply
 static func response_decay(x: float, decay_rate: float) -> float:
-    return exp(-decay_rate * x)
-
-## Evaluates action scores to select the highest-ranking candidate
-static func select_best_action(actions: Array[Dictionary]) -> StringName:
-    var best_action: StringName = &"idle"
-    var highest_utility: float = -1.0
-    
-    for act in actions:
-        var score: float = act["utility_score"]
-        if score > highest_utility:
-            highest_utility = score
-            best_action = act["name"]
-            
-    return best_action
+	return exp(-decay_rate * x)
 ```
+
+- **`response_logistic(...)`**: Generates a smooth, S-shaped activation curve. Useful for behaviors like bravery or retreat—utility stays low until danger crosses `midpoint`, then ramps up quickly.
+- **`response_decay(...)`**: Exponential decay curve ($e^{-\lambda x}$). Useful for behaviors where utility drops off sharply as danger or distance increases.
+
+#### Chunk 5.2: Highest-Score Action Selection
+
+```gdscript
+static func select_best_action(actions: Array[Dictionary]) -> StringName:
+	var best_action: StringName = &"idle"
+	var highest_utility: float = -1.0
+	
+	for act in actions:
+		var score: float = act["utility_score"]
+		if score > highest_utility:
+			highest_utility = score
+			best_action = act["name"]
+			
+	return best_action
+```
+
+- Iterates through scored actions and returns the highest-scoring candidate. This cleanly resolves competing priorities without long, fragile chains of nested `if/elif` statements.
 
 ---
 
@@ -3995,19 +4416,18 @@ Building game UI that runs reliably on different display resolutions requires un
 3. **Procedural UI Animations via `Tween`**: Never use `_process()` to interpolate UI positions or alpha levels. Use the engine's `Tween` pipeline to animate values smoothly across hardware refresh rates:
 
 ```gdscript
-## Tactile, bouncy UI presentation using custom easing curves
 func present_modal_dialogue(panel: Control) -> void:
-    panel.pivot_offset = panel.size * 0.5
-    panel.scale = Vector2.ZERO
-    panel.modulate.a = 0.0
-    
-    var tween: Tween = panel.create_tween().set_parallel(true)
-    tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-    
-    # Scale from 0 to 1 with elastic overshoot
-    tween.tween_property(panel, "scale", Vector2.ONE, 0.35)
-    # Fade alpha concurrently
-    tween.tween_property(panel, "modulate:a", 1.0, 0.20)
+	panel.pivot_offset = panel.size * 0.5
+	panel.scale = Vector2.ZERO
+	panel.modulate.a = 0.0
+	
+	var tween: Tween = panel.create_tween().set_parallel(true)
+	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	# Scale from 0 to 1 with elastic overshoot
+	tween.tween_property(panel, "scale", Vector2.ONE, 0.35)
+	# Fade alpha concurrently
+	tween.tween_property(panel, "modulate:a", 1.0, 0.20)
 ```
 
 ---
@@ -4026,130 +4446,255 @@ ALIGNMENT:  Steers toward average heading/velocity of neighbors
 COHESION:   Steers toward average center of mass of neighbors
 ```
 
+---
+
+### Step-by-Step Architectural Construction: Flocking Boid Agent
+
+Let us deconstruct each of the three steering calculations line by line.
+
+#### Chunk 7.1: Separation Force Calculation
+
+```gdscript
+func _compute_separation(neighbors: Array[FlockingAgent2D]) -> Vector2:
+	var steer: Vector2 = Vector2.ZERO
+	var count: int = 0
+	
+	for other in neighbors:
+		var dist: float = global_position.distance_to(other.global_position)
+		if dist > 0.0 and dist < separation_radius:
+			var diff: Vector2 = (global_position - other.global_position).normalized() / dist
+			steer += diff
+			count += 1
+			
+	if count > 0:
+		steer /= float(count)
+		if steer.length_squared() > 0.0:
+			steer = (steer.normalized() * max_velocity) - velocity
+			
+	return steer
+```
+
+- **`diff = (global_position - other.global_position).normalized() / dist`**: The inverse-distance repulsion formula. The closer a neighbor is, the stronger the repulsion force pushing away from them.
+- **`(steer.normalized() * max_velocity) - velocity`**: Standard Reynolds steering force: $\vec{F}_{\text{steer}} = \vec{v}_{\text{desired}} - \vec{v}_{\text{current}}$.
+
+#### Chunk 7.2: Alignment Force Calculation
+
+```gdscript
+func _compute_alignment(neighbors: Array[FlockingAgent2D]) -> Vector2:
+	var average_velocity: Vector2 = Vector2.ZERO
+	var count: int = 0
+	
+	for other in neighbors:
+		var dist: float = global_position.distance_to(other.global_position)
+		if dist < neighborhood_radius:
+			average_velocity += other.velocity
+			count += 1
+			
+	if count > 0:
+		average_velocity /= float(count)
+		var steer: Vector2 = (average_velocity.normalized() * max_velocity) - velocity
+		return steer
+		
+	return Vector2.ZERO
+```
+
+- Computes the average velocity vector of all local flockmates. Steers the agent to match the group's heading and travel speed.
+
+#### Chunk 7.3: Cohesion Force Calculation
+
+```gdscript
+func _compute_cohesion(neighbors: Array[FlockingAgent2D]) -> Vector2:
+	var center_of_mass: Vector2 = Vector2.ZERO
+	var count: int = 0
+	
+	for other in neighbors:
+		var dist: float = global_position.distance_to(other.global_position)
+		if dist < neighborhood_radius:
+			center_of_mass += other.global_position
+			count += 1
+			
+	if count > 0:
+		center_of_mass /= float(count)
+		var desired_heading: Vector2 = (center_of_mass - global_position).normalized() * max_velocity
+		return desired_heading - velocity
+		
+	return Vector2.ZERO
+```
+
+- Sums neighbor positions to locate the local group's center of mass, steering the agent toward the center to keep the flock together.
+
+#### Chunk 7.4: Composite Force Blending & Kinematic Step
+
+```gdscript
+func _physics_process(delta: float) -> void:
+	var neighbors: Array[FlockingAgent2D] = _gather_flock_neighbors()
+	
+	var force_sep: Vector2 = _compute_separation(neighbors)
+	var force_ali: Vector2 = _compute_alignment(neighbors)
+	var force_coh: Vector2 = _compute_cohesion(neighbors)
+	
+	var composite_steering: Vector2 = (force_sep * weight_separation) + \
+	                                  (force_ali * weight_alignment) + \
+	                                  (force_coh * weight_cohesion)
+	                                  
+	composite_steering = composite_steering.limit_length(max_steering_force)
+	
+	velocity = (velocity + composite_steering * delta).limit_length(max_velocity)
+	
+	if velocity.length_squared() > 10.0:
+		rotation = velocity.angle()
+		
+	move_and_slide()
+```
+
+- **`composite_steering.limit_length(max_steering_force)`**: Prevents sudden acceleration spikes by clamping the composite steering force.
+- **`velocity = (velocity + ...).limit_length(max_velocity)`**: Integrates steering acceleration into velocity, bounded by maximum travel speed.
+- **`rotation = velocity.angle()`**: Aligns the agent's visual rotation with its current heading.
+
+---
+
+#### The Fully Assembled `FlockingAgent2D.gd`
+
 ```gdscript
 # ==============================================================================
-# AUTONOMOUS STEERING FLOCKING AGENT (2D Kinematic Implementation)
+# SCRIPT: FlockingAgent2D.gd
+# Architecture: Craig Reynolds' Autonomous Flocking Agent (2D Kinematics)
 # ==============================================================================
 class_name FlockingAgent2D
 extends CharacterBody2D
 
 @export_group("Kinematic Constraints")
+## Maximum permissible movement speed (pixels/second)
 @export var max_velocity: float = 240.0
+## Maximum force magnitude applied per physics tick
 @export var max_steering_force: float = 400.0
 
 @export_group("Flocking Weights")
+## Multiplier applied to separation repulsion
 @export var weight_separation: float = 1.5
+## Multiplier applied to heading alignment
 @export var weight_alignment: float = 1.0
+## Multiplier applied to center-of-mass attraction
 @export var weight_cohesion: float = 1.0
 
 @export_group("Sensor Radii")
+## Radius within which agents push apart to prevent crowding
 @export var separation_radius: float = 40.0
+## Radius within which flockmates contribute to alignment and cohesion
 @export var neighborhood_radius: float = 120.0
 
 @onready var sensor_area: Area2D = $SensorArea
 
 func _physics_process(delta: float) -> void:
-    var neighbors: Array[FlockingAgent2D] = _gather_flock_neighbors()
-    
-    var force_sep: Vector2 = _compute_separation(neighbors)
-    var force_ali: Vector2 = _compute_alignment(neighbors)
-    var force_coh: Vector2 = _compute_cohesion(neighbors)
-    
-    var composite_steering: Vector2 = (force_sep * weight_separation) + \
-                                      (force_ali * weight_alignment) + \
-                                      (force_coh * weight_cohesion)
-                                      
-    # Clamp steering force to prevent instantaneous acceleration spikes
-    composite_steering = composite_steering.limit_length(max_steering_force)
-    
-    velocity = (velocity + composite_steering * delta).limit_length(max_velocity)
-    
-    # Orient agent visual representation along heading
-    if velocity.length_squared() > 10.0:
-        rotation = velocity.angle()
-        
-    move_and_slide()
+	var neighbors: Array[FlockingAgent2D] = _gather_flock_neighbors()
+	
+	var force_sep: Vector2 = _compute_separation(neighbors)
+	var force_ali: Vector2 = _compute_alignment(neighbors)
+	var force_coh: Vector2 = _compute_cohesion(neighbors)
+	
+	# Weighted vector sum of all steering forces
+	var composite_steering: Vector2 = (force_sep * weight_separation) + \
+	                                  (force_ali * weight_alignment) + \
+	                                  (force_coh * weight_cohesion)
+	                                  
+	# Clamp steering force to prevent acceleration spikes
+	composite_steering = composite_steering.limit_length(max_steering_force)
+	
+	# Euler velocity integration
+	velocity = (velocity + composite_steering * delta).limit_length(max_velocity)
+	
+	# Align visual rotation with current velocity heading
+	if velocity.length_squared() > 10.0:
+		rotation = velocity.angle()
+		
+	move_and_slide()
 
+## Gathers overlapping flock agents from the sensor volume
 func _gather_flock_neighbors() -> Array[FlockingAgent2D]:
-    var agents: Array[FlockingAgent2D] = []
-    for body in sensor_area.get_overlapping_bodies():
-        if body != self and body is FlockingAgent2D:
-            agents.append(body as FlockingAgent2D)
-    return agents
+	var agents: Array[FlockingAgent2D] = []
+	for body in sensor_area.get_overlapping_bodies():
+		if body != self and body is FlockingAgent2D:
+			agents.append(body as FlockingAgent2D)
+	return agents
 
+## Separation: Repels from nearby neighbors to avoid crowding
 func _compute_separation(neighbors: Array[FlockingAgent2D]) -> Vector2:
-    var steer: Vector2 = Vector2.ZERO
-    var count: int = 0
-    
-    for other in neighbors:
-        var dist: float = global_position.distance_to(other.global_position)
-        if dist > 0.0 and dist < separation_radius:
-            # Force varies inversely with distance: closer neighbors repel more strongly
-            var diff: Vector2 = (global_position - other.global_position).normalized() / dist
-            steer += diff
-            count += 1
-            
-    if count > 0:
-        steer /= float(count)
-        if steer.length_squared() > 0.0:
-            steer = (steer.normalized() * max_velocity) - velocity
-            
-    return steer
+	var steer: Vector2 = Vector2.ZERO
+	var count: int = 0
+	
+	for other in neighbors:
+		var dist: float = global_position.distance_to(other.global_position)
+		if dist > 0.0 and dist < separation_radius:
+			# Inverse-distance repulsion
+			var diff: Vector2 = (global_position - other.global_position).normalized() / dist
+			steer += diff
+			count += 1
+			
+	if count > 0:
+		steer /= float(count)
+		if steer.length_squared() > 0.0:
+			steer = (steer.normalized() * max_velocity) - velocity
+			
+	return steer
 
+## Alignment: Steers toward the average heading of nearby flockmates
 func _compute_alignment(neighbors: Array[FlockingAgent2D]) -> Vector2:
-    var average_velocity: Vector2 = Vector2.ZERO
-    var count: int = 0
-    
-    for other in neighbors:
-        var dist: float = global_position.distance_to(other.global_position)
-        if dist < neighborhood_radius:
-            average_velocity += other.velocity
-            count += 1
-            
-    if count > 0:
-        average_velocity /= float(count)
-        var steer: Vector2 = (average_velocity.normalized() * max_velocity) - velocity
-        return steer
-        
-    return Vector2.ZERO
+	var average_velocity: Vector2 = Vector2.ZERO
+	var count: int = 0
+	
+	for other in neighbors:
+		var dist: float = global_position.distance_to(other.global_position)
+		if dist < neighborhood_radius:
+			average_velocity += other.velocity
+			count += 1
+			
+	if count > 0:
+		average_velocity /= float(count)
+		var steer: Vector2 = (average_velocity.normalized() * max_velocity) - velocity
+		return steer
+		
+	return Vector2.ZERO
 
+## Cohesion: Steers toward the center of mass of nearby flockmates
 func _compute_cohesion(neighbors: Array[FlockingAgent2D]) -> Vector2:
-    var center_of_mass: Vector2 = Vector2.ZERO
-    var count: int = 0
-    
-    for other in neighbors:
-        var dist: float = global_position.distance_to(other.global_position)
-        if dist < neighborhood_radius:
-            center_of_mass += other.global_position
-            count += 1
-            
-    if count > 0:
-        center_of_mass /= float(count)
-        # Steer toward the center of mass
-        var desired_heading: Vector2 = (center_of_mass - global_position).normalized() * max_velocity
-        return desired_heading - velocity
-        
-    return Vector2.ZERO
+	var center_of_mass: Vector2 = Vector2.ZERO
+	var count: int = 0
+	
+	for other in neighbors:
+		var dist: float = global_position.distance_to(other.global_position)
+		if dist < neighborhood_radius:
+			center_of_mass += other.global_position
+			count += 1
+			
+	if count > 0:
+		center_of_mass /= float(count)
+		var desired_heading: Vector2 = (center_of_mass - global_position).normalized() * max_velocity
+		return desired_heading - velocity
+		
+	return Vector2.ZERO
 ```
 
 ---
 
+
 # 🦴 Module VI: Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK)
 
 > [!info] 📖 Lexicon & First Principles: Skeletal & Kinematic Terminology
-> Before synthesizing procedural motion or deriving inverse kinematic solvers, we must establish formal definitions for the anatomical and mathematical constructs of skeletal animation:
+> Transitioning from keyframed animation playback to dynamic procedural motion requires formalizing the anatomical and mathematical constructs of real-time skeletal systems:
 > - ⤷ **Armature (`Skeleton2D` / `Skeleton3D`)**: A hierarchical tree of virtual bones where each bone's global transform is the cumulative matrix product of its local pose and all ancestor bone poses up to the root.
-> - ⤷ **Rest Pose vs. Pose Override**: The **Rest Pose** is the default, un-animated bind configuration of a skeleton (typically a T-Pose or A-Pose) used to weight mesh vertices. A **Pose Override** is the runtime matrix offset applied to a bone on a given frame.
+> - ⤷ **Rest Pose vs. Pose Override**: The **Rest Pose** is the bind configuration of a skeleton (e.g., T-Pose or A-Pose) used to weight mesh vertices in model space. A **Pose Override** is a runtime matrix offset applied to a bone on a discrete frame by animations or procedural scripts.
 > - ⤷ **Forward Kinematics (FK)**: The standard animation paradigm where parent joint angles are rotated explicitly ($\theta_1, \theta_2, \dots, \theta_n$), and the resulting world coordinate of the extremity is computed forward down the chain.
-> - ⤷ **Inverse Kinematics (IK)**: The mathematical inverse of FK—defining the desired spatial coordinate of the terminal extremity first and ==solving backward for the interior joint rotations== required to place the extremity at that coordinate.
+> - ⤷ **Inverse Kinematics (IK)**: The mathematical inverse of FK—defining the desired spatial coordinate of the terminal extremity first and solving backward for the interior joint rotations required to place the extremity at that coordinate.
 > - ⤷ **End-Effector**: The terminal bone or tip of a kinematic chain (e.g., hand, foot ankle, tail tip, arachnid tarsus) whose spatial target drives the IK solver.
-> - ⤷ **Pole Target (Swivel Constraint)**: A spatial reference coordinate in 3D space that defines the plane of articulation for a hinge joint (such as an elbow or knee), preventing anatomical hyperextension or erratic roll flipping.
+> - ⤷ **Pole Target (Swivel Constraint)**: A spatial reference coordinate in 3D space that defines the plane of articulation for a hinge joint (such as an elbow or knee), preventing unnatural anatomical hyperextension or erratic axis flipping.
 
 ---
 
 ## 6.1 Skeletal Hierarchy & Coordinate Spaces in `Skeleton3D`
 
-A common stumbling block for programmers attempting procedural animation is confusing the three distinct coordinate spaces operating simultaneously inside a `Skeleton3D` node. Unlike standard `Node3D` hierarchies, bones are not individual nodes in the Scene Tree; they are indexed elements inside a single contiguous C++ array managed by the `Skeleton3D` instance.
+A primary stumbling block in procedural animation is confusing the three distinct coordinate spaces operating simultaneously inside a `Skeleton3D` node. 
+
+Unlike standard `Node3D` hierarchies, bones are **not** individual nodes in the Scene Tree. They are indexed entries within a contiguous C++ internal buffer managed by the `Skeleton3D` server instance.
 
 ```
                       THE THREE SKELETAL COORDINATE SPACES
@@ -4173,38 +4718,76 @@ Consequently, to convert a world-space raycast hit point $\vec{P}_{\text{world}}
 
 $$\vec{P}_{\text{skel}} = \mathbf{T}_{\text{skeleton}}^{-1} \cdot \vec{P}_{\text{world}}$$
 
+---
+
+### Step-by-Step Architectural Construction: Skeletal Coordinate Utilities
+
+Let us construct our skeletal coordinate transformation library chunk by chunk, examining the low-level mechanics of matrix inversion, parent indexing, and global-to-local space conversions.
+
+#### Chunk 1.1: World Space to Skeleton Pose Space Conversion
+
+```gdscript
+class_name SkeletalMath
+extends RefCounted
+
+static func world_to_skeleton_pose(skeleton: Skeleton3D, world_transform: Transform3D) -> Transform3D:
+	return skeleton.global_transform.affine_inverse() * world_transform
+
+static func skeleton_pose_to_world(skeleton: Skeleton3D, skel_pose: Transform3D) -> Transform3D:
+	return skeleton.global_transform * skel_pose
+```
+
+- **`skeleton.global_transform.affine_inverse()`**: Inverts the affine transformation matrix of the `Skeleton3D` node (undoing its world translation, rotation, and scale). Multiplying this inverted matrix by a world-space transform maps coordinates into the skeleton's root coordinate system ($[0,0,0]$ at the skeleton origin).
+- **`skeleton.global_transform * skel_pose`**: The forward projection. Multiplies the skeleton's global transform matrix by a skeleton-space pose, placing it into absolute 3D world physics space.
+
+#### Chunk 1.2: Skeleton Global Pose to Parent-Relative Local Space
+
+```gdscript
+static func global_pose_to_local_pose(skeleton: Skeleton3D, bone_idx: int, skel_global_pose: Transform3D) -> Transform3D:
+	var parent_idx: int = skeleton.get_bone_parent(bone_idx)
+	if parent_idx == -1:
+		return skel_global_pose
+	var parent_global_pose: Transform3D = skeleton.get_bone_global_pose(parent_idx)
+	return parent_global_pose.affine_inverse() * skel_global_pose
+```
+
+- **`skeleton.get_bone_parent(bone_idx)`**: Queries the internal C++ bone hierarchy buffer for the parent index. If it returns `-1`, the bone is an absolute root bone with no parent, meaning its local pose is already identical to its skeleton global pose.
+- **`parent_global_pose.affine_inverse() * skel_global_pose`**: Solves the equation $\mathbf{G}_{\text{child}} = \mathbf{G}_{\text{parent}} \cdot \mathbf{L}_{\text{child}}$ for $\mathbf{L}_{\text{child}}$. Multiplying the child's global pose by the parent's inverted global pose yields the exact parent-relative local pose matrix required by `skeleton.set_bone_pose()`.
+
+---
+
+#### The Fully Assembled `SkeletalMath.gd`
+
 ```gdscript
 # ==============================================================================
-# SKELETAL COORDINATE CONVERSION UTILITIES
+# SCRIPT: SkeletalMath.gd
+# Architecture: Skeletal Space Transformations & Matrix Conversions
 # ==============================================================================
 class_name SkeletalMath
 extends RefCounted
 
-## Converts a 3D world-space Transform3D into Skeleton-space Global Pose
+## Converts an absolute 3D world-space Transform3D into Skeleton-relative Global Pose space
 static func world_to_skeleton_pose(skeleton: Skeleton3D, world_transform: Transform3D) -> Transform3D:
-    return skeleton.global_transform.affine_inverse() * world_transform
+	return skeleton.global_transform.affine_inverse() * world_transform
 
-## Converts a Skeleton-space Global Pose into a 3D world-space Transform3D
+## Converts a Skeleton-relative Global Pose Transform3D into absolute 3D world coordinates
 static func skeleton_pose_to_world(skeleton: Skeleton3D, skel_pose: Transform3D) -> Transform3D:
-    return skeleton.global_transform * skel_pose
+	return skeleton.global_transform * skel_pose
 
-## Converts a Skeleton-space Global Pose into a bone's parent-relative Local Pose
+## Converts a Skeleton-space Global Pose into a bone's parent-relative Local Pose matrix
 static func global_pose_to_local_pose(skeleton: Skeleton3D, bone_idx: int, skel_global_pose: Transform3D) -> Transform3D:
-    var parent_idx: int = skeleton.get_bone_parent(bone_idx)
-    if parent_idx == -1:
-        return skel_global_pose
-    var parent_global_pose: Transform3D = skeleton.get_bone_global_pose(parent_idx)
-    return parent_global_pose.affine_inverse() * skel_global_pose
+	var parent_idx: int = skeleton.get_bone_parent(bone_idx)
+	if parent_idx == -1:
+		return skel_global_pose
+	var parent_global_pose: Transform3D = skeleton.get_bone_global_pose(parent_idx)
+	return parent_global_pose.affine_inverse() * skel_global_pose
 ```
-
-> [!warning] ⚠️ Production Trap: `SkeletonModificationStack3D` Deprecation in Godot 4.3+
-> Early Godot 4.0–4.2 tutorials reference `SkeletonModificationStack3D` and `SkeletonIK3D`. Both were officially **deprecated and replaced in Godot 4.3+** by the unified **`SkeletonModifier3D`** architecture. Never build new 3D procedural animation pipelines on deprecated modification stacks; always extend `SkeletonModifier3D` and override `_process_modification()`.
 
 ---
 
 ## 6.2 `AnimationTree`, Blend Spaces & Root Motion Extraction
 
-Keyframed animations stored inside an `AnimationPlayer` are static tracks. To blend smoothly between directional locomotion states, layer upper-body combat actions over lower-body running, and synchronize physical velocity with footwork, we construct an **`AnimationTree`** powered by an `AnimationNodeBlendTree`.
+Keyframed animations stored inside an `AnimationPlayer` are static, pre-baked tracks. To blend smoothly between directional movement states, layer upper-body actions over running legs, and extract physical velocity, we construct an **`AnimationTree`** powered by an `AnimationNodeBlendTree`.
 
 ```
                         HYBRID LOCOMOTION & COMBAT BLEND TREE
@@ -4225,19 +4808,24 @@ A `BlendSpace2D` maps a normalized 2D local velocity vector $(v_x, v_z) \in [-1,
 Using Delaunay triangulation, the engine computes **Barycentric Coordinates** $(\lambda_1, \lambda_2, \lambda_3)$ where $\lambda_1 + \lambda_2 + \lambda_3 = 1.0$ for the triangle enclosing the input point, blending the three nearest animations proportionally without sudden snapping.
 
 ### 2. Per-Bone Hierarchical Filtering (`OneShot` & `Blend2`)
-If a player swings a sword or reloads a weapon while sprinting, playing the full-body attack animation overwrites the leg bones, causing the character's feet to slide rigidly across the floor ("ice-skating").
+If a player swings a weapon while sprinting, playing the full-body attack animation overwrites leg bone positions, causing the character's feet to slide rigidly across the floor ("ice-skating").
 - ⤷ **The Solution**: Enable **Filter** on the `AnimationNodeOneShot` or `AnimationNodeBlend2` node and check only the `Spine`, `Chest`, `Shoulders`, `Arms`, and `Head` bones. The lower-body bones (`Hips`, `Thighs`, `Calves`, `Feet`) continue executing the `BlendSpace2D` sprint cycle uninterrupted.
 
 ### 3. Root Motion Extraction (`get_root_motion_position()`)
-In precision melee combat games (e.g., *Monster Hunter*, *Elden Ring*), driving character velocity via a flat mathematical curve during a sword lunge causes the feet to slide out of sync with the floor texture.
+In precision melee combat, driving character velocity via flat mathematical formulas during an attack lunge causes feet to slide out of sync with the ground.
 - ⤷ **Root Motion Mechanism**: The animator animates the actual `Root` bone moving forward in 3D space during the lunge. At runtime, Godot strips that translation off the visual skeleton and hands the frame-delta displacement $\Delta \vec{p}_{\text{root}}$ and rotation $\Delta \mathbf{q}_{\text{root}}$ to your `CharacterBody3D` script:
 
 $$\vec{v}_{\text{kinematic}} = \frac{\mathbf{B}_{\text{actor}} \cdot \Delta \vec{p}_{\text{root}}}{\Delta t}$$
 
+---
+
+### Step-by-Step Architectural Construction: Animation Tree & Root Motion Controller
+
+Let us deconstruct our locomotion and root motion pipeline chunk by chunk.
+
+#### Chunk 2.1: Node Bindings & Parameter Path Interning
+
 ```gdscript
-# ==============================================================================
-# PRODUCTION ANIMATION TREE & ROOT MOTION CONTROLLER
-# ==============================================================================
 class_name LocomotionAnimController
 extends Node
 
@@ -4245,7 +4833,6 @@ extends Node
 @export var animation_tree: AnimationTree
 @export var blend_smoothing_speed: float = 12.0
 
-# Pre-cached StringName parameter paths to avoid per-frame string allocation
 const PARAM_LOCOMOTION_BLEND: StringName = &"parameters/Locomotion/blend_position"
 const PARAM_ATTACK_REQUEST: StringName = &"parameters/AttackOneShot/request"
 const PARAM_TIMESCALE: StringName = &"parameters/TimeScale/scale"
@@ -4253,46 +4840,122 @@ const PARAM_TIMESCALE: StringName = &"parameters/TimeScale/scale"
 var _current_blend_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
-    assert(animation_tree != null, "LocomotionAnimController: AnimationTree unassigned.")
-    animation_tree.active = true
+	assert(animation_tree != null, "LocomotionAnimController: AnimationTree unassigned.")
+	animation_tree.active = true
+```
 
+- **`StringName (&"...")`**: Interns the node path strings within Godot's StringName table. Setting properties inside an `AnimationTree` every single frame via dynamic strings causes string hash lookups; interning them converts parameter lookups into fast pointer comparisons.
+- **`animation_tree.active = true`**: Forces the animation processor to begin ticking within the engine frame loop.
+
+#### Chunk 2.2: Local Velocity Transformation & Exponential Blend Smoothing
+
+```gdscript
 func update_locomotion_blend(world_velocity: Vector3, max_speed: float, delta: float) -> void:
-    # Convert world velocity into actor's local coordinate space (Right = +X, Forward = -Z)
-    var local_vel: Vector3 = actor.global_transform.basis.orthonormalized().transposed() * world_velocity
-    var target_blend: Vector2 = Vector2(local_vel.x, -local_vel.z) / maxf(0.001, max_speed)
-    target_blend = target_blend.limit_length(1.0)
-    
-    # Frame-rate independent exponential smoothing
-    var weight: float = 1.0 - exp(-blend_smoothing_speed * delta)
-    _current_blend_pos = _current_blend_pos.lerp(target_blend, weight)
-    
-    animation_tree.set(PARAM_LOCOMOTION_BLEND, _current_blend_pos)
+	var local_vel: Vector3 = actor.global_transform.basis.orthonormalized().transposed() * world_velocity
+	var target_blend: Vector2 = Vector2(local_vel.x, -local_vel.z) / maxf(0.001, max_speed)
+	target_blend = target_blend.limit_length(1.0)
+	
+	var weight: float = 1.0 - exp(-blend_smoothing_speed * delta)
+	_current_blend_pos = _current_blend_pos.lerp(target_blend, weight)
+	
+	animation_tree.set(PARAM_LOCOMOTION_BLEND, _current_blend_pos)
+```
 
-func trigger_upper_body_action() -> void:
-    animation_tree.set(PARAM_ATTACK_REQUEST, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+- **`actor.global_transform.basis.orthonormalized().transposed() * world_velocity`**: Transforms the absolute world velocity vector into the actor's local coordinate frame using transpose inversion (Module IV). In this local frame, $+X$ is local right, and $-Z$ is local forward.
+- **`Vector2(local_vel.x, -local_vel.z) / max_speed`**: Normalizes local speeds into the range $[-1.0, 1.0]$ required by the 2D blend space. Note that local forward ($-Z$) maps to positive $+Y$ on the blend plane.
+- **`1.0 - exp(-blend_smoothing_speed * delta)`**: Evaluates our exact frame-rate independent exponential decay formula. The blend coordinate glides toward target inputs smoothly without frame-rate variance.
 
-## Extracts baked root motion velocity to drive CharacterBody3D.velocity
+#### Chunk 2.3: Root Motion Extraction & Kinematic Velocity Synthesis
+
+```gdscript
 func extract_root_motion_velocity(delta: float) -> Vector3:
-    if delta <= 0.00001:
-        return Vector3.ZERO
-        
-    # Retrieve rotation and position deltas for the current physics tick
-    var delta_rot: Quaternion = animation_tree.get_root_motion_rotation()
-    var delta_pos: Vector3 = animation_tree.get_root_motion_position()
-    
-    # Apply root rotation directly to the actor's basis
-    actor.quaternion = (actor.quaternion * delta_rot).normalized()
-    
-    # Transform local root displacement into world-space velocity
-    var world_displacement: Vector3 = actor.global_transform.basis * delta_pos
-    return world_displacement / delta
+	if delta <= 0.00001:
+		return Vector3.ZERO
+		
+	var delta_rot: Quaternion = animation_tree.get_root_motion_rotation()
+	var delta_pos: Vector3 = animation_tree.get_root_motion_position()
+	
+	actor.quaternion = (actor.quaternion * delta_rot).normalized()
+	
+	var world_displacement: Vector3 = actor.global_transform.basis * delta_pos
+	return world_displacement / delta
+```
+
+- **`animation_tree.get_root_motion_rotation()` & `get_root_motion_position()`**: Reads the discrete displacement baked into the skeleton's root bone over the elapsed frame.
+- **`actor.quaternion = (actor.quaternion * delta_rot).normalized()`**: Applies the root bone's rotational delta directly to the actor's global orientation, allowing animations to turn characters organically.
+- **`actor.global_transform.basis * delta_pos`**: Converts root translation from local space into world displacement. Dividing by `delta` yields the exact kinematic velocity vector to pass into `CharacterBody3D.velocity`.
+
+---
+
+#### The Fully Assembled `LocomotionAnimController.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: LocomotionAnimController.gd
+# Architecture: AnimationTree Blending & Root Motion Extraction
+# ==============================================================================
+class_name LocomotionAnimController
+extends Node
+
+@export_group("Dependencies")
+## Controlling kinematic character body
+@export var actor: CharacterBody3D
+## Underlying animation blend tree
+@export var animation_tree: AnimationTree
+
+@export_group("Tuning")
+## Frame-rate independent blend smoothing factor
+@export var blend_smoothing_speed: float = 12.0
+
+# Interned StringNames for zero-allocation property access
+const PARAM_LOCOMOTION_BLEND: StringName = &"parameters/Locomotion/blend_position"
+const PARAM_ATTACK_REQUEST: StringName = &"parameters/AttackOneShot/request"
+const PARAM_TIMESCALE: StringName = &"parameters/TimeScale/scale"
+
+var _current_blend_pos: Vector2 = Vector2.ZERO
+
+func _ready() -> void:
+	assert(animation_tree != null, "LocomotionAnimController: AnimationTree unassigned.")
+	animation_tree.active = true
+
+## Updates the 2D locomotion blend space coordinates from entity velocity
+func update_locomotion_blend(world_velocity: Vector3, max_speed: float, delta: float) -> void:
+	# Convert world velocity into actor's local coordinate frame
+	var local_vel: Vector3 = actor.global_transform.basis.orthonormalized().transposed() * world_velocity
+	var target_blend: Vector2 = Vector2(local_vel.x, -local_vel.z) / maxf(0.001, max_speed)
+	target_blend = target_blend.limit_length(1.0)
+	
+	# Frame-rate independent exponential smoothing
+	var weight: float = 1.0 - exp(-blend_smoothing_speed * delta)
+	_current_blend_pos = _current_blend_pos.lerp(target_blend, weight)
+	
+	animation_tree.set(PARAM_LOCOMOTION_BLEND, _current_blend_pos)
+
+## Fires a transient upper-body filtered action animation
+func trigger_upper_body_action() -> void:
+	animation_tree.set(PARAM_ATTACK_REQUEST, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+## Extracts baked root motion deltas to drive kinematic velocity
+func extract_root_motion_velocity(delta: float) -> Vector3:
+	if delta <= 0.00001:
+		return Vector3.ZERO
+		
+	var delta_rot: Quaternion = animation_tree.get_root_motion_rotation()
+	var delta_pos: Vector3 = animation_tree.get_root_motion_position()
+	
+	# Apply root angular delta
+	actor.quaternion = (actor.quaternion * delta_rot).normalized()
+	
+	# Convert local linear displacement into world-space velocity
+	var world_displacement: Vector3 = actor.global_transform.basis * delta_pos
+	return world_displacement / delta
 ```
 
 ---
 
 ## 6.3 Inverse Kinematics (IK): Mathematical Proofs & Solvers
 
-When a character walks up a staircase, reaches for a door handle, or aims a rifle at an elevated target, pre-baked animations cannot anticipate the exact world coordinates of the environment. We must solve the **Inverse Kinematics** problem.
+When characters walk over uneven terrain, climb staircases, or aim weapons at dynamic targets, pre-baked animations cannot anticipate world contact points. We solve this using **Inverse Kinematics**.
 
 ```
 FORWARD KINEMATICS (FK):              INVERSE KINEMATICS (IK):
@@ -4317,7 +4980,7 @@ Find:  End-effector position E        Find:  Joint angles (θ1, θ2) so E == T
 
 ### 1. Analytical Two-Bone IK (The Law of Cosines Derivation)
 
-For any two-segment limb—such as an upper arm ($L_1$) and forearm ($L_2$), or thigh ($L_1$) and calf ($L_2$)—iterative solvers are unnecessary. Because three points (Root $\vec{R}$, Mid-Joint $\vec{J}$, and Target $\vec{T}$) always form a triangle in a 2D plane defined by the **Pole Target** $\vec{P}$, we can compute the exact joint angles in $\mathcal{O}(1)$ time using the **Law of Cosines**.
+For two-segment limbs (e.g., upper arm $L_1$ and forearm $L_2$, or thigh $L_1$ and calf $L_2$), iterative solvers are unnecessary. The three joints (Root $\vec{R}$, Mid-Joint $\vec{J}$, and Target $\vec{T}$) form a triangle on an articulation plane defined by the **Pole Target** $\vec{P}$, which we solve in $\mathcal{O}(1)$ time via the **Law of Cosines**.
 
 ```
                    THE TWO-BONE IK TRIANGLE GEOMETRY
@@ -4332,35 +4995,27 @@ For any two-segment limb—such as an upper arm ($L_1$) and forearm ($L_2$), or 
                               D = ||T - R||
 ```
 
-> [!example] 🧪 Step-by-Step Mathematical Proof: Two-Bone Analytical IK
-> Let:
-> - $L_1 = \|\vec{J} - \vec{R}\|$ be the length of the upper bone (thigh/upper arm).
-> - $L_2 = \|\vec{E} - \vec{J}\|$ be the length of the lower bone (calf/forearm).
-> - $D = \|\vec{T} - \vec{R}\|$ be the Euclidean distance from the root socket to the target.
-> 
-> **Step 1 — Reachability Clamping (Triangle Inequality)**:
-> A triangle can only exist if $D$ lies between the fully folded length and fully extended length. To prevent floating-point domain errors ($\arccos(x)$ where $|x| > 1.0$, which returns `NaN`), we clamp $D$ with a tiny epsilon $\epsilon = 10^{-4}$:
-> $$D_{\text{clamped}} = \text{clamp}\left(\|\vec{T} - \vec{R}\|, \, |L_1 - L_2| + \epsilon, \, (L_1 + L_2) - \epsilon\right)$$
-> 
-> **Step 2 — Solving Shoulder/Hip Pitch Angle ($\alpha$)**:
-> By the Law of Cosines ($c^2 = a^2 + b^2 - 2ab\cos C$), the side opposite to angle $\alpha$ is $L_2$:
-> $$L_2^2 = L_1^2 + D^2 - 2 L_1 D \cos(\alpha) \implies \cos(\alpha) = \frac{L_1^2 + D^2 - L_2^2}{2 L_1 D}$$
-> $$\alpha = \arccos\left(\text{clamp}\left(\frac{L_1^2 + D^2 - L_2^2}{2 L_1 D}, \, -1.0, \, 1.0\right)\right)$$
-> 
-> **Step 3 — Solving Elbow/Knee Interior Flexion Angle ($\beta$)**:
-> The side opposite to interior angle $\beta$ is $D$:
-> $$D^2 = L_1^2 + L_2^2 - 2 L_1 L_2 \cos(\beta) \implies \cos(\beta) = \frac{L_1^2 + L_2^2 - D^2}{2 L_1 L_2}$$
-> $$\beta = \arccos\left(\text{clamp}\left(\frac{L_1^2 + L_2^2 - D^2}{2 L_1 L_2}, \, -1.0, \, 1.0\right)\right)$$
-> 
-> **Step 4 — Constructing the Articulation Plane via the Pole Target ($\vec{P}$)**:
-> In 3D space, a triangle of side lengths $(L_1, L_2, D)$ can swivel $360^\circ$ around the axis $\hat{u}_{\text{forward}} = \frac{\vec{T} - \vec{R}}{\|\vec{T} - \vec{R}\|}$. To lock the knee or elbow toward the Pole Target $\vec{P}$, we construct an orthonormal basis using the Gram-Schmidt process:
-> $$\hat{u}_{\text{axis}} = \frac{\vec{T} - \vec{R}}{\|\vec{T} - \vec{R}\|} \qquad \hat{u}_{\text{hinge}} = \frac{\hat{u}_{\text{axis}} \times (\vec{P} - \vec{R})}{\|\hat{u}_{\text{axis}} \times (\vec{P} - \vec{R})\|}$$
-> Rotating $\vec{R} \rightarrow \vec{T}$ around $\hat{u}_{\text{hinge}}$ by angle $\alpha$ yields the exact 3D coordinate of the mid-joint $\vec{J}$!
+#### Step-by-Step Mathematical Derivation:
+Let $L_1 = \|\vec{J} - \vec{R}\|$, $L_2 = \|\vec{E} - \vec{J}\|$, and $D = \|\vec{T} - \vec{R}\|$.
+
+1. **Triangle Inequality Clamping**: To prevent $\arccos(x)$ domain errors ($|x| > 1.0$), clamp target distance $D$ using epsilon $\epsilon = 10^{-4}$:
+   $$D_{\text{clamped}} = \text{clamp}\left(\|\vec{T} - \vec{R}\|, \, |L_1 - L_2| + \epsilon, \, (L_1 + L_2) - \epsilon\right)$$
+2. **Solving Root-to-Mid Angle ($\alpha$)**: By the Law of Cosines ($L_2^2 = L_1^2 + D^2 - 2 L_1 D \cos\alpha$):
+   $$\alpha = \arccos\left(\text{clamp}\left(\frac{L_1^2 + D^2 - L_2^2}{2 L_1 D}, \, -1.0, \, 1.0\right)\right)$$
+3. **Constructing the Articulation Plane via Pole Target ($\vec{P}$)**:
+   $$\hat{u}_{\text{target}} = \frac{\vec{T} - \vec{R}}{\|\vec{T} - \vec{R}\|} \qquad \hat{u}_{\text{pole}} = \frac{\vec{P} - \vec{R}}{\|\vec{P} - \vec{R}\|}$$
+   $$\hat{u}_{\text{hinge}} = \frac{\hat{u}_{\text{target}} \times \hat{u}_{\text{pole}}}{\|\hat{u}_{\text{target}} \times \hat{u}_{\text{pole}}\|}$$
+   Rotating $\hat{u}_{\text{target}}$ around $\hat{u}_{\text{hinge}}$ by angle $-\alpha$ and scaling by $L_1$ produces the exact 3D position of the mid-joint $\vec{J}$!
+
+---
+
+### Step-by-Step Architectural Construction: Two-Bone IK via `SkeletonModifier3D`
+
+Let us construct a custom `SkeletonModifier3D` implementing analytical two-bone IK chunk by chunk.
+
+#### Chunk 3.1: Bone Index Resolution & Guard Checks
 
 ```gdscript
-# ==============================================================================
-# CUSTOM SKELETONMODIFIER3D: ANALYTICAL TWO-BONE IK SOLVER
-# ==============================================================================
 @tool
 class_name AnalyticalTwoBoneIK3D
 extends SkeletonModifier3D
@@ -4377,83 +5032,198 @@ var _mid_idx: int = -1
 var _tip_idx: int = -1
 
 func _validate_bone_indices(skeleton: Skeleton3D) -> bool:
-    _root_idx = skeleton.find_bone(root_bone_name)
-    _mid_idx = skeleton.find_bone(mid_bone_name)
-    _tip_idx = skeleton.find_bone(tip_bone_name)
-    return _root_idx != -1 and _mid_idx != -1 and _tip_idx != -1
+	_root_idx = skeleton.find_bone(root_bone_name)
+	_mid_idx = skeleton.find_bone(mid_bone_name)
+	_tip_idx = skeleton.find_bone(tip_bone_name)
+	return _root_idx != -1 and _mid_idx != -1 and _tip_idx != -1
+```
 
-## Overridden virtual method called automatically by Skeleton3D during pose evaluation
+- **`@tool`**: Allows the modifier to execute inside the Godot Editor viewport, providing real-time visual feedback when gizmos are moved.
+- **`extends SkeletonModifier3D`**: Uses Godot 4.3+'s replacement for deprecated IK stacks. `SkeletonModifier3D` integrates directly into the skeleton evaluation pipeline before mesh skinning occurs.
+- **`skeleton.find_bone(...)`**: Caches internal bone indices once, eliminating string comparisons during frame evaluation.
+
+#### Chunk 3.2: Coordinate Mapping & Law of Cosines Evaluation
+
+```gdscript
 func _process_modification() -> void:
-    var skeleton: Skeleton3D = get_skeleton()
-    if skeleton == null or target_node == null or pole_node == null:
-        return
-    if not _validate_bone_indices(skeleton):
-        return
+	var skeleton: Skeleton3D = get_skeleton()
+	if skeleton == null or target_node == null or pole_node == null:
+		return
+	if not _validate_bone_indices(skeleton):
+		return
 
-    # 1. Extract bone origins in Skeleton Global Pose space
-    var root_pose: Transform3D = skeleton.get_bone_global_pose(_root_idx)
-    var mid_pose: Transform3D = skeleton.get_bone_global_pose(_mid_idx)
-    var tip_pose: Transform3D = skeleton.get_bone_global_pose(_tip_idx)
+	var root_pose: Transform3D = skeleton.get_bone_global_pose(_root_idx)
+	var mid_pose: Transform3D = skeleton.get_bone_global_pose(_mid_idx)
+	var tip_pose: Transform3D = skeleton.get_bone_global_pose(_tip_idx)
 
-    var p_root: Vector3 = root_pose.origin
-    var p_mid: Vector3 = mid_pose.origin
-    var p_tip: Vector3 = tip_pose.origin
+	var p_root: Vector3 = root_pose.origin
+	var p_mid: Vector3 = mid_pose.origin
+	var p_tip: Vector3 = tip_pose.origin
 
-    var inv_skel: Transform3D = skeleton.global_transform.affine_inverse()
-    var p_target: Vector3 = inv_skel * target_node.global_position
-    var p_pole: Vector3 = inv_skel * pole_node.global_position
+	var inv_skel: Transform3D = skeleton.global_transform.affine_inverse()
+	var p_target: Vector3 = inv_skel * target_node.global_position
+	var p_pole: Vector3 = inv_skel * pole_node.global_position
 
-    # 2. Measure fixed segment lengths L1 and L2
-    var l1: float = p_root.distance_to(p_mid)
-    var l2: float = p_mid.distance_to(p_tip)
-    var epsilon: float = 0.0001
-    
-    var to_target: Vector3 = p_target - p_root
-    var raw_dist: float = to_target.length()
-    var d: float = clampf(raw_dist, absf(l1 - l2) + epsilon, (l1 + l2) - epsilon)
+	var l1: float = p_root.distance_to(p_mid)
+	var l2: float = p_mid.distance_to(p_tip)
+	var epsilon: float = 0.0001
+	
+	var to_target: Vector3 = p_target - p_root
+	var raw_dist: float = to_target.length()
+	var d: float = clampf(raw_dist, absf(l1 - l2) + epsilon, (l1 + l2) - epsilon)
 
-    # 3. Law of Cosines: Solve angle alpha (root-to-target vs root-to-mid)
-    var cos_alpha: float = clampf(((l1 * l1) + (d * d) - (l2 * l2)) / (2.0 * l1 * d), -1.0, 1.0)
-    var alpha: float = acos(cos_alpha)
+	var cos_alpha: float = clampf(((l1 * l1) + (d * d) - (l2 * l2)) / (2.0 * l1 * d), -1.0, 1.0)
+	var alpha: float = acos(cos_alpha)
+```
 
-    # 4. Construct orthonormal articulation plane using Pole Target
-    var dir_target: Vector3 = to_target / maxf(epsilon, raw_dist)
-    var dir_pole: Vector3 = (p_pole - p_root).normalized()
-    
-    var hinge_normal: Vector3 = dir_target.cross(dir_pole)
-    if hinge_normal.length_squared() < epsilon:
-        hinge_normal = dir_target.cross(Vector3.UP)
-    hinge_normal = hinge_normal.normalized()
+- **`inv_skel * target_node.global_position`**: Converts world coordinates of the target and pole nodes into the skeleton's global pose space.
+- **`var d = clampf(raw_dist, ...)`**: Clamps target distance to prevent triangle collapse or unreachable targets, protecting the division from producing `NaN` in `acos()`.
+- **`acos(cos_alpha)`**: Computes the interior shoulder/hip pitch angle $\alpha$ using the Law of Cosines.
 
-    # 5. Compute exact Mid-Joint position and Target Tip position
-    var mid_dir: Vector3 = dir_target.rotated(hinge_normal, -alpha).normalized()
-    var solved_mid_pos: Vector3 = p_root + (mid_dir * l1)
-    var solved_tip_pos: Vector3 = p_root + (dir_target * d)
+#### Chunk 3.3: Articulation Basis Construction & Pose Assignment
 
-    # 6. Construct solved Basis matrices (assuming +Y is bone forward axis along length)
-    var root_y: Vector3 = (solved_mid_pos - p_root).normalized()
-    var root_x: Vector3 = hinge_normal
-    var root_z: Vector3 = root_x.cross(root_y).normalized()
-    root_pose.basis = Basis(root_x, root_y, root_z).orthonormalized()
+```gdscript
+	var dir_target: Vector3 = to_target / maxf(epsilon, raw_dist)
+	var dir_pole: Vector3 = (p_pole - p_root).normalized()
+	
+	var hinge_normal: Vector3 = dir_target.cross(dir_pole)
+	if hinge_normal.length_squared() < epsilon:
+		hinge_normal = dir_target.cross(Vector3.UP)
+	hinge_normal = hinge_normal.normalized()
 
-    var mid_y: Vector3 = (solved_tip_pos - solved_mid_pos).normalized()
-    var mid_x: Vector3 = hinge_normal
-    var mid_z: Vector3 = mid_x.cross(mid_y).normalized()
-    mid_pose.origin = solved_mid_pos
-    mid_pose.basis = Basis(mid_x, mid_y, mid_z).orthonormalized()
+	var mid_dir: Vector3 = dir_target.rotated(hinge_normal, -alpha).normalized()
+	var solved_mid_pos: Vector3 = p_root + (mid_dir * l1)
+	var solved_tip_pos: Vector3 = p_root + (dir_target * d)
 
-    # 7. Write back solved poses to Skeleton3D
-    skeleton.set_bone_global_pose(_root_idx, root_pose)
-    skeleton.set_bone_global_pose(_mid_idx, mid_pose)
+	var root_y: Vector3 = (solved_mid_pos - p_root).normalized()
+	var root_x: Vector3 = hinge_normal
+	var root_z: Vector3 = root_x.cross(root_y).normalized()
+	root_pose.basis = Basis(root_x, root_y, root_z).orthonormalized()
+
+	var mid_y: Vector3 = (solved_tip_pos - solved_mid_pos).normalized()
+	var mid_x: Vector3 = hinge_normal
+	var mid_z: Vector3 = mid_x.cross(mid_y).normalized()
+	mid_pose.origin = solved_mid_pos
+	mid_pose.basis = Basis(mid_x, mid_y, mid_z).orthonormalized()
+
+	skeleton.set_bone_global_pose(_root_idx, root_pose)
+	skeleton.set_bone_global_pose(_mid_idx, mid_pose)
+```
+
+- **`dir_target.cross(dir_pole)`**: Generates the hinge normal perpendicular to the target-pole triangle, establishing the plane of articulation.
+- **`dir_target.rotated(hinge_normal, -alpha)`**: Rotates the upper limb vector on the articulation plane by angle $-\alpha$, finding the exact 3D position of the mid joint (`solved_mid_pos`).
+- **`Basis(root_x, root_y, root_z).orthonormalized()`**: Builds orthonormal orientation matrices aligning the upper and lower bone segments along their displacement vectors, then writes the updated transforms directly into `Skeleton3D`.
+
+---
+
+#### The Fully Assembled `AnalyticalTwoBoneIK3D.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: AnalyticalTwoBoneIK3D.gd
+# Architecture: Closed-Form Law of Cosines SkeletonModifier3D
+# ==============================================================================
+@tool
+class_name AnalyticalTwoBoneIK3D
+extends SkeletonModifier3D
+
+@export_group("Bones")
+## Root socket bone name (e.g. UpperArm, Thigh)
+@export var root_bone_name: StringName
+## Articulating middle joint name (e.g. Forearm, Calf)
+@export var mid_bone_name: StringName
+## Terminal extremity bone name (e.g. Hand, Foot)
+@export var tip_bone_name: StringName
+
+@export_group("Spatial Targets")
+## 3D target node defining the desired end-effector position
+@export var target_node: Node3D
+## 3D guide node defining the elbow/knee bending direction
+@export var pole_node: Node3D
+
+var _root_idx: int = -1
+var _mid_idx: int = -1
+var _tip_idx: int = -1
+
+func _validate_bone_indices(skeleton: Skeleton3D) -> bool:
+	_root_idx = skeleton.find_bone(root_bone_name)
+	_mid_idx = skeleton.find_bone(mid_bone_name)
+	_tip_idx = skeleton.find_bone(tip_bone_name)
+	return _root_idx != -1 and _mid_idx != -1 and _tip_idx != -1
+
+## Virtual callback executed by Skeleton3D during pose calculation
+func _process_modification() -> void:
+	var skeleton: Skeleton3D = get_skeleton()
+	if skeleton == null or target_node == null or pole_node == null:
+		return
+	if not _validate_bone_indices(skeleton):
+		return
+
+	# 1. Read existing bone global poses in skeleton space
+	var root_pose: Transform3D = skeleton.get_bone_global_pose(_root_idx)
+	var mid_pose: Transform3D = skeleton.get_bone_global_pose(_mid_idx)
+	var tip_pose: Transform3D = skeleton.get_bone_global_pose(_tip_idx)
+
+	var p_root: Vector3 = root_pose.origin
+	var p_mid: Vector3 = mid_pose.origin
+	var p_tip: Vector3 = tip_pose.origin
+
+	# 2. Map external 3D target coordinates into skeleton-local space
+	var inv_skel: Transform3D = skeleton.global_transform.affine_inverse()
+	var p_target: Vector3 = inv_skel * target_node.global_position
+	var p_pole: Vector3 = inv_skel * pole_node.global_position
+
+	# 3. Calculate limb segment lengths
+	var l1: float = p_root.distance_to(p_mid)
+	var l2: float = p_mid.distance_to(p_tip)
+	var epsilon: float = 0.0001
+	
+	var to_target: Vector3 = p_target - p_root
+	var raw_dist: float = to_target.length()
+	var d: float = clampf(raw_dist, absf(l1 - l2) + epsilon, (l1 + l2) - epsilon)
+
+	# 4. Law of Cosines: Solve interior angle alpha
+	var cos_alpha: float = clampf(((l1 * l1) + (d * d) - (l2 * l2)) / (2.0 * l1 * d), -1.0, 1.0)
+	var alpha: float = acos(cos_alpha)
+
+	# 5. Construct articulation plane from Pole Target
+	var dir_target: Vector3 = to_target / maxf(epsilon, raw_dist)
+	var dir_pole: Vector3 = (p_pole - p_root).normalized()
+	
+	var hinge_normal: Vector3 = dir_target.cross(dir_pole)
+	if hinge_normal.length_squared() < epsilon:
+		hinge_normal = dir_target.cross(Vector3.UP)
+	hinge_normal = hinge_normal.normalized()
+
+	# 6. Compute solved joint positions
+	var mid_dir: Vector3 = dir_target.rotated(hinge_normal, -alpha).normalized()
+	var solved_mid_pos: Vector3 = p_root + (mid_dir * l1)
+	var solved_tip_pos: Vector3 = p_root + (dir_target * d)
+
+	# 7. Construct solved Basis matrices (bone length aligned to +Y axis)
+	var root_y: Vector3 = (solved_mid_pos - p_root).normalized()
+	var root_x: Vector3 = hinge_normal
+	var root_z: Vector3 = root_x.cross(root_y).normalized()
+	root_pose.basis = Basis(root_x, root_y, root_z).orthonormalized()
+
+	var mid_y: Vector3 = (solved_tip_pos - solved_mid_pos).normalized()
+	var mid_x: Vector3 = hinge_normal
+	var mid_z: Vector3 = mid_x.cross(mid_y).normalized()
+	mid_pose.origin = solved_mid_pos
+	mid_pose.basis = Basis(mid_x, mid_y, mid_z).orthonormalized()
+
+	# 8. Write updated poses into Skeleton3D
+	skeleton.set_bone_global_pose(_root_idx, root_pose)
+	skeleton.set_bone_global_pose(_mid_idx, mid_pose)
 ```
 
 ---
 
 ### 2. Multi-Joint Iterative IK: FABRIK (Forward And Backward Reaching IK)
 
-When a kinematic chain contains more than two segments ($N \ge 3$, such as a dragon's neck, a mechanical tentacle, a scorpion tail, or a spine), analytical trigonometry becomes under-determined (infinitely many valid solutions exist).
+When a kinematic chain contains three or more segments ($N \ge 3$, such as tentacles, spines, ropes, or robotic tails), analytical trigonometry becomes under-determined. 
 
-Rather than computing expensive Jacobian matrix pseudoinverses ($\mathbf{J}^+$) or slow Euler angle rotations (CCD), **FABRIK** solves the chain in pure Euclidean point space using iterative distance projections, converging to visual perfection in just $3\text{--}8$ iterations!
+**FABRIK** solves the chain using iterative Euclidean distance projections, converging in $3\text{--}8$ iterations without evaluating costly trigonometric operations or matrix inversions.
 
 ```
                       THE FABRIK TWO-PASS ITERATION LOOP
@@ -4466,115 +5236,161 @@ Rather than computing expensive Jacobian matrix pseudoinverses ($\mathbf{J}^+$) 
                                  (Root pulled off socket!)      (Root locked; Tip at Target!)
 ```
 
-#### Formal Mathematical Specification of FABRIK
-Given $N+1$ joint positions $\vec{p}_0, \vec{p}_1, \dots, \vec{p}_N$ and $N$ fixed bone lengths $d_i = \|\vec{p}_{i+1} - \vec{p}_i\|$ for $i \in [0, N-1]$:
-1. **Unreachable Fast-Path**: If $\|\vec{T} - \vec{p}_0\| \ge \sum_{i=0}^{N-1} d_i$, the target is out of reach. Simply point all bones straight toward $\vec{T}$ in a single $\mathcal{O}(N)$ pass and terminate:
-   $$\vec{p}_{i+1} = \vec{p}_i + \frac{\vec{T} - \vec{p}_i}{\|\vec{T} - \vec{p}_i\|} \cdot d_i$$
-2. **Stage A — Forward Reaching (Tip $\rightarrow$ Root)**:
-   Set $\vec{p}_N' = \vec{T}$. For $i = N-1$ down to $0$:
-   $$\vec{p}_i' = \vec{p}_{i+1}' + \frac{\vec{p}_i - \vec{p}_{i+1}'}{\|\vec{p}_i - \vec{p}_{i+1}'\|} \cdot d_i$$
-3. **Stage B — Backward Reaching (Root $\rightarrow$ Tip)**:
-   Set $\vec{p}_0'' = \vec{p}_{\text{root\_origin}}$. For $i = 0$ up to $N-1$:
-   $$\vec{p}_{i+1}'' = \vec{p}_i'' + \frac{\vec{p}_{i+1}' - \vec{p}_i''}{\|\vec{p}_{i+1}' - \vec{p}_i''\|} \cdot d_i$$
-4. **Termination**: Repeat Stages A and B until $\|\vec{p}_N'' - \vec{T}\|^2 < \epsilon^2$ or `max_iterations` is reached.
+---
+
+### Step-by-Step Architectural Construction: FABRIK with Conical Constraints
+
+Let us deconstruct the forward and backward reaching passes and conical constraint checks.
+
+#### Chunk 4.1: Reachability Fast-Path
+
+```gdscript
+class_name FABRIKSolver3D
+extends RefCounted
+
+static func solve_chain(
+	points: PackedVector3Array,
+	lengths: PackedFloat32Array,
+	target_pos: Vector3,
+	max_cone_angle_rad: float = PI,
+	tolerance: float = 0.005,
+	max_iterations: int = 8
+) -> void:
+	var n: int = points.size() - 1
+	if n < 1:
+		return
+
+	var root_origin: Vector3 = points[0]
+	var total_length: float = 0.0
+	for length in lengths:
+		total_length += length
+
+	var root_to_target: Vector3 = target_pos - root_origin
+	if root_to_target.length() >= total_length:
+		var dir: Vector3 = root_to_target.normalized()
+		for i in range(n):
+			points[i + 1] = points[i] + (dir * lengths[i])
+		return
+```
+
+- **`PackedVector3Array` & `PackedFloat32Array`**: Passes contiguous memory buffers. Solves points in-place without heap allocations.
+- **Unreachable Fast-Path**: If the target distance exceeds the total length of the chain ($\|\vec{T} - \vec{p}_0\| \ge \sum L_i$), the chain cannot reach it. We skip iterative convergence entirely, pointing all bones straight toward the target in a single $\mathcal{O}(N)$ pass.
+
+#### Chunk 4.2: Forward Reaching (Tip $\rightarrow$ Root)
+
+```gdscript
+	var tolerance_sq: float = tolerance * tolerance
+
+	for _iter in range(max_iterations):
+		if points[n].distance_squared_to(target_pos) <= tolerance_sq:
+			break
+
+		# Pass 1: Forward Reaching
+		points[n] = target_pos
+		for i in range(n - 1, -1, -1):
+			var dir_back: Vector3 = (points[i] - points[i + 1]).normalized()
+			points[i] = points[i + 1] + (dir_back * lengths[i])
+```
+
+- **`points[n].distance_squared_to(target_pos) <= tolerance_sq`**: Early exit check using squared distance. Terminates the solve loop as soon as the tip reaches the target.
+- **Forward Pass**: Snaps the end-effector ($\vec{p}_n$) directly to the target. It iterates backward down the chain, pulling each parent bone along the line connecting them to preserve fixed segment lengths ($L_i$). The root bone will temporarily be pulled away from its fixed socket.
+
+#### Chunk 4.3: Backward Reaching with Conical Angle Constraints
+
+```gdscript
+		# Pass 2: Backward Reaching
+		points[0] = root_origin
+		for i in range(n):
+			var desired_dir: Vector3 = (points[i + 1] - points[i]).normalized()
+			
+			# Enforce conical angle constraint relative to the preceding bone
+			if i > 0 and max_cone_angle_rad < PI:
+				var prev_bone_dir: Vector3 = (points[i] - points[i - 1]).normalized()
+				var angle: float = prev_bone_dir.angle_to(desired_dir)
+				if angle > max_cone_angle_rad:
+					var rot_axis: Vector3 = prev_bone_dir.cross(desired_dir)
+					if rot_axis.length_squared() > 0.00001:
+						desired_dir = prev_bone_dir.rotated(rot_axis.normalized(), max_cone_angle_rad)
+
+			points[i + 1] = points[i] + (desired_dir * lengths[i])
+```
+
+- **Backward Pass**: Snaps the root bone ($\vec{p}_0$) back to its fixed origin socket. It iterates forward, projecting child joints along their segment vectors to restore bone lengths.
+- **Conical Constraint**: Measures the deflection angle between the current bone and its predecessor. If the joint bends beyond `max_cone_angle_rad`, it clamps the vector along the cone perimeter via cross-product axis rotation, preventing unnatural joint breaks.
+
+---
+
+#### The Fully Assembled `FABRIKSolver3D.gd`
 
 ```gdscript
 # ==============================================================================
-# PRODUCTION N-BONE FABRIK SOLVER WITH CONICAL JOINT CONSTRAINTS
+# SCRIPT: FABRIKSolver3D.gd
+# Architecture: Multi-Joint Forward and Backward Reaching IK Solver
 # ==============================================================================
 class_name FABRIKSolver3D
 extends RefCounted
 
-## Solves an N-point chain in-place to reach target_pos while respecting max_cone_angle_rad
+## Solves an N-joint chain in-place toward target_pos while respecting conical joint bounds
 static func solve_chain(
-    points: PackedVector3Array,
-    lengths: PackedFloat32Array,
-    target_pos: Vector3,
-    max_cone_angle_rad: float = PI,
-    tolerance: float = 0.005,
-    max_iterations: int = 8
+	points: PackedVector3Array,
+	lengths: PackedFloat32Array,
+	target_pos: Vector3,
+	max_cone_angle_rad: float = PI,
+	tolerance: float = 0.005,
+	max_iterations: int = 8
 ) -> void:
-    var n: int = points.size() - 1
-    if n < 1:
-        return
+	var n: int = points.size() - 1
+	if n < 1:
+		return
 
-    var root_origin: Vector3 = points[0]
-    var total_length: float = 0.0
-    for length in lengths:
-        total_length += length
+	var root_origin: Vector3 = points[0]
+	var total_length: float = 0.0
+	for length in lengths:
+		total_length += length
 
-    # 1. Fast-Path: Target exceeds total chain reach
-    var root_to_target: Vector3 = target_pos - root_origin
-    if root_to_target.length() >= total_length:
-        var dir: Vector3 = root_to_target.normalized()
-        for i in range(n):
-            points[i + 1] = points[i] + (dir * lengths[i])
-        return
+	# 1. Fast-Path: Target exceeds maximum chain reach
+	var root_to_target: Vector3 = target_pos - root_origin
+	if root_to_target.length() >= total_length:
+		var dir: Vector3 = root_to_target.normalized()
+		for i in range(n):
+			points[i + 1] = points[i] + (dir * lengths[i])
+		return
 
-    var tolerance_sq: float = tolerance * tolerance
+	var tolerance_sq: float = tolerance * tolerance
 
-    # 2. Iterative Forward & Backward Reaching Loop
-    for _iter in range(max_iterations):
-        if points[n].distance_squared_to(target_pos) <= tolerance_sq:
-            break
+	# 2. Iterative Forward & Backward Reaching Loop
+	for _iter in range(max_iterations):
+		if points[n].distance_squared_to(target_pos) <= tolerance_sq:
+			break
 
-        # --- STAGE A: Forward Reaching (Tip to Root) ---
-        points[n] = target_pos
-        for i in range(n - 1, -1, -1):
-            var dir_back: Vector3 = (points[i] - points[i + 1]).normalized()
-            points[i] = points[i + 1] + (dir_back * lengths[i])
+		# --- STAGE A: Forward Reaching (Tip -> Root) ---
+		points[n] = target_pos
+		for i in range(n - 1, -1, -1):
+			var dir_back: Vector3 = (points[i] - points[i + 1]).normalized()
+			points[i] = points[i + 1] + (dir_back * lengths[i])
 
-        # --- STAGE B: Backward Reaching (Root to Tip) with Conical Constraints ---
-        points[0] = root_origin
-        for i in range(n):
-            var desired_dir: Vector3 = (points[i + 1] - points[i]).normalized()
-            
-            # Enforce conical angle constraint relative to previous bone vector
-            if i > 0 and max_cone_angle_rad < PI:
-                var prev_bone_dir: Vector3 = (points[i] - points[i - 1]).normalized()
-                var angle: float = prev_bone_dir.angle_to(desired_dir)
-                if angle > max_cone_angle_rad:
-                    var rot_axis: Vector3 = prev_bone_dir.cross(desired_dir)
-                    if rot_axis.length_squared() > 0.00001:
-                        desired_dir = prev_bone_dir.rotated(rot_axis.normalized(), max_cone_angle_rad)
+		# --- STAGE B: Backward Reaching (Root -> Tip) with Conical Constraints ---
+		points[0] = root_origin
+		for i in range(n):
+			var desired_dir: Vector3 = (points[i + 1] - points[i]).normalized()
+			
+			# Conical constraint check against predecessor direction
+			if i > 0 and max_cone_angle_rad < PI:
+				var prev_bone_dir: Vector3 = (points[i] - points[i - 1]).normalized()
+				var angle: float = prev_bone_dir.angle_to(desired_dir)
+				if angle > max_cone_angle_rad:
+					var rot_axis: Vector3 = prev_bone_dir.cross(desired_dir)
+					if rot_axis.length_squared() > 0.00001:
+						desired_dir = prev_bone_dir.rotated(rot_axis.normalized(), max_cone_angle_rad)
 
-            points[i + 1] = points[i] + (desired_dir * lengths[i])
+			points[i + 1] = points[i] + (desired_dir * lengths[i])
 ```
 
 ---
 
-## 6.4 Procedural Foot Placement, Pelvis Adaptation & Arachnid Gaits
+## 6.4 Procedural Multi-Legged Gait Synthesis & Terrain Alignment
 
-### 1. Bipedal Slope & Staircase Adaptation
-When a bipedal character stands with one foot on a step of elevation $y = 0.4\text{ m}$ and the other foot on the floor at $y = 0.0\text{ m}$, simply moving the upper foot up via IK is only half the solution. Without lowering the character's **Pelvis / Hips bone**, the lower foot will hang $0.4\text{ m}$ in mid-air because its leg is already fully extended!
-
-```
-WITHOUT PELVIS ADAPTATION:              WITH PELVIS ADAPTATION:
-Pelvis stays at flat-ground height;     Pelvis drops by Δy = min(foot_L_offset, foot_R_offset);
-Lower leg hyperextends & floats!        Upper knee bends via IK, Lower foot plants firmly!
-
-          [Pelvis]                                  │ (Pelvis lowered by Δy)
-           /    \                                   ▼
-     ╭────╯      \                               [Pelvis]
-   [Foot L]       \                               /    \
-  =========      [Foot R] (Floating!)       ╭────╯      \
-  (High Step)                               [Foot L]     [Foot R]
-                 =========                 =========    =========
-```
-
-- ⤷ **The Pelvis Offset Invariant**:
-  1. Raycast downward from both foot bones ($L$ and $R$) to find ground hit elevations $y_{\text{hit}, L}$ and $y_{\text{hit}, R}$.
-  2. Compute vertical displacements from the character's root base $y_{\text{root}}$:
-     $$\Delta y_L = y_{\text{hit}, L} - y_{\text{root}}, \qquad \Delta y_R = y_{\text{hit}, R} - y_{\text{root}}$$
-  3. Smoothly offset the `Pelvis` bone vertically by the **lowest** foot displacement:
-     $$\Delta y_{\text{pelvis}} = \min(\Delta y_L, \Delta y_R)$$
-  4. Align each ankle's rotation quaternion to the ground surface normal $\vec{n}_{\text{hit}}$ using cross-product basis reconstruction.
-
----
-
-### 2. Procedural Multi-Legged Gait Synthesis (Arachnids, Mechs & Quadrupeds)
-
-Keyframing walking animations for a 4-, 6-, or 8-legged creature on uneven terrain is practically impossible. Instead, we generate locomotion **100% procedurally** using raycast home targets and **Alternating Tetrapod / Tripod Gait Groups**.
+Keyframing movement for a 4-, 6-, or 8-legged creature across uneven terrain is practically impossible. We generate locomotion **100% procedurally** using raycast targets, parabolic step arcs, and **Alternating Gait Groups**.
 
 ```
                    ALTERNATING TETRAPOD GAIT (8-LEGGED ARACHNID)
@@ -4591,35 +5407,40 @@ Keyframing walking animations for a 4-, 6-, or 8-legged creature on uneven terra
   any leg in Group B is mid-air! This guarantees static physical stability.
 ```
 
-#### The Parabolic Step Trajectory Equation
-When a planted foot at world coordinate $\vec{P}_{\text{start}}$ lags behind its ideal home raycast target $\vec{P}_{\text{target}}$ by a distance exceeding stride threshold $R_{\text{stride}}$, it initiates a step over duration $T_{\text{step}}$. For normalized progress $t \in [0, 1]$:
+### The Parabolic Step Trajectory Equation
+When a planted foot at $\vec{P}_{\text{start}}$ lags behind its home raycast point $\vec{P}_{\text{target}}$ by distance $R_{\text{stride}}$, it initiates a step over duration $T_{\text{step}}$. For normalized progress $t \in [0, 1]$:
 
 $$t_{\text{smooth}} = 3t^2 - 2t^3 \quad (\text{Hermite Smoothstep})$$
 
-$$\vec{P}_{\text{foot}}(t) = \text{lerp}\left(\vec{P}_{\text{start}}, \, \vec{P}_{\text{target}}, \, t_{\text{smooth}}\right) + \vec{n}_{\text{up}} \cdot \sin(\pi t) \cdot H_{\text{lift}}$$
+$$\vec{P}_{\text{foot}}(t) = \text{lerp}\left(\vec{P}_{\text{start}}, \, \vec{P}_{\text{target}}, \, t_{\text{smooth}}\right) + \hat{u}_{\text{up}} \cdot \sin(\pi t) \cdot H_{\text{lift}}$$
 
-Notice the elegance of $\sin(\pi t)$: at $t = 0$, $\sin(0) = 0$; at the apex $t = 0.5$, $\sin(\frac{\pi}{2}) = 1.0$ (maximum lift height $H_{\text{lift}}$); and upon landing at $t = 1.0$, $\sin(\pi) = 0$!
+At $t = 0$, $\sin(0) = 0$. At the step apex ($t = 0.5$), $\sin(\frac{\pi}{2}) = 1.0$ (maximum vertical clearance). At landing ($t = 1.0$), $\sin(\pi) = 0$.
+
+---
+
+### Step-by-Step Architectural Construction: Procedural Walker Controller
+
+Let us deconstruct our gait management, step evaluation, and chassis orientation logic.
+
+#### Chunk 5.1: Leg Tracking Data Structures & Setup
 
 ```gdscript
-# ==============================================================================
-# PRODUCTION PROCEDURAL GAIT & BODY NORMAL ALIGNMENT ENGINE
-# ==============================================================================
 class_name ProceduralWalkerController
 extends Node3D
 
 class LegStepper:
-    var leg_id: int
-    var gait_group: int # 0 = Group A, 1 = Group B
-    var raycast: RayCast3D
-    var ik_target: Marker3D
-    
-    var planted_world_pos: Vector3
-    var step_start_pos: Vector3
-    var step_goal_pos: Vector3
-    var step_progress: float = 1.0 # 1.0 = firmly planted on ground
-    
-    func is_stepping() -> bool:
-        return step_progress < 1.0
+	var leg_id: int
+	var gait_group: int # 0 = Group A, 1 = Group B
+	var raycast: RayCast3D
+	var ik_target: Marker3D
+	
+	var planted_world_pos: Vector3
+	var step_start_pos: Vector3
+	var step_goal_pos: Vector3
+	var step_progress: float = 1.0
+	
+	func is_stepping() -> bool:
+		return step_progress < 1.0
 
 @export_group("Stride & Gait Parameters")
 @export var stride_threshold: float = 0.65
@@ -4635,140 +5456,293 @@ class LegStepper:
 @export var ik_target_container: Node3D
 
 var _legs: Array[LegStepper] = []
+```
+
+- **`class LegStepper`**: Holds the runtime step state for each limb, including start points, target goals, and the active progress accumulator ($t \in [0, 1]$).
+- **`gait_group: int = i % 2`**: Partitions alternating legs into Group 0 and Group 1.
+- **`step_progress: float = 1.0`**: Initialized to $1.0$ (grounded). Values $< 1.0$ indicate the foot is mid-air.
+
+#### Chunk 5.2: Step Trajectory Updates
+
+```gdscript
+func _update_stepping_cycles(delta: float) -> void:
+	for leg in _legs:
+		if leg.is_stepping():
+			leg.step_progress = minf(1.0, leg.step_progress + (delta / step_duration))
+			var t: float = leg.step_progress
+			var smooth_t: float = t * t * (3.0 - 2.0 * t)
+			var horizontal_pos: Vector3 = leg.step_start_pos.lerp(leg.step_goal_pos, smooth_t)
+			var vertical_arc: Vector3 = global_transform.basis.y * (sin(t * PI) * step_lift_height)
+			
+			leg.planted_world_pos = horizontal_pos + vertical_arc
+			
+		leg.ik_target.global_position = leg.planted_world_pos
+```
+
+- **`t * t * (3.0 - 2.0 * t)`**: Evaluates cubic Hermite smoothstep, providing gentle acceleration and deceleration on foot liftoff and touchdown.
+- **`global_transform.basis.y * (sin(t * PI) * step_lift_height)`**: Elevates the foot along the creature's local up vector using a sine arc.
+- **`leg.ik_target.global_position = leg.planted_world_pos`**: Pins the IK target in world space so the planted foot does not slide as the main body moves forward.
+
+#### Chunk 5.3: Stride Evaluation & Gait Group Locking
+
+```gdscript
+func _evaluate_new_steps() -> void:
+	var group_0_busy: bool = false
+	var group_1_busy: bool = false
+	for leg in _legs:
+		if leg.is_stepping():
+			if leg.gait_group == 0: group_0_busy = true
+			else: group_1_busy = true
+
+	for leg in _legs:
+		if leg.is_stepping() or not leg.raycast.is_colliding():
+			continue
+			
+		# Lock: Do not step if the opposing group is mid-air
+		if (leg.gait_group == 0 and group_1_busy) or (leg.gait_group == 1 and group_0_busy):
+			continue
+			
+		var home_point: Vector3 = leg.raycast.get_collision_point()
+		var dist_sq: float = leg.planted_world_pos.distance_squared_to(home_point)
+		
+		if dist_sq > (stride_threshold * stride_threshold):
+			var overshoot: Vector3 = chassis_body.velocity * step_duration * velocity_overshoot_factor
+			leg.step_start_pos = leg.planted_world_pos
+			leg.step_goal_pos = home_point + overshoot
+			leg.step_progress = 0.0
+			
+			if leg.gait_group == 0: group_0_busy = true
+			else: group_1_busy = true
+```
+
+- **`group_busy` Gatekeeper**: Enforces alternating gaits. A leg in Group A cannot lift off while any leg in Group B is airborne, ensuring the creature always maintains grounded contact points for balance.
+- **`chassis_body.velocity * step_duration * overshoot`**: Velocity Prediction. Rather than stepping toward where the home point is *now*, it predicts where the home point will be when the step finishes, allowing the creature to step forward into motion.
+
+#### Chunk 5.4: Surface Normal Alignment via Geometric Cross Products
+
+```gdscript
+func _align_chassis_to_legs(delta: float) -> void:
+	if _legs.size() < 3:
+		return
+		
+	var avg_foot_pos: Vector3 = Vector3.ZERO
+	for leg in _legs:
+		avg_foot_pos += leg.planted_world_pos
+	avg_foot_pos /= float(_legs.size())
+
+	var composite_normal: Vector3 = Vector3.ZERO
+	var count: int = _legs.size()
+	for i in range(count):
+		var v1: Vector3 = _legs[i].planted_world_pos - avg_foot_pos
+		var v2: Vector3 = _legs[(i + 1) % count].planted_world_pos - avg_foot_pos
+		var n: Vector3 = v1.cross(v2)
+		if n.dot(global_transform.basis.y) < 0.0:
+			n = -n
+		composite_normal += n
+
+	var target_up: Vector3 = composite_normal.normalized()
+	if target_up.length_squared() < 0.01:
+		target_up = Vector3.UP
+
+	var decay_weight: float = 1.0 - exp(-body_alignment_decay * delta)
+	var desired_height: float = avg_foot_pos.y + body_height_offset
+	global_position.y = lerpf(global_position.y, desired_height, decay_weight)
+
+	var current_up: Vector3 = global_transform.basis.y
+	var align_quat: Quaternion = Quaternion(current_up, target_up)
+	var target_basis: Basis = Basis(align_quat) * global_transform.basis
+	global_transform.basis = global_transform.basis.slerp(target_basis.orthonormalized(), decay_weight)
+```
+
+- **`avg_foot_pos`**: Finds the center of mass (centroid) of all planted contact points.
+- **`v1.cross(v2)`**: Evaluates cross products between adjacent leg vectors radiating from the centroid, constructing a composite terrain normal vector.
+- **`Quaternion(current_up, target_up)`**: Calculates the shortest rotational arc to align the body's up vector with the terrain slope, then interpolates smoothly using exponential decay.
+
+---
+
+#### The Fully Assembled `ProceduralWalkerController.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: ProceduralWalkerController.gd
+# Architecture: Alternating Gait Engine & Surface Normal Alignment
+# ==============================================================================
+class_name ProceduralWalkerController
+extends Node3D
+
+class LegStepper:
+	var leg_id: int
+	var gait_group: int # 0 = Group A, 1 = Group B
+	var raycast: RayCast3D
+	var ik_target: Marker3D
+	
+	var planted_world_pos: Vector3
+	var step_start_pos: Vector3
+	var step_goal_pos: Vector3
+	var step_progress: float = 1.0
+	
+	func is_stepping() -> bool:
+		return step_progress < 1.0
+
+@export_group("Stride & Gait Parameters")
+## Maximum distance between planted foot and home target before a step triggers
+@export var stride_threshold: float = 0.65
+## Temporal duration of a single leg swing (seconds)
+@export var step_duration: float = 0.18
+## Peak apex height of the parabolic foot arc (metres)
+@export var step_lift_height: float = 0.35
+## Multiplier projecting step targets ahead of body velocity
+@export var velocity_overshoot_factor: float = 0.45
+## Vertical height offset of the torso above the average foot plane
+@export var body_height_offset: float = 1.1
+## Exponential decay rate for torso smoothing
+@export var body_alignment_decay: float = 10.0
+
+@export_group("Scene References")
+## Controlling kinematic body
+@export var chassis_body: CharacterBody3D
+## Container node holding RayCast3D nodes pointing at ground targets
+@export var raycast_container: Node3D
+## Container node holding Marker3D targets feeding the limb IK solvers
+@export var ik_target_container: Node3D
+
+var _legs: Array[LegStepper] = []
 
 func _ready() -> void:
-    _initialize_leg_arrays()
+	_initialize_leg_arrays()
 
 func _initialize_leg_arrays() -> void:
-    var ray_count: int = raycast_container.get_child_count()
-    for i in range(ray_count):
-        var ray: RayCast3D = raycast_container.get_child(i) as RayCast3D
-        var target: Marker3D = ik_target_container.get_child(i) as Marker3D
-        if ray == null or target == null:
-            continue
-            
-        var leg: LegStepper = LegStepper.new()
-        leg.leg_id = i
-        leg.gait_group = i % 2 # Alternating Gait Groups (0 and 1)
-        leg.raycast = ray
-        leg.ik_target = target
-        
-        ray.force_raycast_update()
-        leg.planted_world_pos = ray.get_collision_point() if ray.is_colliding() else target.global_position
-        leg.step_goal_pos = leg.planted_world_pos
-        _legs.append(leg)
+	var ray_count: int = raycast_container.get_child_count()
+	for i in range(ray_count):
+		var ray: RayCast3D = raycast_container.get_child(i) as RayCast3D
+		var target: Marker3D = ik_target_container.get_child(i) as Marker3D
+		if ray == null or target == null:
+			continue
+			
+		var leg: LegStepper = LegStepper.new()
+		leg.leg_id = i
+		leg.gait_group = i % 2
+		leg.raycast = ray
+		leg.ik_target = target
+		
+		ray.force_raycast_update()
+		leg.planted_world_pos = ray.get_collision_point() if ray.is_colliding() else target.global_position
+		leg.step_goal_pos = leg.planted_world_pos
+		_legs.append(leg)
 
 func _physics_process(delta: float) -> void:
-    _update_stepping_cycles(delta)
-    _evaluate_new_steps()
-    _align_chassis_to_legs(delta)
+	_update_stepping_cycles(delta)
+	_evaluate_new_steps()
+	_align_chassis_to_legs(delta)
 
 func _update_stepping_cycles(delta: float) -> void:
-    for leg in _legs:
-        if leg.is_stepping():
-            leg.step_progress = minf(1.0, leg.step_progress + (delta / step_duration))
-            var t: float = leg.step_progress
-            # Hermite smoothstep horizontal interpolation
-            var smooth_t: float = t * t * (3.0 - 2.0 * t)
-            var horizontal_pos: Vector3 = leg.step_start_pos.lerp(leg.step_goal_pos, smooth_t)
-            # Parabolic sine arc for vertical foot clearance
-            var vertical_arc: Vector3 = global_transform.basis.y * (sin(t * PI) * step_lift_height)
-            
-            leg.planted_world_pos = horizontal_pos + vertical_arc
-            
-        # Pin the IK Target node in world space so the foot does not slide!
-        leg.ik_target.global_position = leg.planted_world_pos
+	for leg in _legs:
+		if leg.is_stepping():
+			leg.step_progress = minf(1.0, leg.step_progress + (delta / step_duration))
+			var t: float = leg.step_progress
+			# Smoothstep horizontal progress
+			var smooth_t: float = t * t * (3.0 - 2.0 * t)
+			var horizontal_pos: Vector3 = leg.step_start_pos.lerp(leg.step_goal_pos, smooth_t)
+			# Parabolic vertical arc
+			var vertical_arc: Vector3 = global_transform.basis.y * (sin(t * PI) * step_lift_height)
+			
+			leg.planted_world_pos = horizontal_pos + vertical_arc
+			
+		# Pin IK target in world space
+		leg.ik_target.global_position = leg.planted_world_pos
 
 func _evaluate_new_steps() -> void:
-    # Check if either gait group is currently mid-air
-    var group_0_busy: bool = false
-    var group_1_busy: bool = false
-    for leg in _legs:
-        if leg.is_stepping():
-            if leg.gait_group == 0:
-                group_0_busy = true
-            else:
-                group_1_busy = true
+	var group_0_busy: bool = false
+	var group_1_busy: bool = false
+	for leg in _legs:
+		if leg.is_stepping():
+			if leg.gait_group == 0:
+				group_0_busy = true
+			else:
+				group_1_busy = true
 
-    for leg in _legs:
-        if leg.is_stepping() or not leg.raycast.is_colliding():
-            continue
-            
-        # Stability lock: Only step if the opposing gait group has all feet planted!
-        if (leg.gait_group == 0 and group_1_busy) or (leg.gait_group == 1 and group_0_busy):
-            continue
-            
-        var home_point: Vector3 = leg.raycast.get_collision_point()
-        var dist_sq: float = leg.planted_world_pos.distance_squared_to(home_point)
-        
-        if dist_sq > (stride_threshold * stride_threshold):
-            # Project step goal slightly ahead of current velocity so the leg steps INTO motion
-            var overshoot: Vector3 = chassis_body.velocity * step_duration * velocity_overshoot_factor
-            leg.step_start_pos = leg.planted_world_pos
-            leg.step_goal_pos = home_point + overshoot
-            leg.step_progress = 0.0
-            
-            if leg.gait_group == 0:
-                group_0_busy = true
-            else:
-                group_1_busy = true
+	for leg in _legs:
+		if leg.is_stepping() or not leg.raycast.is_colliding():
+			continue
+			
+		# Lock gait groups: only step if opposite group is grounded
+		if (leg.gait_group == 0 and group_1_busy) or (leg.gait_group == 1 and group_0_busy):
+			continue
+			
+		var home_point: Vector3 = leg.raycast.get_collision_point()
+		var dist_sq: float = leg.planted_world_pos.distance_squared_to(home_point)
+		
+		if dist_sq > (stride_threshold * stride_threshold):
+			var overshoot: Vector3 = chassis_body.velocity * step_duration * velocity_overshoot_factor
+			leg.step_start_pos = leg.planted_world_pos
+			leg.step_goal_pos = home_point + overshoot
+			leg.step_progress = 0.0
+			
+			if leg.gait_group == 0:
+				group_0_busy = true
+			else:
+				group_1_busy = true
 
-## Fits an average plane to all planted feet to tilt the spider/mech over slopes
 func _align_chassis_to_legs(delta: float) -> void:
-    if _legs.size() < 3:
-        return
-        
-    var avg_foot_pos: Vector3 = Vector3.ZERO
-    for leg in _legs:
-        avg_foot_pos += leg.planted_world_pos
-    avg_foot_pos /= float(_legs.size())
+	if _legs.size() < 3:
+		return
+		
+	var avg_foot_pos: Vector3 = Vector3.ZERO
+	for leg in _legs:
+		avg_foot_pos += leg.planted_world_pos
+	avg_foot_pos /= float(_legs.size())
 
-    # Accumulate cross-product normals across adjacent leg pairs around the centroid
-    var composite_normal: Vector3 = Vector3.ZERO
-    var count: int = _legs.size()
-    for i in range(count):
-        var v1: Vector3 = _legs[i].planted_world_pos - avg_foot_pos
-        var v2: Vector3 = _legs[(i + 1) % count].planted_world_pos - avg_foot_pos
-        var n: Vector3 = v1.cross(v2)
-        if n.dot(global_transform.basis.y) < 0.0:
-            n = -n
-        composite_normal += n
+	# Compute composite surface normal from cross products around the centroid
+	var composite_normal: Vector3 = Vector3.ZERO
+	var count: int = _legs.size()
+	for i in range(count):
+		var v1: Vector3 = _legs[i].planted_world_pos - avg_foot_pos
+		var v2: Vector3 = _legs[(i + 1) % count].planted_world_pos - avg_foot_pos
+		var n: Vector3 = v1.cross(v2)
+		if n.dot(global_transform.basis.y) < 0.0:
+			n = -n
+		composite_normal += n
 
-    var target_up: Vector3 = composite_normal.normalized()
-    if target_up.length_squared() < 0.01:
-        target_up = Vector3.UP
+	var target_up: Vector3 = composite_normal.normalized()
+	if target_up.length_squared() < 0.01:
+		target_up = Vector3.UP
 
-    # Smoothly align torso height and surface pitch/roll
-    var decay_weight: float = 1.0 - exp(-body_alignment_decay * delta)
-    var desired_height: float = avg_foot_pos.y + body_height_offset
-    global_position.y = lerpf(global_position.y, desired_height, decay_weight)
+	var decay_weight: float = 1.0 - exp(-body_alignment_decay * delta)
+	var desired_height: float = avg_foot_pos.y + body_height_offset
+	global_position.y = lerpf(global_position.y, desired_height, decay_weight)
 
-    var current_up: Vector3 = global_transform.basis.y
-    var align_quat: Quaternion = Quaternion(current_up, target_up)
-    var target_basis: Basis = Basis(align_quat) * global_transform.basis
-    global_transform.basis = global_transform.basis.slerp(target_basis.orthonormalized(), decay_weight)
+	# Align body up vector to the terrain normal
+	var current_up: Vector3 = global_transform.basis.y
+	var align_quat: Quaternion = Quaternion(current_up, target_up)
+	var target_basis: Basis = Basis(align_quat) * global_transform.basis
+	global_transform.basis = global_transform.basis.slerp(target_basis.orthonormalized(), decay_weight)
 ```
 
 ---
 
 ## 6.5 Active Ragdolls & Physics-Driven Animation (`PhysicalBoneSimulator3D`)
 
-Standard ragdolls are completely limp; when an enemy dies, you call `physical_bones_start_simulation()` on `PhysicalBoneSimulator3D` and gravity collapses the skeleton.
+Standard ragdolls are passive: when an entity dies, simulation starts and gravity collapses the bones into a limp pile.
 
-An **Active Ragdoll** (seen in *Half-Life: Alyx*, *Gang Beasts*, *Euphoria* engine) combines keyframed animation with rigid-body physics simultaneously. Every `PhysicalBone3D` applies rotational **PD (Proportional-Derivative) Spring-Damper Torque** ($\vec{\tau}$) to steer its physical body toward the animated target bone orientation:
+An **Active Ragdoll** blends keyframed animation with rigid-body dynamics simultaneously. Each `PhysicalBone3D` uses **Proportional-Derivative (PD) Spring-Damper Torque** ($\vec{\tau}$) to drive its physical body toward animated target bone orientations:
 
 $$\vec{\tau} = k_p \cdot \vec{e}_{\theta} - k_d \cdot \vec{\omega}$$
 
 where:
-- $\vec{e}_{\theta}$ is the shortest-arc axis-angle error vector between the physical bone's current quaternion $\mathbf{q}_{\text{phys}}$ and the animated skeleton's target quaternion $\mathbf{q}_{\text{anim}}$ (derived from $\mathbf{q}_{\text{diff}} = \mathbf{q}_{\text{anim}} \cdot \mathbf{q}_{\text{phys}}^{-1}$).
-- $k_p$ is the **Proportional Stiffness Gain** (muscular strength—high for torso/legs, lower for extremities).
-- $k_d$ is the **Derivative Damping Gain** (prevents violent harmonic oscillation/vibrating).
-- $\vec{\omega}$ is the physical bone's current `angular_velocity`.
+- $\vec{e}_{\theta}$ is the shortest-arc axis-angle error vector between the physical bone's current quaternion $\mathbf{q}_{\text{phys}}$ and the target animation quaternion $\mathbf{q}_{\text{anim}}$ (derived from $\mathbf{q}_{\text{diff}} = \mathbf{q}_{\text{anim}} \cdot \mathbf{q}_{\text{phys}}^{-1}$).
+- $k_p$ is the **Proportional Stiffness Gain** (muscular strength).
+- $k_d$ is the **Derivative Damping Gain** (prevents violent oscillation).
+- $\vec{\omega}$ is the bone's current `angular_velocity`.
+
+---
+
+### Step-by-Step Architectural Construction: Active Ragdoll PD Servo
+
+Let us deconstruct the quaternion error evaluation, derivative damping, and torque application line by line.
+
+#### Chunk 6.1: State Binding & Difference Quaternion Extraction
 
 ```gdscript
-# ==============================================================================
-# ACTIVE RAGDOLL TORQUE MATCHING CONTROLLER (PD Quaternion Servo)
-# ==============================================================================
 class_name ActiveRagdollBoneController
 extends PhysicalBone3D
 
@@ -4781,41 +5755,116 @@ extends PhysicalBone3D
 var _bone_id: int = -1
 
 func _ready() -> void:
-    if target_skeleton != null:
-        _bone_id = target_skeleton.find_bone(bone_name)
+	if target_skeleton != null:
+		_bone_id = target_skeleton.find_bone(bone_name)
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-    if target_skeleton == null or _bone_id == -1 or is_zero_approx(muscular_strength_multiplier):
-        return
+	if target_skeleton == null or _bone_id == -1 or is_zero_approx(muscular_strength_multiplier):
+		return
 
-    # 1. Compute target world orientation from the animated reference skeleton
-    var anim_skel_pose: Transform3D = target_skeleton.get_bone_global_pose_no_override(_bone_id)
-    var target_world_basis: Basis = (target_skeleton.global_transform * anim_skel_pose).basis
-    
-    var q_target: Quaternion = target_world_basis.get_rotation_quaternion()
-    var q_current: Quaternion = state.transform.basis.get_rotation_quaternion()
+	var anim_skel_pose: Transform3D = target_skeleton.get_bone_global_pose_no_override(_bone_id)
+	var target_world_basis: Basis = (target_skeleton.global_transform * anim_skel_pose).basis
+	
+	var q_target: Quaternion = target_world_basis.get_rotation_quaternion()
+	var q_current: Quaternion = state.transform.basis.get_rotation_quaternion()
 
-    # 2. Compute difference quaternion: q_diff = q_target * inv(q_current)
-    var q_diff: Quaternion = q_target * q_current.inverse()
-    
-    # Ensure shortest path across the 4D hypersphere (hemisphere check)
-    if q_diff.w < 0.0:
-        q_diff = -q_diff
+	var q_diff: Quaternion = q_target * q_current.inverse()
+	if q_diff.w < 0.0:
+		q_diff = -q_diff
+```
 
-    # 3. Extract rotation axis and angle error
-    var axis: Vector3 = q_diff.get_axis()
-    var angle: float = q_diff.get_angle()
-    
-    if not axis.is_normalized() or is_zero_approx(angle):
-        return
+- **`_integrate_forces(state)`**: Overrides the physics server hook. This executes during the physics integration step, giving us access to angular velocity and body transforms.
+- **`q_target * q_current.inverse()`**: Solves for the relative difference quaternion $\mathbf{q}_{\text{diff}}$ that rotates the physical bone from its current orientation into the animated target orientation.
+- **`if q_diff.w < 0.0: q_diff = -q_diff`**: **The 4D Hemisphere Invariant**. Because quaternions double-cover 3D rotations ($\mathbf{q}$ and $-\mathbf{q}$ represent the same physical rotation), checking if $w < 0$ and inverting signs ensures the solver always traverses the shortest rotational arc on the 4D hypersphere.
 
-    var angular_error: Vector3 = axis * angle
+#### Chunk 6.2: Axis-Angle Extraction & PD Torque Synthesis
 
-    # 4. Evaluate PD Controller: Torque = (Kp * error) - (Kd * angular_velocity)
-    var raw_torque: Vector3 = (angular_error * stiffness_kp) - (state.angular_velocity * damping_kd)
-    var final_torque: Vector3 = (raw_torque * muscular_strength_multiplier).limit_length(max_muscle_torque)
+```gdscript
+	var axis: Vector3 = q_diff.get_axis()
+	var angle: float = q_diff.get_angle()
+	
+	if not axis.is_normalized() or is_zero_approx(angle):
+		return
 
-    state.apply_torque(final_torque)
+	var angular_error: Vector3 = axis * angle
+
+	var raw_torque: Vector3 = (angular_error * stiffness_kp) - (state.angular_velocity * damping_kd)
+	var final_torque: Vector3 = (raw_torque * muscular_strength_multiplier).limit_length(max_muscle_torque)
+
+	state.apply_torque(final_torque)
+```
+
+- **`axis * angle`**: Extracts the error vector $\vec{e}_{\theta}$ where the direction vector is the axis of rotation and the magnitude is the angular discrepancy in radians.
+- **`(angular_error * stiffness_kp) - (state.angular_velocity * damping_kd)`**: The core PD control loop:
+  - The proportional term ($\vec{e}_{\theta} \cdot k_p$) pushes the bone toward the animated pose like a physical spring.
+  - The derivative term ($\vec{\omega} \cdot k_d$) resists high angular speeds, damping oscillations and preventing the ragdoll from vibrating.
+- **`state.apply_torque(final_torque)`**: Injects physical rotational torque into the rigid body simulation.
+
+---
+
+#### The Fully Assembled `ActiveRagdollBoneController.gd`
+
+```gdscript
+# ==============================================================================
+# SCRIPT: ActiveRagdollBoneController.gd
+# Architecture: Proportional-Derivative (PD) Active Ragdoll Torque Servo
+# ==============================================================================
+class_name ActiveRagdollBoneController
+extends PhysicalBone3D
+
+@export_group("Animation Source")
+## Animated reference skeleton whose poses serve as physical targets
+@export var target_skeleton: Skeleton3D
+
+@export_group("PD Muscle Parameters")
+## Proportional spring stiffness (muscular power)
+@export var stiffness_kp: float = 650.0
+## Derivative damper gain (prevents violent oscillation)
+@export var damping_kd: float = 45.0
+## Maximum torque magnitude applied to the physical bone
+@export var max_muscle_torque: float = 1200.0
+## Overall muscular tension scalar [0.0 = Limp ragdoll, 1.0 = Full muscle stiffness]
+@export_range(0.0, 1.0) var muscular_strength_multiplier: float = 1.0
+
+var _bone_id: int = -1
+
+func _ready() -> void:
+	if target_skeleton != null:
+		_bone_id = target_skeleton.find_bone(bone_name)
+
+## Physics Server force integration callback
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if target_skeleton == null or _bone_id == -1 or is_zero_approx(muscular_strength_multiplier):
+		return
+
+	# 1. Sample un-overridden animated pose in world space
+	var anim_skel_pose: Transform3D = target_skeleton.get_bone_global_pose_no_override(_bone_id)
+	var target_world_basis: Basis = (target_skeleton.global_transform * anim_skel_pose).basis
+	
+	var q_target: Quaternion = target_world_basis.get_rotation_quaternion()
+	var q_current: Quaternion = state.transform.basis.get_rotation_quaternion()
+
+	# 2. Compute difference quaternion: q_diff = q_target * inv(q_current)
+	var q_diff: Quaternion = q_target * q_current.inverse()
+	
+	# Shortest-path hemisphere check
+	if q_diff.w < 0.0:
+		q_diff = -q_diff
+
+	# 3. Extract rotation axis and angular error
+	var axis: Vector3 = q_diff.get_axis()
+	var angle: float = q_diff.get_angle()
+	
+	if not axis.is_normalized() or is_zero_approx(angle):
+		return
+
+	var angular_error: Vector3 = axis * angle
+
+	# 4. PD Controller: Torque = (Kp * error) - (Kd * angular_velocity)
+	var raw_torque: Vector3 = (angular_error * stiffness_kp) - (state.angular_velocity * damping_kd)
+	var final_torque: Vector3 = (raw_torque * muscular_strength_multiplier).limit_length(max_muscle_torque)
+
+	state.apply_torque(final_torque)
 ```
 
 ---

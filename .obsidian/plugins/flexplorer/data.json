@@ -5,7 +5,6 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "Operon",
         "Projects",
         "Year 1",
         "Personal Projects",
@@ -17,6 +16,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Operon 1",
         "dashboard-2.md",
         "dashboard.md",
         "Operon",
@@ -877,24 +877,6 @@
       "ctime": 1793463143948,
       "mtime": 1793463143948
     },
-    "Operon": {
-      "isPinned": false,
-      "isHidden": false,
-      "customOrder": [
-        "Tasks"
-      ],
-      "sortOrder": "custom",
-      "ctime": 1793496694970,
-      "mtime": 1793496694970
-    },
-    "Operon/Tasks": {
-      "isPinned": false,
-      "isHidden": false,
-      "customOrder": [],
-      "sortOrder": "custom",
-      "ctime": 1793496694978,
-      "mtime": 1793496694978
-    },
     "Personal Projects/Godot 4/General Information": {
       "isPinned": false,
       "isHidden": false,
@@ -990,13 +972,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793499999596,
-      "mtime": 1793504336226
-    },
-    "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793497065306,
-      "mtime": 1793497132839
+      "mtime": 1793505627832
     },
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md": {
       "isPinned": false,
@@ -1014,7 +990,31 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793504502037,
-      "mtime": 1793504502037
+      "mtime": 1793504560890
+    },
+    "Unsorted/Operon 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Tasks"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1793496694970,
+      "mtime": 1793496694970
+    },
+    "Unsorted/Operon 1/Tasks": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [],
+      "sortOrder": "custom",
+      "ctime": 1793496694978,
+      "mtime": 1793496694978
+    },
+    "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793505822227,
+      "mtime": 1793505822227
     }
   },
   "showHidden": false,

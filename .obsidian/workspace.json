@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+                "file": "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "🏗️ Mod III; Software Architecture & Game Design Patterns"
+              "title": "🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis"
             }
           }
         ],
@@ -203,7 +203,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+                "file": "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -261,11 +261,11 @@
   },
   "active": "7d222c4d13ffd294",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
     "Personal Projects/Godot 4/General Information/Masterlist.md",
-    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
     "Personal Projects/Godot 4/General Information/🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
+    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+    "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
     "Personal Projects/Godot 4/General Information/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
     "Personal Projects/Godot 4/General Information/Table of Contents.md",
     "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
@@ -279,8 +279,8 @@
     "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
     "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
     "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
-    "Operon/Tasks",
-    "Operon",
+    "Unsorted/Operon 1/Tasks",
+    "Unsorted/Operon 1",
     "Personal Projects/Godot 4/Master Curriculum & Reference Compendium.md",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Personal Projects/Godot 4",
