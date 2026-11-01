@@ -594,22 +594,22 @@ Shipping a commercial game requires automating repetitive workflows, catching re
 
 ## 🗺️ Master Textbook Chapter Index (Completed & Upcoming Deep-Dives)
 
-| Module | Textbook Chapter Status | File Reference |
-| :--- | :--- | :--- |
-| **Module I**: Bridging the Paradigm | ✅ **Generated** | `godot_module_1_bridging_the_paradigm.md` |
-| **Module II**: Advanced Data & Memory Mechanics | ✅ **Generated** | `godot_module_2_data_manipulation_and_memory.md` |
-| **Module III**: Software Architecture & Design Patterns | ✅ **Generated** | `godot_module_3_software_architecture_and_design_patterns.md` |
-| **Module IV**: The Mathematical Engine | ✅ **Generated** | `godot_module_4_applied_game_mathematics.md` |
-| **Module V**: Universal Gameplay Systems | ✅ **Generated** | `godot_module_5_universal_gameplay_systems.md` |
-| **Module VI**: Skeletal Rigging, Procedural Animation & IK | ⏳ *Ready to Generate* | `godot_module_6_animation_and_inverse_kinematics.md` |
-| **Module VII**: Autonomous AI, Combat & Bot Synthesis | ⏳ *Ready to Generate* | `godot_module_7_ai_enemies_and_bot_engineering.md` |
-| **Module VIII**: Multiplayer, Servers & Netcode Optimisation | ⏳ *Ready to Generate* | `godot_module_8_multiplayer_and_netcode.md` |
-| **Module IX**: Level Design, PCG & World Streaming | ⏳ *Ready to Generate* | `godot_module_9_level_design_and_pcg.md` |
-| **Module X**: Formal Game Design, Balancing & Economies | ⏳ *Ready to Generate* | `godot_module_10_game_design_and_economies.md` |
-| **Module XI**: Rendering, Shaders, Audio & Engine Servers | ✅ **Generated** *(Formerly Mod VI)* | `godot_module_6_rendering_shaders_and_servers.md` |
-| **Module XII**: Diagnostics, Profiling & Optimisation | ✅ **Generated** *(Formerly Mod VII)* | `godot_module_7_diagnostics_profiling_and_optimization.md` |
-| **Module XIII**: Editor Tooling, Testing & Release DevOps | ⏳ *Ready to Generate* | `godot_module_13_tooling_testing_and_devops.md` |
-| **Module XIV**: Master Resource Library & Audit Compendium | ✅ **Generated** *(Formerly Mod VIII)* | `godot_module_8_resource_library_and_compendium.md` |
+| Module                                                       | Textbook Chapter Status               | File Reference                                                |
+| :----------------------------------------------------------- | :------------------------------------ | :------------------------------------------------------------ |
+| **Module I**: Bridging the Paradigm                          | ✅ **Generated**                       | `godot_module_1_bridging_the_paradigm.md`                     |
+| **Module II**: Advanced Data & Memory Mechanics              | ✅ **Generated**                       | `godot_module_2_data_manipulation_and_memory.md`              |
+| **Module III**: Software Architecture & Design Patterns      | ✅ **Generated**                       | `godot_module_3_software_architecture_and_design_patterns.md` |
+| **Module IV**: The Mathematical Engine                       | ✅ **Generated**                       | `godot_module_4_applied_game_mathematics.md`                  |
+| **Module V**: Universal Gameplay Systems                     | ✅ **Generated**                       | `godot_module_5_universal_gameplay_systems.md`                |
+| **Module VI**: Skeletal Rigging, Procedural Animation & IK   | ✅ **Generated**                       | `godot_module_6_animation_and_inverse_kinematics.md`          |
+| **Module VII**: Autonomous AI, Combat & Bot Synthesis        | ✅ **Generated**                       | `godot_module_7_ai_enemies_and_bot_engineering.md`            |
+| **Module VIII**: Multiplayer, Servers & Netcode Optimisation | ⏳ *Ready to Generate*                 | `godot_module_8_multiplayer_and_netcode.md`                   |
+| **Module IX**: Level Design, PCG & World Streaming           | ⏳ *Ready to Generate*                 | `godot_module_9_level_design_and_pcg.md`                      |
+| **Module X**: Formal Game Design, Balancing & Economies      | ⏳ *Ready to Generate*                 | `godot_module_10_game_design_and_economies.md`                |
+| **Module XI**: Rendering, Shaders, Audio & Engine Servers    | ✅ **Generated** *(Formerly Mod VI)*   | `godot_module_6_rendering_shaders_and_servers.md`             |
+| **Module XII**: Diagnostics, Profiling & Optimisation        | ✅ **Generated** *(Formerly Mod VII)*  | `godot_module_7_diagnostics_profiling_and_optimization.md`    |
+| **Module XIII**: Editor Tooling, Testing & Release DevOps    | ⏳ *Ready to Generate*                 | `godot_module_13_tooling_testing_and_devops.md`               |
+| **Module XIV**: Master Resource Library & Audit Compendium   | ✅ **Generated** *(Formerly Mod VIII)* | `godot_module_8_resource_library_and_compendium.md`           |
 
 ---
 

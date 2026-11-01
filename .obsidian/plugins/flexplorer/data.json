@@ -878,6 +878,8 @@
         "🏗️ Mod III; Software Architecture & Game Design Patterns.md",
         "📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
         "🎮 Mod V; Universal Gameplay Systems Engineering.md",
+        "# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md",
+        "🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
         "🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
         "⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
         "📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md"
@@ -956,6 +958,18 @@
       "sortOrder": "custom",
       "ctime": 1793496694978,
       "mtime": 1793496694978
+    },
+    "Personal Projects/Godot 4/# 🦴 Mod VI; Skeletal Rigging, Procedural Animation & Inverse Kinematics (IK).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793497065306,
+      "mtime": 1793497132839
+    },
+    "Personal Projects/Godot 4/🤖 Mod VII; Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793497561269,
+      "mtime": 1793497561269
     }
   },
   "showHidden": false,
