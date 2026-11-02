@@ -44,16 +44,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
+                "file": "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture"
+              "title": "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4)"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -213,7 +212,6 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -223,7 +221,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -259,8 +257,9 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "fee2a2db3f27cfb2",
+  "active": "9ac3fa34df0cba6a",
   "lastOpenFiles": [
+    "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
     "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
     "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
@@ -270,7 +269,6 @@
     "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
     "Personal Projects/Godot 4/General Information/Masterlist.md",
     "Personal Projects/Godot 4/General Information/Table of Contents.md",
-    "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
     "Personal Projects/Godot 4/General Information/🛠️ Mod XIII; Custom Editor Tooling, Testing, DevOps & Release Engineering.md",
     "Personal Projects/Godot 4/General Information/📚 Mod XIV; Curated Master Resource Library & Architectural Reference Compendium.md",
     "Operon/Tasks",

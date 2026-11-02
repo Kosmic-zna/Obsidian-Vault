@@ -1008,18 +1008,18 @@
     "Operon": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Tasks"
       ],
-      "sortOrder": "custom",
       "ctime": 1793541543020,
       "mtime": 1793541543020
     },
     "Operon/Tasks": {
       "isPinned": false,
       "isHidden": false,
-      "customOrder": [],
       "sortOrder": "custom",
+      "customOrder": [],
       "ctime": 1793541543397,
       "mtime": 1793541543397
     },
