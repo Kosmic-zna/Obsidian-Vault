@@ -9,7 +9,7 @@ customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-10-31T15:32:31.770Z"
+updatedAt: "2026-11-02T02:36:28.583Z"
 config:
   statuses:
     - id: "todo"

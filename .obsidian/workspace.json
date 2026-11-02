@@ -52,7 +52,8 @@
               "title": "🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4)"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -212,6 +213,7 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -257,7 +259,7 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "9ac3fa34df0cba6a",
+  "active": "fee2a2db3f27cfb2",
   "lastOpenFiles": [
     "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
     "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
