@@ -4,7 +4,7 @@ state: "[[Final]]"
 # 🛡️ Module 3: Formal & Informal Fallacies
 
 ## 📖 Prerequisite Lexicon (From First Principles)
-- **Fallacy** (from Latin *fallacia*, meaning "deceit" or "trick")
+- **Fallacy** (from Latin *fallere*, meaning "deceit" or "trick")
   - ⤷ **Definition**: A structural or psychological defect in an argument that causes it to be logically invalid or unsound, whilst often appearing superficially persuasive.
 - **Formal Fallacy**
   - ⤷ **Definition**: An error exclusively in the **logical structure (form)** of a deductive argument. You can spot a formal fallacy purely by looking at the symbolic blueprint ($S$, $P$, $M$, $+$, $-$), without even knowing what the words mean in the real world.
