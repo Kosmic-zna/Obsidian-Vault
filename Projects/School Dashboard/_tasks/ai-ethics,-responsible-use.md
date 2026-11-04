@@ -5,7 +5,7 @@ parentId:
 id: 42v5nx01mvvs1qu7
 title: ai ethics, responsible use
 type: task
-status: blocked
+status: done
 priority: medium
 start: 2026-10-31
 due: 2026-11-04
@@ -18,7 +18,8 @@ tags:
 subtaskIds: []
 dependencies: []
 createdAt: 2026-10-31T02:23:44.671Z
-updatedAt: 2026-11-02T02:36:28.583Z
+updatedAt: 2026-11-04T12:47:27.403Z
+completed: 2026-11-04
 ---
 
 Project: [[School Dashboard|School Dashboard]]

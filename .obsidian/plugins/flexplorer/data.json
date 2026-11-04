@@ -54,9 +54,9 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "Module 3",
         "Module 1",
-        "Module 2"
+        "Module 2",
+        "Module 3"
       ],
       "ctime": 1793377290302,
       "mtime": 1793377290302
@@ -730,19 +730,19 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793412743639,
-      "mtime": 1793460751789
+      "mtime": 1793796461997
     },
     "Projects/School Dashboard/_tasks/review-for-hum.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793412991364,
-      "mtime": 1793458663976
+      "mtime": 1793796450670
     },
     "Projects/School Dashboard/_tasks/review-for-it(l).md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793413035654,
-      "mtime": 1793458708744
+      "mtime": 1793796449850
     },
     "Projects/School Dashboard/_tasks/finish-codechum.md": {
       "isPinned": false,
@@ -760,13 +760,13 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793413479587,
-      "mtime": 1793413479587
+      "mtime": 1793796447431
     },
     "Projects/School Dashboard/_tasks/correlation-and-regression.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793413531160,
-      "mtime": 1793413628234
+      "mtime": 1793796461980
     },
     "Projects/School Dashboard/_tasks/learning-task.md": {
       "isPinned": false,
@@ -1041,21 +1041,21 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "lesson_9_networks_and_communications_reviewer.md",
-        "lesson_10_program_development_reviewer.md"
+        "Networks and Communications (CS).md",
+        "Program Development (CS).md"
       ]
     },
-    "Year 1/Term 1/CS/Module 3/lesson_10_program_development_reviewer.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1793796281310,
-      "mtime": 1793796282520
-    },
-    "Year 1/Term 1/CS/Module 3/lesson_9_networks_and_communications_reviewer.md": {
+    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793796144529,
       "mtime": 1793796145177
+    },
+    "Year 1/Term 1/CS/Module 3/Program Development (CS).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793796281310,
+      "mtime": 1793796282520
     }
   },
   "showHidden": false,
