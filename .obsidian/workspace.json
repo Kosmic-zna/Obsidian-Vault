@@ -52,8 +52,7 @@
               "title": "Formal & Informal Fallacies (HUM)"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -238,7 +237,6 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-advanced-slides:Show Slide Preview": true,
-      "obsidian-spaced-repetition:Review flashcards": true,
       "project-manager:Project manager": false,
       "operon:Create New Operon Task": false,
       "operon:Operon Filter View": false,
@@ -249,7 +247,7 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "fee2a2db3f27cfb2",
+  "active": "9ac3fa34df0cba6a",
   "lastOpenFiles": [
     "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
     "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
