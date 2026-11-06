@@ -9,7 +9,7 @@ customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-11-04T12:47:41.974Z"
+updatedAt: "2026-11-05T23:26:57.338Z"
 config:
   statuses:
     - id: "todo"
@@ -48,4 +48,4 @@ Things to do at school
 - [ ] [[using-functions-methods|Using functions/methods]]
 - [x] [[test-on-informal-fallacies|Test on informal fallacies]]
 - [x] [[service-learning-proposal|Service Learning Proposal]]
-- [ ] [[review-the-service-proposal-|Review the service proposal ]]
+- [x] [[review-the-service-proposal-|Review the service proposal ]]

@@ -151,6 +151,7 @@
         "Types of Reasoning (MATH).md",
         "Nature of Statistics (MATH).md",
         "Descriptive Statistics, Grouped and Ungrouped (MATH).md",
+        "Correlation and Regression (MATH).md",
         "Resources"
       ],
       "ctime": 1793377290309,
@@ -730,7 +731,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793412743639,
-      "mtime": 1793796461997
+      "mtime": 1793921217368
     },
     "Projects/School Dashboard/_tasks/review-for-hum.md": {
       "isPinned": false,
@@ -850,7 +851,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793446842423,
-      "mtime": 1793446842423
+      "mtime": 1793921217358
     },
     "Personal Projects": {
       "isPinned": false,
@@ -1056,6 +1057,12 @@
       "isHidden": false,
       "ctime": 1793796281310,
       "mtime": 1793796282520
+    },
+    "Year 1/Term 1/MATH/Module 3/Correlation and Regression (MATH).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1793924726440,
+      "mtime": 1793924726440
     }
   },
   "showHidden": false,

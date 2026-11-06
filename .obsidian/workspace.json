@@ -44,15 +44,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
+                "file": "Year 1/Term 1/MATH/Module 3/Correlation and Regression (MATH).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Descriptive Statistics, Grouped and Ungrouped (MATH)"
+              "title": "Correlation and Regression (MATH)"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -202,10 +203,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
+                "file": "Year 1/Term 1/MATH/Module 3/Correlation and Regression (MATH).md",
                 "followCursor": false,
                 "showSearch": true,
-                "searchQuery": "chi"
+                "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "Outline"
@@ -237,19 +238,14 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-advanced-slides:Show Slide Preview": true,
-      "project-manager:Project manager": false,
-      "operon:Create New Operon Task": false,
-      "operon:Operon Filter View": false,
-      "operon:Task Finder": false,
-      "operon:Operon Calendar": false,
-      "operon:Operon Kanban": false,
-      "operon:Operon Table": false,
-      "operon:Open Pinned Tasks": false
+      "project-manager:Project manager": false
     }
   },
-  "active": "9ac3fa34df0cba6a",
+  "active": "8a8284d2e770e04a",
   "lastOpenFiles": [
     "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
+    "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
+    "Year 1/Term 1/MATH/Module 3/Correlation and Regression (MATH).md",
     "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
     "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
@@ -278,10 +274,8 @@
     "Personal Projects/Godot 4/The Godot 4 Systems Architect; Master Curriculum & Reference Compendium.md",
     "Unsorted/Operon 1/Tasks",
     "Unsorted/Operon 1",
-    "Personal Projects/Godot 4/Master Curriculum & Reference Compendium.md",
     "Personal Projects/Godot 4",
     "Personal Projects",
-    "Projects/School Dashboard/_tasks/review-the-service-proposal-.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",
