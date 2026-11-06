@@ -9,7 +9,7 @@ customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-11-06T14:20:45.655Z"
+updatedAt: "2026-11-06T15:31:50.591Z"
 config:
   statuses:
     - id: "todo"
@@ -44,7 +44,7 @@ Things to do at school
 - [ ] [[finish-codechum|Finish codechum]]
 - [x] [[review-for-math|Review for math]]
 - [x] [[ai-ethics,-responsible-use|ai ethics, responsible use]]
-- [ ] [[correlation-and-regression|Correlation and regression]]
+- [x] [[correlation-and-regression|Correlation and regression]]
 - [ ] [[using-functions-methods|Using functions/methods]]
 - [x] [[test-on-informal-fallacies|Test on informal fallacies]]
 - [x] [[service-learning-proposal|Service Learning Proposal]]
