@@ -5,7 +5,7 @@ parentId:
 id: krsepnl4mvvs32ys
 title: Correlation and regression
 type: task
-status: blocked
+status: in-progress
 priority: medium
 start: 2026-10-31
 due: 2026-11-06
@@ -19,7 +19,7 @@ subtaskIds:
   - "[[practice-task|Practice task]]"
 dependencies: []
 createdAt: 2026-10-31T02:24:47.044Z
-updatedAt: 2026-11-04T12:47:41.974Z
+updatedAt: 2026-11-06T14:18:30.704Z
 ---
 
 Project: [[School Dashboard|School Dashboard]]

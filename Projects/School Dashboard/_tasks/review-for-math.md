@@ -2,20 +2,22 @@
 pm-task: true
 projectId: "[[School Dashboard|School Dashboard]]"
 parentId:
-id: "jb9a2w23mvvrufuk"
-title: "Review for math"
-type: "task"
-status: "todo"
-priority: "low"
-start: "2026-10-31"
-due: "2026-11-09"
+id: jb9a2w23mvvrufuk
+title: Review for math
+type: task
+status: done
+priority: low
+start: 2026-10-31
+due: 2026-11-09
 progress: 0
 assignees: []
-tags: ["Exams"]
+tags:
+  - Exams
 subtaskIds: []
 dependencies: []
-createdAt: "2026-10-31T02:18:03.836Z"
-updatedAt: "2026-10-31T02:20:12.733Z"
+createdAt: 2026-10-31T02:18:03.836Z
+updatedAt: 2026-11-06T14:18:36.822Z
+completed: 2026-11-06
 ---
 
 Project: [[School Dashboard|School Dashboard]]
