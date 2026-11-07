@@ -41,8 +41,8 @@
       "customOrder": [
         "HUM",
         "IT(L)",
-        "MATH",
         "IT",
+        "MATH",
         "AI",
         "CS"
       ],
@@ -76,6 +76,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Module 1",
         "Module 2"
       ],
       "ctime": 1793377290303,
@@ -735,7 +736,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793412743639,
-      "mtime": 1794010460305
+      "mtime": 1794033271973
     },
     "Projects/School Dashboard/_tasks/review-for-hum.md": {
       "isPinned": false,
@@ -1114,7 +1115,23 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794033269877,
-      "mtime": 1794033269877
+      "mtime": 1794033271961
+    },
+    "Year 1/Term 1/IT/Module 1": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "FULL MODULE 1 (IT).md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1794034053684,
+      "mtime": 1794034053684
+    },
+    "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794034057797,
+      "mtime": 1794034057797
     }
   },
   "showHidden": false,
