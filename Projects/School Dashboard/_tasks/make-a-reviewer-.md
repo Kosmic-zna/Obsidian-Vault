@@ -5,7 +5,7 @@ parentId:
 id: 2huwmf7nmw612e0h
 title: "Make a reviewer "
 type: task
-status: in-progress
+status: todo
 priority: medium
 start: 2026-11-07
 due: ""
@@ -17,7 +17,7 @@ tags:
 subtaskIds: []
 dependencies: []
 createdAt: 2026-11-07T06:33:53.009Z
-updatedAt: 2026-11-07T06:34:31.941Z
+updatedAt: 2026-11-07T11:21:12.132Z
 ---
 
 Project: [[School Dashboard|School Dashboard]]
