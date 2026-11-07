@@ -4,12 +4,12 @@ id: "jvmlnfw2mvvrn5c7"
 title: "School Dashboard"
 color: "#8b72be"
 icon: "📋"
-taskIds: ["[[review-for-hum|Review for hum]]", "[[review-for-it(l)|Review for IT(L)]]", "[[finish-codechum|Finish codechum]]", "[[review-for-math|Review for math]]", "[[ai-ethics,-responsible-use|ai ethics, responsible use]]", "[[correlation-and-regression|Correlation and regression]]", "[[using-functions-methods|Using functions/methods]]", "[[test-on-informal-fallacies|Test on informal fallacies]]", "[[service-learning-proposal|Service Learning Proposal]]", "[[review-the-service-proposal-|Review the service proposal ]]", "[[review-for-departmental-exam|Review for Departmental Exam]]", "[[review-for-departmental-exam 1|Review for Departmental Exam]]"]
+taskIds: ["[[review-for-hum|Review for hum]]", "[[review-for-it(l)|Review for IT(L)]]", "[[finish-codechum|Finish codechum]]", "[[review-for-math|Review for math]]", "[[ai-ethics,-responsible-use|ai ethics, responsible use]]", "[[correlation-and-regression|Correlation and regression]]", "[[using-functions-methods|Using functions/methods]]", "[[test-on-informal-fallacies|Test on informal fallacies]]", "[[service-learning-proposal|Service Learning Proposal]]", "[[review-the-service-proposal-|Review the service proposal ]]", "[[review-for-departmental-exam|Review for Departmental Exam]]", "[[review-for-departmental-exam 1|Review for Departmental Exam]]", "[[flowchart-grouping|Flowchart Grouping]]"]
 customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-11-06T15:31:50.591Z"
+updatedAt: "2026-11-07T00:14:20.270Z"
 config:
   statuses:
     - id: "todo"
@@ -51,3 +51,4 @@ Things to do at school
 - [x] [[review-the-service-proposal-|Review the service proposal ]]
 - [ ] [[review-for-departmental-exam|Review for Departmental Exam]]
 - [ ] [[review-for-departmental-exam 1|Review for Departmental Exam]]
+- [ ] [[flowchart-grouping|Flowchart Grouping]]
