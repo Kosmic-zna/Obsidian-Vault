@@ -58,12 +58,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
+                "file": "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Networks and Communications (CS)"
+              "title": "Program Development (CS)"
             }
           }
         ],
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
+                "file": "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -264,6 +264,14 @@
   },
   "active": "6bc61390dceba0a6",
   "lastOpenFiles": [
+    "Year 1/Term 1/CS/Module 3/Word/~$sson_9_Networks_and_Communications.docx",
+    "Year 1/Term 1/CS/Module 3/Word/~$sson_10_Program_Development_SDLC.docx",
+    "Year 1/Term 1/CS/Module 3/Word/Lesson_10_Program_Development_SDLC.docx",
+    "Year 1/Term 1/CS/Module 3/Word/Lesson_10_11_Program_Development_SDLC.docx",
+    "Year 1/Term 1/CS/Module 3/Word/Lesson_9_Networks_and_Communications.docx",
+    "Year 1/Term 1/CS/Module 3/Word",
+    "Year 1/Term 1/CS/Module 3/New folder",
+    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
     "Unsorted/Random/Term 1/Printed Notes/~WRD0005.tmp",
     "Year 1/Term 1/HUM/Module 2/~$tegorical syllogisms & square of opposition (HUM).docx",
     "Projects/School Dashboard/_tasks/flowchart-grouping.md",
@@ -273,7 +281,6 @@
     "Year 1/Term 1/MATH/Module 3/Correlation and Regression (MATH).md",
     "Year 1/Term 1/MATH/Module 3/Descriptive Statistics, Grouped and Ungrouped (MATH).md",
     "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
-    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
     "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
@@ -293,11 +300,6 @@
     "Personal Projects/Godot 4/General Information/🗺️ Mod IX; Level Architecture, Procedural Generation (PCG) & World Streaming.md",
     "Personal Projects/Godot 4/General Information/🎨 Mod XI; Rendering Pipelines, Shaders, Audio & Engine Servers.md",
     "Personal Projects/Godot 4/General Information/⚡ Mod XII; Diagnostics, Profiling, Optimisation & Edge-Case Engineering.md",
-    "Personal Projects/Godot 4/General Information",
-    "Unsorted/Operon 1/Tasks",
-    "Unsorted/Operon 1",
-    "Personal Projects/Godot 4",
-    "Personal Projects",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",
@@ -307,8 +309,6 @@
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Глеб Орлов.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Вера Павлова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Борис Кузнецов.svg",
-    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Анна Смирнова.svg",
-    "Projects Plus - Демо 2/Кабинет/Обложки",
-    "Projects Plus - Демо 2/Финансы"
+    "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Анна Смирнова.svg"
   ]
 }
