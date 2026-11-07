@@ -195,6 +195,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "~$tegorical syllogisms & square of opposition (HUM).docx",
         "Categorical syllogisms & square of opposition (HUM).docx"
       ],
       "ctime": 1793377290315,
@@ -734,7 +735,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1793412743639,
-      "mtime": 1793974779653
+      "mtime": 1794010460305
     },
     "Projects/School Dashboard/_tasks/review-for-hum.md": {
       "isPinned": false,
@@ -1083,7 +1084,13 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794010458578,
-      "mtime": 1794010458578
+      "mtime": 1794010460291
+    },
+    "Year 1/Term 1/HUM/Module 2/~$tegorical syllogisms & square of opposition (HUM).docx": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794015116002,
+      "mtime": 1794015116002
     }
   },
   "showHidden": false,
