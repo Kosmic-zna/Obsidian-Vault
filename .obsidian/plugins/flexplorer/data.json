@@ -873,6 +873,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Ashen Kata",
         "General Information"
       ],
       "ctime": 1793463143948,
@@ -1091,11 +1092,11 @@
     "Year 1/Term 1/CS/Module 3/Word": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "CS M3 Lesson_9_Networks_and_Communications.docx",
         "CS M3 Lesson_10_Program_Development_SDLC.docx"
       ],
-      "sortOrder": "custom",
       "ctime": 1794019127335,
       "mtime": 1794019127335
     },
@@ -1120,10 +1121,10 @@
     "Year 1/Term 1/IT/Module 1": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "FULL MODULE 1 (IT).md"
       ],
-      "sortOrder": "custom",
       "ctime": 1794034053684,
       "mtime": 1794034053684
     },
@@ -1132,6 +1133,29 @@
       "isHidden": false,
       "ctime": 1794034057797,
       "mtime": 1794034057797
+    },
+    "Personal Projects/Godot 4/Ashen Kata": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Map Specifics.md",
+        "Combat Specifics.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1794140293347,
+      "mtime": 1794140293347
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Combat Specifics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794140265280,
+      "mtime": 1794140291999
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Map Specifics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794140320281,
+      "mtime": 1794140403268
     }
   },
   "showHidden": false,
