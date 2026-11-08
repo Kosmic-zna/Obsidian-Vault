@@ -1137,22 +1137,22 @@
     "Personal Projects/Godot 4/Ashen Kata": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Saved Chat Excerpts"
       ],
-      "sortOrder": "custom",
       "ctime": 1794140293347,
       "mtime": 1794140293347
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Basic Combat.md",
         "Combat Specifics.md",
         "Map Specifics.md"
       ],
-      "sortOrder": "custom",
       "ctime": 1794142401512,
       "mtime": 1794142401512
     },
