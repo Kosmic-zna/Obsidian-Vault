@@ -1138,24 +1138,41 @@
       "isPinned": false,
       "isHidden": false,
       "customOrder": [
-        "Map Specifics.md",
-        "Combat Specifics.md"
+        "Saved Chat Excerpts"
       ],
       "sortOrder": "custom",
       "ctime": 1794140293347,
       "mtime": 1794140293347
     },
-    "Personal Projects/Godot 4/Ashen Kata/Combat Specifics.md": {
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts": {
       "isPinned": false,
       "isHidden": false,
-      "ctime": 1794140265280,
-      "mtime": 1794140291999
+      "customOrder": [
+        "Basic Combat.md",
+        "Combat Specifics.md",
+        "Map Specifics.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1794142401512,
+      "mtime": 1794142401512
     },
-    "Personal Projects/Godot 4/Ashen Kata/Map Specifics.md": {
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Basic Combat.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794142167529,
+      "mtime": 1794142386513
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794140320281,
       "mtime": 1794140403268
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794140265280,
+      "mtime": 1794140291999
     }
   },
   "showHidden": false,

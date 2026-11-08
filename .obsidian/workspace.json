@@ -58,12 +58,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Map Specifics.md",
-                "mode": "preview",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Map Specifics"
+              "title": "Combat Specifics"
             }
           }
         ],
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Map Specifics.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -262,10 +262,12 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "a29bdf29231c874d",
+  "active": "c8ec36727857404e",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/Ashen Kata/Combat Specifics.md",
-    "Personal Projects/Godot 4/Ashen Kata/Map Specifics.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Basic Combat.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata",
     "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
     "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
@@ -281,7 +283,6 @@
     "Year 1/Term 1/CS/Module 3/Word/~WRD0000.tmp",
     "Year 1/Term 1/CS/Module 3/Word/~$ M3 Lesson_10_Program_Development_SDLC.docx",
     "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
-    "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_10_Program_Development_SDLC.docx",
     "Projects/School Dashboard/_tasks/flowchart-grouping.md",
     "Projects/School Dashboard/_tasks/review-for-departmental-exam 1.md",
     "Projects/School Dashboard/_tasks/review-for-departmental-exam.md",
@@ -298,8 +299,6 @@
     "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
     "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
     "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
-    "Personal Projects/Godot 4/General Information/Masterlist.md",
-    "Personal Projects/Godot 4/General Information/Table of Contents.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",
