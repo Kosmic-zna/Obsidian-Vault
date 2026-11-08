@@ -58,12 +58,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Combat Specifics"
+              "title": "Katana Weapon"
             }
           }
         ],
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -262,12 +262,13 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "c8ec36727857404e",
+  "active": "9677d05bff210ce8",
   "lastOpenFiles": [
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Basic Combat.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata",
     "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
     "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",

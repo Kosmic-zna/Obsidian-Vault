@@ -1149,6 +1149,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Katana Weapon.md",
         "Basic Combat.md",
         "Combat Specifics.md",
         "Map Specifics.md"
@@ -1173,6 +1174,12 @@
       "isHidden": false,
       "ctime": 1794140265280,
       "mtime": 1794140291999
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794151511715,
+      "mtime": 1794151521060
     }
   },
   "showHidden": false,
