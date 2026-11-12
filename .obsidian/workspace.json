@@ -58,12 +58,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",
-                "mode": "source",
+                "file": "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Katana Weapon"
+              "title": "Hardware, Software, Network Systems (CS)"
             }
           }
         ],
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",
+                "file": "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -262,10 +262,16 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "9677d05bff210ce8",
+  "active": "c8ec36727857404e",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
+    "Year 1/Term 1/CS/Module 1/Number System.md",
+    "Year 1/Term 1/CS/Module 1/CS Module 1-3.docx",
+    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
+    "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
+    "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
+    "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_10_Program_Development_SDLC.docx",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Basic Combat.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts",
@@ -273,17 +279,12 @@
     "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
     "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
     "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md",
-    "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
     "Year 1/Term 1/IT/Module 1",
     "Year 1/Term 1/IT/New folder",
     "Projects/School Dashboard/_tasks/make-a-reviewer-.md",
-    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
     "Year 1/Term 1/CS/Module 3/Word/~WRL0003.tmp",
     "Year 1/Term 1/CS/Module 3/Word/~WRD0002.tmp",
     "Year 1/Term 1/CS/Module 3/Word/~WRL0001.tmp",
-    "Year 1/Term 1/CS/Module 3/Word/~WRD0000.tmp",
-    "Year 1/Term 1/CS/Module 3/Word/~$ M3 Lesson_10_Program_Development_SDLC.docx",
-    "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
     "Projects/School Dashboard/_tasks/flowchart-grouping.md",
     "Projects/School Dashboard/_tasks/review-for-departmental-exam 1.md",
     "Projects/School Dashboard/_tasks/review-for-departmental-exam.md",
@@ -298,8 +299,6 @@
     "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
     "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
-    "Personal Projects/Godot 4/General Information/🌐 Mod VIII; Multiplayer Architecture, Authoritative Servers & Netcode Optimisation.md",
-    "Personal Projects/Godot 4/General Information/🤖 Mod VII, Autonomous AI Enemies, Tactical Combat & Bot Synthesis.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",

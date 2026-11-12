@@ -432,6 +432,60 @@
         "panelVisible": true,
         "collapsedIds": []
       }
+    },
+    {
+      "path": "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_10_Program_Development_SDLC.docx",
+      "mtime": 1794021261538,
+      "format": "docx",
+      "lastAccessed": 2054,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
+      "mtime": 1794020796861,
+      "format": "docx",
+      "lastAccessed": 2191,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 3300
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "Year 1/Term 1/CS/Module 1/CS Module 1-3.docx",
+      "mtime": 1789691498516,
+      "format": "docx",
+      "lastAccessed": 5053,
+      "position": {
+        "scrollLeft": 28,
+        "scrollTop": 7433
+      },
+      "zoom": {
+        "scale": 1.35,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
     }
   ]
 }
