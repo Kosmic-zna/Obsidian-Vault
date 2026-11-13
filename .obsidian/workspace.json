@@ -58,12 +58,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
+                "file": "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Hardware, Software, Network Systems (CS)"
+              "title": "Program Development (CS)"
             }
           }
         ],
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
+                "file": "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -264,10 +264,11 @@
   },
   "active": "c8ec36727857404e",
   "lastOpenFiles": [
+    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
+    "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
+    "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
     "Year 1/Term 1/CS/Module 1/Number System.md",
     "Year 1/Term 1/CS/Module 1/CS Module 1-3.docx",
-    "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
-    "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
     "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
     "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_10_Program_Development_SDLC.docx",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md",

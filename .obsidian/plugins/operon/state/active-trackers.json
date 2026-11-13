@@ -1,15 +1,4 @@
 {
 	"version": 1,
-	"active": [
-		{
-			"id": "trk_mwcxdux2_kc9seu",
-			"userId": "",
-			"userName": "",
-			"taskId": null,
-			"start": "2026-11-12T10:25:12",
-			"source": "status-bar",
-			"createdAt": "2026-11-12T10:25:12",
-			"updatedAt": "2026-11-12T10:25:12"
-		}
-	]
+	"active": []
 }
