@@ -58,12 +58,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
+                "file": "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Program Development (CS)"
+              "title": "FULL MODULE 1 (IT)"
             }
           }
         ],
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
+                "file": "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -264,9 +264,12 @@
   },
   "active": "c8ec36727857404e",
   "lastOpenFiles": [
+    "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
+    "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Motion Blur.md",
+    "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
     "Year 1/Term 1/CS/Module 3/Networks and Communications (CS).md",
     "Year 1/Term 1/CS/Module 2/Hardware, Software, Network Systems (CS).md",
-    "Year 1/Term 1/CS/Module 3/Program Development (CS).md",
     "Year 1/Term 1/CS/Module 1/Number System.md",
     "Year 1/Term 1/CS/Module 1/CS Module 1-3.docx",
     "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
@@ -277,8 +280,6 @@
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Basic Combat.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts",
     "Personal Projects/Godot 4/Ashen Kata",
-    "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
-    "Year 1/Term 1/IT/Module 2/Structured Pseudocode Algorithmic Logic (IT).md",
     "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md",
     "Year 1/Term 1/IT/Module 1",
     "Year 1/Term 1/IT/New folder",
@@ -299,7 +300,6 @@
     "Personal Projects/Godot 4/General Information/🧰 Mod XV; The Third-Party Ecosystem, Essential Libraries & GDExtension Architecture.md",
     "Personal Projects/Godot 4/General Information/⚖️ Mod X; Formal Game Design Theory, Systems Balancing & Game Economies.md",
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
-    "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",

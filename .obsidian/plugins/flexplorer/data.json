@@ -1149,6 +1149,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Motion Blur.md",
         "Katana Weapon.md",
         "Basic Combat.md",
         "Combat Specifics.md",
@@ -1180,6 +1181,12 @@
       "isHidden": false,
       "ctime": 1794151511715,
       "mtime": 1794151521060
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Motion Blur.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794575036061,
+      "mtime": 1794575036061
     }
   },
   "showHidden": false,
