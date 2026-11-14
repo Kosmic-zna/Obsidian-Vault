@@ -2,20 +2,23 @@
 pm-task: true
 projectId: "[[School Dashboard|School Dashboard]]"
 parentId:
-id: "u7j25dvwmw528et0"
-title: "Review for Departmental Exam"
-type: "milestone"
-status: "todo"
-priority: "critical"
+id: u7j25dvwmw528et0
+title: Review for Departmental Exam
+type: milestone
+status: done
+priority: critical
 start: ""
-due: "2026-11-12"
+due: 2026-11-12
 progress: 0
 assignees: []
-tags: ["CS", "Exams"]
+tags:
+  - CS
+  - Exams
 subtaskIds: []
 dependencies: []
-createdAt: "2026-11-06T14:18:47.412Z"
-updatedAt: "2026-11-06T14:18:47.412Z"
+createdAt: 2026-11-06T14:18:47.412Z
+updatedAt: 2026-11-14T05:35:36.133Z
+completed: 2026-11-14
 ---
 
 Project: [[School Dashboard|School Dashboard]]

@@ -5,7 +5,7 @@ parentId:
 id: 4ffa1peumw529m1k
 title: Review for Departmental Exam
 type: milestone
-status: todo
+status: done
 priority: critical
 start: ""
 due: 2026-11-14
@@ -17,7 +17,8 @@ tags:
 subtaskIds: []
 dependencies: []
 createdAt: 2026-11-06T14:19:43.448Z
-updatedAt: 2026-11-06T14:20:45.655Z
+updatedAt: 2026-11-14T05:35:34.956Z
+completed: 2026-11-14
 ---
 
 Project: [[School Dashboard|School Dashboard]]

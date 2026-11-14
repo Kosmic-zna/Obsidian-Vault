@@ -9,7 +9,7 @@ customFields: []
 teamMembers: []
 savedViews: []
 createdAt: "2026-10-31T02:12:23.623Z"
-updatedAt: "2026-11-07T11:21:23.853Z"
+updatedAt: "2026-11-14T05:35:53.489Z"
 config:
   statuses:
     - id: "todo"
@@ -45,11 +45,11 @@ Things to do at school
 - [x] [[review-for-math|Review for math]]
 - [x] [[ai-ethics,-responsible-use|ai ethics, responsible use]]
 - [x] [[correlation-and-regression|Correlation and regression]]
-- [ ] [[using-functions-methods|Using functions/methods]]
+- [x] [[using-functions-methods|Using functions/methods]]
 - [x] [[test-on-informal-fallacies|Test on informal fallacies]]
 - [x] [[service-learning-proposal|Service Learning Proposal]]
 - [x] [[review-the-service-proposal-|Review the service proposal ]]
-- [ ] [[review-for-departmental-exam|Review for Departmental Exam]]
-- [ ] [[review-for-departmental-exam 1|Review for Departmental Exam]]
-- [ ] [[flowchart-grouping|Flowchart Grouping]]
-- [ ] [[make-a-reviewer-|Make a reviewer ]]
+- [x] [[review-for-departmental-exam|Review for Departmental Exam]]
+- [x] [[review-for-departmental-exam 1|Review for Departmental Exam]]
+- [x] [[flowchart-grouping|Flowchart Grouping]]
+- [x] [[make-a-reviewer-|Make a reviewer ]]
