@@ -147,3 +147,175 @@ When asking any AI model to write code for these mechanics, point it to these ex
 |**Ghoststep Rear-Flank Teleport / Vault**|**Module 4.4 & 4.6:** _Basis Transforms & Cubic Bézier Curves_|Calculate target rear position via `enemy.global_transform.basis.z * 1.8` and sweep the player around the enemy using `evaluate_cubic_bezier()`.|
 |**1v2 Boss Aggression Pacing (No Unfair Overlapping)**|**Module 7.5:** _`CombatDirector.gd` (Attack Token System)_|Limit `max_melee_tokens = 1` and `max_ranged_tokens = 1`. While _Mistress's Guardian_ holds the melee token to rush you, _Iron Fiend_ is restricted to ranged cannon fire or circling!|
 |**Root-Motion Kung-Fu Lunges**|**Module 6.2:** _`LocomotionAnimController.gd` (Root Motion)_|Drive sword combo forward momentum using `animation_tree.get_root_motion_position()` so feet never ice-skate during rapid martial arts flurries.|
+
+> ✍️ **Phrasing Refinement:** "Am I heading in the right direction? I am aiming for a synthesis of _Sekiro_’s rhythmic deflection, _Elden Ring_’s weapon variety, boss design, and spatial positioning, and _The Witcher 3_’s animation flair and spell-weaving—essentially _Phantom Blade Zero_. Does starting with this foundation allow me to scale seamlessly into more complex combat mechanics? While this design is still evolving, my current vision pairs basic attacks and held heavy attacks (akin to _The Witcher 3_) with passive upgrades inspired by _Sekiro_’s skill tree and dedicated hotkey skills (`C`, `V`, `F`) for combo extensions, similar to Roblox combat games. Since I have personally played _Sekiro_, _The Witcher 3_, _Dragon's Dogma: Dark Arisen_, and _Dark Souls 2_—and only observed _Phantom Blade Zero_ through gameplay footage—could you refine my combat design and rank which games I should draw inspiration from?"
+> 
+>   
+
+### 📋 Executive Summary & Direct Verdict
+
+- ✅ **Are You Heading in the Right Direction?** **Yes—with one mandatory structural upgrade before you code your first swing.** Your current `playerMovement.gd` is an ideal kinematic foundation, and starting with manual single-swing animations is the exact right way to learn. However, to prevent your code from turning into an unmanageable "Boolean Labyrinth" (`if is_attacking and not is_dashing and can_skill_cancel:`) as you add held heavies, parries, and `C`/`V`/`F` skills, your very next step must be wrapping your movement and attacks inside the **Pushdown Automaton (`StateMachine.gd`)** from **Module III (Section 3.3)** and storing each move's timing/damage inside **`AttackProfile` Resources** from **Module II (Section 2.2)**.
+    
+      
+    
+- ✅ **Brutally Honest Critique of Your "Held Heavy + `C`/`V`/`F` Skill Keys" Idea:**
+    
+      
+    1. **The "Held LMB" Trap:** In _The Witcher 3_, holding or shifting into Strong Attacks works because Geralt’s combat is mid-tempo and floaty. In a fast, rhythmic _Sekiro_ / _Phantom Blade Zero_ system, **holding a button introduces a $200\text{–}300\text{ ms}$ input detection delay** (the engine has to wait to see if you are tapping or holding). Solution: Use **Tap `LMB`** for Light combos, **Tap `RMB` (or `E`/Mouse4)** for instant Heavy/Sha-Chi strikes, and reserve **Holding `LMB` or `RMB`** specifically for **Charged Finisher / Stance-Release** moves (like _Sekiro_’s _Ashina Cross_ or _Elden Ring_’s Charged R2s).
+        
+          
+        
+    2. **The "`C` / `V` / `F` Roblox Cooldown Bar" Trap:** In many Roblox arena games, pressing `C`, `V`, `F` fires off long, un-cancelable 3-second cutscene attacks governed by 12-second timers. If you drop that into a _Sekiro_-style boss fight, the boss will hit you mid-animation and players will just run in circles waiting for cooldowns. Instead, translate your `C`, `V`, `F` keys using the **Dragon's Dogma: Dark Arisen + Phantom Blade Zero** model: tie them to your **Sha-Chi (Killing Intent) / Spark gauge** (earned by parrying and landing light hits, **not** passive cooldown timers!) and make them **1-second kinetic bridge moves** that can be **Deflect-Canceled**.
+        
+          
+        
+
+### 📖 Plain-English Glossary of Hybrid Combat Design
+
+- **Input Hold Latency (Tap vs. Hold Contention):** When a single button performs both a fast tap action and a held action, the game cannot start the tap animation until you _release_ the button (or until a timer expires), making fast combat feel sluggish.
+    
+      
+    
+- **Cancel Window (Animation Hierarchy):** Specific frame ranges inside an attack animation where the player is allowed to interrupt the recovery (e.g., canceling the end of a Light slash into a `C`/`V`/`F` skill, a Weapon Swap, or an instant _Sekiro_ Deflect).
+    
+      
+    
+- **Resource-Driven Skills vs. Cooldown Timers:** Instead of locking `C`/`V`/`F` skills behind arbitrary 10-second clocks (which reward running away), skills consume **Sha-Chi** (built by parrying and attacking). Aggressive play equals non-stop skills.
+    
+      
+    
+- **Motion Value / Commitment Trade-Off:** Fast attacks do low HP damage and can be parry-canceled at any frame; Heavy/Skill attacks consume Sha-Chi, deal massive posture/HP damage, and commit your body to the swing.
+    
+      
+    
+
+### 🏛️ How Your Current Script Evolves Into the Full Combat Engine
+
+```
+========================================================================================
+       SCALING ROADMAP: FROM `playerMovement.gd` TO FULL PHANTOM BLADE COMBAT
+========================================================================================
+
+ [ STAGE 1: RIGHT NOW (Your Current Script) ]
+   • Monolithic `CharacterBody3D` (`_physics_process` + `_update_animations`)[cite: 15]
+   • Good for: Walking, Sprinting, Jumping, and testing 1 basic attack clip.
+
+                                    │
+                                    ▼ (Refactor into Module 3.3 + Module 2.2!)
+
+ [ STAGE 2: MODULAR COMBAT CORE (Seamless Expansion Architecture) ]
+   Player (CharacterBody3D)
+    ├── ShaChiComponent (Node)       ──► Tracks bidirectional Posture / Skill Gauge
+    ├── HealthComponent (Node)       ──► Armor mitigation & HP pool (Module 3.2)
+    ├── HurtboxComponent (Area3D)    ──► Receives hits + Ghoststep i-frames (Module 3.2)
+    └── StateMachine (Pushdown FSM)  ──► Orchestrates all actions cleanly (Module 3.3)
+         ├── LocomotionState         ──► Your exact ground/sprint/air math lives here!
+         ├── LightAttackState        ──► Reads `AttackProfile.tres` (0 Sha-Chi cost)
+         ├── HeavySkillState (C/V/F) ──► Spends Sha-Chi; chains combos
+         └── DeflectGhoststepState   ──► Pushes onto stack at ANY frame to parry!
+========================================================================================
+```
+
+### 🔧 Refining Your Combat Design: Making `C` / `V` / `F` + Passives Feel Incredible
+
+Since you have played **_Sekiro_**, **_The Witcher 3_**, **_Dragon’s Dogma: Dark Arisen_**, and **_Dark Souls 2_**, we can translate _Phantom Blade Zero_'s mechanics directly into the games you already know in your muscle memory:
+
+  
+
+#### 1. How _Phantom Blade Zero_ Actually Works (Translated to Games You Know)
+
+_Phantom Blade Zero_ is **not** a complex fighting game where you memorize 15-button combos. Under the hood, it is:
+
+  
+
+1. **_Sekiro_'s Deflect & Posture Bar:** Parrying enemy combos builds your advantage and breaks their posture (`Sha-Chi`).
+    
+      
+    
+2. **_Dragon's Dogma: Dark Arisen_'s Weapon Skills:** Just like holding `Left Bumper` in _Dragon's Dogma_ to press `X / Y / B` for _Blink Strike_, _Hindsight Sweep_, or _Helm Splitter_, your **`C`, `V`, `F` keys** trigger distinct, flashy martial arts / _Iaijutsu_ / _Witcher Sign_ techniques.
+    
+      
+    
+3. **The Secret Sauce (Cancellation + Sha-Chi):** What makes it feel like _Phantom Blade_ instead of a clunky MMO is that **Light Attacks flow into `C`/`V`/`F` Skills with zero pause**, and **Deflecting/Dodging can cancel your Light Attacks on any frame**.
+    
+      
+    
+
+```
+========================================================================================
+             YOUR REFINED COMBAT LOOP & CANCELLATION RULES
+========================================================================================
+
+  [ TAP LMB: Light Kenjutsu String ] (Fast, 0 Cost, Builds +5% Sha-Chi per hit)
+       │
+       ├──► At ANY frame Enemy Swings ──► [ TAP BLOCK / DODGE ] (Instant Parry / Ghoststep!)
+       │
+       ├──► Hold LMB on Finisher      ──► [ CHARGED HEAVY ] (High Stagger / Guard Break)
+       │
+       └──► Press C, V, or F mid-combo──► [ ACTIVATED SKILL / PHANTOM EDGE ]
+                                           • C: Gap-Closer / Iaijutsu Dash (*Blink Strike*)
+                                           • V: Launcher / Rebound Slash (*Tsubame-Gaeshi*)
+                                           • F: Witcher-Style Sign / Phantom Edge (*Igni / Ash Wave*)
+                                                  │
+                                                  ▼
+                                    [ PRESS Q: FLUX WEAPON SWAP ]
+                                     (Swaps Katana ◄──► Ōdachi & refills +35% Sha-Chi!)
+========================================================================================
+```
+
+#### 2. How Your "Sekiro-Style Passive Skill Tree" Fits In
+
+In _Sekiro_, passives like _Ascending/Descending Carp_ (parries deal more posture damage), _Shinobi Eyes_ (Mikiri counter boost), and _Breath of Life_ (restore HP/Posture on deathblow) are **game-changers** because they reward mastery of the core loop rather than adding button bloat.
+
+  
+
+- **How to implement them cleanly in your code:** Use **`ModifiableAttribute`** from **Module V (Section 5.3)**[cite: 16] paired with signals on your `ShaChiComponent` and `StateMachine`:
+    
+      
+    - _Passive Example 1 ("Carp's Riposte"):_ Parrying a Blue-Glint attack increases the next `C`/`V`/`F` skill's stagger damage by $+40\%$ (`PERCENT_ADD` modifier)[cite: 16].
+        
+          
+        
+    - _Passive Example 2 ("Flowing Scabbard"):_ Hitting an enemy with the final hit of a `C`/`V`/`F` skill automatically triggers a free **Flux Swap** without spending the swap cooldown.
+        
+          
+        
+    - _Passive Example 3 ("Ashen Momentum"):_ Sprinting for $1.5\text{ s}$ turns your first Light Attack into an automatic _Iaijutsu_ quick-draw dash.
+        
+          
+        
+
+### 🎯 Inspiration Ranking: From Heavy (80%) to Low (10%)
+
+Use this exact hierarchy so your combat identity stays razor-sharp and never feels like a Frankensteined mix of conflicting genres:
+
+  
+
+|**Weight**|**Game Reference**|**What to Take From It**|**What to Leave Behind**|
+|---|---|---|---|
+|**🔥 HEAVY (40%)**|**_Sekiro: Shadows Die Twice_**|The Defensive Rhythm & Posture (`Sha-Chi`) Economy: Instant deflect-canceling out of light attacks, clang-clang-clang sword cadence, perilous Red/Blue glint counters (`Ghoststep`), and passive skill-tree mastery (_Ascending Carp_ style passives).|Single-weapon restriction (you want Katana + Ōdachi / varied weapons!).|
+|**🔥 HEAVY (30%)**|**_Dragon's Dogma: Dark Arisen_** & **_Phantom Blade Zero_**[cite: 17]|**Your `C` / `V` / `F` Activated Combat Skills:** Short, punchy, physically grounded martial skills (_Blink Strike_, _Clairvoyance_ counter, _Iaijutsu_ cross-slash) that chain directly out of light attacks and spend your `Sha-Chi` gauge[cite: 17] instead of sitting on long MMO/Roblox cooldown timers.|_Dragon's Dogma_’s menu-pausing item healing and stamina-drain panting when sprinting[cite: 17].|
+|**⚡ MEDIUM (15%)**|**_Elden Ring_** & **_Dark Souls 2_**|**Weapon Archetypes, Hitbox Spacing & Boss Silhouette Telegraphing:** Distinct reach and swing weight between a standard Katana and an Ōdachi (_Great Katana_), plus readable boss wind-ups and _DS2_'s versatile weapon power-stancing / moveset variety.|Slow Soulslike dodge-rolling stamina taxes[cite: 17] and un-cancelable light attack startup frames[cite: 17].|
+|**✨ MEDIUM-LOW (10%)**|**_The Witcher 3: Wild Hunt_**|**Pirouette Footwork, Combat Spells (Signs) & Atmospheric Aesthetics:** Using flowing rotational steps (`Kesa-Nagashi`) to close distance and fast one-handed tactical spells (_Igni_ fire cone / _Aard_ shockwave / _Quen_ parry shield) mapped to your **Phantom Edge (`F` key)** slot[cite: 17].|Geralt’s randomized distance-dependent spin animations (keep your attack distances 100% deterministic so spacing stays precise!).|
+|**🧊 LOW (5%)**|**Roblox Action/Arena Games** _(e.g., Deepwoken / Type Soul / TSB)_|**Snappy Keybind Accessibility (`C`, `V`, `F`, `R`) & Combo-Extender Satisfaction:** The pure tactile fun of hitting `LMB x3 -> C (Dash Slash) -> LMB x2 -> V (Rising Launch)` to extend a combo seamlessly.|Long 4-second cutscene animations that lock player control and 15-second passive cooldown bars that encourage running away[cite: 17].|
+
+### 🛠️ Why Starting With Manual Single Swings Right Now Is 100% Safe
+
+If you build your first basic Kenjutsu swing (`Normal 1`) and your first `C`-key _Iaijutsu_ skill (`Ashina Jūji-Giri`) using **three simple rules** today, you will never have to rewrite them when you add _Ghoststep_, _Sha-Chi_, or dual-weapon _Flux Swaps_[cite: 17] next month:
+
+  
+
+1. Make Every Attack Data-Driven (`AttackProfile.tres` — Module 2.2)[cite: 16, 17]: Instead of hardcoding `if current_attack == "Iaijutsu": damage = 40` inside `playerMovement.gd`, create a small `AttackProfile` Resource holding `animation_name`, `damage`, `sha_chi_cost`, `forward_lunge_speed`, and `can_be_parry_canceled: bool`[cite: 16, 17].
+    
+      
+    
+2. Drive Forward Lunges via Curves or Root Motion (Module 4.6 / 6.2)[cite: 16, 17]: A sword swing standing frozen in place feels stiff; a sword swing that steps forward $1.2\text{ metres}$ during the slash feels like _Sekiro_ and _Witcher 3_.
+    
+      
+    
+3. Separate Locomotion From Attack State (Module 3.3)[cite: 16, 17]: Keep your `playerMovement.gd` clean by letting an `AttackState` take over velocity during a swing, then pop right back to locomotion when the swing finishes (or when you press `C` to chain into an _Iaijutsu_ skill!)[cite: 16, 17].
+    
+      
+    
+
+Would you like to start by **keyframing your first basic Kenjutsu slash in Blender** using Y Bot, or would you like to **set up the lightweight `AttackState` + `AttackProfile` structure in Godot** first using `AnimationLibrary_Godot_Standard/Sword_Attack` so you can test `LMB` combos and a `C`-key skill lunge in-game right away?
