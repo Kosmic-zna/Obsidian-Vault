@@ -85,4 +85,145 @@ When you are ready to build your first sword combo for *Ashen Kata*, keep the sc
 1. **Pick One Core Identity First:** Pair **Iaijutsu Quick-Draw** (for sprint-ambush / heavy opener) with **Flowing Orbit 3-Hit Combo** (Light Attack 1: Diagonal Down → Light Attack 2: Rising Rebound → Light Attack 3: Heavy Overhead Cleave).
 2. **Use Godot’s `AnimationLibrary` + Root Motion (or Code-Driven Impulse):** Keep your animations **in-place** (just like `Jog_Fwd` and `Sprint`) and apply a tiny forward velocity burst (`velocity += -visual_model.global_basis.z * lunge_speed`) in `playerMovement.gd` on the exact frame the slash snaps—giving every swing crisp *Sekiro*-style forward magnetism without fighting root-motion drift!
 
-Which of these sword styles—**Iaijutsu Quick-Draw**, **Flowing Orbit**, or **Ōdachi Great-Katana Sweeps**—feels closest to the combat identity you envision for *Ashen Kata*?
+> ✍️ **Phrasing Refinement:** "I will begin manually animating a basic combat swing grounded in kenjutsu fighting styles alongside activated iaijutsu skills; could you provide a structured table of distinctive, non-repetitive attack patterns—categorised by normal, heavy, miscellaneous, and skill applications with specific game inspirations—and identify the relevant modules in my Masterlist covering the engineering architecture behind combat development?"
+> 
+>   
+
+### 📋 Executive Summary & Direct Verdict
+
+- ✅ **The Combat Animation Blueprint:** To avoid repetitive "left-right-left" slashing while keeping manual Blender keyframing achievable for a beginner, build your moveset around **alternating planes of motion and kinetic tempo**—pairing flowing diagonal/rising kenjutsu strings for normal attacks with committed overhead/centrifugal strikes for heavy attacks, and saving explosive **scabbard-draw bursts (_Iaijutsu_)** for activated skills.
+    
+      
+    
+- ✅ **Essential `Masterlist.md` Reading Order for Combat Engineering:** Before animating or coding your sword swings, read **Module III (Sections 3.2 & 3.3)** for `HitboxComponent`/`HurtboxComponent` spatial collision and Pushdown State Machine interrupts (`AttackState`), **Module VI (Section 6.2)** for `AnimationTree` upper-body bone filtering and Root Motion lunges, **Module II (Section 2.2)** for data-driven `AttackProfile` resources (hitstop, knockback, trauma), and **Module V (Section 5.2)** for screen-shake impact feedback.
+    
+      
+    
+
+### 📖 Plain-English Glossary of Combat & Animation Terms
+
+- **Plane of Motion (Cut Trajectory):** The geometric angle along which a blade travels—such as downward diagonal (_kesa-giri_), rising uppercut (_kiri-age_), horizontal sweep (_yoko-giri_), or linear thrust (_tsuki_). Alternating planes between consecutive hits is what makes a combo feel dynamic rather than repetitive.
+    
+      
+    
+- **Hitbox vs. Hurtbox (`Area3D` Volumes):** A **Hitbox** is an active collision volume attached to your katana blade that turns on _only_ during the lethal swing frames (`active frames`); a **Hurtbox** is a passive collision capsule wrapped around an enemy's body that receives the hit.
+    
+      
+    
+- **Active Frames vs. Recovery Frames:** Every melee animation splits into three phases—**Startup** (wind-up anticipation), **Active** (the 3–5 frames where the blade deals damage), and **Recovery** (follow-through where the character can cancel into a dodge or next combo hit).
+    
+      
+    
+- **Hitstop (Freeze-Frame Juice):** Pausing or slowing `anim_player.speed_scale` for $40\text{–}90\text{ milliseconds}$ on the exact frame a katana connects with an enemy, creating the visceral sensation of steel biting through resistance.
+    
+      
+    
+- **Nōtō & Chiburi (Sheathe-Return & Blood-Flick):** Traditional kenjutsu finishing flourishes—flicking the blade to clear ash/blood (_chiburi_) and sliding it back into the scabbard (_nōtō_)—which serve as natural idle transitions or stamina/posture recovery animations.
+    
+      
+    
+
+### ⚔️ Non-Repetitive Kenjutsu & Iaijutsu Combat Moveset Table
+
+Each entry below is designed around **clear silhouette poses** (using IK hand controllers in Blender) so you can achieve flashy, high-impact motion without complex finger or wrist micro-animation:
+
+  
+
+|**Attack Name & Style**|**Role / Slot**|**Swing Pattern & Animation Keyframes**|**Why It Feels Distinct & Easy to Animate**|**Specific Game / Media Inspiration**|
+|---|---|---|---|---|
+|**1. Kesa-Nagashi** _(Flowing Sash-Cut — Suiō-ryū)_|**Normal 1** _(Opener)_|**45° Downward Diagonal:** Steps forward with left foot, slashing cleanly from right shoulder to left hip; blade ends low at the left knee.|Follows the natural hinge of the shoulder; ending low sets up the rising second hit with zero awkward reset.|**_Ghost of Tsushima_** (_Water Stance_ 1st strike) & **_Sekiro_** (_Kusabimaru_ 1st light slash).|
+|**2. Kiri-Age Gaeshi** _(Rebound Rising Cut — Suiō-ryū)_|**Normal 2** _(Combo Link)_|**45° Rising Uppercut:** Uses the low finish of Normal 1 to whip the blade upward from left knee across to upper-right skyward guard (_hassō_).|You literally mirror Normal 1's arc in reverse—creating fluid figure-eight momentum out of two poses.|**_Ghost of Tsushima_** (_Water Stance_ surge) & **_Rurouni Kenshin_** (_Hiten Mitsurugi_ rising reversal).|
+|**3. Kaiten-Zuki** _(Spinning Corkscrew Thrust — Hokushin Ittō-ryū)_|**Normal 3** _(Combo Finisher)_|**360° Pivot → Linear Lunge:** Spins leftward on the front heel while tucking the hilt to the ribs, exploding forward into a long two-handed piercing thrust.|Replaces a third repetitive slash with a sharp **linear piercing silhouette** that pushes enemies back.|**_Sekiro_** (_Whirlwind Slash_ → _Shadowrush_ thrust) & **_Nioh 2_** (Mid-stance Katana finisher).|
+|**4. Jigen-Rakka** _(Sky-Splitting Vertical Drop — Jigen-ryū)_|**Heavy Attack** _(Neutral / Guard Break)_|**High Vertical Cleave:** Raises hilt high above the right ear (`Hassō-no-kamae`), leaps/stomps heavily forward, and slams the blade straight down to the ground.|Maximum **anticipation-to-snap contrast** (12-frame hold at peak → 3-frame slam); shatters enemy guard posture.|**_Sekiro_** (_Ichimonji_ / _Ichimonji: Double_) & **_For Honor_** (Kensei’s top unblockable finisher).|
+|**5. Ōdachi Chi-Barai** _(Ash-Drag Sweeping Arc — Nodachi)_|**Heavy Attack** _(Charged / Crowd Cleave)_|**Low Ground-Drag → 270° Horizontal Sweep:** Trails the blade tip behind the ankle during charge, then whips hips in a wide horizontal cyclone.|Dragging the tip along the ground builds dramatic tension before releasing a huge circular hitbox.|**_Elden Ring: Shadow of the Erdtree_** (_Great Katana_ / _Rakshasa_ sweeps) & **_Monster Hunter Rise_** (_Long Sword_ Spirit Roundslash).|
+|**6. Tsuka-Ate & Chiburi** _(Pommel Bash / Blood-Flick)_|**Misc** _(Sprint Attack / Posture Stagger / Flourish)_|**Close-Range Hilt Strike / Blade Flick:** Drives the sword pommel (_tsuka_) into the enemy’s chin mid-sprint, or flicks blade sideways to snap back into scabbard.|Gives your sprint a snappy opener without long recovery frames; _chiburi_ doubles as a stylish post-fight taunt.|**_Sekiro_** (Sprint slash / _Senpou Leaping Kicks_ stagger) & **_Ghost of Tsushima_** (Swipe-right blade wipe/sheathe).|
+|**7. Ashina Jūji-Giri** _(Cross-Draw Flash — Iaijutsu)_|**Activated Skill 1** _(Burst Gap-Closer)_|**Coiled Crouch → Double Cross-Slash:** Left thumb clicks guard (_tsuba_) out of scabbard; character dashes forward in a blur, carving an **X** across the target before re-sheathing.|80% of the clip is a tense coiled crouch pose; the actual slash happens across just 4 rapid frames with trail VFX.|**_Sekiro_** (_Ashina Cross_ & _One Mind_) & **_Devil May Cry 5_** (Vergil’s _Rapid Slash_ / _Judgement Cut_).|
+|**8. Tsubame-Gaeshi** _(Swallow Reversal — Ganryū Iaijutsu)_|**Activated Skill 2** _(Anti-Air / Counter Skill)_|**Vertical Slam → Instant Mid-Air Upward Reversal:** Delivers a deceptive downward draw-slash, immediately flipping wrists mid-swing to slice upward along the exact same line.|Catches dodging or airborne enemies off-guard; looks ultra-technical while reusing the exact same vertical arc twice.|**_Fate/stay night_** (Sasaki Kojirō’s _Tsubame Gaeshi_) & **_Nioh 2_** (_Iai Quickdraw_ → _Night Rain_).|
+|**9. Kaze-no-Nagi** _(Vacuum Crescent Draw — Battōjutsu)_|**Activated Skill 3** _(Mid-Range Wave / Ōdachi Skill)_|**Wide Horizontal Draw-Sweep:** Plants wide horse stance (_kiba-dachi_), draws the blade in a sweeping $180^\circ$ horizontal arc that launches a razor-thin wind/ash crescent projectile.|Keeps the player stationary in an iconic samurai silhouette while spawning a projectile hitbox (`BallisticStrategy`).|**_Elden Ring_** (_Moonveil_ _Transient Moonlight_ / _Waterfowl_) & **_Ghost of Tsushima_** (_Dance of Wrath_).|
+
+### 📚 Masterlist Architecture Roadmap: What This Phase Entails
+
+```
+========================================================================================
+             HOW YOUR COMBAT SYSTEM MAPS TO `Masterlist.md` MODULES
+========================================================================================
+
+  [ 1. INPUT & STATE ]       Module III (3.3): Pushdown State Machine (`AttackState`)
+         │                   ──► Interrupts `Run`/`Idle` cleanly; pops back on finish
+         ▼
+  [ 2. ANIMATION & MOTION ]  Module VI (6.2): `AnimationTree` (`OneShot` Upper-Body Filter
+         │                   + `extract_root_motion_velocity()` for forward sword lunges)
+         ▼
+  [ 3. HIT DETECTION ]       Module III (3.1 & 3.2): `HitboxComponent` ──► `HurtboxComponent`
+         │                   ──► `HealthComponent` ("Call Down, Signal Up")
+         ▼
+  [ 4. DATA & GAME FEEL ]    Module II (2.2) & Module V (5.2): `AttackProfile` Resource
+                             (Damage, Knockback, Hitstop) + `CinematicCameraRig` Trauma
+========================================================================================
+```
+
+Consult these exact sections in your **`Masterlist.md`** as you build each layer of your combat pipeline:
+
+  
+
+1. **Module III — Section 3.3: The State Pattern (`StateMachine.gd` & `AttackState.gd`)**
+    
+      
+    - **What You Will Learn:** Why adding `is_attacking` booleans to `playerMovement.gd` eventually creates unmaintainable bugs, and how a **Pushdown Automaton (State Stack)** pushes an `AttackState` over your locomotion state during a swing and automatically `pop_state()`s back to `Idle` or `Run` when the animation finishes.
+        
+          
+        
+2. **Module III — Sections 3.1 & 3.2: Component Architecture (`HitboxComponent`, `HurtboxComponent`, `HealthComponent`)**
+    
+      
+    - **What You Will Learn:** How to attach an active `HitboxComponent` (`Area3D` with `monitoring = true`) to your katana mesh and toggle it on/off strictly during your swing's **active frames** via `AnimationPlayer` Call Method tracks—delivering damage cleanly to enemy `HurtboxComponent` volumes with built-in invulnerability frames (i-frames).
+        
+          
+        
+3. **Module VI — Section 6.2: `AnimationTree`, Per-Bone Filtering & Root Motion Extraction**
+    
+      
+    - **What You Will Learn:** Two vital combat animation techniques:
+        
+          
+        - **Per-Bone Filtering (`AnimationNodeOneShot`):** Lets your upper body swing the katana while your lower body keeps running smoothly without "ice-skating".
+            
+              
+            
+        - **Root Motion Extraction (`get_root_motion_position()`):** Lets you animate forward steps and _Iaijutsu_ lunges directly inside Blender so your character's feet stay locked to the terrain during attacks.
+            
+              
+            
+4. **Module II — Section 2.2: Data-Driven Combat Payloads (`AttackProfile` Resource)**
+    
+      
+    - **What You Will Learn:** How to package each attack's damage, knockback impulse, launch angle, hitstop freeze duration (`hitstop_duration_sec`), and screen trauma (`camera_trauma_injection`) into reusable `.tres` files so Normal 1, Heavy Cleave, and _Ashina Jūji-Giri_ feel completely distinct without writing separate combat scripts.
+        
+          
+        
+5. **Module III — Section 3.5: The Strategy Pattern via Custom Resources**
+    
+      
+    - **What You Will Learn:** How to swap weapon behaviours (e.g., standard katana melee hitboxes vs. _Kaze-no-Nagi_ crescent wave projectiles vs. _Ōdachi_ wide arcs) dynamically at runtime using swappable `Resource` strategies.
+        
+          
+        
+6. **Module IV (Sections 4.2 & 4.5) & Module V (Section 5.2): Combat Math & Camera Juice**
+    
+      
+    - **What You Will Learn:** Using **Dot Products** (Section 4.2) to check whether an attack lands within a frontal cleave cone or triggers a critical backstab[cite: 16], **Quaternion SLERP** (Section 4.5) to smoothly snap your character toward a locked-on target during wind-up[cite: 16], and **`CinematicCameraRig.add_trauma()`** (Section 5.2) to inject visceral screen shake on blade impact[cite: 16].
+        
+          
+        
+
+### 💡 Three Practical Rules Before Keyframing Your First Swing in Blender
+
+- **Rule 1 — Animate In-Place First (Code-Driven Lunge):** Until you set up `AnimationTree` Root Motion (Module VI, Section 6.2)[cite: 16], keep Y Bot's hips roughly centred over the origin (`0, 0, 0`) in Blender and trigger a small forward velocity burst in GDScript on the active swing frame—it integrates immediately with your current `AnimationPlayer` setup.
+    
+      
+    
+- **Rule 2 — Exaggerate the Silhouette & Timing:** Use **30 FPS** in Blender (`1 second = 30 frames`). Hold your wind-up pose on frames `1–8`, whip the sword across to the follow-through pose by frame `12`, and ease out from frames `13–24`.
+    
+      
+    
+- **Rule 3 — Use `AnimationPlayer` Call Method Tracks for Hitboxes:** In Godot's `AnimationPlayer`, add a **Call Method Track** targeting your katana's `HitboxComponent` to call `enable_hitbox()` on frame `9` and `disable_hitbox()` on frame `13`—guaranteeing frame-accurate hit detection synced to your visual blade arc.
