@@ -319,3 +319,110 @@ If you build your first basic Kenjutsu swing (`Normal 1`) and your first `C`-key
     
 
 Would you like to start by **keyframing your first basic Kenjutsu slash in Blender** using Y Bot, or would you like to **set up the lightweight `AttackState` + `AttackProfile` structure in Godot** first using `AnimationLibrary_Godot_Standard/Sword_Attack` so you can test `LMB` combos and a `C`-key skill lunge in-game right away?
+
+
+> ✍️ **Phrasing Refinement:** "Come to think of it, how do I differentiate my game from *Sekiro*? While my animations and primary combat loop lean heavily toward *Sekiro*, I really admire *Phantom Blade Zero*’s visual aesthetic—even without knowing how it plays—and my only personal experience with Wuxia games is roughly five hours and three bosses in *Where Winds Meet*. Since *Sekiro* also features activated combat arts, how does the combat system I have described actually set itself apart?"
+
+---
+
+### 📋 Executive Summary & Direct Verdict
+
+* ✅ **Why Your Game Is Already Fundamentally Different From *Sekiro*:** *Sekiro* is a **single-weapon, reactive rhythm game** built around a rigid **1-skill-at-a-time bottleneck** (`L1 + R1`), zero true combo expression, and **no stamina/mana spend on normal heavies**. By contrast, the system you are building—combining **dual-weapon mid-combo swaps (`Flux Swap`)**, **3 instant-cast combo-extender hotkeys (`C`, `V`, `F`)**, **a bidirectional `Sha-Chi` gauge that acts as both offensive skill mana and defensive posture**, and **telegraphed Blue/Red/Black glint counters (`Ghoststep`)**—plays far closer to a **high-speed Wuxia character-action hybrid** (like *Where Winds Meet* meets *Dragon's Dogma* and *Phantom Blade Zero*) than *Sekiro*.
+
+
+* ✅ **How to Make It Visually & Mechanically Unmistakable From *Sekiro*:** Change **four concrete pillars** so players never call it a "*Sekiro* clone":
+1. **Replace *Sekiro*'s "1 Equipped Combat Art" With Active Combo-Weaving (`C`, `V`, `F` + `Flux Swap`):** In *Sekiro*, *Mortal Draw* or *Ichimonji* is a slow standalone move that resets you back to neutral. In your game, pressing `C`, `V`, `F` or swapping from Katana → Ōdachi mid-string **chains directly out of light slashes** and refunds `Sha-Chi`.
+
+
+2. **Replace *Sekiro*'s Stationary Deflect With Orbital `Ghoststep` Counters:** Instead of standing toe-to-toe trading static sword clangs until a red deathblow dot appears, parrying a **Blue Glint** or dodging a **Red Glint** triggers **Ghoststep**—blurring your character along a curved arc behind the boss's back for an immediate rear-flank punish.
+
+
+3. **Incorporate *Where Winds Meet*'s Wuxia Kinetic Flow & Multi-Weapon Identity:** Since you have played 5 hours of *Where Winds Meet*, lean into what makes Wuxia feel different from Japanese samurai realism: **low, coiled stances** (like the exact hip-sheathed pose you just built in Blender!), **aerial vault-overs** over sweeping polearms, **one-handed mystical/ki palm or wind-blade projectiles (`Phantom Edge` / `F` key)**, and **fluid weapon-to-weapon transitions**.
+
+
+4. **Design Multi-Target & Spacing Encounters (Not Just 1v1 Tunnel Vision):** Unlike *Sekiro*, which breaks down the moment two bosses attack at once, your **`CombatDirector` Attack Token system** (Module 7.5) and **unlocked spatial triangulation** allow thrilling 1v2 martial arts duels where you weave between ranged cannon fire and melee halberds.
+
+
+
+
+
+---
+
+### 📖 Plain-English Glossary of Design Differentiation
+
+* **Reactive Rhythm Loop (*Sekiro*):** The enemy dictates 80% of the tempo; you stand still tapping Deflect (`L1`) to fill their posture bar, sneak in 1–2 basic `R1` pokes, and repeat until a scripted Execution triggers.
+* **Expressive Wuxia Combo-Flow (Your Game / *Phantom Blade* / *Where Winds Meet*):** Deflecting is still your defensive anchor, **but** every parry and weapon swap (`Flux`) feeds your **`Sha-Chi` mana pool**, letting you go on extended, high-speed offensive chains using `C`/`V`/`F` skills, weapon swaps, and rear-flank `Ghoststep` warps.
+
+
+* **Neutral Reset vs. Combo-Bridge (`C` / `V` / `F`):** In *Sekiro*, using a Combat Art ends your string and leaves you in recovery. A **Combo-Bridge** skill cancels the recovery of your 2nd or 3rd light slash, launches or gap-closes, and lets you immediately resume light attacks or swap weapons.
+
+
+* **Wuxia ("Kung-Fu Punk") Silhouette vs. Historical Samurai Realism:** Samurai kenjutsu (*Sekiro*) emphasizes heavy, grounded, economical two-handed cuts. Wuxia (*Where Winds Meet* / *Phantom Blade Zero*) emphasizes **wire-fu momentum, reverse-grip flicks, sweeping cloak/ash trails, mid-air vaults, and internal Qi/Sha-Chi shockwaves**.
+
+
+
+---
+
+### ⚖️ Side-by-Side Breakdown: *Sekiro* vs. Your Combat System
+
+```
+========================================================================================
+       ARCHITECTURAL & GAMEPLAY COMPARISON: SEKIRO VS. YOUR COMBAT ENGINE
+========================================================================================
+
+ DIMENSION                 SEKIRO: SHADOWS DIE TWICE        YOUR SYSTEM ("KUNG-FU PUNK")[cite: 2]
+ ──────────────────────────────────────────────────────────────────────────────────────
+ Primary Resource          Posture Bar (Passive drain)      Bidirectional `Sha-Chi` Gauge[cite: 2]
+                                                            (Spends on Skills; Refills on
+                                                             Parry & Weapon Flux Swap!)[cite: 2]
+
+ Weapon Variety            1 Katana (Kusabimaru) only       Dual Primary Slots (Katana ◄► Ōdachi)[cite: 2]
+                                                            + `Phantom Edge` Heavy Tool (`F`)[cite: 2]
+
+ Activated Skills          1 Combat Art equipped at a time  3 Instant Hotkeys (`C`, `V`, `F`)
+                           (Slow startup; resets combo)     that cancel & extend combos mid-air/ground[cite: 2]
+
+ Perilous Counter          Jump-kick Sweep / Mikiri Thrust  Blue Glint (Parry) & Red Glint (Dodge)[cite: 2]
+                                                            ──► Both trigger orbital `Ghoststep` warp![cite: 2]
+
+ Spacing & Multi-Enemy     Strict 1v1 lock-on duel;         Fluid spacing + `CombatDirector` Tokens[cite: 1, 2]
+                           camera breaks in 1v2 fights      for cinematic 1v2 boss choreography[cite: 2]
+========================================================================================
+
+```
+
+---
+
+### 🎨 How to Capture *Where Winds Meet* & *Phantom Blade*'s Look Without Playing *Phantom Blade*
+
+Since you have already experienced *Where Winds Meet*'s opening bosses and have seen *Phantom Blade Zero* footage, here is **exactly how to translate that visual identity into your Blender animations and Godot VFX**:
+
+1. **Animate Coiled Anticipation & Explosive Snap (Not Linear Swings):**
+* Notice in your Blender viewport (`image_76d62b.png`) how your character holds the katana low and close to the hip with bent knees. That is pure Wuxia/*Iaijutsu* silhouette.
+
+
+* When animating your `C`/`V`/`F` skills, hold the coiled wind-up for **8–10 frames**, snap the slash across in **3–4 frames**, and add a **brief 2-frame weapon flourish (`chiburi` / wrist spin)** at the end—that contrast between stillness and blur is what gives *Where Winds Meet* and *Phantom Blade* their signature "kung-fu cinema" look.
+
+
+2. **Make `C`, `V`, and `F` Visually Distinct Across Three Archetypes:**
+* **`C` Key — Kinetic Gap-Closer (*Where Winds Meet* Dash-Palm / *Iaijutsu* Flash):** Low horizontal dash that leaves an ink/ash ribbon trail (`GPUParticles3D` / `MeshInstance3D` slash arc) and passes *through* the enemy's guard.
+* **`V` Key — Vertical / Aerial Counter (*Where Winds Meet* Crane/Swallow Vault):** A rising slash or vault-kick that carries you slightly airborne over low sweeps, letting you slam downward with your heavy secondary weapon.
+
+
+* **`F` Key — `Phantom Edge` / Mystical Ki Tool (*Witcher* Sign + *Phantom Blade*):** Summons an ethereal heavy construct or internal-Qi blast (like a phantom greatsword slam, a cone of embers, or a vacuum wind-crescent) that shatters boss hyper-armour.
+
+
+
+
+3. **Use `Flux Weapon Swap` (`Q`) as Your Signature Mechanic:**
+* Neither *Sekiro* nor *The Witcher 3* lets you morph or swap weapons mid-swing to refill your posture/skill bar. Making `LMB x3 → C (Iaijutsu Dash) → Q (Flux Swap into Heavy Ōdachi Slam)` your core bread-and-butter loop will immediately give your game an identity that feels completely fresh to anyone who plays it.
+
+
+
+
+
+---
+
+### ✅ Practical Takeaway for Your Current Blender Session
+
+Keep building your **basic Kenjutsu light combo** and **1 *Iaijutsu* skill** right now—those core sword swings are universal building blocks. Once you export them into your `AnimLib_Katana_Combat.glb` library and hook them into your `StateMachine.gd`, layering **`Sha-Chi`**, **`Ghoststep`**, and **`Flux Weapon Swaps`** on top is purely data and state transitions—zero re-animating required.
