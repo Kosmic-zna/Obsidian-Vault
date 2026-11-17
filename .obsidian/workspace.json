@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Buffer.md",
-                "mode": "preview",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Lunge Architecture.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Combat Buffer"
+              "title": "Lunge Architecture"
             }
           }
         ],
@@ -203,7 +203,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Buffer.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Lunge Architecture.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -250,8 +250,9 @@
   },
   "active": "c8ec36727857404e",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Slash Effect & VFX.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Buffer.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Lunge Architecture.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Slash Effect & VFX.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Japanese Sword Fighting Styles.md",
@@ -285,7 +286,6 @@
     "Year 1/Term 1/MATH/Module 3/Nature of Statistics (MATH).md",
     "Year 1/Term 1/HUM/Module 3/Formal & Informal Fallacies (HUM).md",
     "Personal Projects/Godot 4/General Information/📐 Mod IV; The Mathematical Engine (Applied Game Mathematics).md",
-    "Personal Projects/Godot 4/General Information/🎮 Mod V; Universal Gameplay Systems Engineering.md",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Кира Белова.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Илья Фёдоров.svg",
     "Projects Plus - Демо 2/Кабинет/Обложки/Обложка Зоя Никитина.svg",
