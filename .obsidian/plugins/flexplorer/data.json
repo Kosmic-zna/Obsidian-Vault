@@ -1149,6 +1149,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "World Setting.md",
         "Lunge Architecture.md",
         "Slash Effect & VFX.md",
         "Combat Buffer.md",
@@ -1172,7 +1173,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794140320281,
-      "mtime": 1794140403268
+      "mtime": 1794982764411
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md": {
       "isPinned": false,
@@ -1215,6 +1216,12 @@
       "isHidden": false,
       "ctime": 1794924937669,
       "mtime": 1794924937669
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/World Setting.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794982991646,
+      "mtime": 1794982991646
     }
   },
   "showHidden": false,
