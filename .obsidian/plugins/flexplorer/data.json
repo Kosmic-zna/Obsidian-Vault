@@ -5,6 +5,8 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Pasted image 20261119125118.png",
+        "Pasted image 20261119125116.png",
         "Operon",
         "Projects",
         "Year 1",
@@ -1161,6 +1163,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Map Connection Fog.md",
         "Save and Respawn.md",
         "Boss Inspirations.md",
         "Graphics.md",
@@ -1242,7 +1245,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794984274044,
-      "mtime": 1794986327497
+      "mtime": 1795063878542
     },
     "Unsorted/Pasted image 20261118144448.png": {
       "isPinned": false,
@@ -1327,6 +1330,24 @@
       "isHidden": false,
       "ctime": 1794985168250,
       "mtime": 1794985168250
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Connection Fog.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795063816747,
+      "mtime": 1795063831118
+    },
+    "Pasted image 20261119125116.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795063876508,
+      "mtime": 1795063876508
+    },
+    "Pasted image 20261119125118.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795063878551,
+      "mtime": 1795063878551
     }
   },
   "showHidden": false,
