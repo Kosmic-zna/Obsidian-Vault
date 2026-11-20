@@ -42,12 +42,14 @@
             "id": "c8ec36727857404e",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Unsorted/Pasted image 20261120204350.png"
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Populating the World.md",
+                "mode": "preview",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20261120204350"
+              "icon": "lucide-file",
+              "title": "Populating the World"
             }
           }
         ],
@@ -201,7 +203,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unsorted/Pasted image 20261120204350.png",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Populating the World.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -246,11 +248,12 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "a29bdf29231c874d",
+  "active": "c8ec36727857404e",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Graphics.md",
-    "Unsorted/Pasted image 20261120204350.png",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Populating the World.md",
+    "Unsorted/Pasted image 20261120204350.png",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Graphics.md",
     "Unsorted/Pasted image 20261120204344.png",
     "Unsorted/Pasted image 20261120204212.png",
     "Unsorted/Pasted image 20261120204142.png",

@@ -1182,6 +1182,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Populating the World.md",
         "Region Inspirations.md",
         "Realistic Assets.md",
         "Map Connection Fog.md",
@@ -1495,6 +1496,12 @@
       "isHidden": false,
       "ctime": 1795176102766,
       "mtime": 1795176102766
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Populating the World.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795188779474,
+      "mtime": 1795188779474
     }
   },
   "showHidden": false,
