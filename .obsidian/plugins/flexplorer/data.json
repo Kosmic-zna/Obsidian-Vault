@@ -5,6 +5,20 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Pasted image 20261120200438.png",
+        "Pasted image 20261120200427.png",
+        "Pasted image 20261120200418.png",
+        "Pasted image 20261120200411.png",
+        "Pasted image 20261120200359.png",
+        "Pasted image 20261120200353.png",
+        "Pasted image 20261120200257.png",
+        "Pasted image 20261120200247.png",
+        "Pasted image 20261120200238.png",
+        "Pasted image 20261120200228.png",
+        "Pasted image 20261120200223.png",
+        "Pasted image 20261120200142.png",
+        "Pasted image 20261120200133.png",
+        "Pasted image 20261120200117.png",
         "Pasted image 20261119125118.png",
         "Pasted image 20261119125116.png",
         "Operon",
@@ -1163,6 +1177,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Region Inspirations.md",
         "Realistic Assets.md",
         "Map Connection Fog.md",
         "Save and Respawn.md",
@@ -1354,7 +1369,97 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1795174292024,
-      "mtime": 1795174292024
+      "mtime": 1795174301544
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176063924,
+      "mtime": 1795176267590
+    },
+    "Pasted image 20261120200117.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176077490,
+      "mtime": 1795176077490
+    },
+    "Pasted image 20261120200133.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176093850,
+      "mtime": 1795176093850
+    },
+    "Pasted image 20261120200142.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176102766,
+      "mtime": 1795176102766
+    },
+    "Pasted image 20261120200223.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176143766,
+      "mtime": 1795176143766
+    },
+    "Pasted image 20261120200228.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176148295,
+      "mtime": 1795176148295
+    },
+    "Pasted image 20261120200238.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176158831,
+      "mtime": 1795176158831
+    },
+    "Pasted image 20261120200247.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176167979,
+      "mtime": 1795176167979
+    },
+    "Pasted image 20261120200257.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176177583,
+      "mtime": 1795176177583
+    },
+    "Pasted image 20261120200353.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176233238,
+      "mtime": 1795176233238
+    },
+    "Pasted image 20261120200359.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176239580,
+      "mtime": 1795176239580
+    },
+    "Pasted image 20261120200411.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176251768,
+      "mtime": 1795176251768
+    },
+    "Pasted image 20261120200418.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176258784,
+      "mtime": 1795176258784
+    },
+    "Pasted image 20261120200427.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176267184,
+      "mtime": 1795176267184
+    },
+    "Pasted image 20261120200438.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176278973,
+      "mtime": 1795176278973
     }
   },
   "showHidden": false,
