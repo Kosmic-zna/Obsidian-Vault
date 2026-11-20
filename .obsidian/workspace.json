@@ -42,14 +42,12 @@
             "id": "c8ec36727857404e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md",
-                "mode": "source",
-                "source": false
+                "file": "Unsorted/Pasted image 20261120204350.png"
               },
-              "icon": "lucide-file",
-              "title": "Region Inspirations"
+              "icon": "lucide-image",
+              "title": "Pasted image 20261120204350"
             }
           }
         ],
@@ -203,7 +201,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md",
+                "file": "Unsorted/Pasted image 20261120204350.png",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -248,22 +246,21 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "c8ec36727857404e",
+  "active": "a29bdf29231c874d",
   "lastOpenFiles": [
-    "Pasted image 20261120200438.png",
-    "Pasted image 20261120200427.png",
-    "Pasted image 20261120200418.png",
-    "Pasted image 20261120200411.png",
-    "Pasted image 20261120200359.png",
-    "Pasted image 20261120200353.png",
-    "Pasted image 20261120200257.png",
-    "Pasted image 20261120200247.png",
-    "Pasted image 20261120200238.png",
-    "Pasted image 20261120200228.png",
-    "Pasted image 20261120200223.png",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Graphics.md",
+    "Unsorted/Pasted image 20261120204350.png",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md",
+    "Unsorted/Pasted image 20261120204344.png",
+    "Unsorted/Pasted image 20261120204212.png",
+    "Unsorted/Pasted image 20261120204142.png",
+    "Pasted image 20261120204131.png",
+    "Unsorted/Pasted image 20261120204108.png",
+    "Unsorted/Pasted image 20261120200438.png",
+    "Unsorted/Pasted image 20261120200427.png",
+    "Unsorted/Pasted image 20261120200418.png",
+    "Unsorted/Pasted image 20261120200411.png",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Realistic Assets.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Connection Fog.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Save and Respawn.md",
