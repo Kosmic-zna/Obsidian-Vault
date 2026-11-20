@@ -1163,6 +1163,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Realistic Assets.md",
         "Map Connection Fog.md",
         "Save and Respawn.md",
         "Boss Inspirations.md",
@@ -1348,6 +1349,12 @@
       "isHidden": false,
       "ctime": 1795063878551,
       "mtime": 1795063878551
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Realistic Assets.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795174292024,
+      "mtime": 1795174292024
     }
   },
   "showHidden": false,
