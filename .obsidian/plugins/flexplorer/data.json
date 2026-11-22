@@ -5,6 +5,8 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Screenshot (5600).png",
+        "Pasted image 20261122200125.png",
         "Operon",
         "Projects",
         "Year 1",
@@ -1281,7 +1283,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794984274044,
-      "mtime": 1795237446634
+      "mtime": 1795348887137
     },
     "Unsorted/Pasted image 20261118144448.png": {
       "isPinned": false,
@@ -1600,6 +1602,18 @@
       "isHidden": false,
       "ctime": 1795237388306,
       "mtime": 1795237388306
+    },
+    "Pasted image 20261122200125.png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795348885029,
+      "mtime": 1795348885029
+    },
+    "Screenshot (5600).png": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795348900105,
+      "mtime": 1795348900105
     }
   },
   "showHidden": false,
