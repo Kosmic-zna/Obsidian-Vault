@@ -25,6 +25,7 @@ aliases:
   - ↳ **Lost Sinner**: Agile, acrobatic greatsword leaps and dark-arena visibility pressure; fast recovery cancels.
   - ↳ **Nox Duo**: Coordinated twin-duellist pressure with whip/blade range shifts; reference for paired medium-threat enemies.
   - curseblade
+  - melania
 
 > → *Design Note*: Ideal for early-to-mid mountain ridge "skill-check" bosses that validate the player's parry timing before entering fortified castle gates.
 
