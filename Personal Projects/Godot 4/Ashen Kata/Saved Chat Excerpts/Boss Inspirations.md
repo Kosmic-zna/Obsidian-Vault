@@ -4,6 +4,11 @@
 - tower knight
 - giant lord
 - dirty collossus
+- worm face
+- iron golem
+- crossbreed priscilla
+- sif
+- stone digger troll
 
 ## <font color="#6425d0">Dragons</font>
 - dragon agheel
@@ -14,6 +19,11 @@
 - penetrator
 - patches
 - ancient dragon man
+- old dragonslayer
+- demi humanswordmaster onze
+- old king allant
+- black knight
+
 
 ## **<font color="#92d050">Medium Monster</font>**
 - bell gargoyle
@@ -21,5 +31,11 @@
 - grave warden duelist
 - Flame lurker
 - man eater
+- mad pumpkin head
+- nox duo
+- leonine misbegotten
+- the pursuer
+- bloodhound knight 
+- lost sinner
 
 
