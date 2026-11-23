@@ -1200,6 +1200,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Lore.md",
         "Populating the World.md",
         "Region Inspirations.md",
         "Realistic Assets.md",
@@ -1297,7 +1298,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794984637542,
-      "mtime": 1795003008215
+      "mtime": 1795418376745
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Save and Respawn.md": {
       "isPinned": false,
@@ -1628,6 +1629,12 @@
       "isHidden": false,
       "ctime": 1795355604261,
       "mtime": 1795355604261
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Lore.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795422866675,
+      "mtime": 1795422866675
     }
   },
   "showHidden": false,
