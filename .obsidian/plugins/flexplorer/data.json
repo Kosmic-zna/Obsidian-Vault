@@ -1200,6 +1200,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Character & Weapon Stats.md",
         "Lore.md",
         "Populating the World.md",
         "Region Inspirations.md",
@@ -1298,7 +1299,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794984637542,
-      "mtime": 1795418376745
+      "mtime": 1795427155591
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Save and Respawn.md": {
       "isPinned": false,
@@ -1634,7 +1635,13 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1795422866675,
-      "mtime": 1795422866675
+      "mtime": 1795422870645
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Character & Weapon Stats.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795442902215,
+      "mtime": 1795442902215
     }
   },
   "showHidden": false,
