@@ -1200,112 +1200,19 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
-        "Character & Weapon Stats.md",
-        "Lore.md",
-        "Populating the World.md",
-        "Region Inspirations.md",
-        "Realistic Assets.md",
-        "Map Connection Fog.md",
-        "Save and Respawn.md",
-        "Boss Inspirations.md",
-        "Graphics.md",
-        "World Setting.md",
-        "Lunge Architecture.md",
-        "Slash Effect & VFX.md",
-        "Combat Buffer.md",
-        "Japanese Sword Fighting Styles.md",
-        "Motion Blur.md",
-        "Katana Weapon.md",
-        "Basic Combat.md",
-        "Combat Specifics.md",
-        "Map Specifics.md"
+        "Gameplay",
+        "Inspiration",
+        "Map Design & Graphics",
+        "Weapons & Combat"
       ],
       "ctime": 1794142401512,
       "mtime": 1794142401512
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Basic Combat.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794142167529,
-      "mtime": 1794142386513
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Specifics.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794140320281,
-      "mtime": 1794982764411
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Specifics.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794140265280,
-      "mtime": 1794140291999
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Katana Weapon.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794151511715,
-      "mtime": 1794151521060
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Motion Blur.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794575036061,
-      "mtime": 1794575036061
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Japanese Sword Fighting Styles.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794675644495,
-      "mtime": 1794675649338
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Combat Buffer.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794923869190,
-      "mtime": 1794923914188
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Slash Effect & VFX.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794923926336,
-      "mtime": 1794924103889
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Lunge Architecture.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794924937669,
-      "mtime": 1794924937669
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/World Setting.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794982991646,
-      "mtime": 1794983002626
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Graphics.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794984274044,
-      "mtime": 1795348887137
     },
     "Unsorted/Pasted image 20261118144448.png": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794984288247,
       "mtime": 1794984288247
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Boss Inspirations.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794984637542,
-      "mtime": 1795427155591
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Save and Respawn.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1795006496508,
-      "mtime": 1795007473697
     },
     "Unsorted/Pasted image 20261118151847.png": {
       "isPinned": false,
@@ -1372,24 +1279,6 @@
       "isHidden": false,
       "ctime": 1794985168250,
       "mtime": 1794985168250
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Connection Fog.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1795063816747,
-      "mtime": 1795063831118
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Realistic Assets.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1795174292024,
-      "mtime": 1795174301544
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Region Inspirations.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1795176063924,
-      "mtime": 1795238535972
     },
     "Unsorted/Pasted image 20261120204344.png": {
       "isPinned": false,
@@ -1517,12 +1406,6 @@
       "ctime": 1795176102766,
       "mtime": 1795176102766
     },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Populating the World.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1795188779474,
-      "mtime": 1795188779474
-    },
     "Unsorted/Pasted image 20261121132225.png": {
       "isPinned": false,
       "isHidden": false,
@@ -1631,17 +1514,181 @@
       "ctime": 1795355604261,
       "mtime": 1795355604261
     },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Lore.md": {
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Combat Specifics.md",
+        "Basic Combat.md",
+        "Katana Weapon.md",
+        "Japanese Sword Fighting Styles.md",
+        "Combat Buffer.md",
+        "Slash Effect & VFX.md",
+        "Lunge Architecture.md",
+        "Character & Weapon Stats.md",
+        "Weapon Skills.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1795448344021,
+      "mtime": 1795448344021
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Map Specifics.md",
+        "Motion Blur.md",
+        "World Setting.md",
+        "Graphics.md",
+        "Map Connection Fog.md",
+        "Realistic Assets.md",
+        "Region Inspirations.md",
+        "Populating the World.md",
+        "Lore.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1795448362196,
+      "mtime": 1795448362196
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Inspiration": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Boss Inspirations.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1795448372443,
+      "mtime": 1795448372443
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795448335451,
+      "mtime": 1795448341302
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795442902215,
+      "mtime": 1795442933996
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Lore.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1795422866675,
       "mtime": 1795422870645
     },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Character & Weapon Stats.md": {
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Populating the World.md": {
       "isPinned": false,
       "isHidden": false,
-      "ctime": 1795442902215,
-      "mtime": 1795442902215
+      "ctime": 1795188779474,
+      "mtime": 1795188779474
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Region Inspirations.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795176063924,
+      "mtime": 1795238535972
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Realistic Assets.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795174292024,
+      "mtime": 1795174301544
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Map Connection Fog.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795063816747,
+      "mtime": 1795063831118
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Gameplay": {
+      "isPinned": false,
+      "isHidden": false,
+      "customOrder": [
+        "Save and Respawn.md"
+      ],
+      "sortOrder": "custom",
+      "ctime": 1795448407159,
+      "mtime": 1795448407159
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Gameplay/Save and Respawn.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795006496508,
+      "mtime": 1795007473697
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Inspiration/Boss Inspirations.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794984637542,
+      "mtime": 1795427155591
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Graphics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794984274044,
+      "mtime": 1795348887137
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/World Setting.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794982991646,
+      "mtime": 1794983002626
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Lunge Architecture.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794924937669,
+      "mtime": 1794924937669
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Slash Effect & VFX.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794923926336,
+      "mtime": 1794924103889
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Buffer.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794923869190,
+      "mtime": 1794923914188
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Japanese Sword Fighting Styles.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794675644495,
+      "mtime": 1794675649338
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Motion Blur.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794575036061,
+      "mtime": 1794575036061
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Katana Weapon.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794151511715,
+      "mtime": 1794151521060
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Basic Combat.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794142167529,
+      "mtime": 1794142386513
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Specifics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794140265280,
+      "mtime": 1794140291999
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Map Specifics.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1794140320281,
+      "mtime": 1794982764411
     }
   },
   "showHidden": false,
