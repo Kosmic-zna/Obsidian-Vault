@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
-                "mode": "preview",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Character & Weapon Stats"
+              "title": "Balancing Between Dodging and Parrying"
             }
           },
           {
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -264,8 +264,9 @@
   },
   "active": "c8ec36727857404e",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Buffer.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Slash Effect & VFX.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Specifics.md",
@@ -303,7 +304,6 @@
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Katana Weapon.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Motion Blur.md",
     "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md",
-    "Year 1/Term 1/IT/Module 2/Arrays (IT).md",
     "Year 1/Term 1/CS/Module 1/CS Module 1-3.docx",
     "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_9_Networks_and_Communications.docx",
     "Year 1/Term 1/CS/Module 3/Word/CS M3 Lesson_10_Program_Development_SDLC.docx",

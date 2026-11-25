@@ -1519,6 +1519,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Balancing Between Dodging and Parrying.md",
         "Skill Ideas.md",
         "Combat Specifics.md",
         "Basic Combat.md",
@@ -1570,7 +1571,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1795442902215,
-      "mtime": 1795605719932
+      "mtime": 1795617147377
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Lore.md": {
       "isPinned": false,
@@ -1689,6 +1690,12 @@
       "isHidden": false,
       "ctime": 1795614528239,
       "mtime": 1795614632889
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795619341925,
+      "mtime": 1795619341925
     }
   },
   "showHidden": false,
