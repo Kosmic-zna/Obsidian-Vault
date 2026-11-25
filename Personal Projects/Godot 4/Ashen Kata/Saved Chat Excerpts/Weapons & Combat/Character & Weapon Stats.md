@@ -2,7 +2,7 @@
 > 
 >   
 
-### ✅ Summary:
+# ✅ Summary:
 
 **Adopt a _Sekiro_-inspired "Unified Character Level + 4-Stat Weapon Identity" architecture.** Instead of scattering points across Strength, Dexterity, Arcane, and Faith, give the player **one single Character Level** (which linearly scales core Vitality, `Sha-Chi` Posture, and Spirit Seal capacity) while letting **weapons carry all build variety** through just **four clean, readable numbers** (`Slash Power`, `Stance Break`, `Guard Stability`, and `Skill Affinity`) plus **one passive weapon trait**—giving you crisp tactical variety without a single spreadsheet or talisman screen.
 
@@ -77,7 +77,95 @@ Would you like to **pair this `WeaponData` resource with a minimal `PlayerStats`
 > 
 >   
 
-### ✅ Summary:
+# ✅ Summary:
+
+- **Yes—those four weapon numbers (`Slash Power`, `Stance Break`, `Guard Stability`, `Skill Affinity`) plus one passive trait are mathematically complete**, because every action in a _Sekiro_ / _Phantom Blade_-style swordfighter reduces to four fundamental variables: **health damage, posture damage, defensive mitigation, and skill-resource generation**.
+    
+- **How They Create Dynamic Boss Variety:** Instead of altering player spreadsheets, bosses test **different axes of those four stats**—such as high-poise knights who shrug off low `Stance Break`, relentless flurry duellists who shatter low `Guard Stability` if you block instead of deflecting, or agile monsters that starve low `Skill Affinity` builds of Spirit Seals.
+    
+- **Character & Enemy Stats (`Mirror Symmetry`):** Keep **both** the player and enemies on the exact same **four core combat stats** (`Vitality`, `Sha-Chi Posture`, `Poise`, and `Posture Recovery Rate`) so your shared `Combatant` state machine runs on one unified math formula.
+    
+
+### 📖 Plain-English Glossary of Minimalist Combat Math
+
+- **Orthogonal Stats (`Zero Overlap`):** Four statistics are "orthogonal" when each controls a completely separate lever of combat (`HP`, `Posture`, `Defence`, `Resource`)—meaning no two stats do the same job, and removing any one of them leaves a noticeable mechanical gap.
+    
+- **`Poise` (`Hyper-Armour Threshold`):** A hidden or visible threshold on enemies and bosses determining how much `Stance Break` is required to flinch them mid-swing—differentiating a nimble _Onze_-style duellist (low poise, interrupts easily) from a _Black Knight_ or _Crucible Commander_ (high poise, powers through light slashes).
+    
+- **`Posture Recovery Rate` (`Sha-Chi Regeneration`):** How quickly an enemy's yellow/crimson posture bar drains when left unpressured—forcing aggressive, relentless swordplay against fast bosses whose `Sha-Chi` recovers rapidly at high health.
+    
+
+### ⚖️ 1. Why These 4 Weapon Stats Are Mathematically Complete
+
+Every frame of melee combat in _Ashen Kata_ asks only four questions. If your weapon covers all four cleanly, adding more stats only creates UI clutter without adding real tactical depth:
+
+  
+
+|**Weapon Stat**|**Combat Question It Answers**|**What Happens When It Is High vs. Low**|
+|---|---|---|
+|**1. `Slash Power`**|_"How fast do I kill an enemy once I find an opening?"_|**High (`Odachi`):** Punishes brief boss recovery windows heavily.<br><br>  <br>  <br><br>**Low (`Twin Blades`):** Requires sustained combo pressure to chip HP down.|
+|**2. `Stance Break`**|_"How fast do I fill the enemy's `Sha-Chi` bar and flinch them?"_|**High:** Interrupts mid-tier enemies (`Black Knights`) and topples giants (`Tower Knight`).<br><br>  <br>  <br><br>**Low:** Relies on clean deflections rather than raw strikes to break posture.|
+|**3. `Guard Stability`**|_"How forgiving is an imperfect block when I mistime a deflect?"_|**High (`Katana` / `Greatsword`):** Protects your own posture during frantic 5-hit boss flurries.<br><br>  <br>  <br><br>**Low (`Twin Blades`):** Punishes passive guarding; forces _Ghoststep_ evasion or frame-perfect parries.|
+|**4. `Skill Affinity`**|_"How fast do I charge Spirit Seals for `X`, `C`, and `F` Boss Arts?"_|**High:** Rewards aggressive deflection chains with frequent _Twin Moon_ or _Ash-Lightning_ casts.<br><br>  <br>  <br><br>**Low:** Trades frequent spectacle skills for raw physical `Slash Power`.|
+
+### ⚔️ 2. How Bosses Dynamically Test Those Exact 4 Stats
+
+You do not need elemental resistance tables (`Fire`, `Lightning`, `Bleed`, `Frost`) to force players to adapt their loadout or tactics across bosses:
+
+  
+
+1. **The Hyper-Aggressive Duelist (`Onze` / `Genichiro` Archetype):**
+    
+    - **Boss Profile:** Low `Poise` (flinches when interrupted), rapid `Posture Recovery Rate` at full HP, and 5-hit flurry combos.
+        
+    - **Stat Test:** Tests **`Guard Stability`** (surviving rapid parry strings) and **`Skill Affinity`** (converting multi-hit deflections into rapid `X`/`C` counter-skills before their posture recovers).
+        
+2. **The Heavy Armoured Commander (`Black Knight` / `Winged Crucible` Archetype):**
+    
+    - **Boss Profile:** High `Poise` (ignores light slashes during wind-ups), slower `Posture Recovery Rate`, and massive overhead cleaves.
+        
+    - **Stat Test:** Tests **`Stance Break`** (cracking their poise during delayed wind-ups) and **`Slash Power`** (capitalising on narrow punish windows after _Ghoststepping_ through unblockable wing/shoulder checks).
+        
+3. **The Colossal Juggernaut (`Tower Knight` / `Giant Lord` Archetype):**
+    
+    - **Boss Profile:** Massive `Vitality` pool, immune to standard flinching until ankle/wrist `Sha-Chi` threshold breaks.
+        
+    - **Stat Test:** Rewards high **`Stance Break`** weapons or heavy `F` Boss Arts (_Ash-Lightning Plunge_) to trigger a full-body posture collapse, followed by high **`Slash Power`** executions.
+        
+
+### 🧬 3. Streamlined Character & Enemy Stats (`CombatantStats` Mirror)
+
+Keep **Player**, **Small Mobs**, **Medium Knights**, and **Bosses** on the **exact same 4-stat `CombatantStats` structure** so your damage and posture formulas never require special-case spaghetti code:
+
+  
+
+GDScript
+
+```
+class_name CombatantStats
+extends Resource
+
+@export_group("Unified Combatant Core (Shared by Player & Enemies)")
+@export var max_vitality: float = 500.0          # Total HP pool
+@export var max_sha_chi: float = 100.0           # Posture capacity before lethal stun / execution
+@export var poise: float = 30.0                  # Stance Break needed to interrupt an active attack
+@export var posture_recovery_rate: float = 12.0  # Sha-Chi drained per second when not under pressure
+```
+
+- **For the Player:** `max_vitality` and `max_sha_chi` scale cleanly with your single **Character Level (`1 → 50`)**, while `poise` and `posture_recovery_rate` stay crisp and predictable (with `posture_recovery_rate` speeding up when holding guard cleanly, just like _Sekiro_).
+    
+- **For Enemies & Bosses:** You simply author one `CombatantStats` `.tres` file per enemy archetype (e.g., `stats_mountain_duelist.tres` with `poise = 15, posture_recovery_rate = 22` vs. `stats_crucible_commander.tres` with `poise = 65, posture_recovery_rate = 8`).
+    
+
+### 🎯 Next Step Question
+
+Would you like to **build the shared `Combatant` base node in Godot 4** using `CombatantStats` and `WeaponData` next—wiring up `take_hit(slash_power, stance_break)` and `deflect()` so you can test breaking a dummy's `Sha-Chi` posture in your `Region1` scene?
+
+> ✍️ **Phrasing Refinement:** "How can I be certain these statistics are sufficient? Can we create dynamic boss variety using them, and what about character and enemy statistics?"
+> 
+>   
+
+# ✅ Summary:
 
 - **Yes—those four weapon numbers (`Slash Power`, `Stance Break`, `Guard Stability`, `Skill Affinity`) plus one passive trait are mathematically complete**, because every action in a _Sekiro_ / _Phantom Blade_-style swordfighter reduces to four fundamental variables: **health damage, posture damage, defensive mitigation, and skill-resource generation**.
     
