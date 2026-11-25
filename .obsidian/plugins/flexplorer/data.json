@@ -1517,6 +1517,7 @@
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Combat Specifics.md",
         "Basic Combat.md",
@@ -1528,13 +1529,13 @@
         "Character & Weapon Stats.md",
         "Weapon Skills.md"
       ],
-      "sortOrder": "custom",
       "ctime": 1795448344021,
       "mtime": 1795448344021
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Map Specifics.md",
         "Motion Blur.md",
@@ -1546,17 +1547,16 @@
         "Populating the World.md",
         "Lore.md"
       ],
-      "sortOrder": "custom",
       "ctime": 1795448362196,
       "mtime": 1795448362196
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Inspiration": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Boss Inspirations.md"
       ],
-      "sortOrder": "custom",
       "ctime": 1795448372443,
       "mtime": 1795448372443
     },
@@ -1605,10 +1605,10 @@
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Gameplay": {
       "isPinned": false,
       "isHidden": false,
+      "sortOrder": "custom",
       "customOrder": [
         "Save and Respawn.md"
       ],
-      "sortOrder": "custom",
       "ctime": 1795448407159,
       "mtime": 1795448407159
     },
