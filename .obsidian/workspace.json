@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Skill Ideas.md",
-                "mode": "source",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Skill Ideas"
+              "title": "Character & Weapon Stats"
             }
           },
           {
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Skill Ideas.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -264,11 +264,15 @@
   },
   "active": "c8ec36727857404e",
   "lastOpenFiles": [
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Buffer.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Slash Effect & VFX.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Specifics.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Japanese Sword Fighting Styles.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Skill Ideas.md",
     "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
     "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Untitled.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Gameplay",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Inspiration",
@@ -296,10 +300,6 @@
     "Personal Projects/Godot 4/General Information/Masterlist.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/World Setting.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Lunge Architecture.md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Buffer.md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Slash Effect & VFX.md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Specifics.md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Japanese Sword Fighting Styles.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Katana Weapon.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Motion Blur.md",
     "Year 1/Term 1/IT/Module 1/FULL MODULE 1 (IT).md",
