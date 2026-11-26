@@ -1,12 +1,13 @@
 {
-  "underwater-theme@@underwater-colors-dark": "uw-sand",
+  "underwater-theme@@underwater-colors-dark": "uw-deep",
   "underwater-theme@@kanban": "normal",
   "underwater-theme@@callout": "callout-solid",
   "underwater-theme@@table": "table-minimal",
   "underwater-theme@@checkbox": "normal",
   "underwater-theme@@vault-icon": "Moon",
-  "underwater-theme@@love-rgb@@dark": "#B5E8FE",
+  "underwater-theme@@love-rgb@@dark": "#6F79F8",
   "underwater-theme@@rose-rgb@@dark": "#F16D6D",
   "underwater-theme@@gold-rgb@@dark": "#D7F895",
-  "underwater-theme@@pine-rgb@@dark": "#5A49AF"
+  "underwater-theme@@links-styling": "normal",
+  "underwater-theme@@subtle@@dark": "#B6B5BE"
 }
