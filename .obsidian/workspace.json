@@ -67,7 +67,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Grab Attacks.md",
+                "file": "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -262,10 +262,10 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "c8ec36727857404e",
+  "active": "aa8ef919723c3715",
   "lastOpenFiles": [
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Grab Attacks.md",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Buffer.md",
