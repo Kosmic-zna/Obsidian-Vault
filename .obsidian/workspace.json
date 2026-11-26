@@ -44,12 +44,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Grab Attacks.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Skill Ideas.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Grab Attacks"
+              "title": "Skill Ideas"
             }
           },
           {
@@ -67,7 +67,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -217,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+                "file": "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Skill Ideas.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
@@ -262,13 +262,13 @@
       "operon:Open Pinned Tasks": false
     }
   },
-  "active": "aa8ef919723c3715",
+  "active": "c8ec36727857404e",
   "lastOpenFiles": [
-    "Unsorted/Pasted image 20261122200125.png",
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Grab Attacks.md",
     "Personal Projects/Godot 4/General Information/🏗️ Mod III; Software Architecture & Game Design Patterns.md",
+    "Unsorted/Pasted image 20261122200125.png",
     "Personal Projects/Godot 4/General Information/🏛️ Mod I; Bridging the Paradigm (Python & Roblox Luau → Godot 4).md",
     "Personal Projects/Godot 4/General Information/🗂️ Mod II; Advanced Data Manipulation & Memory Mechanics.md",
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Grab Attacks.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Balancing Between Dodging and Parrying.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Character & Weapon Stats.md",
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Weapon Skills.md",
