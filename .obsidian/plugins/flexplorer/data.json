@@ -1500,11 +1500,7 @@
         "Balancing Between Dodging and Parrying.md",
         "Skill Ideas.md",
         "Combat Specifics.md",
-        "Basic Combat.md",
-        "Katana Weapon.md",
-        "Combat Buffer.md",
         "Slash Effect & VFX.md",
-        "Lunge Architecture.md",
         "Character & Weapon Stats.md",
         "Weapon Skills.md"
       ],
@@ -1615,41 +1611,17 @@
       "ctime": 1794982991646,
       "mtime": 1794983002626
     },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Lunge Architecture.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794924937669,
-      "mtime": 1794924937669
-    },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Slash Effect & VFX.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794923926336,
       "mtime": 1794924103889
     },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Buffer.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794923869190,
-      "mtime": 1794923914188
-    },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Map Design & Graphics/Motion Blur.md": {
       "isPinned": false,
       "isHidden": false,
       "ctime": 1794575036061,
       "mtime": 1794575036061
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Katana Weapon.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794151511715,
-      "mtime": 1794151521060
-    },
-    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Basic Combat.md": {
-      "isPinned": false,
-      "isHidden": false,
-      "ctime": 1794142167529,
-      "mtime": 1794142386513
     },
     "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Combat Specifics.md": {
       "isPinned": false,
@@ -1709,7 +1681,7 @@
       "isPinned": false,
       "isHidden": false,
       "ctime": 1795777426063,
-      "mtime": 1795777426063
+      "mtime": 1795777487997
     }
   },
   "showHidden": false,
