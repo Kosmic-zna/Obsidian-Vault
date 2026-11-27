@@ -1495,6 +1495,7 @@
       "isHidden": false,
       "sortOrder": "custom",
       "customOrder": [
+        "Untitled.md",
         "Grab Attacks.md",
         "Balancing Between Dodging and Parrying.md",
         "Skill Ideas.md",
@@ -1703,6 +1704,12 @@
       "isHidden": false,
       "ctime": 1795355604261,
       "mtime": 1795355604261
+    },
+    "Personal Projects/Godot 4/Ashen Kata/Saved Chat Excerpts/Weapons & Combat/Untitled.md": {
+      "isPinned": false,
+      "isHidden": false,
+      "ctime": 1795777426063,
+      "mtime": 1795777426063
     }
   },
   "showHidden": false,
